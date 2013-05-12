@@ -1,0 +1,6 @@
+# Pre-Compiled Files #
+*.class
+*.f
+*.g
+*.v
+sdk/

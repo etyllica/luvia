@@ -1,4 +1,4 @@
-luvia
+Luvia
 =====
 
 A JOGL fork from etyllica.
