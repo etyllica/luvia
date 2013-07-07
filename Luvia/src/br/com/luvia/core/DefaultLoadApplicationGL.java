@@ -17,9 +17,9 @@ import br.com.etyllica.core.video.Grafico;
  *
  */
 
-public class DefaultLoadApplication3D extends Application3D implements LoadApplication{
+public class DefaultLoadApplicationGL extends ApplicationGL implements LoadApplication{
 
-	public DefaultLoadApplication3D(int x, int y, int w, int h) {
+	public DefaultLoadApplicationGL(int x, int y, int w, int h) {
 		super(x,y,w,h);
 				
 		load();

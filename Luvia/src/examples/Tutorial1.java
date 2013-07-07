@@ -10,9 +10,9 @@ import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.video.Grafico;
 import br.com.etyllica.gui.Button;
 import br.com.etyllica.gui.label.TextLabel;
-import br.com.luvia.core.Application3D;
+import br.com.luvia.core.ApplicationGL;
 
-public class Tutorial1 extends Application3D {
+public class Tutorial1 extends ApplicationGL {
 
 	public Tutorial1(int width, int height) {
 		super(width, height);

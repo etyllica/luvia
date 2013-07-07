@@ -8,19 +8,19 @@ import javax.media.opengl.glu.GLU;
 
 import br.com.etyllica.core.application.Application;
 
-public abstract class Application3D extends Application implements GLEventListener{
+public abstract class ApplicationGL extends Application implements GLEventListener{
 
 	protected GLU glu;
 	
-	protected Application3D returnApplication3D = this;
+	protected ApplicationGL returnApplication3D = this;
 	
-	public Application3D(int x, int y, int width, int height){
+	public ApplicationGL(int x, int y, int width, int height){
 		super(x,y,width,height);
 
 		glu = new GLU(); // GL Utilities
 	}
 	
-	public Application3D(int width, int height){
+	public ApplicationGL(int width, int height){
 		super(width,height);
 
 		glu = new GLU(); // GL Utilities
@@ -36,17 +36,11 @@ public abstract class Application3D extends Application implements GLEventListen
 	public void dispose(GLAutoDrawable drawable){
 		// TODO Auto-generated method stub
 	}
-
-	/*@Override
-	public Application getReturnApplication(){
-		return returnApplication3D;
-	}*/
 	
-	public Application3D getReturnApplication3D(){
+	public ApplicationGL getReturnApplication3D(){
 		return returnApplication3D;
 	}
 	
-
 	/*//Texture routines
 	protected void enableTextureDefault(GL2 gl){
 

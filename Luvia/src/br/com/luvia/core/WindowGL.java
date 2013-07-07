@@ -8,20 +8,20 @@ import br.com.etyllica.core.video.Grafico;
 import br.com.etyllica.gui.Window;
 import br.com.luvia.loader.TextureLoader;
 
-public class Window3D extends Window {
+public class WindowGL extends Window {
 	
-	private Application3D application3D;
+	private ApplicationGL application3D;
 	
-	private DefaultLoadApplication3D load3D;
+	private DefaultLoadApplicationGL load3D;
 	
-	public Window3D(int x, int y, int w, int h){
+	public WindowGL(int x, int y, int w, int h){
 		super(x,y,w,h);
 		
-		load3D = new DefaultLoadApplication3D(x,y,w,h);
+		load3D = new DefaultLoadApplicationGL(x,y,w,h);
 		application3D = load3D;
 	}
 	
-	public Application3D getApplication3D() {
+	public ApplicationGL getApplication3D() {
 		return application3D;
 	}
 	
@@ -32,10 +32,10 @@ public class Window3D extends Window {
 
 	@Override
 	public void setApplication(Application application) {
-		setApplication3D((Application3D)application3D);
+		setApplication3D((ApplicationGL)application3D);
 	}
 	
-	public void setApplication3D(Application3D application3D) {
+	public void setApplication3D(ApplicationGL application3D) {
 		this.application = application3D;
 		this.application3D = application3D;
 		
@@ -103,7 +103,7 @@ public class Window3D extends Window {
 		
 	}*/
 	
-	public DefaultLoadApplication3D getLoadApplication3D(){
+	public DefaultLoadApplicationGL getLoadApplication3D(){
 		return load3D;
 	}
 		

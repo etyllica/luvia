@@ -45,7 +45,7 @@ public class LuviaCore extends Core implements GLEventListener, Runnable{
 	private FPSAnimator animator;  // Used to drive display()
 
 	//TODO Most Important
-	private Window3D desktop;
+	private WindowGL desktop;
 
 	private ExecutorService loadExecutor;
 
@@ -58,7 +58,7 @@ public class LuviaCore extends Core implements GLEventListener, Runnable{
 
 		grafico = new Graphics3D(w,h);
 
-		desktop = new Window3D(0,0,w,h);
+		desktop = new WindowGL(0,0,w,h);
 
 		add(desktop);
 		
@@ -130,7 +130,7 @@ public class LuviaCore extends Core implements GLEventListener, Runnable{
 
 		if(changeApp){
 
-			DefaultLoadApplication3D load3D = desktop.getLoadApplication3D();
+			DefaultLoadApplicationGL load3D = desktop.getLoadApplication3D();
 
 			load3D.init(drawable);
 			load3D.load();
@@ -173,7 +173,7 @@ public class LuviaCore extends Core implements GLEventListener, Runnable{
 
 	}
 
-	private Application3D anotherApplication3D;
+	private ApplicationGL anotherApplication3D;
 
 	private boolean changeApp = false;
 
@@ -186,7 +186,7 @@ public class LuviaCore extends Core implements GLEventListener, Runnable{
 
 	}
 
-	public void setMainApplication3D(Application3D application3D) {
+	public void setMainApplication3D(ApplicationGL application3D) {
 		//this.mainApplication = application3D;
 
 		anotherApplication3D = application3D;

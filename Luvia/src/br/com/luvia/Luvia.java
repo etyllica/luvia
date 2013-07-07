@@ -7,9 +7,8 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 
-import br.com.etyllica.core.Core;
 import br.com.etyllica.core.application.Application;
-import br.com.luvia.core.Application3D;
+import br.com.luvia.core.ApplicationGL;
 import br.com.luvia.core.LuviaCore;
 import br.com.luvia.loader.TextureLoader;
 
@@ -102,7 +101,7 @@ public class Luvia extends JFrame {
 
 	}
 
-	public void setMainApplication(Application3D application3D){
+	public void setMainApplication(ApplicationGL application3D){
 
 		luviaCore.setMainApplication3D(application3D);
 

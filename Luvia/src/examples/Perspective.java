@@ -16,13 +16,13 @@ import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyboardEvent;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.video.Grafico;
-import br.com.luvia.core.Application3D;
+import br.com.luvia.core.ApplicationGL;
 import br.com.luvia.loader.TextureLoader;
 import br.com.luvia.util.Camera;
 
 import com.jogamp.opengl.util.texture.Texture;
 
-public class Perspective extends Application3D {
+public class Perspective extends ApplicationGL {
 
 	private Texture floor;
 
