@@ -1,12 +1,8 @@
 package br.com.luvia.core;
 
-import javax.media.opengl.GLAutoDrawable;
-
 import br.com.etyllica.core.application.Application;
-import br.com.etyllica.core.loader.ApplicationLoader;
-import br.com.etyllica.core.video.Grafico;
+import br.com.etyllica.core.video.Graphic;
 import br.com.etyllica.gui.Window;
-import br.com.luvia.loader.TextureLoader;
 
 public class WindowGL extends Window {
 	
@@ -108,7 +104,7 @@ public class WindowGL extends Window {
 	}
 		
 	@Override
-	public void draw(Grafico g) {
+	public void draw(Graphic g) {
 		this.application3D.draw(g);
 	}
 	

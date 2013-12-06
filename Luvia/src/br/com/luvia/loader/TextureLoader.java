@@ -6,12 +6,12 @@ import java.io.IOException;
 import javax.media.opengl.GLContext;
 import javax.media.opengl.GLException;
 
-import br.com.etyllica.core.loader.Loader;
+import br.com.etyllica.core.loader.LoaderImpl;
 
 import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.TextureIO;
 
-public class TextureLoader extends Loader{
+public class TextureLoader extends LoaderImpl{
 
 	private static TextureLoader instance = null;
 	

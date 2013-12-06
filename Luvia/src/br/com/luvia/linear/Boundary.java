@@ -3,7 +3,7 @@ package br.com.luvia.linear;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.etyllica.core.video.Grafico;
+import br.com.etyllica.core.video.Graphic;
 
 /**
  * 
@@ -56,7 +56,7 @@ public class Boundary extends Ponto3D{
 		return result;
 	}
 
-	public void desenha(Grafico g){
+	public void desenha(Graphic g){
 
 		int i;
 		

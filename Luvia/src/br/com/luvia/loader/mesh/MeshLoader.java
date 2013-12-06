@@ -50,7 +50,7 @@ public class MeshLoader {
 	}
 	
 	//private String pasta = "http://www.etyllica.com.br/fox/modelos/";
-	private String pasta = "res/models/";
+	private String pasta = "assets/models/";
 	
 	public Modelo3D loadModel(String caminho){
 		

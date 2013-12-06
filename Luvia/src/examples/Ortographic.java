@@ -11,11 +11,11 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 
-import br.com.etyllica.core.control.mouse.MouseButton;
 import br.com.etyllica.core.event.GUIEvent;
-import br.com.etyllica.core.event.KeyboardEvent;
+import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
-import br.com.etyllica.core.video.Grafico;
+import br.com.etyllica.core.input.mouse.MouseButton;
+import br.com.etyllica.core.video.Graphic;
 import br.com.luvia.core.ApplicationGL;
 import br.com.luvia.loader.TextureLoader;
 import br.com.luvia.util.Camera;
@@ -172,7 +172,7 @@ public class Ortographic extends ApplicationGL {
 	protected boolean click = false;
 
 	@Override
-	public GUIEvent updateKeyboard(KeyboardEvent event) {
+	public GUIEvent updateKeyboard(KeyEvent event) {
 		return GUIEvent.NONE;
 	}
 	
@@ -181,12 +181,12 @@ public class Ortographic extends ApplicationGL {
 		mx = event.getX();
 		my = event.getY();
 
-		if(event.getPressed(MouseButton.MOUSE_BUTTON_LEFT)){
+		if(event.onButtonDown(MouseButton.MOUSE_BUTTON_LEFT)){
 			camera.setZ(camera.getZ()+0.1f);
 			click = true;
 		}
 
-		if(event.getReleased(MouseButton.MOUSE_BUTTON_LEFT)){
+		if(event.onButtonUp(MouseButton.MOUSE_BUTTON_LEFT)){
 			camera.setZ(camera.getZ()-0.1f);
 			click = false;
 		}
@@ -218,7 +218,7 @@ public class Ortographic extends ApplicationGL {
 	
 
 	@Override
-	public void draw(Grafico g) {
+	public void draw(Graphic g) {
 
 		int size = 100;
 
@@ -230,7 +230,7 @@ public class Ortographic extends ApplicationGL {
 
 		//Draw Gui
 		g.setColor(Color.WHITE);
-		g.escreveSombra(20,20, "Scene",Color.BLACK);
+		g.drawShadow(20,20, "Scene",Color.BLACK);
 		//g.escreve(20,20,"Scene");
 		//System.out.println("w = "+w);
 		//System.out.println("h = "+h);

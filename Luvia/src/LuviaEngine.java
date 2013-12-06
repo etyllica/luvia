@@ -22,9 +22,9 @@ public class LuviaEngine extends Luvia{
 	@Override
 	public void startGame(){
 
-		///setMainApplication(new Tutorial1(w, h));
+		setMainApplication(new Tutorial1(w, h));
 		//setMainApplication(new Perspective(w, h));
-		setMainApplication(new Ortographic(w, h));
+		//setMainApplication(new Ortographic(w, h));
 		
 	}
 

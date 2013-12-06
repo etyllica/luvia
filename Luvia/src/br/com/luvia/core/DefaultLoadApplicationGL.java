@@ -4,11 +4,11 @@ import java.awt.Color;
 
 import javax.media.opengl.GLAutoDrawable;
 
-import br.com.etyllica.core.application.LoadApplication;
-import br.com.etyllica.core.event.PointerEvent;
+import br.com.etyllica.core.application.load.LoadApplication;
 import br.com.etyllica.core.event.GUIEvent;
-import br.com.etyllica.core.event.KeyboardEvent;
-import br.com.etyllica.core.video.Grafico;
+import br.com.etyllica.core.event.KeyEvent;
+import br.com.etyllica.core.event.PointerEvent;
+import br.com.etyllica.core.video.Graphic;
 
 /**
  * 
@@ -46,7 +46,7 @@ public class DefaultLoadApplicationGL extends ApplicationGL implements LoadAppli
 	}
 
 	@Override
-	public void draw(Grafico g) {
+	public void draw(Graphic g) {
 
 		g.setColor(Color.BLUE);
 		g.getGraphics().fillRect(x,y,w,h);
@@ -85,7 +85,7 @@ public class DefaultLoadApplicationGL extends ApplicationGL implements LoadAppli
 	}
 
 	@Override
-	public GUIEvent updateKeyboard(KeyboardEvent event) {
+	public GUIEvent updateKeyboard(KeyEvent event) {
 		return GUIEvent.NONE;
 	}
 
@@ -111,6 +111,14 @@ public class DefaultLoadApplicationGL extends ApplicationGL implements LoadAppli
 	@Override
 	public void timeUpdate() {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setText(String phrase, float load) {
+
+		this.phrase = phrase;
+		this.loading = load;
 		
 	}
 

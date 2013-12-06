@@ -5,9 +5,9 @@ import java.awt.Color;
 import javax.media.opengl.GLAutoDrawable;
 
 import br.com.etyllica.core.event.GUIEvent;
-import br.com.etyllica.core.event.KeyboardEvent;
+import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
-import br.com.etyllica.core.video.Grafico;
+import br.com.etyllica.core.video.Graphic;
 import br.com.etyllica.gui.Button;
 import br.com.etyllica.gui.label.TextLabel;
 import br.com.luvia.core.ApplicationGL;
@@ -48,7 +48,7 @@ public class Tutorial1 extends ApplicationGL {
 	}
 
 	@Override
-	public GUIEvent updateKeyboard(KeyboardEvent event) {
+	public GUIEvent updateKeyboard(KeyEvent event) {
 		// TODO Auto-generated method stub
 		return GUIEvent.NONE;
 	}
@@ -66,7 +66,7 @@ public class Tutorial1 extends ApplicationGL {
 	}
 
 	@Override
-	public void draw(Grafico g) {
+	public void draw(Graphic g) {
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, w, h);		
 	}

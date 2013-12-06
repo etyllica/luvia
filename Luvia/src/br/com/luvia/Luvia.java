@@ -12,7 +12,7 @@ import br.com.luvia.core.ApplicationGL;
 import br.com.luvia.core.LuviaCore;
 import br.com.luvia.loader.TextureLoader;
 
-public class Luvia extends JFrame {
+public abstract class Luvia extends JFrame{
 
 	private static final long serialVersionUID = -6060864375960874373L;
 
@@ -28,16 +28,14 @@ public class Luvia extends JFrame {
 
 	// Constructor
 	public Luvia(int w, int h) {
-
-		this.w = w;
-		this.h = h;
+		super();
 
 		setSize(w, h);
 
 		String s = getClass().getResource("").toString();
 
-		luviaCore = new LuviaCore(w,h);
-
+		luviaCore = new LuviaCore(this, w,h);
+		
 		luviaCore.setUrl(s);
 		TextureLoader.getInstance().setUrl(s);
 
@@ -56,16 +54,14 @@ public class Luvia extends JFrame {
 			}
 		});
 
-
 		//addKeyListener(KeyListenerWrapper.init(Core.getInstance().getControl().getTeclado(),true));
 		//addKeyListener(KeyListenerWrapper.init(Core.getInstance().getControl().getTeclado(),false));
 		
-		addKeyListener(luviaCore.getControl().getTeclado());
+		addKeyListener(luviaCore.getControl().getKeyboard());
 
-		setUndecorated(true);
+		setUndecorated(false);
 
 		setTitle("Luvia - HighPerformance");
-
 
 		startGame();
 
@@ -87,12 +83,10 @@ public class Luvia extends JFrame {
 		
 	}
 
-	public void startGame(){
-
-	}
+	public abstract void startGame();
 	
 	public void setMainApplication(Application application3D){
-
+		
 		//TODO Make adaptor
 		
 		System.err.println("Make Adaptor from Application3D to Application2D");
@@ -104,7 +98,7 @@ public class Luvia extends JFrame {
 	public void setMainApplication(ApplicationGL application3D){
 
 		luviaCore.setMainApplication3D(application3D);
-
+		
 	}
 
 }
