@@ -133,5 +133,19 @@ public abstract class ApplicationGL extends Application implements GLEventListen
 		return get3DPointerFromMouse(gl, mx, my, 0);
 
 	}
+	
+	protected double[] get2DPositionFromPoint(GL2 gl, double px, double py, double pz){
+
+		double[] position = new double[3];
+
+		int[] viewport = getViewPort(gl);
+		double[] modelview = getModelView(gl);
+		double[] projection = getProjection(gl);
+
+		glu.gluProject(px, py, pz, modelview, 0, projection, 0, viewport, 0, position, 0);
+
+		return position;
+
+	}
 
 }
