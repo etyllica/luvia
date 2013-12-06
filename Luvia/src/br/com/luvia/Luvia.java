@@ -29,12 +29,15 @@ public abstract class Luvia extends JFrame{
 	// Constructor
 	public Luvia(int w, int h) {
 		super();
+		
+		this.w = w;
+		this.h = h;
 
 		setSize(w, h);
 
 		String s = getClass().getResource("").toString();
 
-		luviaCore = new LuviaCore(this, w,h);
+		luviaCore = new LuviaCore(this,w,h);
 		
 		luviaCore.setUrl(s);
 		TextureLoader.getInstance().setUrl(s);
