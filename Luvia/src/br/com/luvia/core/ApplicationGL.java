@@ -94,8 +94,8 @@ public abstract class ApplicationGL extends Application implements GLEventListen
 		return projection;
 	}
 	
-	protected Point3D get3DPointerFromMouse(GL2 gl, int mx, int my){
-
+	protected Point3D get3DPointerFromMouse(GL2 gl, int mx, int my, float zPlane){
+		
 		final int X = 0;
 		final int Y = 1;
 		final int Z = 2;
@@ -116,7 +116,7 @@ public abstract class ApplicationGL extends Application implements GLEventListen
 		glu.gluUnProject((double) mx, (double) my, 1.0, modelview, 0, projection, 0, viewport, 0, wfcoord, 0);
 		Vector3f v2 = new Vector3f ((float)wfcoord[X], (float)wfcoord[Y], (float)wfcoord[Z] );
 
-		float t = (v1.getY() - 0) / (v1.getY() - v2.getY());  // - 0 Since our Z == 0.. For easier editing later
+		float t = (v1.getY() - zPlane) / (v1.getY() - v2.getY());
 
 		// so here are the desired (x, y) coordinates
 		float fX = v1.getX() + (v2.getX() - v1.getX()) * t;
@@ -125,7 +125,13 @@ public abstract class ApplicationGL extends Application implements GLEventListen
 		Point3D point = new Point3D(fX, 0, fZ);
 		
 		return point;
+		
+	}
+	
+	protected Point3D get3DPointerFromMouse(GL2 gl, int mx, int my){
+		
+		return get3DPointerFromMouse(gl, mx, my, 0);
 
-	}	
+	}
 
 }
