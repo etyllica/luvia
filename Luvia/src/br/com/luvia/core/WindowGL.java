@@ -1,6 +1,7 @@
 package br.com.luvia.core;
 
 import br.com.etyllica.core.application.Application;
+import br.com.etyllica.core.application.Context;
 import br.com.etyllica.core.video.Graphic;
 import br.com.etyllica.gui.Window;
 
@@ -27,7 +28,7 @@ public class WindowGL extends Window {
 	}
 
 	@Override
-	public void setApplication(Application application) {
+	public void setApplication(Context application) {
 		setApplication3D((ApplicationGL)application3D);
 	}
 	
