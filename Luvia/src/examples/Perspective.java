@@ -28,8 +28,8 @@ public class Perspective extends ApplicationGL {
 
 	private Camera camera;
 	
-	protected int mx = 0;
-	protected int my = 0;
+	protected float mx = 0;
+	protected float my = 0;
 
 	public Perspective(int w, int h) {
 		super(w, h);
@@ -154,7 +154,7 @@ public class Perspective extends ApplicationGL {
 
 		GL2 gl = drawable.getGL().getGL2();
 
-		gl.glViewport (x, y, w, h);
+		gl.glViewport((int)x, (int)y, (int)w, (int)h);
 
 		gl.glMatrixMode(GL2.GL_PROJECTION);
 

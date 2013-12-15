@@ -34,9 +34,9 @@ public class DefaultLoadApplicationGL extends ApplicationGL implements LoadAppli
 	private int bxLimite = 400;
 	private int byLimite = 30;
 
-	private int bx = (w/2)-bxLimite/2;
+	private float bx = (w/2)-bxLimite/2;
 
-	private int by = h/3;
+	private float by = h/3;
 
 	public void load(){
 
@@ -49,15 +49,15 @@ public class DefaultLoadApplicationGL extends ApplicationGL implements LoadAppli
 	public void draw(Graphic g) {
 
 		g.setColor(Color.BLUE);
-		g.getGraphics().fillRect(x,y,w,h);
+		g.fillRect(x,y,w,h);
 
 		g.setColor(Color.BLACK);
-		g.getGraphics().drawRect(bx,by,bxLimite,byLimite);
+		g.drawRect(bx,by,bxLimite,byLimite);
 		g.setColor(Color.WHITE);
-		g.getGraphics().drawRect(bx-1,by-1,bxLimite+2,byLimite+2);
+		g.drawRect(bx-1,by-1,bxLimite+2,byLimite+2);
 
 		g.setColor(Color.WHITE);
-		g.escreveX(100, phrase,true);
+		g.writeX(100, phrase,true);
 			
 		//Desenha preenchimento da barra
 		g.fillRect(bx+2, by+2, fill*4, byLimite-3);
@@ -66,7 +66,7 @@ public class DefaultLoadApplicationGL extends ApplicationGL implements LoadAppli
 		g.setColor(Color.WHITE);
 		
 		///System.out.println(percent);
-		g.escreveX(h-85, percent,true);
+		g.writeX(h-85, percent,true);
 
 	}
 

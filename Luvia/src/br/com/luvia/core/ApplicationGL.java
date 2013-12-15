@@ -19,7 +19,12 @@ public abstract class ApplicationGL extends Application implements GLEventListen
 	
 	protected ApplicationGL returnApplication3D = this;
 	
-	public ApplicationGL(int x, int y, int width, int height){
+	public ApplicationGL(float w, float h){
+		super(w,h);
+		glu = new GLU(); // GL Utilities
+	}
+	
+	public ApplicationGL(float x, float y, float width, float height){
 		super(x,y,width,height);
 
 		glu = new GLU(); // GL Utilities
@@ -94,7 +99,7 @@ public abstract class ApplicationGL extends Application implements GLEventListen
 		return projection;
 	}
 	
-	protected Point3D get3DPointerFromMouse(GL2 gl, int mx, int my, float zPlane){
+	protected Point3D get3DPointerFromMouse(GL2 gl, float mx, float my, float zPlane){
 		
 		final int X = 0;
 		final int Y = 1;
@@ -128,7 +133,7 @@ public abstract class ApplicationGL extends Application implements GLEventListen
 		
 	}
 	
-	protected Point3D get3DPointerFromMouse(GL2 gl, int mx, int my){
+	protected Point3D get3DPointerFromMouse(GL2 gl, float mx, float my){
 		
 		return get3DPointerFromMouse(gl, mx, my, 0);
 

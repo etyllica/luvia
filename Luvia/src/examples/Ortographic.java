@@ -28,8 +28,8 @@ public class Ortographic extends ApplicationGL {
 
 	private Camera camera;
 	
-	protected int mx = 0;
-	protected int my = 0;
+	protected float mx = 0;
+	protected float my = 0;
 
 	public Ortographic(int w, int h) {
 		super(w, h);
