@@ -212,7 +212,7 @@ public class GLCore extends EngineCore implements GLEventListener, Runnable{
 
 	public void run() {
 
-		gerencia();
+		update(getTimeNow());
 
 	}
 
