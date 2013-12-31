@@ -1,6 +1,6 @@
 import examples.Ortographic;
 import examples.Perspective;
-import examples.Tutorial1;
+import examples.tutorial1.Tutorial1;
 import br.com.luvia.Luvia;
 
 

@@ -1,4 +1,4 @@
-package examples;
+package examples.tutorial1;
 
 import java.awt.Color;
 
@@ -30,8 +30,7 @@ public class Tutorial1 extends ApplicationGL {
 		Button exit = new Button(w/2-200/2, h/2-60/2, 200, 60);
 		exit.setLabel(new TextLabel("BUTTON"));
 		add(exit);
-		
-		
+				
 		loading = 100;
 	}
 	
@@ -68,7 +67,7 @@ public class Tutorial1 extends ApplicationGL {
 	@Override
 	public void draw(Graphic g) {
 		g.setColor(Color.WHITE);
-		g.fillRect(0, 0, w, h);		
+		g.fillRect(0, 0, w, h);
 	}
 	
 }
