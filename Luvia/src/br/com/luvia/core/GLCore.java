@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import org.jogamp.glg2d.GLGraphics2D;
 
 import sound.MultimediaLoader;
-import br.com.etyllica.core.EngineCore;
+import br.com.etyllica.core.InnerCore;
 import br.com.etyllica.core.loader.FontLoader;
 import br.com.etyllica.core.loader.ImageLoader;
 import br.com.etyllica.core.video.Graphic;
@@ -27,7 +27,7 @@ import br.com.luvia.loader.mesh.MeshLoader;
 import com.jogamp.opengl.util.FPSAnimator;
 
 
-public class GLCore extends EngineCore implements GLEventListener, Runnable{
+public class GLCore extends InnerCore implements GLEventListener, Runnable{
 
 	private static final int UPDATE_DELAY = 10;    // Display refresh frames per second
 

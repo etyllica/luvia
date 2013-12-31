@@ -13,9 +13,9 @@ public class Graphics3D extends Graphic{
 		super(width,heigth);
 	}
 
-	public void setGraphics(Graphics2D graphics){		
+	public void setGraphics(Graphics2D graphics){
 		this.screen = graphics;
-		this.screen.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		this.screen.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);		
 	}
 	
 	public void setGraphics(GLGraphics2D graphics){		

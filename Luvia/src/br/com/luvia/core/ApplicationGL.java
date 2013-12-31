@@ -19,23 +19,17 @@ public abstract class ApplicationGL extends Application implements GLEventListen
 	
 	protected ApplicationGL returnApplication3D = this;
 	
-	public ApplicationGL(float w, float h){
+	public ApplicationGL(int w, int h){
 		super(w,h);
 		glu = new GLU(); // GL Utilities
 	}
 	
-	public ApplicationGL(float x, float y, float width, float height){
+	public ApplicationGL(int x, int y, int width, int height){
 		super(x,y,width,height);
 
 		glu = new GLU(); // GL Utilities
 	}
 	
-	public ApplicationGL(int width, int height){
-		super(width,height);
-
-		glu = new GLU(); // GL Utilities
-	}
-
 	public abstract void timeUpdate();
 
 	public void preDisplay(Graphics2D g) {
