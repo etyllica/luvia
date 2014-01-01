@@ -1,20 +1,22 @@
 import examples.Ortographic;
 import examples.Perspective;
 import examples.tutorial1.Tutorial1;
+import br.com.luvia.Application3D;
 import br.com.luvia.Luvia;
 
 
 public class LuviaEngine extends Luvia{
 
-	public LuviaEngine(int w, int h) {
-		super(w, h);
+	public LuviaEngine() {
+		//super(640,480);
+		super(1024,576);
 	}
 
 	// Main program
 	public static void main(String[] args) {
 
-		//LuviaEngine engine = new LuviaEngine(640,480);
-		LuviaEngine engine = new LuviaEngine(1024,576);
+		LuviaEngine engine = new LuviaEngine();
+		
 		engine.init();
 
 	}

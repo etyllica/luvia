@@ -109,7 +109,7 @@ public class DefaultLoadApplicationGL extends ApplicationGL implements LoadAppli
 	}
 
 	@Override
-	public void timeUpdate() {
+	public void timeUpdate(long now) {
 		// TODO Auto-generated method stub
 		
 	}

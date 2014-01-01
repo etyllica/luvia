@@ -39,7 +39,8 @@ public abstract class Luvia extends JFrame{
 
 		luviaCore = new LuviaCore(this,w,h);
 		
-		luviaCore.setUrl(s);
+		luviaCore.setUrl(s);		
+		
 		TextureLoader.getInstance().setUrl(s);
 
 		addWindowListener(new WindowAdapter() {
@@ -64,7 +65,7 @@ public abstract class Luvia extends JFrame{
 
 		setUndecorated(false);
 
-		setTitle("Luvia - HighPerformance");
+		setTitle("Luvia - Window");
 
 		startGame();
 

@@ -30,7 +30,11 @@ public abstract class ApplicationGL extends Application implements GLEventListen
 		glu = new GLU(); // GL Utilities
 	}
 	
-	public abstract void timeUpdate();
+	@Override
+	public void timeUpdate(long now) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	public void preDisplay(Graphics2D g) {
 		

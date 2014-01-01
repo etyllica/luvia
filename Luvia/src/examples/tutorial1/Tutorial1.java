@@ -63,12 +63,6 @@ public class Tutorial1 extends ApplicationGL {
 		// TODO Auto-generated method stub
 		return GUIEvent.NONE;
 	}
-
-	@Override
-	public void timeUpdate() {
-		// TODO Auto-generated method stub
-		
-	}
 		
 	public void changeColor(){
 		this.color = Color.BLACK;

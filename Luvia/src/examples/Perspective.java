@@ -144,12 +144,6 @@ public class Perspective extends ApplicationGL {
 	}
 
 	@Override
-	public void timeUpdate() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
 
 		GL2 gl = drawable.getGL().getGL2();

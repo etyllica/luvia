@@ -29,7 +29,7 @@ import com.jogamp.opengl.util.FPSAnimator;
 
 public class GLCore extends InnerCore implements GLEventListener, Runnable{
 
-	private static final int UPDATE_DELAY = 10;    // Display refresh frames per second
+	private static final int UPDATE_DELAY = 20;    // Display refresh frames per second
 
 	private static final int REFRESH_FPS = 60;    // Display refresh frames per second
 	
@@ -37,7 +37,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable{
 
 	private GLGraphics2D glGraphics;
 
-	private Graphics3D grafico;
+	private Graphics3D graphic;
 
 	private String url;
 
@@ -57,7 +57,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable{
 
 		glGraphics = new GLGraphics2D();
 
-		grafico = new Graphics3D(w,h);
+		graphic = new Graphics3D(w,h);
 
 		activeWindowGL = new WindowGL(0,0,w,h);
 				
@@ -166,9 +166,9 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable{
 			glGraphics.setCanvas(drawable);
 			glGraphics.setColor(Color.BLACK);
 			glGraphics.setFont(new Font("ARIAL", Font.PLAIN, 18));
-			grafico.setGraphics(glGraphics);
+			graphic.setGraphics(glGraphics);
 
-			draw((Graphic)grafico);
+			draw((Graphic)graphic);
 		}
 
 	}
@@ -183,7 +183,6 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable{
 		System.out.println("LuviaCore.changeApplication()");
 
 		setMainApplication3D(activeWindowGL.getApplication3D().getReturnApplication3D());
-		
 		
 	}
 
@@ -211,7 +210,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable{
 	}
 
 	public void run() {
-
+		
 		update(getTimeNow());
 
 	}
