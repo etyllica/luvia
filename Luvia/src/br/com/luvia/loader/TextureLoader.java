@@ -1,15 +1,18 @@
 package br.com.luvia.loader;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.media.opengl.GLContext;
 import javax.media.opengl.GLException;
+import javax.media.opengl.GLProfile;
 
 import br.com.etyllica.core.loader.LoaderImpl;
 
 import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.TextureIO;
+import com.jogamp.opengl.util.texture.awt.AWTTextureIO;
 
 public class TextureLoader extends LoaderImpl{
 
@@ -58,6 +61,12 @@ public class TextureLoader extends LoaderImpl{
 	public Texture loadTexture(String textureName){
 		
 		return loadTexture(getPath()+folder, textureName);
+
+	}
+	
+	public Texture loadTexture(BufferedImage buffer){
+		
+		return AWTTextureIO.newTexture(GLProfile.getGL2GL3(), buffer, false);
 
 	}
 
