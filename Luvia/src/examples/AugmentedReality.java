@@ -31,10 +31,15 @@ public class AugmentedReality extends ApplicationGL {
 	protected float mx = 0;
 	protected float my = 0;
 
+	protected boolean click = false;
+	
+	private double angleX = 0;
+	
+	private double angleY = 0;
+
 	public AugmentedReality(int w, int h) {
 		super(w, h);
 	}
-
 
 	@Override
 	public void init(GLAutoDrawable arg0) {
@@ -164,21 +169,28 @@ public class AugmentedReality extends ApplicationGL {
 
 	}	
 
-	protected boolean click = false;
-	
-	private double rotation = 0;
-
 	@Override
 	public GUIEvent updateKeyboard(KeyEvent event) {
 		
 		if(event.isKeyDown(KeyEvent.TSK_UP_ARROW)){
 			
-			rotation += 5;
+			angleX += 5;
 			
 		}
 		else if(event.isKeyDown(KeyEvent.TSK_DOWN_ARROW)){
 			
-			rotation -= 5;
+			angleX -= 5;
+			
+		}
+		
+		if(event.isKeyDown(KeyEvent.TSK_LEFT_ARROW)){
+			
+			angleY += 5;
+			
+		}
+		else if(event.isKeyDown(KeyEvent.TSK_RIGHT_ARROW)){
+			
+			angleY -= 5;
 			
 		}
 		
@@ -215,7 +227,8 @@ public class AugmentedReality extends ApplicationGL {
 		//Transform by Camera
 		lookCamera(drawable.getGL().getGL2());
 		
-		gl.glRotated(rotation, 1, 0, 0);
+		gl.glRotated(angleX, 1, 0, 0);
+		gl.glRotated(angleY, 0, 1, 0);
 
 		//Draw Scene
 		//drawAxis(gl);
@@ -243,7 +256,9 @@ public class AugmentedReality extends ApplicationGL {
 		g.setColor(Color.WHITE);
 		g.drawShadow(20,20, "Scene",Color.BLACK);
 		
-		g.drawShadow(20,40, "Angle: "+(rotation-5),Color.BLACK);
+		g.drawShadow(20,40, "AngleX: "+(angleX-5),Color.BLACK);
+		
+		g.drawShadow(20,60, "AngleY: "+(angleY),Color.BLACK);
 		
 		//g.escreve(20,20,"Scene");
 		//System.out.println("w = "+w);
