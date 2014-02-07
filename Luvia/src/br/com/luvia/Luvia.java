@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 
-import br.com.etyllica.core.application.Application;
+import br.com.etyllica.context.Application;
 import br.com.luvia.core.ApplicationGL;
 import br.com.luvia.core.LuviaCore;
 import br.com.luvia.loader.TextureLoader;

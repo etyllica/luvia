@@ -1,7 +1,7 @@
 package br.com.luvia.core;
 
-import br.com.etyllica.core.application.Application;
-import br.com.etyllica.core.application.Context;
+import br.com.etyllica.context.Application;
+import br.com.etyllica.context.Context;
 import br.com.etyllica.core.video.Graphic;
 import br.com.etyllica.gui.Window;
 

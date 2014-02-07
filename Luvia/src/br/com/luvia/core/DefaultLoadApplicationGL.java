@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import javax.media.opengl.GLAutoDrawable;
 
-import br.com.etyllica.core.application.load.LoadApplication;
+import br.com.etyllica.context.load.LoadApplication;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;

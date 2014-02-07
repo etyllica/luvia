@@ -10,7 +10,7 @@ import javax.media.opengl.glu.GLU;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import br.com.etyllica.core.application.Application;
+import br.com.etyllica.context.Application;
 import br.com.luvia.linear.Point3D;
 
 public abstract class ApplicationGL extends Application implements GLEventListener{
