@@ -38,7 +38,7 @@ public class Perspective extends ApplicationGL {
 
 	@Override
 	public void init(GLAutoDrawable arg0) {
-		floor = TextureLoader.getInstance().loadTexture("/mark.png");
+		floor = TextureLoader.getInstance().loadTexture("/mark.png");		
 	}
 	
 	@Override

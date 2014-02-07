@@ -5,7 +5,10 @@ import static javax.media.opengl.GL.GL_TEXTURE_2D;
 import static javax.media.opengl.GL.GL_TEXTURE_MAG_FILTER;
 import static javax.media.opengl.GL.GL_TEXTURE_MIN_FILTER;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
@@ -24,7 +27,7 @@ import com.jogamp.opengl.util.texture.Texture;
 
 public class AugmentedReality extends ApplicationGL {
 
-	private Texture floor;
+	private Texture marker;
 
 	private Camera camera;
 	
@@ -43,7 +46,23 @@ public class AugmentedReality extends ApplicationGL {
 
 	@Override
 	public void init(GLAutoDrawable arg0) {
-		floor = TextureLoader.getInstance().loadTexture("/mark.png");
+		
+		//marker = TextureLoader.getInstance().loadTexture("/mark.png");
+		
+		BufferedImage image = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g = image.createGraphics();
+		
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, 200, 200);
+		
+		g.setColor(Color.RED);
+		g.fillOval(50, 50, 100, 100);
+		
+		g.setColor(Color.BLACK);
+		g.setStroke(new BasicStroke(5f));
+		g.drawRect(5, 5, 190, 190);
+		
+		marker = TextureLoader.getInstance().loadTexture(image);
 	}
 	
 	@Override
@@ -81,12 +100,12 @@ public class AugmentedReality extends ApplicationGL {
 
 		double tileSize = 5;
 
-		floor.enable(gl);
-		floor.bind(gl);
+		marker.enable(gl);
+		marker.bind(gl);
 
 		drawTile(gl, -.5, -.5, tileSize);
 		
-		floor.disable(gl);
+		marker.disable(gl);
 	}
 
 	private void drawTile(GL2 gl, double x, double y, double tileSize){
