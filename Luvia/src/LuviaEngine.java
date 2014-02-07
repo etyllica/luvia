@@ -1,3 +1,4 @@
+import examples.AugmentedReality;
 import examples.Ortographic;
 import examples.Perspective;
 import examples.tutorial1.Tutorial1;
@@ -25,8 +26,9 @@ public class LuviaEngine extends Luvia{
 	public void startGame(){
 
 		//setMainApplication(new Tutorial1(w, h));
-		setMainApplication(new Perspective(w, h));
+		//setMainApplication(new Perspective(w, h));
 		//setMainApplication(new Ortographic(w, h));
+		setMainApplication(new AugmentedReality(w, h));
 		
 	}
 
