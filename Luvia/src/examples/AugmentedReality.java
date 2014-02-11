@@ -28,7 +28,7 @@ import com.jogamp.opengl.util.texture.Texture;
 public class AugmentedReality extends ApplicationGL {
 
 	private Texture marker;
-
+	
 	private Camera camera;
 	
 	protected float mx = 0;
@@ -105,16 +105,17 @@ public class AugmentedReality extends ApplicationGL {
 
 		double tileSize = 5;
 
-		marker.enable(gl);
-		marker.bind(gl);
-
-		drawTile(gl, -.5, -.5, tileSize);
+		drawTile(gl, -.5, -.5, tileSize, marker);
 		
-		marker.disable(gl);
+		drawTile(gl, -2.5, -.5, tileSize, marker);
+		
 	}
 
-	private void drawTile(GL2 gl, double x, double y, double tileSize){
+	private void drawTile(GL2 gl, double x, double y, double tileSize, Texture texture){
 
+		texture.enable(gl);
+		texture.bind(gl);
+		
 		gl.glBegin(GL2.GL_QUADS);
 
 		//(0,0)
@@ -134,6 +135,8 @@ public class AugmentedReality extends ApplicationGL {
 		gl.glVertex3d(x*tileSize, 0, y*tileSize+tileSize);
 
 		gl.glEnd();
+		
+		texture.disable(gl);
 	}
 
 	private void drawAxis(GL2 gl){
