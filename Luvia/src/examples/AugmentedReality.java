@@ -39,6 +39,8 @@ public class AugmentedReality extends ApplicationGL {
 	private double angleX = 0;
 	
 	private double angleY = 0;
+	
+	private double angleZ = 0;
 
 	public AugmentedReality(int w, int h) {
 		super(w, h);
@@ -59,8 +61,11 @@ public class AugmentedReality extends ApplicationGL {
 		g.fillOval(50, 50, 100, 100);
 		
 		g.setColor(Color.BLACK);
-		g.setStroke(new BasicStroke(5f));
-		g.drawRect(5, 5, 190, 190);
+		
+		int stroke = 8;
+		
+		g.setStroke(new BasicStroke(stroke));
+		g.drawRect(stroke, stroke, 200-stroke*2, 200-stroke*2);
 		
 		marker = TextureLoader.getInstance().loadTexture(image);
 	}
@@ -213,6 +218,17 @@ public class AugmentedReality extends ApplicationGL {
 			
 		}
 		
+		if(event.isKeyDown(KeyEvent.TSK_VIRGULA)){
+			
+			angleZ += 5;
+			
+		}
+		else if(event.isKeyDown(KeyEvent.TSK_PONTO)){
+			
+			angleZ -= 5;
+			
+		}
+		
 		return GUIEvent.NONE;
 	}
 	
@@ -248,6 +264,7 @@ public class AugmentedReality extends ApplicationGL {
 		
 		gl.glRotated(angleX, 1, 0, 0);
 		gl.glRotated(angleY, 0, 1, 0);
+		gl.glRotated(angleZ, 0, 0, 1);
 
 		//Draw Scene
 		//drawAxis(gl);
@@ -278,6 +295,8 @@ public class AugmentedReality extends ApplicationGL {
 		g.drawShadow(20,40, "AngleX: "+(angleX-5),Color.BLACK);
 		
 		g.drawShadow(20,60, "AngleY: "+(angleY),Color.BLACK);
+		
+		g.drawShadow(20,80, "AngleZ: "+(angleZ),Color.BLACK);
 		
 		//g.escreve(20,20,"Scene");
 		//System.out.println("w = "+w);

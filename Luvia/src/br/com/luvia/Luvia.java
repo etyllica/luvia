@@ -67,7 +67,7 @@ public abstract class Luvia extends JFrame{
 
 		setTitle("Luvia - Window");
 
-		startGame();
+		setMainApplication(startApplication());
 
 		setVisible(true);
 		
@@ -87,9 +87,9 @@ public abstract class Luvia extends JFrame{
 		
 	}
 
-	public abstract void startGame();
+	public abstract ApplicationGL startApplication();
 	
-	public void setMainApplication(Application application3D){
+	private void setMainApplication(Application application3D){
 		
 		//TODO Make adaptor
 		
@@ -99,7 +99,7 @@ public abstract class Luvia extends JFrame{
 
 	}
 
-	public void setMainApplication(ApplicationGL application3D){
+	private void setMainApplication(ApplicationGL application3D){
 
 		luviaCore.setMainApplication3D(application3D);
 		
