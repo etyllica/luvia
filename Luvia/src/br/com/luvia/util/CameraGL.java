@@ -1,8 +1,5 @@
 package br.com.luvia.util;
 
-import javax.media.opengl.GL2;
-import javax.media.opengl.glu.GLU;
-
 import br.com.luvia.linear.Ponto3D;
 
 /**
@@ -12,25 +9,25 @@ import br.com.luvia.linear.Ponto3D;
  *
  */
 
-public class Camera extends Ponto3D{
+public class CameraGL extends Ponto3D{
 
-	private Ponto3D alvo;
+	private Ponto3D target;
 	
-	public Camera(double x, double y, double z){
+	public CameraGL(double x, double y, double z){
 		super(x, y, z);
-		alvo = new Ponto3D(0,0,0);
+		target = new Ponto3D(0,0,0);
 	}
 	
 	public Ponto3D getTarget(){
-		return alvo;
+		return target;
 	}
 	
 	public void setTarget(Ponto3D target){
-		this.alvo = target;
+		this.target = target;
 	}
 	
 	public void setTarget(double x, double y, double z){
-		alvo.setCoordenadas(x, y, z);
+		target.setCoordenadas(x, y, z);
 	}
 	
 	

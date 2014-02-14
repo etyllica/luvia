@@ -21,7 +21,7 @@ import br.com.etyllica.core.input.mouse.MouseButton;
 import br.com.etyllica.core.video.Graphic;
 import br.com.luvia.core.ApplicationGL;
 import br.com.luvia.loader.TextureLoader;
-import br.com.luvia.util.Camera;
+import br.com.luvia.util.CameraGL;
 
 import com.jogamp.opengl.util.texture.Texture;
 
@@ -29,7 +29,7 @@ public class AugmentedReality extends ApplicationGL {
 
 	private Texture marker;
 	
-	private Camera camera;
+	private CameraGL camera;
 	
 	protected float mx = 0;
 	protected float my = 0;
@@ -73,7 +73,7 @@ public class AugmentedReality extends ApplicationGL {
 	@Override
 	public void load() {
 		
-		camera = new Camera(0,15,1);
+		camera = new CameraGL(0,15,1);
 		
 		loading = 100;
 	}

@@ -18,7 +18,7 @@ import br.com.etyllica.core.input.mouse.MouseButton;
 import br.com.etyllica.core.video.Graphic;
 import br.com.luvia.core.ApplicationGL;
 import br.com.luvia.loader.TextureLoader;
-import br.com.luvia.util.Camera;
+import br.com.luvia.util.CameraGL;
 
 import com.jogamp.opengl.util.texture.Texture;
 
@@ -26,7 +26,7 @@ public class Perspective extends ApplicationGL {
 
 	private Texture floor;
 
-	private Camera camera;
+	private CameraGL camera;
 	
 	protected float mx = 0;
 	protected float my = 0;
@@ -44,7 +44,7 @@ public class Perspective extends ApplicationGL {
 	@Override
 	public void load() {
 		
-		camera = new Camera(0,15,-10);
+		camera = new CameraGL(0,15,-10);
 		
 		loading = 100;
 	}
