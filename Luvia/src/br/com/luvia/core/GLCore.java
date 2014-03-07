@@ -31,7 +31,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable{
 
 	private static final int UPDATE_DELAY = 20;    // Display refresh frames per second
 
-	private static final int REFRESH_FPS = 60;    // Display refresh frames per second
+	private static final int REFRESH_FPS = 20;    // Display refresh frames per second
 	
 	private JPanel panel = new JPanel();
 

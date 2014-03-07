@@ -47,7 +47,7 @@ public class AugmentedReality extends ApplicationGL {
 	}
 
 	@Override
-	public void init(GLAutoDrawable arg0) {
+	public void init(GLAutoDrawable drawable) {
 		
 		//marker = TextureLoader.getInstance().loadTexture("/mark.png");
 		
