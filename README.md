@@ -1,4 +1,4 @@
 Luvia
 =====
 
-A JOGL fork from etyllica.
+An etyllica fork using JOGL and glg2d for GPU rendering.
