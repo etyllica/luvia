@@ -14,29 +14,29 @@ import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.TextureIO;
 import com.jogamp.opengl.util.texture.awt.AWTTextureIO;
 
-public class TextureLoader extends LoaderImpl{
+public class TextureLoader extends LoaderImpl {
 
 	private static TextureLoader instance = null;
 	
 	private GLContext context; 
 	
-	private TextureLoader(){
+	private TextureLoader() {
 		super();
 	
-		folder = "res/images/";
+		folder = "assets/images/";
 	}
 	
 	public static TextureLoader getInstance() {
-		if(instance==null){
+		if(instance==null) {
 			instance = new TextureLoader();
 		}
 
 		return instance;
 	}
 	
-	public Texture loadTexture(String fullPath, String textureName){
+	public Texture loadTexture(String fullPath, String textureName) {
 		
-		if(GLContext.getCurrent()==null){
+		if(GLContext.getCurrent()==null) {
 			
 			System.err.println("Force Current");
 			
@@ -58,13 +58,13 @@ public class TextureLoader extends LoaderImpl{
 		return null;
 	}
 	
-	public Texture loadTexture(String textureName){
+	public Texture loadTexture(String textureName) {
 		
 		return loadTexture(getPath()+folder, textureName);
 
 	}
 	
-	public Texture loadTexture(BufferedImage buffer){
+	public Texture loadTexture(BufferedImage buffer) {
 		
 		return AWTTextureIO.newTexture(GLProfile.getGL2GL3(), buffer, false);
 
