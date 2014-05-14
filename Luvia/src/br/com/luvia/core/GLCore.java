@@ -17,9 +17,9 @@ import org.jogamp.glg2d.GLGraphics2D;
 
 import sound.MultimediaLoader;
 import br.com.etyllica.core.InnerCore;
+import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.loader.FontLoader;
 import br.com.etyllica.core.loader.image.ImageLoader;
-import br.com.etyllica.core.video.Graphic;
 import br.com.luvia.core.video.Graphics3D;
 import br.com.luvia.loader.TextureLoader;
 import br.com.luvia.loader.mesh.MeshLoader;

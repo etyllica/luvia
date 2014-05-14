@@ -5,9 +5,9 @@ import java.awt.RenderingHints;
 
 import org.jogamp.glg2d.GLGraphics2D;
 
-import br.com.etyllica.core.video.Graphic;
+import br.com.etyllica.core.graphics.Graphic;
 
-public class Graphics3D extends Graphic{
+public class Graphics3D extends Graphic {
 
 	public Graphics3D(int width, int heigth){
 		super(width,heigth);
