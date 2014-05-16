@@ -1,8 +1,6 @@
 package br.com.luvia.util;
 
-import javax.media.opengl.GL2;
-import javax.media.opengl.glu.GLU;
-
+import br.com.luvia.linear.Point3D;
 import br.com.luvia.linear.Ponto3D;
 
 /**
@@ -12,7 +10,7 @@ import br.com.luvia.linear.Ponto3D;
  *
  */
 
-public class CameraGL extends Ponto3D {
+public class CameraGL extends Point3D {
 	
 	private Ponto3D target;
 	
