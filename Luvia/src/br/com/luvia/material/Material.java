@@ -3,7 +3,6 @@ package br.com.luvia.material;
 import org.lwjgl.util.vector.Vector3f;
 
 import com.jogamp.opengl.util.texture.Texture;
-import com.jogamp.opengl.util.texture.TextureIO;
 
 /**
  * 
@@ -19,26 +18,26 @@ public class Material {
 	//Ambient Color
 	private Vector3f Ka;
 	private String map_Ka = "";
-	private Texture texture_Ka;
+	private Texture texture_Ka = null;
 	
 	//Diffuse Color
 	private Vector3f Kd;
 	private String map_Kd = "";
-	private Texture texture_Kd;
+	private Texture texture_Kd = null;
 	
 	//Specular Color
 	private Vector3f Ks;
 	private String map_Ks = "";
-	private Texture texture_Ks;
+	private Texture texture_Ks = null;
 	
 	//Specular Highlight
 	private float Ns = 0f;
 	private String map_Ns = "";
-	private Texture texture_Ns;
+	private Texture texture_Ns = null;
 	
 	private float d;
 	private String map_d = "";
-	private Texture texture_d;
+	private Texture texture_d = null;
 	
 	
 	private int illum = 0;

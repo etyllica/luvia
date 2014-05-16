@@ -7,7 +7,7 @@ import br.com.luvia.Luvia;
 import br.com.luvia.core.ApplicationGL;
 
 
-public class LuviaEngine extends Luvia{
+public class LuviaEngine extends Luvia {
 
 	public LuviaEngine() {
 		//super(640,480);

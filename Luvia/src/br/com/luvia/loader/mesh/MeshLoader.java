@@ -1,11 +1,11 @@
 package br.com.luvia.loader.mesh;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import br.com.etyllica.core.loader.LoaderImpl;
 import br.com.luvia.linear.Mesh;
 
 /**
@@ -15,46 +15,27 @@ import br.com.luvia.linear.Mesh;
  *
  */
 
-public class MeshLoader {
+public class MeshLoader extends LoaderImpl {
 
-	private static MeshLoader instancia = null;
-	private URL url;
-
-	private MeshLoader(){
-		super();
-	}
+	private static MeshLoader instance = null;
 
 	public static MeshLoader getInstance() {
-		if(instancia==null){
-			instancia = new MeshLoader();
+		if(instance==null){
+			instance = new MeshLoader();
 		}
 
-		return instancia;
-	}
-
-	public void setUrl(String s){
-		try {
-			url = new URL(s);
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-	} 
-
-	public URL getUrl(){
-		return url;
+		return instance;
 	}
 	
-	public File getFile(String path){
+	private MeshLoader() {
+		super();
 		
-		return new File(url.toString().substring(5)+path);
+		folder = "assets/models/";
 	}
 	
-	//private String pasta = "http://www.etyllica.com.br/fox/modelos/";
-	private String pasta = "assets/models/";
-	
-	public Mesh loadModel(String caminho){
+	public Mesh loadModel(String path) {
 		
-		String diretorio = pasta+caminho;
+		String diretorio = folder+path;
 		
 		URL dir = null;
 		try {
@@ -62,7 +43,6 @@ public class MeshLoader {
 		} catch (MalformedURLException e1) {
 			e1.printStackTrace();
 		}
-
 		
 		try {
 			return OBJLoader.loadModel(dir);
@@ -74,14 +54,6 @@ public class MeshLoader {
 		
 		return null;
 		
-	}
-
-	public String getPasta() {
-		return pasta;
-	}
-
-	public void setPasta(String pasta) {
-		this.pasta = pasta;
 	}
 	
 }

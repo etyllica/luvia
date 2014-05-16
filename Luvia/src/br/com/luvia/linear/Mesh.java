@@ -33,7 +33,7 @@ import com.jogamp.opengl.util.texture.Texture;
  *
  */
 
-public class Mesh extends Ponto3D implements GL2Drawable {
+public class Mesh extends Point3D implements GL2Drawable {
 
 	private Set<Integer> vertexSelection = new HashSet<Integer>();
 
@@ -124,11 +124,11 @@ public class Mesh extends Ponto3D implements GL2Drawable {
 
 	@Override
 	public void draw(GL2 gl) {
-		
+
 		gl.glEnable(GL.GL_DEPTH_TEST);
-		
+
 		gl.glPushMatrix();
-		
+
 		gl.glTranslated(x, y, z);
 		gl.glRotated(angleY, 0, 1, 0);
 
@@ -138,6 +138,8 @@ public class Mesh extends Ponto3D implements GL2Drawable {
 
 		for(Group group: groups) {
 
+			drawTexture = false;
+
 			if(group.getMaterial()!=null) {
 
 				texture = group.getMaterial().getTexture_d();
@@ -146,27 +148,26 @@ public class Mesh extends Ponto3D implements GL2Drawable {
 					texture = group.getMaterial().getTexture_Kd();
 				}
 
-				if(texture==null) {
-					//System.err.println("textura não encontrada");
-					drawTexture = false;
-					gl.glColor3d((double)color.getRed()/255, (double)color.getGreen()/255, (double)color.getBlue()/255);
-				}
+				if(texture!=null) {
+					
+					drawTexture = true;
+				}//else {//System.err.println("textura não encontrada");}
 
 			}
-			//map = "";
+
 			if(drawTexture) {
 
-				if(texture!=null) {
+				gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+				// Use linear filter for texture if image is smaller than the original texture
+				gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-					gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-					// Use linear filter for texture if image is smaller than the original texture
-					gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-					texture.enable(gl);
-					texture.bind(gl);
-
-				}
-
+				texture.enable(gl);
+				texture.bind(gl);
+				
+			} else {
+				
+				gl.glColor3d((double)color.getRed()/255, (double)color.getGreen()/255, (double)color.getBlue()/255);
+				
 			}
 
 			for(Face face: group.getFaces()) {
@@ -194,7 +195,7 @@ public class Mesh extends Ponto3D implements GL2Drawable {
 				gl.glEnd();
 
 			}
-			
+
 			//TODO make it better
 			if(texture!=null) {
 
@@ -203,7 +204,7 @@ public class Mesh extends Ponto3D implements GL2Drawable {
 					texture.disable(gl);
 
 				}
-				
+
 				texture = null;
 
 			}
@@ -227,13 +228,13 @@ public class Mesh extends Ponto3D implements GL2Drawable {
 			//drawCube(gl, vsize);
 			gl.glPopMatrix();
 		}*/
-		
-		
-		
+
+
+
 		gl.glPopMatrix();
 		gl.glDisable(GL.GL_DEPTH_TEST);
 
-		
+
 
 	}
 

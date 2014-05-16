@@ -11,6 +11,7 @@ import br.com.etyllica.context.Application;
 import br.com.luvia.core.ApplicationGL;
 import br.com.luvia.core.LuviaCore;
 import br.com.luvia.loader.TextureLoader;
+import br.com.luvia.loader.mesh.MeshLoader;
 
 public abstract class Luvia extends JFrame{
 
@@ -42,6 +43,8 @@ public abstract class Luvia extends JFrame{
 		luviaCore.setUrl(s);		
 		
 		TextureLoader.getInstance().setUrl(s);
+		
+		MeshLoader.getInstance().setUrl(s);
 
 		addWindowListener(new WindowAdapter() {
 			@Override 
