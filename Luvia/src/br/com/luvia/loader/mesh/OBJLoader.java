@@ -11,7 +11,7 @@ import java.util.List;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
-import br.com.luvia.linear.Modelo3D;
+import br.com.luvia.linear.Mesh;
 import br.com.luvia.loader.mesh.vbo.Face;
 import br.com.luvia.loader.mesh.vbo.Group;
 import br.com.luvia.material.Material;
@@ -89,7 +89,7 @@ public class OBJLoader {
         return new int[]{vboVertexHandle, vboNormalHandle};
     }*/
 
-    public static Modelo3D loadModel(URL url) throws FileNotFoundException, IOException {
+    public static Mesh loadModel(URL url) throws FileNotFoundException, IOException {
     	
     	String fpath = url.getPath();
     	String separator = "/";
@@ -102,7 +102,7 @@ public class OBJLoader {
     	
     	
         BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-        Modelo3D m = new Modelo3D();
+        Mesh m = new Mesh();
                 
         List<Group> groups = new ArrayList<Group>();
         

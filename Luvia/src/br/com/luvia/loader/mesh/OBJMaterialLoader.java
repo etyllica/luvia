@@ -9,8 +9,6 @@ import java.util.List;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import com.jogamp.opengl.util.texture.TextureIO;
-
 import br.com.luvia.loader.TextureLoader;
 import br.com.luvia.material.Material;
 
@@ -37,12 +35,13 @@ public class OBJMaterialLoader {
 		
 		while ((line = reader.readLine()) != null) {
 		
-			//line = line.toLowerCase();
 			line = line.trim();
 			
 			String[] splitLine = line.split(" ");
 			
-			if(line.startsWith("newmtl ")) {
+			String prefix = splitLine[0];
+			
+			if("newmtl".equalsIgnoreCase(prefix)) {
 				
 				if(mat!=null){
 					materials.add(mat);
@@ -52,52 +51,61 @@ public class OBJMaterialLoader {
 				mat.setName(splitLine[1]);
 								
 			}
-			else if (line.startsWith("ka ")) {
-                float x = Float.valueOf(splitLine[1]);
+			else if ("ka".equalsIgnoreCase(prefix)) {
+                
+				float x = Float.valueOf(splitLine[1]);
                 float y = Float.valueOf(splitLine[2]);
                 float z = Float.valueOf(splitLine[3]);
+                
                 mat.setKa(new Vector3f(x, y, z));
-            }else if (line.startsWith("kd ")) {
-                float x = Float.valueOf(splitLine[1]);
+                
+            }else if ("kd".equalsIgnoreCase(prefix)) {
+                
+            	float x = Float.valueOf(splitLine[1]);
                 float y = Float.valueOf(splitLine[2]);
                 float z = Float.valueOf(splitLine[3]);
+                
                 mat.setKd(new Vector3f(x, y, z));
-            }else if (line.startsWith("ks ")) {
+                
+            }else if ("ks".equalsIgnoreCase(prefix)) {
+            	
                 float x = Float.valueOf(splitLine[1]);
                 float y = Float.valueOf(splitLine[2]);
                 float z = Float.valueOf(splitLine[3]);
                 mat.setKs(new Vector3f(x, y, z));
-            }else if (line.startsWith("illum ")) {
-                int illum = Integer.valueOf(splitLine[1]);
+                
+            }else if ("illum".equalsIgnoreCase(prefix)) {
+                
+            	int illum = Integer.valueOf(splitLine[1]);
+                
                 mat.setIllum(illum);
                 
-            }else if (line.startsWith("map_d ")) {
+            }else if ("map_d".equalsIgnoreCase(prefix)) {
             	
             	mat.setMap_d(folder+splitLine[1]);
             	
-            	System.out.println("Load: "+folder+splitLine[1]);
+            	System.out.println("Load map_d: "+folder+splitLine[1]);
             	
             	mat.setTexture_d(TextureLoader.getInstance().loadTexture(folder,splitLine[1]));
             	
-            }else if (line.startsWith("map_Kd ")) {
+            }else if ("map_kd".equalsIgnoreCase(prefix)) {
             	
             	mat.setMap_Kd(folder+splitLine[1]);
             	
-            	System.out.println("Load: "+folder+splitLine[1]);
+            	System.out.println("Load map_kd: "+folder+splitLine[1]);
             	
             	mat.setTexture_Kd(TextureLoader.getInstance().loadTexture(folder,splitLine[1]));
             	
-            }else if (line.startsWith("map_Ka ")) {
+            }else if ("map_ka".equalsIgnoreCase(prefix)) {
             	
             	mat.setMap_Ka(folder+splitLine[1]);
             	
-            	System.out.println("Load: "+folder+splitLine[1]);
+            	System.out.println("Load map_ka: "+folder+splitLine[1]);
             	
             	mat.setTexture_Ka(TextureLoader.getInstance().loadTexture(folder,splitLine[1]));
             	
             }
-			
-			
+						
 		}
 
 		reader.close();

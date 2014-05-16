@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import br.com.luvia.linear.Modelo3D;
+import br.com.luvia.linear.Mesh;
 
 /**
  * 
@@ -52,7 +52,7 @@ public class MeshLoader {
 	//private String pasta = "http://www.etyllica.com.br/fox/modelos/";
 	private String pasta = "assets/models/";
 	
-	public Modelo3D loadModel(String caminho){
+	public Mesh loadModel(String caminho){
 		
 		String diretorio = pasta+caminho;
 		
