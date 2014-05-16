@@ -27,6 +27,7 @@ public class TextureLoader extends LoaderImpl {
 	}
 	
 	public static TextureLoader getInstance() {
+		
 		if(instance==null) {
 			instance = new TextureLoader();
 		}

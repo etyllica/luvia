@@ -12,6 +12,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import br.com.etyllica.context.Application;
 import br.com.luvia.linear.Point3D;
+import br.com.luvia.util.CameraGL;
 
 public abstract class ApplicationGL extends Application implements GLEventListener{
 
@@ -150,5 +151,12 @@ public abstract class ApplicationGL extends Application implements GLEventListen
 		return position;
 
 	}
+	
+	public void updateCamera(GL2 gl, CameraGL camera) {
+		gl.glMatrixMode(GL2.GL_MODELVIEW);
+		gl.glLoadIdentity();
 
+		glu.gluLookAt( camera.getX(), camera.getY(), camera.getZ(), camera.getTarget().getX(), camera.getTarget().getY(), camera.getTarget().getZ(), 0, 1, 0 );
+	}
+	
 }
