@@ -15,7 +15,6 @@ import java.util.Set;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
-import javax.media.opengl.GL2ES1;
 
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
@@ -34,7 +33,7 @@ import com.jogamp.opengl.util.texture.Texture;
  *
  */
 
-public class Modelo3D extends Ponto3D implements GL2Drawable{
+public class Mesh extends Ponto3D implements GL2Drawable {
 
 	private Set<Integer> vertexSelection = new HashSet<Integer>();
 
@@ -54,7 +53,7 @@ public class Modelo3D extends Ponto3D implements GL2Drawable{
 
 	private double angleY = 0;
 
-	public Modelo3D() {
+	public Mesh() {
 		super(0,0,0);
 	}
 
@@ -82,7 +81,7 @@ public class Modelo3D extends Ponto3D implements GL2Drawable{
 		this.vertexes = vertexes;
 	}
 
-	public void drawWireFrame(GL2 gl){
+	public void drawWireFrame(GL2 gl) {
 
 		gl.glEnable(GL.GL_CULL_FACE);
 
@@ -92,11 +91,11 @@ public class Modelo3D extends Ponto3D implements GL2Drawable{
 		//gl.glPolygonMode(GL2.GL_BACK, GL2.GL_FILL);
 
 		// Draw Model		
-		for(Group group: groups){
+		for(Group group: groups) {
 
-			for(Face face: group.getFaces()){
+			for(Face face: group.getFaces()) {
 
-				if(face.vertex.length==3){
+				if(face.vertex.length==3) {
 
 					gl.glBegin(GL.GL_TRIANGLES);
 
@@ -106,7 +105,7 @@ public class Modelo3D extends Ponto3D implements GL2Drawable{
 
 				}
 
-				for(int i=0;i<face.vertex.length;i++){
+				for(int i=0;i<face.vertex.length;i++) {
 
 					gl.glVertex3d(face.vertex[i].getX(), face.vertex[i].getY(), face.vertex[i].getZ());
 				}
@@ -137,17 +136,17 @@ public class Modelo3D extends Ponto3D implements GL2Drawable{
 
 		Texture texture = null;
 
-		for(Group group: groups){
+		for(Group group: groups) {
 
-			if(group.getMaterial()!=null){
+			if(group.getMaterial()!=null) {
 
 				texture = group.getMaterial().getTexture_d();
 
-				if(texture==null){
+				if(texture==null) {
 					texture = group.getMaterial().getTexture_Kd();
 				}
 
-				if(texture==null){
+				if(texture==null) {
 					//System.err.println("textura não encontrada");
 					drawTexture = false;
 					gl.glColor3d((double)color.getRed()/255, (double)color.getGreen()/255, (double)color.getBlue()/255);
@@ -155,9 +154,9 @@ public class Modelo3D extends Ponto3D implements GL2Drawable{
 
 			}
 			//map = "";
-			if(drawTexture){
+			if(drawTexture) {
 
-				if(texture!=null){
+				if(texture!=null) {
 
 					gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 					// Use linear filter for texture if image is smaller than the original texture
@@ -170,9 +169,9 @@ public class Modelo3D extends Ponto3D implements GL2Drawable{
 
 			}
 
-			for(Face face: group.getFaces()){
+			for(Face face: group.getFaces()) {
 
-				if(face.vertex.length==3){
+				if(face.vertex.length==3) {
 
 					gl.glBegin(GL.GL_TRIANGLES);
 
@@ -182,9 +181,9 @@ public class Modelo3D extends Ponto3D implements GL2Drawable{
 
 				}
 
-				for(int i=0;i<face.vertex.length;i++){
+				for(int i=0;i<face.vertex.length;i++) {
 
-					if(drawTexture){
+					if(drawTexture) {
 						//gl.glNormal3d(face.normal[i].getX(), face.normal[i].getY(), face.normal[i].getZ());
 						gl.glTexCoord2d(face.texture[i].getX(), face.texture[i].getY());
 					}
@@ -197,9 +196,9 @@ public class Modelo3D extends Ponto3D implements GL2Drawable{
 			}
 			
 			//TODO make it better
-			if(texture!=null){
+			if(texture!=null) {
 
-				if(drawTexture){
+				if(drawTexture) {
 
 					texture.disable(gl);
 
@@ -211,13 +210,13 @@ public class Modelo3D extends Ponto3D implements GL2Drawable{
 		}
 
 
-		/*for(int i=0;i<vertexes.size(); i++){
+		/*for(int i=0;i<vertexes.size(); i++) {
 
 			gl.glPushMatrix();
 
 			float vsize = 0.01f;
 
-			if(vertexSelection.contains(i)){
+			if(vertexSelection.contains(i)) {
 				gl.glColor3f(1,1,1);
 			}else{
 				//gl.glColor3i(0xdd,0x88,0x55);
