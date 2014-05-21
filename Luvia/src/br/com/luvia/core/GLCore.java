@@ -88,9 +88,13 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable{
 		this.url = s;
 
 		ImageLoader.getInstance().setUrl(s);
+		
 		FontLoader.getInstance().setUrl(s);
+		
 		MultimediaLoader.getInstance().setUrl(s);
+		
 		MeshLoader.getInstance().setUrl(s);
+		
 		TextureLoader.getInstance().setUrl(s);
 	}
 

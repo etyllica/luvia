@@ -145,7 +145,7 @@ public class Mesh extends Point3D implements GL2Drawable {
 				texture = group.getMaterial().getTexture_d();
 
 				if(texture==null) {
-					texture = group.getMaterial().getTexture_Kd();
+					texture = group.getMaterial().getTextureKd();
 				}
 
 				if(texture!=null) {

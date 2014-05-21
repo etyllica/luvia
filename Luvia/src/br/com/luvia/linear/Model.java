@@ -132,7 +132,7 @@ public class Model extends Ponto3D{
 				texture = group.getMaterial().getTexture_d();
 
 				if(texture==null){
-					texture = group.getMaterial().getTexture_Kd();
+					texture = group.getMaterial().getTextureKd();
 				}
 				
 				if(texture==null){

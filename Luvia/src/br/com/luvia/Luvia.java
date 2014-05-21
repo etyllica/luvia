@@ -13,7 +13,7 @@ import br.com.luvia.core.LuviaCore;
 import br.com.luvia.loader.TextureLoader;
 import br.com.luvia.loader.mesh.MeshLoader;
 
-public abstract class Luvia extends JFrame{
+public abstract class Luvia extends JFrame {
 
 	private static final long serialVersionUID = -6060864375960874373L;
 
@@ -26,7 +26,7 @@ public abstract class Luvia extends JFrame{
 	protected int h = 480;
 
 	protected LuviaCore luviaCore;
-
+	
 	// Constructor
 	public Luvia(int w, int h) {
 		super();
@@ -40,11 +40,8 @@ public abstract class Luvia extends JFrame{
 
 		luviaCore = new LuviaCore(this,w,h);
 		
-		luviaCore.setUrl(s);		
-		
-		TextureLoader.getInstance().setUrl(s);
-		
-		MeshLoader.getInstance().setUrl(s);
+		//Sets and Update Loaders
+		luviaCore.setUrl(s);
 
 		addWindowListener(new WindowAdapter() {
 			@Override 
@@ -57,12 +54,10 @@ public abstract class Luvia extends JFrame{
 						luviaCore.stop(); // stop the animator loop
 						System.exit(0);
 					}
+					
 				}.start();
 			}
 		});
-
-		//addKeyListener(KeyListenerWrapper.init(Core.getInstance().getControl().getTeclado(),true));
-		//addKeyListener(KeyListenerWrapper.init(Core.getInstance().getControl().getTeclado(),false));
 		
 		addKeyListener(luviaCore.getControl().getKeyboard());
 
@@ -102,7 +97,7 @@ public abstract class Luvia extends JFrame{
 
 	}
 
-	private void setMainApplication(ApplicationGL application3D){
+	private void setMainApplication(ApplicationGL application3D) {
 
 		luviaCore.setMainApplication3D(application3D);
 		

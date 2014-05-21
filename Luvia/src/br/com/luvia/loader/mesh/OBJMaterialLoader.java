@@ -82,27 +82,27 @@ public class OBJMaterialLoader {
                 
             }else if ("map_d".equalsIgnoreCase(prefix)) {
             	
-            	mat.setMap_d(folder+splitLine[1]);
+            	mat.setMapD(folder+splitLine[1]);
             	
             	System.out.println("Load map_d: "+folder+splitLine[1]);
             	
-            	mat.setTexture_d(TextureLoader.getInstance().loadTexture(folder,splitLine[1]));
+            	mat.setTextureD(TextureLoader.getInstance().loadTexture(folder,splitLine[1]));
             	
             }else if ("map_kd".equalsIgnoreCase(prefix)) {
             	
-            	mat.setMap_Kd(folder+splitLine[1]);
+            	mat.setMapKd(folder+splitLine[1]);
             	
             	System.out.println("Load map_kd: "+folder+splitLine[1]);
             	
-            	mat.setTexture_Kd(TextureLoader.getInstance().loadTexture(folder,splitLine[1]));
+            	mat.setTextureKd(TextureLoader.getInstance().loadTexture(folder,splitLine[1]));
             	
             }else if ("map_ka".equalsIgnoreCase(prefix)) {
             	
-            	mat.setMap_Ka(folder+splitLine[1]);
+            	mat.setMapKa(folder+splitLine[1]);
             	
             	System.out.println("Load map_ka: "+folder+splitLine[1]);
             	
-            	mat.setTexture_Ka(TextureLoader.getInstance().loadTexture(folder,splitLine[1]));
+            	mat.setTextureKa(TextureLoader.getInstance().loadTexture(folder,splitLine[1]));
             	
             }
 						
