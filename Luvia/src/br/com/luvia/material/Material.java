@@ -159,6 +159,7 @@ public class Material {
 	}
 
 	public Texture getTextureKs() {
+
 		return textureKs;
 	}
 
@@ -175,6 +176,7 @@ public class Material {
 	}
 
 	public Texture getTextureD() {
+
 		return textureD;
 	}
 
