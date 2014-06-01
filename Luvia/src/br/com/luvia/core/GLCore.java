@@ -49,8 +49,12 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable{
 	private WindowGL activeWindowGL;
 
 	private ExecutorService loadExecutor;
+	
+	private final Font defaultFont = new Font("ARIAL", Font.PLAIN, 14);
+	
+	private final Color defaultColor = Color.BLACK;
 
-	public GLCore(Component component, int w, int h){
+	public GLCore(Component component, int w, int h) {
 		super();
 		
 		canvas = new GLCanvas();
@@ -98,11 +102,11 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable{
 		TextureLoader.getInstance().setUrl(s);
 	}
 
-	public void start(){
+	public void start() {
 		animator.start();
 	}
 
-	public void stop(){
+	public void stop() {
 		animator.stop();
 	}
 
@@ -110,18 +114,26 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable{
 	@Override
 	public void init(GLAutoDrawable drawable) {
 
-		glGraphics.setCanvas(drawable);
-
-		glGraphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
-		glGraphics.setColor(Color.BLACK);
-		glGraphics.setFont(new Font("ARIAL", Font.PLAIN, 12));
-		
-		//glGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		resetGraphics(drawable);
 
 		//TODO verify
 		activeWindowGL.getLoadApplication3D().init(drawable);
 		System.out.println("Init Application");
 
+	}
+	
+	private void resetGraphics(GLAutoDrawable drawable) {
+		
+		glGraphics.setCanvas(drawable);
+
+		glGraphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
+		glGraphics.setColor(defaultColor);
+		glGraphics.setFont(defaultFont);
+		
+		graphic.setGraphics(glGraphics);
+		
+		//glGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		
 	}
 
 	@Override
@@ -130,9 +142,9 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable{
 	}
 
 	@Override
-	public void display(GLAutoDrawable drawable) {
+	public void display(final GLAutoDrawable drawable) {
 
-		if(changeApp){
+		if(changeApp) {
 
 			DefaultLoadApplicationGL load3D = activeWindowGL.getLoadApplication3D();
 
@@ -152,7 +164,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable{
 					activeWindowGL.clearComponents();
 
 					activeWindowGL.setApplication3D(anotherApplication3D);
-					
+										
 					//desktop.reload(anotherApplication3D);
 
 				}
@@ -164,13 +176,10 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable{
 
 		}else{
 
-			activeWindowGL.getApplication3D().reshape(drawable, panel.getX(), panel.getY(), panel.getWidth(), panel.getHeight());
+			reshape(drawable, panel.getX(), panel.getY(), panel.getWidth(), panel.getHeight());
 			activeWindowGL.getApplication3D().display(drawable);
 			
-			glGraphics.setCanvas(drawable);
-			glGraphics.setColor(Color.BLACK);
-			glGraphics.setFont(new Font("ARIAL", Font.PLAIN, 18));
-			graphic.setGraphics(glGraphics);
+			resetGraphics(drawable);
 
 			draw((Graphic)graphic);
 		}
@@ -182,7 +191,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable{
 	private boolean changeApp = false;
 
 	@Override
-	protected void changeApplication(){
+	protected void changeApplication() {
 
 		System.out.println("LuviaCore.changeApplication()");
 
@@ -202,7 +211,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable{
 
 	}
 
-	private void reload(){
+	private void reload() {
 
 		activeWindowGL.reload(anotherApplication3D);
 		
@@ -212,14 +221,14 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable{
 	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
 		activeWindowGL.getApplication3D().reshape(drawable, x, y, width, height);
 	}
-
+	
 	public void run() {
 		
 		update(System.currentTimeMillis());
 
 	}
 
-	public JPanel getPanel(){
+	public JPanel getPanel() {
 		return panel;
 	}
 }

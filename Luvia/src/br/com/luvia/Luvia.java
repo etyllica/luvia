@@ -74,7 +74,7 @@ public abstract class Luvia extends JFrame {
 	protected void init(){
 		//startThread();
 		//TODO Update Methods
-		executor = Executors.newScheduledThreadPool(2);
+		executor = Executors.newScheduledThreadPool(1);
 		
 		executor.scheduleAtFixedRate(luviaCore, UPDATE_DELAY, UPDATE_DELAY, TimeUnit.MILLISECONDS);
 		//executor.scheduleAtFixedRate(this, TIME_UPDATE_INTERVAL, TIME_UPDATE_INTERVAL, TimeUnit.MILLISECONDS);
