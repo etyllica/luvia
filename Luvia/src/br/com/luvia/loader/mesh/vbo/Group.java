@@ -3,6 +3,7 @@ package br.com.luvia.loader.mesh.vbo;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.luvia.material.DiffuseMaterial;
 import br.com.luvia.material.Material;
 
 public class Group {

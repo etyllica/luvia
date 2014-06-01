@@ -20,7 +20,7 @@ import org.lwjgl.util.vector.Vector3f;
 import br.com.luvia.animation.skeletal.Joint;
 import br.com.luvia.loader.mesh.vbo.Face;
 import br.com.luvia.loader.mesh.vbo.Group;
-import br.com.luvia.material.Material;
+import br.com.luvia.material.DiffuseMaterial;
 
 import com.jogamp.opengl.util.texture.Texture;
 
@@ -39,7 +39,7 @@ public class Model extends Ponto3D{
 
 	public List<Face> faces = new ArrayList<Face>();
 	private List<Group> groups = new ArrayList<Group>();
-	private Map<String, Material> materials = new HashMap<String, Material>();
+	private Map<String, DiffuseMaterial> materials = new HashMap<String, DiffuseMaterial>();
 
 	private boolean drawTexture = true;
 
@@ -59,11 +59,11 @@ public class Model extends Ponto3D{
 		this.drawTexture = drawTexture;
 	}
 
-	public Map<String, Material> getMaterials() {
+	public Map<String, DiffuseMaterial> getMaterials() {
 		return materials;
 	}
 
-	public void setMaterials(Map<String, Material> materials) {
+	public void setMaterials(Map<String, DiffuseMaterial> materials) {
 		this.materials = materials;
 	}
 
