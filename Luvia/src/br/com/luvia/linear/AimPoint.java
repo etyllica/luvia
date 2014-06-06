@@ -2,11 +2,15 @@ package br.com.luvia.linear;
 
 public class AimPoint extends Point3D {
 
-	private double angleX = 0;
+	protected double angleX = 0;
 	
-	private double angleY = 0;
+	protected double angleY = 0;
 	
-	private double angleZ = 0;
+	protected double angleZ = 0;
+	
+	public AimPoint() {
+		super();
+	}
 	
 	public AimPoint(double x, double y, double z) {
 		super(x, y, z);
