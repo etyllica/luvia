@@ -11,12 +11,15 @@ import javax.media.opengl.glu.GLU;
 import org.lwjgl.util.vector.Vector3f;
 
 import br.com.etyllica.context.Application;
+import br.com.luvia.linear.AimPoint;
 import br.com.luvia.linear.Point3D;
 import br.com.luvia.util.CameraGL;
 
 public abstract class ApplicationGL extends Application implements GLEventListener{
-
+	
 	protected GLU glu;
+	
+	protected double zoom = 1;
 	
 	protected ApplicationGL returnApplication3D = this;
 	
@@ -157,6 +160,18 @@ public abstract class ApplicationGL extends Application implements GLEventListen
 		gl.glLoadIdentity();
 		
 		glu.gluLookAt( camera.getX(), camera.getY(), camera.getZ(), camera.getTarget().getX(), camera.getTarget().getY(), camera.getTarget().getZ(), 0, 1, 0 );
+	}
+	
+	protected void aimCamera(GL2 gl, AimPoint aim) {
+		gl.glMatrixMode(GL2.GL_MODELVIEW);
+							
+		gl.glLoadIdentity();
+		
+		gl.glRotated(360-aim.getAngleX(), 1, 0, 0);
+		gl.glRotated(360-aim.getAngleY(), 0, 1, 0);
+		gl.glRotated(360-aim.getAngleZ(), 0, 0, 1);
+		
+		gl.glTranslated(-aim.getX(), -aim.getY(), -aim.getZ());
 	}
 	
 }
