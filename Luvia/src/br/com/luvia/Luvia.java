@@ -7,17 +7,14 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 
-import br.com.etyllica.context.Application;
 import br.com.luvia.core.ApplicationGL;
 import br.com.luvia.core.LuviaCore;
-import br.com.luvia.loader.TextureLoader;
-import br.com.luvia.loader.mesh.MeshLoader;
 
 public abstract class Luvia extends JFrame {
 
 	private static final long serialVersionUID = -6060864375960874373L;
 
-	private static final int UPDATE_DELAY = 80;    // Delay Between control updates
+	private static final int UPDATE_DELAY = 40;    // Delay Between control updates
 	private static final int TIME_UPDATE_INTERVAL = 80;    // Display refresh frames per second 
 
 	private ScheduledExecutorService executor;
@@ -87,19 +84,9 @@ public abstract class Luvia extends JFrame {
 
 	public abstract ApplicationGL startApplication();
 	
-	private void setMainApplication(Application application3D){
-		
-		//TODO Make adaptor
-		
-		System.err.println("Make Adaptor from Application3D to Application2D");
-		
-		//luviaCore.setMainApplication3D(application3D);
+	private void setMainApplication(ApplicationGL applicationGL) {
 
-	}
-
-	private void setMainApplication(ApplicationGL application3D) {
-
-		luviaCore.setMainApplication3D(application3D);
+		luviaCore.setMainApplication3D(applicationGL);
 		
 	}
 

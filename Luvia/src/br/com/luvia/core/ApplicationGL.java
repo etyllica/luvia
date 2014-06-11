@@ -15,7 +15,7 @@ import br.com.abby.util.CameraGL;
 import br.com.etyllica.context.Application;
 import br.com.luvia.linear.AimPoint;
 
-public abstract class ApplicationGL extends Application implements GLEventListener{
+public abstract class ApplicationGL extends Application implements GLEventListener {
 	
 	protected GLU glu;
 	
