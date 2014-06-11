@@ -9,16 +9,16 @@ import br.com.etyllica.core.graphics.Graphic;
 
 public class Graphics3D extends Graphic {
 
-	public Graphics3D(int width, int heigth){
+	public Graphics3D(int width, int heigth) {
 		super(width,heigth);
 	}
 
-	public void setGraphics(Graphics2D graphics){
+	public void setGraphics(Graphics2D graphics) {
 		this.screen = graphics;
 		this.screen.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);		
 	}
 	
-	public void setGraphics(GLGraphics2D graphics){		
+	public void setGraphics(GLGraphics2D graphics) {		
 		this.screen = graphics;
 		this.screen.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 	}

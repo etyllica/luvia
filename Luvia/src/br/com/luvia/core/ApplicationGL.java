@@ -10,10 +10,10 @@ import javax.media.opengl.glu.GLU;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import br.com.abby.linear.Point3D;
+import br.com.abby.util.CameraGL;
 import br.com.etyllica.context.Application;
 import br.com.luvia.linear.AimPoint;
-import br.com.luvia.linear.Point3D;
-import br.com.luvia.util.CameraGL;
 
 public abstract class ApplicationGL extends Application implements GLEventListener{
 	

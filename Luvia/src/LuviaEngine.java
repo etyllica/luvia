@@ -2,7 +2,7 @@ import examples.AugmentedReality;
 import examples.Ortographic;
 import examples.Perspective;
 import examples.tutorial1.Tutorial1;
-import br.com.luvia.Application3D;
+import br.com.abby.Application3D;
 import br.com.luvia.Luvia;
 import br.com.luvia.core.ApplicationGL;
 

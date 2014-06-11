@@ -176,12 +176,12 @@ public class GridPerspective extends ApplicationGL {
 		mx = event.getX();
 		my = event.getY();
 
-		if(event.onButtonDown(MouseButton.MOUSE_BUTTON_LEFT)) {
+		if(event.isButtonDown(MouseButton.MOUSE_BUTTON_LEFT)) {
 
 			click = true;
 		}
 
-		if(event.onButtonUp(MouseButton.MOUSE_BUTTON_LEFT)) {
+		if(event.isButtonUp(MouseButton.MOUSE_BUTTON_LEFT)) {
 			click = false;
 		}
 

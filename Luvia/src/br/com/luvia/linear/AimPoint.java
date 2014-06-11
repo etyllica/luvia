@@ -1,5 +1,7 @@
 package br.com.luvia.linear;
 
+import br.com.abby.linear.Point3D;
+
 public class AimPoint extends Point3D {
 
 	protected double angleX = 0;

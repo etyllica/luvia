@@ -1,5 +1,7 @@
 package br.com.luvia.material;
 
+import br.com.abby.material.DiffuseMaterial;
+
 import com.jogamp.opengl.util.texture.Texture;
 
 /**

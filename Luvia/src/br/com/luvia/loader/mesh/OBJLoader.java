@@ -11,8 +11,8 @@ import java.util.List;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
+import br.com.abby.vbo.Face;
 import br.com.luvia.linear.Mesh;
-import br.com.luvia.loader.mesh.vbo.Face;
 import br.com.luvia.loader.mesh.vbo.Group;
 import br.com.luvia.material.Material;
 
@@ -179,8 +179,8 @@ public class OBJLoader {
             	}
             	
             	Face face = new Face(vIndexes, texIndexes, nIndexes);
-            	face.quad = quad;
             	
+            	face.setCount(quad);            	
             	
             	group.getFaces().add(face);
             	//TODO Remove face from model

@@ -19,10 +19,10 @@ import javax.media.opengl.GL2;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
-import br.com.luvia.core.GL2Drawable;
-import br.com.luvia.loader.mesh.vbo.Face;
+import br.com.abby.linear.Point3D;
+import br.com.abby.vbo.Face;
 import br.com.luvia.loader.mesh.vbo.Group;
-import br.com.luvia.material.DiffuseMaterial;
+import br.com.luvia.core.GL2Drawable;
 import br.com.luvia.material.Material;
 
 import com.jogamp.opengl.util.texture.Texture;

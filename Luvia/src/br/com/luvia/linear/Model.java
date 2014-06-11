@@ -17,10 +17,11 @@ import javax.media.opengl.GL2;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
-import br.com.luvia.animation.skeletal.Joint;
-import br.com.luvia.loader.mesh.vbo.Face;
+import br.com.abby.animation.skeletal.Joint;
+import br.com.abby.linear.Point3D;
+import br.com.abby.material.DiffuseMaterial;
+import br.com.abby.vbo.Face;
 import br.com.luvia.loader.mesh.vbo.Group;
-import br.com.luvia.material.DiffuseMaterial;
 
 import com.jogamp.opengl.util.texture.Texture;
 
@@ -31,7 +32,7 @@ import com.jogamp.opengl.util.texture.Texture;
  *
  */
 
-public class Model extends Ponto3D{
+public class Model extends Point3D {
 
 	public List<Vector3f> vertexes = new ArrayList<Vector3f>();
 	public List<Vector3f> normals = new ArrayList<Vector3f>();

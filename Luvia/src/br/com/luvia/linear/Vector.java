@@ -2,9 +2,11 @@ package br.com.luvia.linear;
 
 import org.lwjgl.util.vector.Vector3f;
 
-public class Vector extends Vector3f{
+public class Vector extends Vector3f {
 
-	public Vector(float x, float y, float z){
+	private static final long serialVersionUID = -292334515787858614L;
+
+	public Vector(float x, float y, float z) {
 		super(x,y,z);
 	}
 	
@@ -26,7 +28,7 @@ public class Vector extends Vector3f{
 
 	}
 	
-	private float[][] rotationMatrixX(float angle, float px, float py, float pz){
+	private float[][] rotationMatrixX(float angle, float px, float py, float pz) {
 
 		float m[][] = new float[4][4];
 

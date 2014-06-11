@@ -14,6 +14,7 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 
+import br.com.abby.util.CameraGL;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
@@ -21,7 +22,6 @@ import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.input.mouse.MouseButton;
 import br.com.luvia.core.ApplicationGL;
 import br.com.luvia.loader.TextureLoader;
-import br.com.luvia.util.CameraGL;
 
 import com.jogamp.opengl.util.texture.Texture;
 
@@ -240,12 +240,12 @@ public class AugmentedReality extends ApplicationGL {
 		mx = event.getX();
 		my = event.getY();
 
-		if(event.onButtonDown(MouseButton.MOUSE_BUTTON_LEFT)){
+		if(event.isButtonDown(MouseButton.MOUSE_BUTTON_LEFT)){
 			camera.setZ(camera.getZ()+0.1f);
 			click = true;
 		}
 
-		if(event.onButtonUp(MouseButton.MOUSE_BUTTON_LEFT)){
+		if(event.isButtonUp(MouseButton.MOUSE_BUTTON_LEFT)){
 			camera.setZ(camera.getZ()-0.1f);
 			click = false;
 		}
