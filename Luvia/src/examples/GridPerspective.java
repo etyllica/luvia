@@ -11,13 +11,13 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 
+import br.com.abby.linear.AimPoint;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.input.mouse.MouseButton;
 import br.com.luvia.core.ApplicationGL;
-import br.com.luvia.linear.AimPoint;
 import br.com.luvia.loader.TextureLoader;
 
 import com.jogamp.opengl.util.texture.Texture;
