@@ -12,9 +12,7 @@ import com.jogamp.opengl.util.texture.Texture;
  */
 
 public class Material extends DiffuseMaterial {
-	
-	private String name = "";
-	
+		
 	//Ambient Color
 	private Texture textureKa = null;
 	
@@ -31,14 +29,6 @@ public class Material extends DiffuseMaterial {
 	
 	public Material() {
 		super();
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public Texture getTextureKa() {
