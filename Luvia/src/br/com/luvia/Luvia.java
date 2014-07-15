@@ -8,9 +8,9 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.JFrame;
 
 import br.com.luvia.core.ApplicationGL;
-import br.com.luvia.core.LuviaCore;
+import br.com.luvia.core.GLCore;
 
-public abstract class Luvia extends JFrame {
+public abstract class Luvia {
 
 	private static final long serialVersionUID = -6060864375960874373L;
 
@@ -22,7 +22,9 @@ public abstract class Luvia extends JFrame {
 	protected int w = 640;
 	protected int h = 480;
 
-	protected LuviaCore luviaCore;
+	protected GLCore luviaCore;
+	
+	private JFrame frame;
 	
 	// Constructor
 	public Luvia(int w, int h) {
@@ -31,16 +33,31 @@ public abstract class Luvia extends JFrame {
 		this.w = w;
 		this.h = h;
 
-		setSize(w, h);
-
 		String s = getClass().getResource("").toString();
 
-		luviaCore = new LuviaCore(this,w,h);
+		luviaCore = new GLCore(frame,w,h);
 		
-		//Sets and Update Loaders
 		luviaCore.setUrl(s);
+		
+		frame = createFrame(w, h);
 
-		addWindowListener(new WindowAdapter() {
+		setMainApplication(startApplication());
+
+		frame.setVisible(true);
+		
+	}
+	
+	private JFrame createFrame(int w, int h) {
+		
+		JFrame frame = new JFrame();
+		
+		frame.setSize(w, h);
+		
+		frame.setUndecorated(false);
+
+		frame.setTitle("Luvia - Window");
+		
+		frame.addWindowListener(new WindowAdapter() {
 			@Override 
 			public void windowClosing(WindowEvent e) {
 				// Use a dedicate thread to run the stop() to ensure that the
@@ -56,16 +73,9 @@ public abstract class Luvia extends JFrame {
 			}
 		});
 		
-		addKeyListener(luviaCore.getControl().getKeyboard());
-
-		setUndecorated(false);
-
-		setTitle("Luvia - Window");
-
-		setMainApplication(startApplication());
-
-		setVisible(true);
+		frame.addKeyListener(luviaCore.getControl().getKeyboard());
 		
+		return frame;
 	}
 	
 	protected void init(){
@@ -76,7 +86,7 @@ public abstract class Luvia extends JFrame {
 		executor.scheduleAtFixedRate(luviaCore, UPDATE_DELAY, UPDATE_DELAY, TimeUnit.MILLISECONDS);
 		//executor.scheduleAtFixedRate(this, TIME_UPDATE_INTERVAL, TIME_UPDATE_INTERVAL, TimeUnit.MILLISECONDS);
 		
-		setContentPane(luviaCore.getPanel());
+		frame.setContentPane(luviaCore.getPanel());
 		
 		luviaCore.start();
 		

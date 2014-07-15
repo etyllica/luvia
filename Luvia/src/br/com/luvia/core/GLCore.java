@@ -10,16 +10,15 @@ import java.util.concurrent.Executors;
 
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
-import javax.media.opengl.awt.GLCanvas;
 import javax.swing.JPanel;
-
-import org.jogamp.glg2d.GLGraphics2D;
 
 import sound.MultimediaLoader;
 import br.com.etyllica.core.InnerCore;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.loader.FontLoader;
 import br.com.etyllica.core.loader.image.ImageLoader;
+import br.com.luvia.core.glg2d.GLG2DCanvas;
+import br.com.luvia.core.glg2d.GLGraphics2D;
 import br.com.luvia.core.video.Graphics3D;
 import br.com.luvia.loader.TextureLoader;
 import br.com.luvia.loader.mesh.MeshLoader;
@@ -27,7 +26,7 @@ import br.com.luvia.loader.mesh.MeshLoader;
 import com.jogamp.opengl.util.FPSAnimator;
 
 
-public class GLCore extends InnerCore implements GLEventListener, Runnable{
+public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 	private static final int UPDATE_DELAY = 20;    // Display refresh frames per second
 
@@ -41,7 +40,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable{
 
 	private String url;
 
-	private GLCanvas canvas;
+	private GLG2DCanvas canvas = new GLG2DCanvas();
 
 	private FPSAnimator animator;  // Used to drive display()
 
@@ -57,8 +56,6 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable{
 	public GLCore(Component component, int w, int h) {
 		super();
 		
-		canvas = new GLCanvas();
-
 		glGraphics = new GLGraphics2D();
 
 		graphic = new Graphics3D(w,h);
@@ -74,9 +71,10 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable{
 		panel.setLayout(new BorderLayout());
 		panel.add(canvas, BorderLayout.CENTER);
 
-		canvas.addGLEventListener(this);
+		canvas.getCanvas().addGLEventListener(this);
 
-		animator = new FPSAnimator(canvas, REFRESH_FPS, true);
+		animator = new FPSAnimator(REFRESH_FPS, true);
+		animator.add(canvas.getCanvas());
 
 	}
 
@@ -91,6 +89,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable{
 
 		this.url = s;
 
+		//Update Loaders
 		ImageLoader.getInstance().setUrl(s);
 		
 		FontLoader.getInstance().setUrl(s);
