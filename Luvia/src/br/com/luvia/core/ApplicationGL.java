@@ -155,6 +155,22 @@ public abstract class ApplicationGL extends Application implements GLEventListen
 
 	}
 	
+	protected Point3D transformPosition(GL2 gl, Point3D point) {
+				
+		double[] m = getModelView(gl);
+		
+		double x = m[0]*point.getX()+m[4]*point.getY()+m[8]*point.getZ();//+m[12]*0;
+		
+		double y = m[1]*point.getX()+m[5]*point.getY()+m[9]*point.getZ();//+m[13]*0;
+		
+		double z = m[2]*point.getX()+m[6]*point.getY()+m[10]*point.getZ();//+m[14]*0;
+		
+		//double w = m[3]*point.getX()+m[7]*point.getY()+m[11]*point.getZ()+m[15]*0;
+		
+		return new Point3D(x, y, z);
+		
+	}
+	
 	public void updateCamera(GL2 gl, CameraGL camera) {
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glLoadIdentity();
