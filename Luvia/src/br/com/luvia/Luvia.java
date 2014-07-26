@@ -32,19 +32,19 @@ public abstract class Luvia {
 		
 		this.w = w;
 		this.h = h;
+		
+		luviaCore = new GLCore(w,h);
+		
+		frame = createFrame(w, h);
+		luviaCore.setComponent(frame);
 
 		String s = getClass().getResource("").toString();
-
-		luviaCore = new GLCore(frame,w,h);
 		
 		luviaCore.setUrl(s);
 		
-		frame = createFrame(w, h);
-
 		setMainApplication(startApplication());
 
-		frame.setVisible(true);
-		
+		frame.setVisible(true);		
 	}
 	
 	private JFrame createFrame(int w, int h) {

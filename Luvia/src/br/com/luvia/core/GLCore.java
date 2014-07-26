@@ -5,15 +5,19 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Frame;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import sound.MultimediaLoader;
 import br.com.etyllica.core.InnerCore;
+import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.loader.FontLoader;
 import br.com.etyllica.core.loader.image.ImageLoader;
@@ -52,8 +56,13 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	private final Font defaultFont = new Font("ARIAL", Font.PLAIN, 14);
 	
 	private final Color defaultColor = Color.BLACK;
+	
+	private JFrame component;
+	
+	private int oldW = 0;
+	private int oldH = 0;
 
-	public GLCore(Component component, int w, int h) {
+	public GLCore(int w, int h) {
 		super();
 				
 		glGraphics = new GLGraphics2D();
@@ -75,6 +84,10 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		animator = new FPSAnimator(REFRESH_FPS, true);
 		animator.add(canvas.getCanvas());
 		
+	}
+	
+	public void setComponent(JFrame frame) {
+		this.component = frame;
 	}
 
 	public String getUrl() {
@@ -144,44 +157,75 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 		if(changeApp) {
 
-			DefaultLoadApplicationGL load3D = activeWindowGL.getLoadApplication3D();
+			changeApplication(drawable);
 
-			load3D.init(drawable);
-			load3D.load();
-
-			anotherApplication3D.init(drawable);
-			anotherApplication3D.load();
-
-			loadExecutor = Executors.newSingleThreadExecutor();
-
-			loadExecutor.execute(new Runnable() {
-
-				@Override
-				public void run() {
-
-					activeWindowGL.clearComponents();
-
-					activeWindowGL.setApplication3D(anotherApplication3D);
-										
-					//desktop.reload(anotherApplication3D);
-
-				}
-			});
-
-			loadExecutor.shutdown();
-
-			changeApp = false;
-
-		}else{
-
-			reshape(drawable, panel.getX(), panel.getY(), panel.getWidth(), panel.getHeight());
-			activeWindowGL.getApplication3D().display(drawable);
+		} else {
+						
+			updateSuperEvents(superEvent);
 			
-			resetGraphics(drawable);
-
-			draw((Graphic)graphic);
+			drawActiveWindow(drawable);
 		}
 
+	}
+	
+	private void updateSuperEvents(GUIEvent event) {
+		
+		if(event == GUIEvent.ENABLE_FULL_SCREEN) {
+
+			this.oldW = component.getWidth();
+			this.oldH = component.getHeight();
+			
+			component.setExtendedState(JFrame.MAXIMIZED_BOTH);
+						
+		} else if(event == GUIEvent.DISABLE_FULL_SCREEN) {
+						
+			component.setExtendedState(JFrame.NORMAL);
+			component.setSize(oldW, oldH);
+			
+		}
+		
+	}
+	
+	private void changeApplication(GLAutoDrawable drawable) {
+		
+		DefaultLoadApplicationGL load3D = activeWindowGL.getLoadApplication3D();
+
+		load3D.init(drawable);
+		load3D.load();
+
+		anotherApplication3D.init(drawable);
+		anotherApplication3D.load();
+
+		loadExecutor = Executors.newSingleThreadExecutor();
+
+		loadExecutor.execute(new Runnable() {
+
+			@Override
+			public void run() {
+
+				activeWindowGL.clearComponents();
+
+				activeWindowGL.setApplication3D(anotherApplication3D);
+									
+				//desktop.reload(anotherApplication3D);
+
+			}
+		});
+
+		loadExecutor.shutdown();
+
+		changeApp = false;
+		
+	}
+	
+	private void drawActiveWindow(GLAutoDrawable drawable) {
+				
+		reshape(drawable, panel.getX(), panel.getY(), panel.getWidth(), panel.getHeight());
+		activeWindowGL.getApplication3D().display(drawable);
+		
+		resetGraphics(drawable);
+
+		draw((Graphic)graphic);		
 	}
 
 	private ApplicationGL anotherApplication3D;
@@ -203,7 +247,6 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		addWindow(activeWindowGL);
 				
 		reload();
-
 	}
 
 	private void reload() {
