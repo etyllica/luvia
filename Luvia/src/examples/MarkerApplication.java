@@ -25,7 +25,7 @@ import br.com.luvia.loader.TextureLoader;
 
 import com.jogamp.opengl.util.texture.Texture;
 
-public class AugmentedReality extends ApplicationGL {
+public class MarkerApplication extends ApplicationGL {
 
 	private Texture marker;
 	
@@ -42,7 +42,7 @@ public class AugmentedReality extends ApplicationGL {
 	
 	private double angleZ = 0;
 
-	public AugmentedReality(int w, int h) {
+	public MarkerApplication(int w, int h) {
 		super(w, h);
 	}
 
@@ -78,7 +78,7 @@ public class AugmentedReality extends ApplicationGL {
 		loading = 100;
 	}
 	
-	protected void lookCamera(GL2 gl){
+	protected void lookCamera(GL2 gl) {
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glLoadIdentity();
 
@@ -90,7 +90,7 @@ public class AugmentedReality extends ApplicationGL {
 
 	}
 	
-	protected void drawFloor(GL2 gl){
+	protected void drawFloor(GL2 gl) {
 
 		gl.glColor3d(1,1,1);
 
@@ -101,7 +101,7 @@ public class AugmentedReality extends ApplicationGL {
 
 	}
 
-	private void drawGrid(GL2 gl, double x, double y){
+	private void drawGrid(GL2 gl, double x, double y) {
 
 		double tileSize = 5;
 
@@ -111,7 +111,7 @@ public class AugmentedReality extends ApplicationGL {
 		
 	}
 
-	private void drawTile(GL2 gl, double x, double y, double tileSize, Texture texture){
+	private void drawTile(GL2 gl, double x, double y, double tileSize, Texture texture) {
 
 		texture.enable(gl);
 		texture.bind(gl);
@@ -139,36 +139,6 @@ public class AugmentedReality extends ApplicationGL {
 		texture.disable(gl);
 	}
 
-	private void drawAxis(GL2 gl){
-
-		double axisSize = 100;
-
-		//Draw Axis
-		gl.glLineWidth(2.5f);
-
-		//Draw X Axis
-		gl.glColor3d(1.0, 0.0, 0.0);
-		gl.glBegin(GL.GL_LINES);
-		gl.glVertex3d(0.0, 0.0, 0.0);
-		gl.glVertex3d(axisSize, 0, 0);
-		gl.glEnd();
-
-		//Draw Y Axis
-		gl.glColor3d(0.0, 1.0, 0.0);
-		gl.glBegin(GL.GL_LINES);
-		gl.glVertex3d(0.0, 0.0, 0.0);
-		gl.glVertex3d(0, axisSize, 0);
-		gl.glEnd();
-
-		//Draw Z Axis
-		gl.glColor3d(0.0, 0.0, 1.0);
-		gl.glBegin(GL.GL_LINES);
-		gl.glVertex3d(0.0, 0.0, 0.0);
-		gl.glVertex3d(0, 0, axisSize);
-		gl.glEnd();
-
-	}
-
 	@Override
 	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
 
@@ -179,54 +149,83 @@ public class AugmentedReality extends ApplicationGL {
 		gl.glMatrixMode(GL2.GL_PROJECTION);
 
 		gl.glLoadIdentity();
-		
-		double left = -10;
-		double right = +10;
-		double bottom = -10;
-		double top = +10;
-		
+				
 		float aspect = (float)width / (float)height; 
 		
-		//gl.glOrtho(left*aspect, right*aspect, bottom, top, 0.1, 500);
-		glu.gluPerspective(60,aspect,1,100);
+		glu.gluPerspective(60, aspect, 1, 100);
 
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 
 		gl.glLoadIdentity();
 
-	}	
-
+	}
+	
+	private boolean upArrow = false;
+	private boolean downArrow = false;
+	private boolean leftArrow = false;
+	private boolean rightArrow = false;
+	
+	@Override
+	public void update(long now) {
+		
+		if(upArrow) {
+			angleX += 1;
+		} else if(downArrow) {
+			angleX -= 1;
+		}
+		
+		if(leftArrow) {
+			angleY += 1;
+		} else if(rightArrow) {
+			angleY -= 1;
+		}
+		
+	}
+	
 	@Override
 	public GUIEvent updateKeyboard(KeyEvent event) {
 		
-		if(event.isKeyDown(KeyEvent.TSK_UP_ARROW)){
+		if(event.isKeyDown(KeyEvent.TSK_UP_ARROW)) {
 			
-			angleX += 5;
+			upArrow = true;
 			
+		} else if (event.isKeyUp(KeyEvent.TSK_UP_ARROW)) {
+			
+			upArrow = false;
 		}
-		else if(event.isKeyDown(KeyEvent.TSK_DOWN_ARROW)){
+				
+		if(event.isKeyDown(KeyEvent.TSK_DOWN_ARROW)) {
 			
-			angleX -= 5;
+			downArrow = true;
 			
-		}
-		
-		if(event.isKeyDown(KeyEvent.TSK_LEFT_ARROW)){
+		} else if(event.isKeyUp(KeyEvent.TSK_DOWN_ARROW)) {
 			
-			angleY += 5;
-			
-		}
-		else if(event.isKeyDown(KeyEvent.TSK_RIGHT_ARROW)){
-			
-			angleY -= 5;
-			
+			downArrow = false;
 		}
 		
-		if(event.isKeyDown(KeyEvent.TSK_VIRGULA)){
+		if(event.isKeyDown(KeyEvent.TSK_LEFT_ARROW)) {
+			
+			leftArrow = true;
+			
+		} else if(event.isKeyUp(KeyEvent.TSK_LEFT_ARROW)) {
+			
+			leftArrow = false;
+		}
+		
+		if(event.isKeyDown(KeyEvent.TSK_RIGHT_ARROW)) {
+			
+			rightArrow = true;
+			
+		} else if (event.isKeyUp(KeyEvent.TSK_RIGHT_ARROW)) {
+			
+			rightArrow = false;
+		}
+		
+		if(event.isKeyDown(KeyEvent.TSK_VIRGULA)) {
 			
 			angleZ += 5;
 			
-		}
-		else if(event.isKeyDown(KeyEvent.TSK_PONTO)){
+		} else if(event.isKeyDown(KeyEvent.TSK_PONTO)) {
 			
 			angleZ -= 5;
 			
@@ -240,12 +239,12 @@ public class AugmentedReality extends ApplicationGL {
 		mx = event.getX();
 		my = event.getY();
 
-		if(event.isButtonDown(MouseButton.MOUSE_BUTTON_LEFT)){
+		if(event.isButtonDown(MouseButton.MOUSE_BUTTON_LEFT)) {
 			camera.setZ(camera.getZ()+0.1f);
 			click = true;
 		}
 
-		if(event.isButtonUp(MouseButton.MOUSE_BUTTON_LEFT)){
+		if(event.isButtonUp(MouseButton.MOUSE_BUTTON_LEFT)) {
 			camera.setZ(camera.getZ()-0.1f);
 			click = false;
 		}
@@ -270,8 +269,6 @@ public class AugmentedReality extends ApplicationGL {
 		gl.glRotated(angleZ, 0, 0, 1);
 
 		//Draw Scene
-		//drawAxis(gl);
-
 		drawFloor(gl);
 		
 
@@ -283,14 +280,6 @@ public class AugmentedReality extends ApplicationGL {
 	@Override
 	public void draw(Graphic g) {
 
-		int size = 100;
-
-		//g.setColor(Color.RED);
-		//g.fillRect(w/2,50,20,20);
-
-		//g.setColor(Color.BLUE);
-		//g.drawRect(w/2-size/2, h/2-size/2, size, size);
-
 		//Draw Gui
 		g.setColor(Color.WHITE);
 		g.drawShadow(20,20, "Scene",Color.BLACK);
@@ -301,11 +290,6 @@ public class AugmentedReality extends ApplicationGL {
 		
 		g.drawShadow(20,80, "AngleZ: "+(angleZ),Color.BLACK);
 		
-		//g.escreve(20,20,"Scene");
-		//System.out.println("w = "+w);
-		//System.out.println("h = "+h);
-		//g.drawLine(w/2, h/2, w/2+mx, h/2+my);
-
 		
 	}
 	

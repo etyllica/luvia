@@ -28,9 +28,9 @@ import com.jogamp.opengl.util.FPSAnimator;
 
 public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
-	private static final int UPDATE_DELAY = 20;    // Display refresh frames per second
+	private static final int UPDATE_DELAY = 20;
 
-	private static final int REFRESH_FPS = 20;    // Display refresh frames per second
+	private static final int REFRESH_FPS = 20; // Display refresh frames per second
 	
 	private JPanel panel = new JPanel();
 
@@ -55,7 +55,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 	public GLCore(Component component, int w, int h) {
 		super();
-		
+				
 		glGraphics = new GLGraphics2D();
 
 		graphic = new Graphics3D(w,h);
@@ -65,7 +65,6 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		canvas.addMouseMotionListener(mouse);
 		canvas.addMouseWheelListener(mouse);
 		canvas.addMouseListener(mouse);
-		//canvas.addKeyListener(core.getControl().getTeclado());
 
 		panel.setSize(w, h);
 		panel.setLayout(new BorderLayout());
@@ -75,7 +74,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 		animator = new FPSAnimator(REFRESH_FPS, true);
 		animator.add(canvas.getCanvas());
-
+		
 	}
 
 	public String getUrl() {
@@ -99,6 +98,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		MeshLoader.getInstance().setUrl(s);
 		
 		TextureLoader.getInstance().setUrl(s);
+		
 	}
 
 	public void start() {
@@ -122,7 +122,6 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	}
 	
 	private void resetGraphics(GLAutoDrawable drawable) {
-		
 		glGraphics.setCanvas(drawable);
 
 		glGraphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
@@ -192,10 +191,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	@Override
 	protected void changeApplication() {
 
-		System.out.println("LuviaCore.changeApplication()");
-
-		setMainApplication3D(activeWindowGL.getApplication3D().getReturnApplication3D());
-		
+		setMainApplication3D(activeWindowGL.getApplication3D().getReturnApplication3D());		
 	}
 
 	public void setMainApplication3D(ApplicationGL application3D) {

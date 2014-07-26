@@ -1,4 +1,4 @@
-import examples.AugmentedReality;
+import examples.MarkerApplication;
 import examples.Ortographic;
 import examples.Perspective;
 import examples.tutorial1.Tutorial1;
@@ -29,7 +29,7 @@ public class LuviaEngine extends Luvia {
 		//setMainApplication(new Tutorial1(w, h));
 		//setMainApplication(new Perspective(w, h));
 		//setMainApplication(new Ortographic(w, h));
-		return new AugmentedReality(w, h);
+		return new MarkerApplication(w, h);
 		
 	}
 

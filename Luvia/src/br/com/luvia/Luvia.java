@@ -24,7 +24,7 @@ public abstract class Luvia {
 
 	protected GLCore luviaCore;
 	
-	private JFrame frame;
+	protected JFrame frame;
 	
 	// Constructor
 	public Luvia(int w, int h) {
