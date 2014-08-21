@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<project name="Luvia" default="dist" basedir=".">
+
+	<property name="version"  value="0.5" />
+
+	<property name="libcore"  value="luvia-${version}" />
+
+	<property name="src.dir"   value="src" />
+	<property name="build.dir" value="bin" />
+	<property name="lib.dir"   value="libs"/>
+
+	<path id="classpath">
+		<fileset dir="${lib.dir}" includes="**/*.jar" />
+	</path>
+	
+	<target name="dist" depends="clean, package"/>
+
+	<target name="clean">
+		<delete includeemptydirs="true" >
+			<fileset dir="${build.dir}">
+				<exclude name="**/assets/*"/>
+				<exclude name="**/assets/**"/>
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="init">
+		<mkdir dir="${build.dir}" />
+	</target>
+   
+	<target name="compile">
+    		<javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="classpath" source="1.6" target="1.6" debug="off">
+			<classpath refid="classpath" />
+		</javac>
+	</target>
+
+	<target name="package" depends="init, compile">
+		<jar destfile="${lib.dir}/${libcore}.jar">
+			<fileset dir="${build.dir}">
+				<include name="**/br/com/luvia/*"/>
+				<include name="**/br/com/luvia/**"/>
+				<include name="**/org/lwjgl/*"/>
+				<include name="**/org/lwjgl/**"/>
+			</fileset>
+		</jar>
+		<jar destfile="${lib.dir}/glg2d.jar">
+			<fileset dir="${build.dir}">
+				<include name="**/org/jogamp/*"/>
+				<include name="**/org/jogamp/**"/>
+			</fileset>
+		</jar>
+	</target>
+	
+</project>
