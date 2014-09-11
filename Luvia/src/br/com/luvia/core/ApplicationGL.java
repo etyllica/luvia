@@ -25,13 +25,17 @@ public abstract class ApplicationGL extends Application implements GLEventListen
 	
 	public ApplicationGL(int w, int h){
 		super(w,h);
-		glu = new GLU(); // GL Utilities
+		init();
 	}
 	
 	public ApplicationGL(int x, int y, int width, int height){
 		super(x,y,width,height);
-
+		init();
+	}
+	
+	private void init() {
 		glu = new GLU(); // GL Utilities
+		clearBeforeDraw = false;
 	}
 	
 	@Override

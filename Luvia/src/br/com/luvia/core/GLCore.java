@@ -3,15 +3,12 @@ package br.com.luvia.core;
 import java.awt.AlphaComposite;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
-import java.awt.Frame;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -61,15 +58,19 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	
 	private int oldW = 0;
 	private int oldH = 0;
+	
+	private ApplicationGL anotherApplication3D;
+
+	private boolean changeApp = false;
 
 	public GLCore(int w, int h) {
 		super();
-				
+
+		activeWindowGL = new WindowGL(0, 0, w, h);
+		
 		glGraphics = new GLGraphics2D();
 
 		graphic = new Graphics3D(w,h);
-
-		activeWindowGL = new WindowGL(0,0,w,h);
 				
 		canvas.addMouseMotionListener(mouse);
 		canvas.addMouseWheelListener(mouse);
@@ -78,12 +79,11 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		panel.setSize(w, h);
 		panel.setLayout(new BorderLayout());
 		panel.add(canvas, BorderLayout.CENTER);
-
+		
 		canvas.getCanvas().addGLEventListener(this);
 
 		animator = new FPSAnimator(REFRESH_FPS, true);
 		animator.add(canvas.getCanvas());
-		
 	}
 	
 	public void setComponent(JFrame frame) {
@@ -141,10 +141,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		glGraphics.setColor(defaultColor);
 		glGraphics.setFont(defaultFont);
 		
-		graphic.setGraphics(glGraphics);
-		
-		//glGraphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		
+		graphic.setGraphics(glGraphics);				
 	}
 
 	@Override
@@ -203,7 +200,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 			@Override
 			public void run() {
 
-				activeWindowGL.clearComponents();
+				//activeWindowGL.clearComponents();
 
 				activeWindowGL.setApplication3D(anotherApplication3D);
 									
@@ -225,12 +222,8 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		
 		resetGraphics(drawable);
 
-		draw((Graphic)graphic);		
+		draw((Graphic)graphic);
 	}
-
-	private ApplicationGL anotherApplication3D;
-
-	private boolean changeApp = false;
 
 	@Override
 	protected void changeApplication() {

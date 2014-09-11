@@ -5,7 +5,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import javax.media.opengl.GLCapabilities;
+import javax.media.opengl.GLProfile;
 import javax.swing.JFrame;
+
+import com.jogamp.newt.opengl.GLWindow;
 
 import br.com.luvia.core.ApplicationGL;
 import br.com.luvia.core.GLCore;
@@ -38,19 +42,19 @@ public abstract class Luvia {
 		frame = createFrame(w, h);
 		luviaCore.setComponent(frame);
 
-		String s = getClass().getResource("").toString();
+		String s = Luvia.class.getResource("").toString();
 		
 		luviaCore.setUrl(s);
 		
 		setMainApplication(startApplication());
 
-		frame.setVisible(true);		
+		frame.setVisible(true);
 	}
-	
+		
 	private JFrame createFrame(int w, int h) {
-		
+				
 		JFrame frame = new JFrame();
-		
+				
 		frame.setSize(w, h);
 		
 		frame.setUndecorated(false);
@@ -71,6 +75,7 @@ public abstract class Luvia {
 					
 				}.start();
 			}
+			
 		});
 		
 		frame.addKeyListener(luviaCore.getControl().getKeyboard());
@@ -78,7 +83,7 @@ public abstract class Luvia {
 		return frame;
 	}
 	
-	protected void init(){
+	protected void init() {
 		//startThread();
 		//TODO Update Methods
 		executor = Executors.newScheduledThreadPool(1);
@@ -88,8 +93,7 @@ public abstract class Luvia {
 		
 		frame.setContentPane(luviaCore.getPanel());
 		
-		luviaCore.start();
-		
+		luviaCore.start();		
 	}
 
 	public abstract ApplicationGL startApplication();

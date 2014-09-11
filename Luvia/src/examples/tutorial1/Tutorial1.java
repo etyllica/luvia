@@ -6,8 +6,6 @@ import javax.media.opengl.GLAutoDrawable;
 
 import br.com.etyllica.core.event.Action;
 import br.com.etyllica.core.event.GUIEvent;
-import br.com.etyllica.core.event.KeyEvent;
-import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.gui.Button;
 import br.com.etyllica.gui.label.TextLabel;
@@ -50,18 +48,6 @@ public class Tutorial1 extends ApplicationGL {
 	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
 		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public GUIEvent updateKeyboard(KeyEvent event) {
-		// TODO Auto-generated method stub
-		return GUIEvent.NONE;
-	}
-
-	@Override
-	public GUIEvent updateMouse(PointerEvent event) {
-		// TODO Auto-generated method stub
-		return GUIEvent.NONE;
 	}
 		
 	public void changeColor(){

@@ -1,3 +1,4 @@
+import examples.GridPerspective;
 import examples.MarkerApplication;
 import examples.Ortographic;
 import examples.Perspective;
@@ -26,11 +27,11 @@ public class LuviaEngine extends Luvia {
 	@Override
 	public ApplicationGL startApplication(){
 
-		//setMainApplication(new Tutorial1(w, h));
-		//setMainApplication(new Perspective(w, h));
-		//setMainApplication(new Ortographic(w, h));
+		//return new Tutorial1(w, h);
+		//return new Perspective(w, h);
+		//return new Ortographic(w, h);
 		return new MarkerApplication(w, h);
-		
+		//return new GridPerspective(w, h);
 	}
 
 }

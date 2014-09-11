@@ -35,10 +35,9 @@ public class Ortographic extends ApplicationGL {
 		super(w, h);
 	}
 
-
 	@Override
 	public void init(GLAutoDrawable arg0) {
-		floor = TextureLoader.getInstance().loadTexture("/mark.png");
+		floor = TextureLoader.getInstance().loadTexture("mark.png");
 	}
 	
 	@Override
@@ -166,10 +165,6 @@ public class Ortographic extends ApplicationGL {
 	protected boolean click = false;
 
 	@Override
-	public GUIEvent updateKeyboard(KeyEvent event) {
-		return GUIEvent.NONE;
-	}
-	
 	public GUIEvent updateMouse(PointerEvent event) {
 
 		mx = event.getX();
@@ -205,11 +200,8 @@ public class Ortographic extends ApplicationGL {
 
 		drawFloor(gl);
 		
-
 		gl.glFlush();
-
-	}
-	
+	}	
 
 	@Override
 	public void draw(Graphic g) {
@@ -229,8 +221,6 @@ public class Ortographic extends ApplicationGL {
 		//System.out.println("w = "+w);
 		//System.out.println("h = "+h);
 		//g.drawLine(w/2, h/2, w/2+mx, h/2+my);
-
-		
 	}
 	
 }

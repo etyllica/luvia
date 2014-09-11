@@ -18,7 +18,7 @@ public class Graphics3D extends Graphic {
 		this.screen.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);		
 	}
 	
-	public void setGraphics(GLGraphics2D graphics) {		
+	public void setGraphics(GLGraphics2D graphics) {
 		this.screen = graphics;
 		this.screen.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 	}

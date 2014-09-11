@@ -1,8 +1,6 @@
 package br.com.luvia.core;
 
-import br.com.etyllica.context.Application;
 import br.com.etyllica.context.Context;
-import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.gui.Window;
 
 public class WindowGL extends Window {
@@ -11,10 +9,10 @@ public class WindowGL extends Window {
 	
 	private DefaultLoadApplicationGL load3D;
 	
-	public WindowGL(int x, int y, int w, int h){
+	public WindowGL(int x, int y, int w, int h) {
 		super(x,y,w,h);
 		
-		load3D = new DefaultLoadApplicationGL(x,y,w,h);
+		load3D = new DefaultLoadApplicationGL(x, y, w, h);
 		application3D = load3D;
 	}
 	
@@ -23,11 +21,6 @@ public class WindowGL extends Window {
 	}
 	
 	@Override
-	public Application getApplication() {
-		return (Application)application3D;
-	}
-
-	@Override
 	public void setApplication(Context application) {
 		setApplication3D((ApplicationGL)application3D);
 	}
@@ -35,15 +28,10 @@ public class WindowGL extends Window {
 	public void setApplication3D(ApplicationGL application3D) {
 		this.application = application3D;
 		this.application3D = application3D;
-		
-		//TODO Based on Window
-		clearComponents();
-		
-		add(application3D);
 	}
 		
 	/*@Override
-	public void changeApplication(){
+	public void changeApplication() {
 		
 		System.out.println("Window3D change Action");
 				
@@ -54,11 +42,11 @@ public class WindowGL extends Window {
 		
 	}
 	
-	public void changeApplication(GLAutoDrawable drawable){
+	public void changeApplication(GLAutoDrawable drawable) {
 		changeApplication(drawable, application3D.getReturnApplication3D());
 	}
 	
-	public void changeApplication(GLAutoDrawable drawable, Application3D application3D){
+	public void changeApplication(GLAutoDrawable drawable, Application3D application3D) {
 		
 		//TODO drawable = null
 		
@@ -100,13 +88,12 @@ public class WindowGL extends Window {
 		
 	}*/
 	
-	public DefaultLoadApplicationGL getLoadApplication3D(){
+	public DefaultLoadApplicationGL getLoadApplication3D() {
 		return load3D;
 	}
-		
-	@Override
-	public void draw(Graphic g) {
-		this.application3D.draw(g);
+	
+	public Context getContext() {
+		return this.application3D;
 	}
 	
 }

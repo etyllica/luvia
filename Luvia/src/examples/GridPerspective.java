@@ -45,7 +45,7 @@ public class GridPerspective extends ApplicationGL {
 		
 		aim.setAngleY(180);
 		
-		floor = TextureLoader.getInstance().loadTexture("/mark.png");		
+		floor = TextureLoader.getInstance().loadTexture("mark.png");
 	}
 	
 	@Override
