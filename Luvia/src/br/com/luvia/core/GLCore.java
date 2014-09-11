@@ -47,41 +47,37 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	private WindowGL activeWindowGL;
 
 	private ExecutorService loadExecutor;
-	
-	private final Font defaultFont = new Font("ARIAL", Font.PLAIN, 14);
-	
-	private final Color defaultColor = Color.BLACK;
-	
+
 	private JFrame component;
-	
+
 	private int oldW = 0;
 	private int oldH = 0;
-	
+
 	private ApplicationGL anotherApplication3D;
 
 	private boolean changeApp = false;
-	
+
 	public JPanel glass;
 
 	public GLCore(int w, int h) {
 		super();
 
 		activeWindowGL = new WindowGL(0, 0, w, h);
-		
+
 		glGraphics = new GLGraphics2D();
 
 		graphic = new Graphics3D(w,h);
-			    
-	    canvas.addMouseMotionListener(mouse);
-	    canvas.addMouseWheelListener(mouse);
-	    canvas.addMouseListener(mouse);
-		
+
+		canvas.addMouseMotionListener(mouse);
+		canvas.addMouseWheelListener(mouse);
+		canvas.addMouseListener(mouse);
+
 		canvas.getCanvas().addGLEventListener(this);			
-		
+
 		animator = new FPSAnimator(REFRESH_FPS, true);
 		animator.add(canvas.getCanvas());
 	}
-	
+
 	public void setComponent(JFrame frame) {
 		this.component = frame;
 	}
@@ -99,13 +95,13 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 		//Update Loaders
 		ImageLoader.getInstance().setUrl(s);
-		
+
 		FontLoader.getInstance().setUrl(s);
-		
+
 		MultimediaLoader.getInstance().setUrl(s);
-		
+
 		MeshLoader.getInstance().setUrl(s);
-		
+
 		TextureLoader.getInstance().setUrl(s);
 	}
 
@@ -128,15 +124,23 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		System.out.println("Init Application");
 
 	}
-	
+
 	private void resetGraphics(GLAutoDrawable drawable) {
 		glGraphics.setCanvas(drawable);
 
-		glGraphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
-		glGraphics.setColor(defaultColor);
-		glGraphics.setFont(defaultFont);
-		
-		graphic.setGraphics(glGraphics);		
+		graphic.setGraphics(glGraphics);
+
+		initGraphics(glGraphics);
+	}
+
+	private final Font defaultFont = new Font("ARIAL", Font.PLAIN, 14);
+
+	private final Color defaultColor = Color.BLACK;
+
+	private void initGraphics(GLGraphics2D graphics) {
+		graphic.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
+		graphic.setColor(defaultColor);
+		graphic.setFont(defaultFont);
 	}
 
 	@Override
@@ -152,33 +156,33 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 			changeApplication(drawable);
 
 		} else {
-						
+
 			updateSuperEvents(superEvent);
-			
+
 			drawActiveWindow(drawable);
 		}
 
 	}
-	
+
 	private void updateSuperEvents(GUIEvent event) {
-		
+
 		if(event == GUIEvent.ENABLE_FULL_SCREEN) {
 
 			this.oldW = component.getWidth();
 			this.oldH = component.getHeight();
-			
+
 			component.setExtendedState(JFrame.MAXIMIZED_BOTH);
-						
+
 		} else if(event == GUIEvent.DISABLE_FULL_SCREEN) {
-						
+
 			component.setExtendedState(JFrame.NORMAL);
 			component.setSize(oldW, oldH);			
 		}
-		
+
 	}
-	
+
 	private void changeApplication(GLAutoDrawable drawable) {
-		
+
 		DefaultLoadApplicationGL load3D = activeWindowGL.getLoadApplication3D();
 
 		load3D.init(drawable);
@@ -194,10 +198,8 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 			@Override
 			public void run() {
 
-				//activeWindowGL.clearComponents();
-
 				activeWindowGL.setApplication3D(anotherApplication3D);
-									
+
 				//desktop.reload(anotherApplication3D);
 
 			}
@@ -206,17 +208,30 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		loadExecutor.shutdown();
 
 		changeApp = false;
-		
+
 	}
-	
+
 	private void drawActiveWindow(GLAutoDrawable drawable) {
-				
+		
+		//Pre Drawing
+		resetGraphics(drawable);
+		preDisplay(drawable, graphic);
+
+		//Display 3D
 		reshape(drawable, canvas.getX(), canvas.getY(), canvas.getWidth(), canvas.getHeight());
 		activeWindowGL.getApplication3D().display(drawable);
-		
-		resetGraphics(drawable);
 
-		draw((Graphic)graphic);
+		//Post Drawing
+		resetGraphics(drawable);
+		draw(graphic);
+	}
+
+	private void preDisplay(GLAutoDrawable drawable, Graphic g) {
+
+		if(!canDraw())
+			return;
+
+		activeWindowGL.getApplication3D().preDisplay(drawable, g);
 	}
 
 	@Override
@@ -231,28 +246,28 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		anotherApplication3D.setSessionMap(activeWindowGL.getSessionMap());
 
 		replaceWindow(activeWindowGL);
-				
+
 		reload();
 	}
 
 	private void reload() {
 
 		activeWindowGL.reload(anotherApplication3D);
-		
+
 		changeApp = true;
 	}
 
 	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
 		activeWindowGL.getApplication3D().reshape(drawable, x, y, width, height);
 	}
-	
+
 	public void run() {
-		
+
 		update(System.currentTimeMillis());
 	}
-	
+
 	public JComponent getPanel() {
 		return canvas;
 	}
-	
+
 }

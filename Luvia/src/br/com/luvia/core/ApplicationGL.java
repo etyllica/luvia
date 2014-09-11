@@ -1,7 +1,5 @@
 package br.com.luvia.core;
 
-import java.awt.Graphics2D;
-
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
@@ -14,6 +12,7 @@ import br.com.abby.linear.AimPoint;
 import br.com.abby.linear.Point3D;
 import br.com.abby.util.CameraGL;
 import br.com.etyllica.context.Application;
+import br.com.etyllica.core.graphics.Graphic;
 
 public abstract class ApplicationGL extends Application implements GLEventListener {
 	
@@ -23,12 +22,12 @@ public abstract class ApplicationGL extends Application implements GLEventListen
 	
 	protected ApplicationGL returnApplication3D = this;
 	
-	public ApplicationGL(int w, int h){
+	public ApplicationGL(int w, int h) {
 		super(w,h);
 		init();
 	}
 	
-	public ApplicationGL(int x, int y, int width, int height){
+	public ApplicationGL(int x, int y, int width, int height) {
 		super(x,y,width,height);
 		init();
 	}
@@ -44,21 +43,21 @@ public abstract class ApplicationGL extends Application implements GLEventListen
 		
 	}
 
-	public void preDisplay(Graphics2D g) {
+	public void preDisplay(GLAutoDrawable drawable, Graphic g) {
 		
 	}
 		
 	@Override
-	public void dispose(GLAutoDrawable drawable){
+	public void dispose(GLAutoDrawable drawable) {
 		// TODO Auto-generated method stub
 	}
 	
-	public ApplicationGL getReturnApplication3D(){
+	public ApplicationGL getReturnApplication3D() {
 		return returnApplication3D;
 	}
 	
 	/*//Texture routines
-	protected void enableTextureDefault(GL2 gl){
+	protected void enableTextureDefault(GL2 gl) {
 
 		gl.glShadeModel (GL2.GL_FLAT);
 
@@ -80,7 +79,7 @@ public abstract class ApplicationGL extends Application implements GLEventListen
 
 	}*/
 	
-	protected int[] getViewPort(GL2 gl){
+	protected int[] getViewPort(GL2 gl) {
 
 		int viewport[] = new int[4];
 		gl.glGetIntegerv(GL.GL_VIEWPORT, viewport, 0);
@@ -88,7 +87,7 @@ public abstract class ApplicationGL extends Application implements GLEventListen
 		return viewport;
 	}
 
-	protected double[] getModelView(GL2 gl){
+	protected double[] getModelView(GL2 gl) {
 
 		double modelView[] = new double[16];
 		gl.glGetDoublev(GL2.GL_MODELVIEW_MATRIX, modelView, 0);
@@ -96,7 +95,7 @@ public abstract class ApplicationGL extends Application implements GLEventListen
 		return modelView;
 	}
 
-	protected double[] getProjection(GL2 gl){
+	protected double[] getProjection(GL2 gl) {
 
 		double projection[] = new double[16];
 
@@ -105,7 +104,7 @@ public abstract class ApplicationGL extends Application implements GLEventListen
 		return projection;
 	}
 	
-	protected Point3D get3DPointerFromMouse(GL2 gl, float mx, float my, float zPlane){
+	protected Point3D get3DPointerFromMouse(GL2 gl, float mx, float my, float zPlane) {
 		
 		final int X = 0;
 		final int Y = 1;
@@ -139,13 +138,13 @@ public abstract class ApplicationGL extends Application implements GLEventListen
 		
 	}
 	
-	protected Point3D get3DPointerFromMouse(GL2 gl, float mx, float my){
+	protected Point3D get3DPointerFromMouse(GL2 gl, float mx, float my) {
 		
 		return get3DPointerFromMouse(gl, mx, my, 0);
 
 	}
 	
-	protected double[] get2DPositionFromPoint(GL2 gl, double px, double py, double pz){
+	protected double[] get2DPositionFromPoint(GL2 gl, double px, double py, double pz) {
 
 		double[] position = new double[3];
 

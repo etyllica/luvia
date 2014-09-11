@@ -254,13 +254,21 @@ public class MarkerApplication extends ApplicationGL {
 	}
 
 	@Override
+	public void preDisplay(GLAutoDrawable drawable, Graphic g) {
+		
+		GL2 gl = drawable.getGL().getGL2();
+
+		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
+		gl.glClearColor(1f, 1f, 1f, 1);
+		
+		g.setColor(Color.YELLOW);
+		g.fillRect(10, 10, w, 60);
+	}
+	
+	@Override
 	public void display(GLAutoDrawable drawable) {
 
 		GL2 gl = drawable.getGL().getGL2();
-
-		//TODO TEST
-		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
-		gl.glClearColor(1f, 1f, 1f, 1);
 				
 		//Transform by Camera
 		lookCamera(drawable.getGL().getGL2());
