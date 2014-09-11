@@ -5,11 +5,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import javax.media.opengl.GLCapabilities;
-import javax.media.opengl.GLProfile;
 import javax.swing.JFrame;
-
-import com.jogamp.newt.opengl.GLWindow;
 
 import br.com.luvia.core.ApplicationGL;
 import br.com.luvia.core.GLCore;
@@ -47,7 +43,8 @@ public abstract class Luvia {
 		luviaCore.setUrl(s);
 		
 		setMainApplication(startApplication());
-
+		
+		frame.requestFocus();
 		frame.setVisible(true);
 	}
 		
@@ -79,7 +76,7 @@ public abstract class Luvia {
 		});
 		
 		frame.addKeyListener(luviaCore.getControl().getKeyboard());
-		
+				
 		return frame;
 	}
 	
@@ -91,8 +88,8 @@ public abstract class Luvia {
 		executor.scheduleAtFixedRate(luviaCore, UPDATE_DELAY, UPDATE_DELAY, TimeUnit.MILLISECONDS);
 		//executor.scheduleAtFixedRate(this, TIME_UPDATE_INTERVAL, TIME_UPDATE_INTERVAL, TimeUnit.MILLISECONDS);
 		
-		frame.setContentPane(luviaCore.getPanel());
-		
+		frame.add(luviaCore.getPanel());
+				
 		luviaCore.start();		
 	}
 
@@ -101,7 +98,6 @@ public abstract class Luvia {
 	private void setMainApplication(ApplicationGL applicationGL) {
 
 		luviaCore.setMainApplication3D(applicationGL);
-		
 	}
-
+	
 }

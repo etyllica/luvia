@@ -234,6 +234,7 @@ public class MarkerApplication extends ApplicationGL {
 		return GUIEvent.NONE;
 	}
 	
+	@Override
 	public GUIEvent updateMouse(PointerEvent event) {
 
 		mx = event.getX();

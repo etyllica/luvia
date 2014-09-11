@@ -1,7 +1,6 @@
 package br.com.luvia.core;
 
 import java.awt.AlphaComposite;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.concurrent.ExecutorService;
@@ -9,6 +8,7 @@ import java.util.concurrent.Executors;
 
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -18,7 +18,7 @@ import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.loader.FontLoader;
 import br.com.etyllica.core.loader.image.ImageLoader;
-import br.com.luvia.core.glg2d.GLG2DCanvas;
+import br.com.luvia.core.glg2d.GLG2DPanel;
 import br.com.luvia.core.glg2d.GLGraphics2D;
 import br.com.luvia.core.video.Graphics3D;
 import br.com.luvia.loader.TextureLoader;
@@ -32,8 +32,6 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	private static final int UPDATE_DELAY = 20;
 
 	private static final int REFRESH_FPS = 20; // Display refresh frames per second
-	
-	private JPanel panel = new JPanel();
 
 	private GLGraphics2D glGraphics;
 
@@ -41,7 +39,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 	private String url;
 
-	private GLG2DCanvas canvas = new GLG2DCanvas();
+	private GLG2DPanel canvas = new GLG2DPanel();
 
 	private FPSAnimator animator;  // Used to drive display()
 
@@ -62,6 +60,8 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	private ApplicationGL anotherApplication3D;
 
 	private boolean changeApp = false;
+	
+	public JPanel glass;
 
 	public GLCore(int w, int h) {
 		super();
@@ -71,17 +71,13 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		glGraphics = new GLGraphics2D();
 
 		graphic = new Graphics3D(w,h);
-				
-		canvas.addMouseMotionListener(mouse);
-		canvas.addMouseWheelListener(mouse);
-		canvas.addMouseListener(mouse);
-
-		panel.setSize(w, h);
-		panel.setLayout(new BorderLayout());
-		panel.add(canvas, BorderLayout.CENTER);
+			    
+	    canvas.addMouseMotionListener(mouse);
+	    canvas.addMouseWheelListener(mouse);
+	    canvas.addMouseListener(mouse);
 		
-		canvas.getCanvas().addGLEventListener(this);
-
+		canvas.getCanvas().addGLEventListener(this);			
+		
 		animator = new FPSAnimator(REFRESH_FPS, true);
 		animator.add(canvas.getCanvas());
 	}
@@ -111,7 +107,6 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		MeshLoader.getInstance().setUrl(s);
 		
 		TextureLoader.getInstance().setUrl(s);
-		
 	}
 
 	public void start() {
@@ -141,7 +136,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		glGraphics.setColor(defaultColor);
 		glGraphics.setFont(defaultFont);
 		
-		graphic.setGraphics(glGraphics);				
+		graphic.setGraphics(glGraphics);		
 	}
 
 	@Override
@@ -177,8 +172,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		} else if(event == GUIEvent.DISABLE_FULL_SCREEN) {
 						
 			component.setExtendedState(JFrame.NORMAL);
-			component.setSize(oldW, oldH);
-			
+			component.setSize(oldW, oldH);			
 		}
 		
 	}
@@ -217,7 +211,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	
 	private void drawActiveWindow(GLAutoDrawable drawable) {
 				
-		reshape(drawable, panel.getX(), panel.getY(), panel.getWidth(), panel.getHeight());
+		reshape(drawable, canvas.getX(), canvas.getY(), canvas.getWidth(), canvas.getHeight());
 		activeWindowGL.getApplication3D().display(drawable);
 		
 		resetGraphics(drawable);
@@ -232,12 +226,11 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	}
 
 	public void setMainApplication3D(ApplicationGL application3D) {
-		//this.mainApplication = application3D;
 
 		anotherApplication3D = application3D;
 		anotherApplication3D.setSessionMap(activeWindowGL.getSessionMap());
 
-		addWindow(activeWindowGL);
+		replaceWindow(activeWindowGL);
 				
 		reload();
 	}
@@ -256,10 +249,10 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	public void run() {
 		
 		update(System.currentTimeMillis());
-
 	}
-
-	public JPanel getPanel() {
-		return panel;
+	
+	public JComponent getPanel() {
+		return canvas;
 	}
+	
 }
