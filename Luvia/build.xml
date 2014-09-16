@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
 <project name="Luvia" default="dist" basedir=".">
 
-	<property name="version"  value="0.5" />
-
+	<property name="version"  value="0.7" />
 	<property name="libcore"  value="luvia-${version}" />
 
 	<property name="src.dir"   value="src" />
@@ -29,9 +28,19 @@
 	</target>
    
 	<target name="compile">
-    		<javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="classpath" source="1.6" target="1.6" debug="off">
-			<classpath refid="classpath" />
+                <javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false" source="1.6" target="1.6" debug="off">
+		  <classpath>
+		    <pathelement path="${classpath}" />
+		    <fileset dir="${lib.dir}">
+			<include name="etyllica*.jar"/>
+			<include name="gluegen-rt.jar"/>
+			<include name="jogl-all.jar"/>
+		    </fileset>
+		  </classpath>
 		</javac>
+		<copy todir="${build.dir}">
+		  <fileset dir="${src.dir}" excludes="**/*.java"/>
+		</copy>
 	</target>
 
 	<target name="package" depends="init, compile">
@@ -41,10 +50,6 @@
 				<include name="**/br/com/luvia/**"/>
 				<include name="**/org/lwjgl/*"/>
 				<include name="**/org/lwjgl/**"/>
-			</fileset>
-		</jar>
-		<jar destfile="${lib.dir}/glg2d.jar">
-			<fileset dir="${build.dir}">
 				<include name="**/org/jogamp/*"/>
 				<include name="**/org/jogamp/**"/>
 			</fileset>
