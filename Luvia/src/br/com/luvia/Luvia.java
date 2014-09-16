@@ -38,14 +38,18 @@ public abstract class Luvia {
 		frame = createFrame(w, h);
 		luviaCore.setComponent(frame);
 
-		String s = Luvia.class.getResource("").toString();
+		String path = Luvia.class.getResource("").toString();
 		
-		luviaCore.setUrl(s);
+		setPath(path);
 		
 		setMainApplication(startApplication());
 		
 		frame.requestFocus();
 		frame.setVisible(true);
+	}
+	
+	protected void setPath(String path) {
+		luviaCore.setUrl(path);
 	}
 		
 	private JFrame createFrame(int w, int h) {
@@ -89,10 +93,10 @@ public abstract class Luvia {
 		//executor.scheduleAtFixedRate(this, TIME_UPDATE_INTERVAL, TIME_UPDATE_INTERVAL, TimeUnit.MILLISECONDS);
 		
 		frame.add(luviaCore.getPanel());
-				
+						
 		luviaCore.start();		
 	}
-
+	
 	public abstract ApplicationGL startApplication();
 	
 	private void setMainApplication(ApplicationGL applicationGL) {

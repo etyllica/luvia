@@ -12,7 +12,6 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import sound.MultimediaLoader;
 import br.com.etyllica.core.InnerCore;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.graphics.Graphic;
@@ -97,8 +96,6 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		ImageLoader.getInstance().setUrl(s);
 
 		FontLoader.getInstance().setUrl(s);
-
-		MultimediaLoader.getInstance().setUrl(s);
 
 		MeshLoader.getInstance().setUrl(s);
 
