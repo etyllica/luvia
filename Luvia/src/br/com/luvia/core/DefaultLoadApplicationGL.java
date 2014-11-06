@@ -25,7 +25,7 @@ public class DefaultLoadApplicationGL extends ApplicationGL implements LoadAppli
 		load();
 	}
 
-	protected String phrase = "Loading...";
+	protected String loadingInfo = "Loading...";
 	
 	protected String percent = "0%";
 
@@ -57,7 +57,7 @@ public class DefaultLoadApplicationGL extends ApplicationGL implements LoadAppli
 		g.drawRect(bx-1,by-1,bxLimite+2,byLimite+2);
 
 		g.setColor(Color.WHITE);
-		g.writeX(100, phrase,true);
+		g.writeX(100, loadingInfo,true);
 			
 		//Desenha preenchimento da barra
 		g.fillRect(bx+2, by+2, fill*4, byLimite-3);
@@ -72,7 +72,7 @@ public class DefaultLoadApplicationGL extends ApplicationGL implements LoadAppli
 
 	public void setText(String phrase, int load){
 		
-		this.phrase = phrase;
+		this.loadingInfo = phrase;
 		
 		this.percent = Integer.toString(load)+"%";
 
@@ -115,11 +115,13 @@ public class DefaultLoadApplicationGL extends ApplicationGL implements LoadAppli
 	}
 
 	@Override
-	public void setText(String phrase, float load) {
-
-		this.phrase = phrase;
+	public void onChangeLoad(float load) {
 		this.loading = load;
-		
+	}
+
+	@Override
+	public void onChangeText(String loadingInfo) {
+		this.loadingInfo = loadingInfo;
 	}
 
 }
