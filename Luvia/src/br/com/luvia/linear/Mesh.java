@@ -19,10 +19,10 @@ import javax.media.opengl.GL2;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
-import br.com.abby.linear.Point3D;
+import br.com.abby.linear.AimPoint;
 import br.com.abby.vbo.Face;
-import br.com.luvia.loader.mesh.vbo.Group;
 import br.com.luvia.core.GL2Drawable;
+import br.com.luvia.loader.mesh.vbo.Group;
 import br.com.luvia.material.Material;
 
 import com.jogamp.opengl.util.texture.Texture;
@@ -34,7 +34,7 @@ import com.jogamp.opengl.util.texture.Texture;
  *
  */
 
-public class Mesh extends Point3D implements GL2Drawable {
+public class Mesh extends AimPoint implements GL2Drawable {
 
 	private Set<Integer> vertexSelection = new HashSet<Integer>();
 
@@ -50,9 +50,10 @@ public class Mesh extends Point3D implements GL2Drawable {
 
 	private boolean drawTexture = true;
 
-	private float zoom = 1;
+	private float scale = 1;
 
 	private double angleY = 0;
+	private double angleX = 0;
 
 	public Mesh() {
 		super(0,0,0);
@@ -123,15 +124,15 @@ public class Mesh extends Point3D implements GL2Drawable {
 
 	}
 
-	@Override
-	public void draw(GL2 gl) {
-
-		gl.glEnable(GL.GL_DEPTH_TEST);
-
+	public void simpleDraw(GL2 gl) {
+		
 		gl.glPushMatrix();
 
 		gl.glTranslated(x, y, z);
+		gl.glRotated(angleX, 1, 0, 0);
 		gl.glRotated(angleY, 0, 1, 0);
+		gl.glRotated(angleZ, 0, 0, 1);
+		gl.glScaled(scale, scale, scale);
 
 		//gl.glTranslated(x, y, z);
 
@@ -233,6 +234,16 @@ public class Mesh extends Point3D implements GL2Drawable {
 
 
 		gl.glPopMatrix();
+		
+	}
+	
+	@Override
+	public void draw(GL2 gl) {
+
+		gl.glEnable(GL.GL_DEPTH_TEST);
+
+		simpleDraw(gl);
+		
 		gl.glDisable(GL.GL_DEPTH_TEST);
 
 
@@ -255,25 +266,12 @@ public class Mesh extends Point3D implements GL2Drawable {
 		this.groups = groups;
 	}
 
-	public float getZoom() {
-		return zoom;
+	public float getScale() {
+		return scale;
 	}
 
-	public void setZoom(float zoom) {
-		this.zoom = zoom;
+	public void setScale(float scale) {
+		this.scale = scale;
 	}
-
-	public double getAngleY() {
-		return angleY;
-	}
-
-	public void setAngleY(double angleY) {
-		this.angleY = angleY;
-	}
-
-	public void setOffsetAngleY(double angleY) {
-		this.angleY += angleY;
-	}
-
 
 }
