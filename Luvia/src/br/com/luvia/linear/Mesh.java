@@ -52,9 +52,6 @@ public class Mesh extends AimPoint implements GL2Drawable {
 
 	private float scale = 1;
 
-	private double angleY = 0;
-	private double angleX = 0;
-
 	public Mesh() {
 		super(0,0,0);
 	}
