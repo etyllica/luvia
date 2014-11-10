@@ -6,7 +6,6 @@ import static javax.media.opengl.GL.GL_TEXTURE_2D;
 import static javax.media.opengl.GL.GL_TEXTURE_MAG_FILTER;
 import static javax.media.opengl.GL.GL_TEXTURE_MIN_FILTER;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -16,13 +15,14 @@ import java.util.Set;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
-import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import br.com.abby.linear.AimPoint;
+import br.com.abby.loader.MeshLoader;
 import br.com.abby.vbo.Face;
+import br.com.abby.vbo.Group;
+import br.com.abby.vbo.VBO;
 import br.com.luvia.core.GL2Drawable;
-import br.com.luvia.loader.mesh.vbo.Group;
 import br.com.luvia.material.Material;
 
 import com.jogamp.opengl.util.texture.Texture;
@@ -38,15 +38,9 @@ public class Mesh extends AimPoint implements GL2Drawable {
 
 	private Set<Integer> vertexSelection = new HashSet<Integer>();
 
-	public List<Vector3f> vertexes = new ArrayList<Vector3f>();
-	public List<Vector3f> normals = new ArrayList<Vector3f>();
-	public List<Vector2f> textures = new ArrayList<Vector2f>();
+	private VBO vbo;
 
-	public List<Face> faces = new ArrayList<Face>();
-
-	private List<Group> groups = new ArrayList<Group>();
-
-	private Map<String, Material> materials = new HashMap<String, Material>();
+	private Map<Group, Material> materials = new HashMap<Group, Material>();
 
 	private boolean drawTexture = true;
 
@@ -54,6 +48,15 @@ public class Mesh extends AimPoint implements GL2Drawable {
 
 	public Mesh() {
 		super(0,0,0);
+	}
+	
+	public Mesh(String path) {
+		super(0,0,0);
+		
+		vbo = MeshLoader.getInstance().loadModel(path);
+		for(Group group: vbo.getGroups()) {
+			materials.put(group, new Material(group.getMaterial()));
+		}
 	}
 
 	public boolean isDrawTexture() {
@@ -64,20 +67,20 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		this.drawTexture = drawTexture;
 	}
 
-	public Map<String, Material> getMaterials() {
+	/*public Map<String, Material> getMaterials() {
 		return materials;
 	}
 
 	public void setMaterials(Map<String, Material> materials) {
 		this.materials = materials;
-	}
+	}*/
 
 	public List<Vector3f> getVertexes() {
-		return vertexes;
+		return vbo.getVertices();
 	}
 
 	public void setVertexes(List<Vector3f> vertexes) {
-		this.vertexes = vertexes;
+		this.vbo.setVertices(vertexes);
 	}
 
 	public void drawWireFrame(GL2 gl) {
@@ -90,7 +93,7 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		//gl.glPolygonMode(GL2.GL_BACK, GL2.GL_FILL);
 
 		// Draw Model		
-		for(Group group: groups) {
+		for(Group group: vbo.getGroups()) {
 
 			for(Face face: group.getFaces()) {
 
@@ -135,16 +138,16 @@ public class Mesh extends AimPoint implements GL2Drawable {
 
 		Texture texture = null;
 
-		for(Group group: groups) {
+		for(Group group: vbo.getGroups()) {
 
 			drawTexture = false;
 
 			if(group.getMaterial()!=null) {
 
-				texture = group.getMaterial().getTextureD();
+				texture = materials.get(group).getTextureD();
 
 				if(texture==null) {
-					texture = group.getMaterial().getTextureKd();
+					texture = materials.get(group).getTextureKd();
 				}
 
 				if(texture!=null) {
@@ -253,14 +256,6 @@ public class Mesh extends AimPoint implements GL2Drawable {
 
 	public void setVertexSelection(Set<Integer> vertexSelection) {
 		this.vertexSelection = vertexSelection;
-	}
-
-	public List<Group> getGroups() {
-		return groups;
-	}
-
-	public void setGroups(List<Group> groups) {
-		this.groups = groups;
 	}
 
 	public float getScale() {

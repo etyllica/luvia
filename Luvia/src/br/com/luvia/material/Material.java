@@ -1,6 +1,7 @@
 package br.com.luvia.material;
 
-import br.com.abby.material.DiffuseMaterial;
+import br.com.abby.material.OBJMaterial;
+import br.com.luvia.loader.TextureLoader;
 
 import com.jogamp.opengl.util.texture.Texture;
 
@@ -11,8 +12,10 @@ import com.jogamp.opengl.util.texture.Texture;
  *
  */
 
-public class Material extends DiffuseMaterial {
-		
+public class Material {
+	
+	private OBJMaterial material;
+	
 	//Ambient Color
 	private Texture textureKa = null;
 	
@@ -27,8 +30,23 @@ public class Material extends DiffuseMaterial {
 	
 	private Texture textureD = null;	
 	
-	public Material() {
+	public Material(OBJMaterial material) {
 		super();
+		
+		this.material = material;
+		
+		if(!material.getMapD().isEmpty()) {
+			setTextureD(TextureLoader.getInstance().loadTexture(material.getMapD()));
+		}
+		
+		if(!material.getMapKd().isEmpty()) {
+			setTextureKd(TextureLoader.getInstance().loadTexture(material.getMapKd()));	
+		}
+		
+		if(!material.getMapKa().isEmpty()) {
+			setTextureKa(TextureLoader.getInstance().loadTexture(material.getMapKa()));	
+		}
+		
 	}
 
 	public Texture getTextureKa() {

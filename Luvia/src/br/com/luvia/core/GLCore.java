@@ -12,6 +12,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import br.com.abby.loader.MeshLoader;
 import br.com.etyllica.core.InnerCore;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.graphics.Graphic;
@@ -21,7 +22,6 @@ import br.com.luvia.core.glg2d.GLG2DPanel;
 import br.com.luvia.core.glg2d.GLGraphics2D;
 import br.com.luvia.core.video.Graphics3D;
 import br.com.luvia.loader.TextureLoader;
-import br.com.luvia.loader.mesh.MeshLoader;
 
 import com.jogamp.opengl.util.FPSAnimator;
 
