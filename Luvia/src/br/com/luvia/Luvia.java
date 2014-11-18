@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 
+import br.com.etyllica.util.PathHelper;
 import br.com.luvia.core.ApplicationGL;
 import br.com.luvia.core.GLCore;
 
@@ -38,7 +39,7 @@ public abstract class Luvia {
 		frame = createFrame(w, h);
 		luviaCore.setComponent(frame);
 
-		String path = Luvia.class.getResource("").toString();
+		String path = PathHelper.currentDirectory();
 		
 		setPath(path);
 		
@@ -79,9 +80,19 @@ public abstract class Luvia {
 			
 		});
 		
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		frame.addKeyListener(luviaCore.getControl().getKeyboard());
 				
 		return frame;
+	}
+	
+	public void hideCursor() {
+		luviaCore.hideCursor();
+	}
+	
+	public void setTitle(String title) {
+		frame.setTitle(title);
 	}
 	
 	protected void init() {
