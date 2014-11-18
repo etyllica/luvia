@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project name="Luvia" default="dist" basedir=".">
 
-	<property name="version"  value="0.7" />
+	<property name="version"  value="0.8" />
 	<property name="libcore"  value="luvia-${version}" />
 
 	<property name="src.dir"   value="src" />
