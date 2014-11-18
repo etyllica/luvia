@@ -3,6 +3,8 @@ package br.com.luvia.core;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -17,7 +19,9 @@ import br.com.etyllica.core.InnerCore;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.loader.FontLoader;
+import br.com.etyllica.core.loader.Loader;
 import br.com.etyllica.core.loader.image.ImageLoader;
+import br.com.etyllica.util.io.IOHandler;
 import br.com.luvia.core.glg2d.GLG2DPanel;
 import br.com.luvia.core.glg2d.GLGraphics2D;
 import br.com.luvia.core.video.Graphics3D;
@@ -57,6 +61,8 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	private boolean changeApp = false;
 
 	public JPanel glass;
+	
+	private Set<Loader> loaders = new HashSet<Loader>();
 
 	public GLCore(int w, int h) {
 		super();
@@ -75,6 +81,15 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 		animator = new FPSAnimator(REFRESH_FPS, true);
 		animator.add(canvas.getCanvas());
+		
+		initLoaders();
+	}
+	
+	private void initLoaders() {
+		loaders.add(ImageLoader.getInstance());
+		loaders.add(FontLoader.getInstance());
+		loaders.add(MeshLoader.getInstance());
+		loaders.add(TextureLoader.getInstance());
 	}
 
 	public void setComponent(JFrame frame) {
@@ -87,19 +102,20 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 	public void setUrl(String url) {
 
-		//For Windows
-		String s = url.replaceAll("%20"," ");
+		String s = IOHandler.fixPath(url);
 
 		this.url = s;
+		
+		initDefault();
+	}
+	
+	public void initDefault() {
 
-		//Update Loaders
-		ImageLoader.getInstance().setUrl(s);
+		for(Loader loader:loaders) {
+			loader.setUrl(url);
+			loader.start();
+		}
 
-		FontLoader.getInstance().setUrl(s);
-
-		MeshLoader.getInstance().setUrl(s);
-
-		TextureLoader.getInstance().setUrl(s);
 	}
 
 	public void start() {
@@ -179,7 +195,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	}
 
 	private void changeApplication(GLAutoDrawable drawable) {
-
+		
 		DefaultLoadApplicationGL load3D = activeWindowGL.getLoadApplication3D();
 
 		load3D.init(drawable);
@@ -234,7 +250,9 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	@Override
 	protected void changeApplication() {
 
-		setMainApplication3D(activeWindowGL.getApplication3D().getReturnApplication3D());		
+		ApplicationGL nextApplication = (ApplicationGL)activeWindowGL.getApplication3D().getNextApplication();
+		
+		setMainApplication3D(nextApplication);
 	}
 
 	public void setMainApplication3D(ApplicationGL application3D) {
