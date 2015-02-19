@@ -21,7 +21,7 @@ import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.loader.FontLoader;
 import br.com.etyllica.core.loader.Loader;
 import br.com.etyllica.core.loader.image.ImageLoader;
-import br.com.etyllica.util.io.IOHandler;
+import br.com.etyllica.util.io.IOHelper;
 import br.com.luvia.core.glg2d.GLG2DPanel;
 import br.com.luvia.core.glg2d.GLGraphics2D;
 import br.com.luvia.core.video.Graphics3D;
@@ -102,7 +102,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 	public void setUrl(String url) {
 
-		String s = IOHandler.fixPath(url);
+		String s = IOHelper.fixPath(url);
 
 		this.url = s;
 		
