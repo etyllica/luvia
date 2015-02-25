@@ -1,5 +1,7 @@
 package br.com.luvia.core;
 
+import java.awt.Color;
+
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
@@ -171,6 +173,14 @@ public abstract class ApplicationGL extends Application implements GLEventListen
 		gl.glRotated(360-aim.getAngleZ(), 0, 0, 1);
 		
 		gl.glTranslated(-aim.getX(), -aim.getY(), -aim.getZ());
+	}
+	
+	public void setColor(GL2 gl, Color color) {
+		float red = ((float)color.getRed()/255);
+		float green = ((float)color.getGreen()/255);
+		float blue = ((float)color.getBlue()/255);
+				
+		gl.glColor3f(red, green, blue);
 	}
 	
 }
