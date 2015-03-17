@@ -50,15 +50,30 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		super(0,0,0);
 	}
 	
+	public Mesh(VBO vbo) {
+		super(0,0,0);
+		
+		this.vbo = vbo;
+		loadMaterials();
+	}
+	
 	public Mesh(String path) {
 		super(0,0,0);
 		
+		loadVBO(path);
+		loadMaterials();
+	}
+
+	protected void loadVBO(String path) {
 		vbo = MeshLoader.getInstance().loadModel(path);
+	}
+
+	protected void loadMaterials() {
 		for(Group group: vbo.getGroups()) {
 			materials.put(group, new Material(group.getMaterial()));
 		}
 	}
-
+	
 	public boolean isDrawTexture() {
 		return drawTexture;
 	}

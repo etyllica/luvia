@@ -153,7 +153,6 @@ public abstract class ApplicationGL extends Application implements GLEventListen
 		//double w = m[3]*point.getX()+m[7]*point.getY()+m[11]*point.getZ()+m[15]*0;
 		
 		return new Point3D(x, y, z);
-		
 	}
 	
 	public void updateCamera(GL2 gl, CameraGL camera) {
@@ -174,7 +173,7 @@ public abstract class ApplicationGL extends Application implements GLEventListen
 		
 		gl.glTranslated(-aim.getX(), -aim.getY(), -aim.getZ());
 	}
-	
+		
 	public void setColor(GL2 gl, Color color) {
 		float red = ((float)color.getRed()/255);
 		float green = ((float)color.getGreen()/255);
