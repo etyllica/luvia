@@ -58,11 +58,9 @@ public class TextureLoader extends LoaderImpl {
 		
 		return null;
 	}
-	
-	public Texture loadTexture(String textureName) {
 		
+	public Texture loadTexture(String textureName) {
 		return loadTexture(getPath()+folder, textureName);
-
 	}
 	
 	public Texture loadTexture(BufferedImage buffer) {

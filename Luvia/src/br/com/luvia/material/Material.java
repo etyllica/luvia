@@ -36,15 +36,15 @@ public class Material {
 		this.material = material;
 		
 		if(!material.getMapD().isEmpty()) {
-			setTextureD(TextureLoader.getInstance().loadTexture(material.getMapD()));
+			setTextureD(TextureLoader.getInstance().loadTexture("", material.getMapD()));
 		}
 		
 		if(!material.getMapKd().isEmpty()) {
-			setTextureKd(TextureLoader.getInstance().loadTexture(material.getMapKd()));	
+			setTextureKd(TextureLoader.getInstance().loadTexture("", material.getMapKd()));	
 		}
 		
 		if(!material.getMapKa().isEmpty()) {
-			setTextureKa(TextureLoader.getInstance().loadTexture(material.getMapKa()));	
+			setTextureKa(TextureLoader.getInstance().loadTexture("", material.getMapKa()));	
 		}
 		
 	}
