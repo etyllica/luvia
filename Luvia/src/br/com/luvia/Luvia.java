@@ -108,6 +108,14 @@ public abstract class Luvia {
 		luviaCore.start();		
 	}
 	
+
+	protected void initialSetup(String path) {
+		
+		String directory = PathHelper.currentDirectory()+path;
+		
+		luviaCore.setUrl(directory);
+	}
+	
 	public abstract ApplicationGL startApplication();
 	
 	private void setMainApplication(ApplicationGL applicationGL) {
