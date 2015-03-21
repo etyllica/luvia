@@ -1,6 +1,7 @@
 package br.com.luvia.util;
 
 import br.com.abby.linear.Point3D;
+import br.com.etyllica.linear.Point2D;
 
 public class PointUtils {
 	
@@ -17,6 +18,21 @@ public class PointUtils {
 		deltaZ /= dist;
 				
 		Point3D c = new Point3D(a.getX()-distanceFromA*deltaX, a.getY()-distanceFromA*deltaY, a.getZ()-distanceFromA*deltaZ);
+
+		return c;
+	}
+	
+	public static Point2D distantPoint(Point2D a, Point2D b, double distanceFromA) {
+		
+		double deltaX = a.getX()-b.getX();
+		double deltaY = a.getY()-b.getY();
+		
+		double dist = Math.sqrt(deltaX*deltaX + deltaY*deltaY);
+		
+		deltaX /= dist;
+		deltaY /= dist;
+				
+		Point2D c = new Point2D(a.getX()-distanceFromA*deltaX, a.getY()-distanceFromA*deltaY);
 
 		return c;
 	}
