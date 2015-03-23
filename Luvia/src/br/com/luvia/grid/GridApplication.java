@@ -2,7 +2,7 @@ package br.com.luvia.grid;
 
 import javax.media.opengl.GL2;
 
-import br.com.luvia.core.ApplicationGL;
+import br.com.luvia.core.context.ApplicationGL;
 
 public abstract class GridApplication extends ApplicationGL {
 

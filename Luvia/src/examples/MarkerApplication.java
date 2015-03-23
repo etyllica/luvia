@@ -12,7 +12,6 @@ import java.awt.image.BufferedImage;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
-import javax.media.opengl.GLAutoDrawable;
 
 import br.com.abby.util.CameraGL;
 import br.com.etyllica.core.event.GUIEvent;
@@ -20,7 +19,8 @@ import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.input.mouse.MouseButton;
-import br.com.luvia.core.ApplicationGL;
+import br.com.luvia.core.context.ApplicationGL;
+import br.com.luvia.core.video.Graphics3D;
 import br.com.luvia.loader.TextureLoader;
 
 import com.jogamp.opengl.util.texture.Texture;
@@ -47,7 +47,7 @@ public class MarkerApplication extends ApplicationGL {
 	}
 
 	@Override
-	public void init(GLAutoDrawable drawable) {
+	public void init(Graphics3D drawable) {
 		
 		//marker = TextureLoader.getInstance().loadTexture("/mark.png");
 		
@@ -140,7 +140,7 @@ public class MarkerApplication extends ApplicationGL {
 	}
 
 	@Override
-	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
+	public void reshape(Graphics3D drawable, int x, int y, int width, int height) {
 
 		GL2 gl = drawable.getGL().getGL2();
 
@@ -254,9 +254,9 @@ public class MarkerApplication extends ApplicationGL {
 	}
 
 	@Override
-	public void preDisplay(GLAutoDrawable drawable, Graphic g) {
+	public void preDisplay(Graphics3D g) {
 		
-		GL2 gl = drawable.getGL().getGL2();
+		GL2 gl = g.getDrawable().getGL().getGL2();
 
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 		gl.glClearColor(1f, 1f, 1f, 1);
@@ -266,7 +266,7 @@ public class MarkerApplication extends ApplicationGL {
 	}
 	
 	@Override
-	public void display(GLAutoDrawable drawable) {
+	public void display(Graphics3D drawable) {
 
 		GL2 gl = drawable.getGL().getGL2();
 				

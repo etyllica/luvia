@@ -4,7 +4,7 @@ import examples.Ortographic;
 import examples.Perspective;
 import examples.tutorial1.Tutorial1;
 import br.com.luvia.Luvia;
-import br.com.luvia.core.ApplicationGL;
+import br.com.luvia.core.context.ApplicationGL;
 
 
 public class LuviaEngine extends Luvia {

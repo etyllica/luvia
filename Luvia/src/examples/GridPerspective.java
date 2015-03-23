@@ -9,7 +9,6 @@ import java.awt.Color;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
-import javax.media.opengl.GLAutoDrawable;
 
 import br.com.abby.linear.AimPoint;
 import br.com.etyllica.core.event.GUIEvent;
@@ -17,7 +16,8 @@ import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.input.mouse.MouseButton;
-import br.com.luvia.core.ApplicationGL;
+import br.com.luvia.core.context.ApplicationGL;
+import br.com.luvia.core.video.Graphics3D;
 import br.com.luvia.loader.TextureLoader;
 
 import com.jogamp.opengl.util.texture.Texture;
@@ -39,7 +39,7 @@ public class GridPerspective extends ApplicationGL {
 	}
 
 	@Override
-	public void init(GLAutoDrawable arg0) {
+	public void init(Graphics3D drawable) {
 		
 		aim = new AimPoint(0, 5, 0);
 		
@@ -137,7 +137,7 @@ public class GridPerspective extends ApplicationGL {
 	}
 
 	@Override
-	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
+	public void reshape(Graphics3D drawable, int x, int y, int width, int height) {
 
 		GL2 gl = drawable.getGL().getGL2();
 
@@ -189,7 +189,7 @@ public class GridPerspective extends ApplicationGL {
 	}
 
 	@Override
-	public void display(GLAutoDrawable drawable) {
+	public void display(Graphics3D drawable) {
 
 		GL2 gl = drawable.getGL().getGL2();
 

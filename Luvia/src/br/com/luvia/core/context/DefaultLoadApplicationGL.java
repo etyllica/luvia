@@ -1,14 +1,13 @@
-package br.com.luvia.core;
+package br.com.luvia.core.context;
 
 import java.awt.Color;
-
-import javax.media.opengl.GLAutoDrawable;
 
 import br.com.etyllica.context.load.LoadApplication;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphic;
+import br.com.luvia.core.video.Graphics3D;
 
 /**
  * 
@@ -17,7 +16,7 @@ import br.com.etyllica.core.graphics.Graphic;
  *
  */
 
-public class DefaultLoadApplicationGL extends ApplicationGL implements LoadApplication{
+public class DefaultLoadApplicationGL extends ApplicationGL implements LoadApplication {
 
 	public DefaultLoadApplicationGL(int x, int y, int w, int h) {
 		super(x,y,w,h);
@@ -90,22 +89,18 @@ public class DefaultLoadApplicationGL extends ApplicationGL implements LoadAppli
 	}
 
 	@Override
-	public void init(GLAutoDrawable drawable) {
+	public void init(Graphics3D g) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
-	public void display(GLAutoDrawable drawable) {
+	public void display(Graphics3D g) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
-	public void reshape(GLAutoDrawable drawable, int x, int y, int width,
-			int height) {
+	public void reshape(Graphics3D g, int x, int y, int width, int height) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override

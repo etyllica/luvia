@@ -8,8 +8,8 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.JFrame;
 
 import br.com.etyllica.util.PathHelper;
-import br.com.luvia.core.ApplicationGL;
 import br.com.luvia.core.GLCore;
+import br.com.luvia.core.context.ApplicationGL;
 
 public abstract class Luvia {
 

@@ -1,11 +1,9 @@
-package br.com.luvia.core;
+package br.com.luvia.core.context;
 
 import java.awt.Color;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
-import javax.media.opengl.GLAutoDrawable;
-import javax.media.opengl.GLEventListener;
 import javax.media.opengl.glu.GLU;
 
 import org.lwjgl.util.vector.Vector3f;
@@ -14,9 +12,10 @@ import br.com.abby.linear.AimPoint;
 import br.com.abby.linear.Point3D;
 import br.com.abby.util.CameraGL;
 import br.com.etyllica.context.Application;
-import br.com.etyllica.core.graphics.Graphic;
+import br.com.luvia.core.G3DEventListener;
+import br.com.luvia.core.video.Graphics3D;
 
-public abstract class ApplicationGL extends Application implements GLEventListener {
+public abstract class ApplicationGL extends Application implements G3DEventListener {
 	
 	protected GLU glu;
 	
@@ -48,12 +47,14 @@ public abstract class ApplicationGL extends Application implements GLEventListen
 		
 	}
 
-	public void preDisplay(GLAutoDrawable drawable, Graphic g) {
+	public void preDisplay(Graphics3D g) {
 		
 	}
 		
+	public abstract void display(Graphics3D g);
+		
 	@Override
-	public void dispose(GLAutoDrawable drawable) {
+	public void dispose(Graphics3D g) {
 		// TODO Auto-generated method stub
 	}
 	

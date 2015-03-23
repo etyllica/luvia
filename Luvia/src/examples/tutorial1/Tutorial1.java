@@ -2,14 +2,13 @@ package examples.tutorial1;
 
 import java.awt.Color;
 
-import javax.media.opengl.GLAutoDrawable;
-
 import br.com.etyllica.core.event.Action;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.gui.Button;
 import br.com.etyllica.gui.label.TextLabel;
-import br.com.luvia.core.ApplicationGL;
+import br.com.luvia.core.context.ApplicationGL;
+import br.com.luvia.core.video.Graphics3D;
 
 public class Tutorial1 extends ApplicationGL {
 
@@ -20,7 +19,7 @@ public class Tutorial1 extends ApplicationGL {
 	private Color color = Color.WHITE;
 	
 	@Override
-	public void init(GLAutoDrawable drawable) {
+	public void init(Graphics3D drawable) {
 		//Init 3d Stuff		
 	}
 
@@ -39,13 +38,13 @@ public class Tutorial1 extends ApplicationGL {
 	}
 	
 	@Override
-	public void display(GLAutoDrawable drawable) {
+	public void display(Graphics3D drawable) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
+	public void reshape(Graphics3D drawable, int x, int y, int width, int height) {
 		// TODO Auto-generated method stub
 
 	}

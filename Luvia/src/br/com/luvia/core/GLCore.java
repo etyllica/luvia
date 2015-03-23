@@ -17,11 +17,12 @@ import javax.swing.JPanel;
 import br.com.abby.loader.MeshLoader;
 import br.com.etyllica.core.InnerCore;
 import br.com.etyllica.core.event.GUIEvent;
-import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.loader.FontLoader;
 import br.com.etyllica.core.loader.Loader;
 import br.com.etyllica.core.loader.image.ImageLoader;
 import br.com.etyllica.util.io.IOHelper;
+import br.com.luvia.core.context.ApplicationGL;
+import br.com.luvia.core.context.DefaultLoadApplicationGL;
 import br.com.luvia.core.glg2d.GLG2DPanel;
 import br.com.luvia.core.glg2d.GLGraphics2D;
 import br.com.luvia.core.video.Graphics3D;
@@ -133,7 +134,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		resetGraphics(drawable);
 
 		//TODO verify
-		activeWindowGL.getLoadApplication3D().init(drawable);
+		activeWindowGL.getLoadApplication3D().init(graphic);
 		System.out.println("Init Application");
 
 	}
@@ -142,6 +143,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		glGraphics.setCanvas(drawable);
 
 		graphic.setGraphics(glGraphics);
+		graphic.setDrawable(drawable);
 
 		initGraphics(glGraphics);
 	}
@@ -158,12 +160,14 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 	@Override
 	public void dispose(GLAutoDrawable drawable) {
-		activeWindowGL.getApplication3D().dispose(drawable);
+		graphic.setDrawable(drawable);
+		activeWindowGL.getApplication3D().dispose(graphic);
 	}
 
 	@Override
 	public void display(final GLAutoDrawable drawable) {
-
+		graphic.setDrawable(drawable);
+		
 		if(changeApp) {
 
 			changeApplication(drawable);
@@ -195,13 +199,14 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	}
 
 	private void changeApplication(GLAutoDrawable drawable) {
-		
+
+		graphic.setDrawable(drawable);
 		DefaultLoadApplicationGL load3D = activeWindowGL.getLoadApplication3D();
 
-		load3D.init(drawable);
+		load3D.init(graphic);
 		load3D.load();
 
-		anotherApplication3D.init(drawable);
+		anotherApplication3D.init(graphic);
 		anotherApplication3D.load();
 
 		loadExecutor = Executors.newSingleThreadExecutor();
@@ -228,23 +233,23 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		
 		//Pre Drawing
 		resetGraphics(drawable);
-		preDisplay(drawable, graphic);
+		preDisplay(graphic);
 
 		//Display 3D
 		reshape(drawable, canvas.getX(), canvas.getY(), canvas.getWidth(), canvas.getHeight());
-		activeWindowGL.getApplication3D().display(drawable);
+		activeWindowGL.getApplication3D().display(graphic);
 
 		//Post Drawing
 		resetGraphics(drawable);
 		draw(graphic);
 	}
 
-	private void preDisplay(GLAutoDrawable drawable, Graphic g) {
+	private void preDisplay(Graphics3D g3d) {
 
 		if(!canDraw())
 			return;
 
-		activeWindowGL.getApplication3D().preDisplay(drawable, g);
+		activeWindowGL.getApplication3D().preDisplay(g3d);
 	}
 
 	@Override
@@ -273,7 +278,8 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	}
 
 	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
-		activeWindowGL.getApplication3D().reshape(drawable, x, y, width, height);
+		graphic.setDrawable(drawable);
+		activeWindowGL.getApplication3D().reshape(graphic, x, y, width, height);
 	}
 
 	public void run() {
