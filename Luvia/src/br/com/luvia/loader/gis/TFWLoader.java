@@ -24,7 +24,6 @@ public class TFWLoader implements GISFileLoader {
      * Line 5: C: x-coordinate of the center of the upper left pixel
      * Line 6: F: y-coordinate of the center of the upper left pixel
 	 */
-	
 	private static final int TFW_LINES = 6;
 	
 	public GISInfo loadGISInfo(File file) throws IOException {
@@ -72,9 +71,7 @@ public class TFWLoader implements GISFileLoader {
 			break;
 		default:
 			break;
-		}
-		
-		System.out.println("Show: "+data);
+		}		
 	}
 	
 }

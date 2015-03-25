@@ -86,5 +86,5 @@ public class GISInfo {
 	
 	public double getYProjection(double x, double y) {
 		return rotationY*x + pixelSizeY*y + topLeftY;
-	}	   	
+	}   	
 }

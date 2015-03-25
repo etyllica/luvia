@@ -27,7 +27,7 @@ public class GISInfoLoader extends LoaderImpl {
 	}
 
 	public GISInfo loadInfo(String fileName) {
-		return loadInfo(getPath(), fileName);
+		return loadInfo(getPath()+folder, fileName);
 	}
 	
 	public GISInfo loadInfo(String fullPath, String fileName) {
@@ -43,7 +43,5 @@ public class GISInfoLoader extends LoaderImpl {
 
 		return null;
 	}
-
-	
 
 }

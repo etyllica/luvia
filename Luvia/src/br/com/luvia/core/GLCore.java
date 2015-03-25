@@ -26,6 +26,8 @@ import br.com.luvia.core.context.DefaultLoadApplicationGL;
 import br.com.luvia.core.glg2d.GLG2DPanel;
 import br.com.luvia.core.glg2d.GLGraphics2D;
 import br.com.luvia.core.video.Graphics3D;
+import br.com.luvia.gis.GISInfo;
+import br.com.luvia.loader.GISInfoLoader;
 import br.com.luvia.loader.TextureLoader;
 
 import com.jogamp.opengl.util.FPSAnimator;
@@ -91,6 +93,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		loaders.add(FontLoader.getInstance());
 		loaders.add(MeshLoader.getInstance());
 		loaders.add(TextureLoader.getInstance());
+		loaders.add(GISInfoLoader.getInstance());
 	}
 
 	public void setComponent(JFrame frame) {
