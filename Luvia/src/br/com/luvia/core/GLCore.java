@@ -26,7 +26,6 @@ import br.com.luvia.core.context.DefaultLoadApplicationGL;
 import br.com.luvia.core.glg2d.GLG2DPanel;
 import br.com.luvia.core.glg2d.GLGraphics2D;
 import br.com.luvia.core.video.Graphics3D;
-import br.com.luvia.gis.GISInfo;
 import br.com.luvia.loader.GISInfoLoader;
 import br.com.luvia.loader.TextureLoader;
 
@@ -80,7 +79,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		canvas.addMouseWheelListener(mouse);
 		canvas.addMouseListener(mouse);
 
-		canvas.getCanvas().addGLEventListener(this);			
+		canvas.getCanvas().addGLEventListener(this);		
 
 		animator = new FPSAnimator(REFRESH_FPS, true);
 		animator.add(canvas.getCanvas());
@@ -114,12 +113,10 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	}
 	
 	public void initDefault() {
-
 		for(Loader loader:loaders) {
 			loader.setUrl(url);
 			loader.start();
 		}
-
 	}
 
 	public void start() {
