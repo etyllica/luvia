@@ -4,3 +4,6 @@
 *.g
 *.v
 sdk/
+
+.classpath
+.project
