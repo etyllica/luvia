@@ -50,8 +50,10 @@ public class TextureLoader extends LoaderImpl {
 			try {
 				//return TextureIO.newTexture(file, false);
 				BufferedImage image = ImageIO.read(file);
-				ImageUtil.flipImageVertically(image);
-				return loadTexture(image);
+				if(image != null) {
+					ImageUtil.flipImageVertically(image);
+					return loadTexture(image);
+				}
 				
 			} catch (GLException e) {
 				// TODO Auto-generated catch block

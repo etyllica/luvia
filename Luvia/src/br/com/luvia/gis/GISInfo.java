@@ -78,6 +78,13 @@ public class GISInfo {
 
 	public void setTopLeftY(double topLeftY) {
 		this.topLeftY = topLeftY;
-	}    
-    	
+	}
+	
+	public double getXProjection(double x, double y) {
+		return pixelSizeX*x + rotationX*y + topLeftX;
+	}
+	
+	public double getYProjection(double x, double y) {
+		return rotationY*x + pixelSizeY*y + topLeftY;
+	}	   	
 }

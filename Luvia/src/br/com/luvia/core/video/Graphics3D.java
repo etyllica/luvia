@@ -12,6 +12,8 @@ import javax.media.opengl.glu.GLUquadric;
 
 import org.jogamp.glg2d.GLGraphics2D;
 
+import com.jogamp.opengl.util.texture.Texture;
+
 import br.com.abby.linear.AimPoint;
 import br.com.etyllica.core.graphics.Graphic;
 
@@ -72,6 +74,36 @@ public class Graphics3D extends Graphic {
             gl.glRotated(point.getAngleX(), 1, 0, 0);
             glu.gluSphere(sphere, radius, 32, 32);
         gl.glPopMatrix();
+	}
+	
+	public void drawTile(double x, double y, double tileSize, Texture texture) {
+
+		GL2 gl = drawable.getGL().getGL2();
+		
+		texture.enable(gl);
+		texture.bind(gl);
+		
+		gl.glBegin(GL2.GL_QUADS);
+
+		//(0,0)
+		gl.glTexCoord2d(0, 0);
+		gl.glVertex3d(x*tileSize, 0, y*tileSize);
+
+		//(1,0)
+		gl.glTexCoord2d(1, 0);
+		gl.glVertex3d(x*tileSize+tileSize, 0, y*tileSize);
+
+		//(1,1)
+		gl.glTexCoord2d(1, 1);
+		gl.glVertex3d(x*tileSize+tileSize, 0, y*tileSize+tileSize);
+
+		//(0,1)
+		gl.glTexCoord2d(0, 1);
+		gl.glVertex3d(x*tileSize, 0, y*tileSize+tileSize);
+
+		gl.glEnd();
+		
+		texture.disable(gl);
 	}
 
 	public GLBase getGL() {
