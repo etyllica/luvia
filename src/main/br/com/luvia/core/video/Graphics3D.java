@@ -1,5 +1,6 @@
 package br.com.luvia.core.video;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
@@ -57,6 +58,15 @@ public class Graphics3D extends Graphic {
 		gl.glGetIntegerv(GL.GL_VIEWPORT, viewport, 0);
 
 		return viewport;
+	}
+	
+	public void drawLine(Point3D a, Point3D b) {
+		GL2 gl = getGL2();
+		
+		gl.glBegin(GL.GL_LINES);
+		gl.glVertex3d(a.getX(), a.getY(), a.getZ());
+		gl.glVertex3d(b.getX(), b.getY(), b.getZ());
+		gl.glEnd();
 	}
 	
 	public void drawSphere(AimPoint point, double radius) {
@@ -209,6 +219,239 @@ public class Graphics3D extends Graphic {
 
 	public GLU getGLU() {
 		return glu;
+	}
+	
+	public void drawPoint(Point3D point, Color color) {
+		drawSphere(0.01, point.getX(), point.getY(), point.getZ(), 16, color);
+	}
+
+	public void drawSphere(double radius, double x,
+			double y, double z, int resolution, Color color) {
+
+		final int slices = resolution;
+		final int stacks = resolution;
+
+		GL2 gl = getGL2();
+		
+		gl.glPushMatrix();
+
+		glSetColor(color);
+
+		gl.glTranslated(x, y, z);
+
+		GLUquadric sphere = generateSphereQuadric(glu);
+
+		glu.gluSphere(sphere, radius, slices, stacks);
+
+		glu.gluDeleteQuadric(sphere);
+
+		gl.glPopMatrix();		
+	}
+
+	public void drawSphere(double radius, double x,
+			double y, double z, int resolution) {
+
+		final int slices = resolution;
+		final int stacks = resolution;
+		
+		GL2 gl = getGL2();
+		
+		gl.glPushMatrix();
+
+		// Draw sphere (possible styles: FILL, LINE, POINT).
+		gl.glColor3f(0.3f, 0.5f, 1f);
+
+		gl.glTranslated(x, y, z);
+
+		GLUquadric sphere = generateSphereQuadric(glu);
+
+		glu.gluSphere(sphere, radius, slices, stacks);
+
+		glu.gluDeleteQuadric(sphere);
+
+		gl.glPopMatrix();		
+	}
+
+	private GLUquadric generateSphereQuadric(GLU glu) {		
+		GLUquadric sphere = glu.gluNewQuadric();
+
+		// Draw sphere (possible styles: FILL, LINE, POINT)
+		glu.gluQuadricDrawStyle(sphere, GLU.GLU_FILL);
+		glu.gluQuadricNormals(sphere, GLU.GLU_FLAT);
+		glu.gluQuadricOrientation(sphere, GLU.GLU_OUTSIDE);
+
+		return sphere;
+	}
+
+	public void drawSphere(double radius, double x,
+			double y, double z) {
+
+		drawSphere(radius, x, y, z, 16);
+	}
+
+	public void drawCube() {
+
+		GL2 gl = getGL2();
+		
+		gl.glPushMatrix();
+
+		gl.glColor3f(0.3f, 0.5f, 1f);
+
+		gl.glTranslated(0, 0.5, 0);
+
+		gl.glPushMatrix();
+		drawSquare(gl);        // front face
+		gl.glPopMatrix();
+
+		gl.glPushMatrix();
+		gl.glRotatef(180,0,1,0);
+		drawSquare(gl);        // back face
+		gl.glPopMatrix();
+
+		gl.glPushMatrix();
+		gl.glRotatef(-90,0,1,0);
+		drawSquare(gl);       // left face
+		gl.glPopMatrix();
+
+		gl.glPushMatrix();
+		gl.glRotatef(90,0,1,0);
+		drawSquare(gl);       // right face is magenta
+		gl.glPopMatrix();
+
+		gl.glPushMatrix();
+		gl.glRotatef(-90,1,0,0); // top face
+		drawSquare(gl);
+		gl.glPopMatrix();
+
+		gl.glPushMatrix();
+		gl.glRotatef(90,1,0,0); // bottom face
+		drawSquare(gl);
+		gl.glPopMatrix();
+
+		gl.glPopMatrix();
+	}
+
+	public void drawPyramid() {
+
+		GL2 gl = getGL2();
+		
+		float size = 1.0f/2;
+
+		gl.glPushMatrix();
+		//gl.glScaled(1.8, 1.8, 1.8);
+		//gl.glScaled(1, 1, 1);
+
+		//gl.glTranslated(0, 1, 0);
+
+		gl.glBegin(GL.GL_TRIANGLES);        // Drawing Using Triangles
+		gl.glColor3f(size, 0.0f, 0.0f);     // Red
+		gl.glVertex3f(0.0f, size, 0.0f);    // Top Of Triangle (Front)
+		gl.glColor3f(0.0f, size, 0.0f);     // Green
+		gl.glVertex3f(-size, -size, size);  // Left Of Triangle (Front)
+		gl.glColor3f(0.0f, 0.0f, size);     // Blue
+		gl.glVertex3f(size, -size, size);   // Right Of Triangle (Front)
+		gl.glColor3f(size, 0.0f, 0.0f);     // Red
+		gl.glVertex3f(0.0f, size, 0.0f);    // Top Of Triangle (Right)
+		gl.glColor3f(0.0f, 0.0f, size);     // Blue
+		gl.glVertex3f(size, -size, size);   // Left Of Triangle (Right)
+		gl.glColor3f(0.0f, size, 0.0f);     // Green
+		gl.glVertex3f(size, -size, -size);  // Right Of Triangle (Right)
+		gl.glColor3f(size, 0.0f, 0.0f);     // Red
+		gl.glVertex3f(0.0f, size, 0.0f);    // Top Of Triangle (Back)
+		gl.glColor3f(0.0f, size, 0.0f);     // Green
+		gl.glVertex3f(size, -size, -size);  // Left Of Triangle (Back)
+		gl.glColor3f(0.0f, 0.0f, size);     // Blue
+		gl.glVertex3f(-size, -size, -size); // Right Of Triangle (Back)
+		gl.glColor3f(size, 0.0f, 0.0f);     // Red
+		gl.glVertex3f(0.0f, size, 0.0f);    // Top Of Triangle (Left)
+		gl.glColor3f(0.0f, 0.0f, size);     // Blue
+		gl.glVertex3f(-size, -size, -size); // Left Of Triangle (Left)
+		gl.glColor3f(0.0f, size, 0.0f);     // Green
+		gl.glVertex3f(-size, -size, size);  // Right Of Triangle (Left)
+		gl.glEnd();                         // Finished Drawing The Triangle
+
+		gl.glPopMatrix();
+
+	}
+
+	public void drawSquare(GL2 gl) {
+
+		float size = 1.0f/2;
+
+		gl.glTranslatef(0,0,size);
+
+		gl.glBegin(GL.GL_TRIANGLE_FAN);
+		gl.glVertex2f(-size,-size);    // Draw the square (before the
+		gl.glVertex2f(size,-size);     //   the translation is applied)
+		gl.glVertex2f(size,size);      //   on the xy-plane, with its
+		gl.glVertex2f(-size,size);     //   at (0,0,0).
+		gl.glEnd();
+
+	}
+	
+	/*
+	 * Draw camera model	
+	 */
+	public void drawCamera(CameraGL camera) {
+
+		GL2 gl = getGL2();
+		
+		Color color = camera.getColor();
+
+		gl.glLineWidth(0.5f);
+		glSetColor(color);
+
+		//Draw origin point
+		drawPoint(camera, color);
+
+		//Draw target point
+		drawPoint(camera.getTarget(), color);
+
+		//Draw target line
+		drawLine(camera, camera.getTarget());
+
+		//Draw Camera as 3D Model
+		gl.glPushMatrix();
+
+		gl.glTranslated(camera.getX(), camera.getY(), camera.getZ());
+
+		gl.glRotated(90, 0, 1, 0);
+		gl.glRotated(camera.angleXY()+30, 1, 0, 0);
+		gl.glRotated(camera.angleXZ()+180, 0, 0, 1);
+
+		Point3D ra = new Point3D(-0.1, 0.2, 0.1);
+		Point3D rb = new Point3D(0.1, 0.2, 0.1);
+		Point3D rc = new Point3D(-0.1, 0.2, -0.1);
+		Point3D rd = new Point3D(0.1, 0.2, -0.1);
+
+		drawPoint(ra, color);
+		drawPoint(rb, color);
+		drawPoint(rc, color);
+		drawPoint(rd, color);
+
+		drawLine(ra, rb);
+		drawLine(ra, rc);
+		drawLine(rd, rb);
+		drawLine(rd, rc);
+
+		Point3D origin = new Point3D();
+
+		drawLine(origin, ra);
+		drawLine(origin, rb);
+		drawLine(origin, rc);
+		drawLine(origin, rd);
+
+		gl.glTranslated(-camera.getX(), -camera.getY(), -camera.getZ());
+
+		gl.glPopMatrix();
+	}
+	
+	public void glSetColor(Color color) {
+		float red = ((float)color.getRed()/255);
+		float green = ((float)color.getGreen()/255);
+		float blue = ((float)color.getBlue()/255);
+				
+		getGL2().glColor3f(red, green, blue);
 	}
 	
 }
