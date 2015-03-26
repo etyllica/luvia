@@ -9,6 +9,7 @@ import java.awt.Color;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
+import javax.media.opengl.glu.GLU;
 
 import br.com.abby.linear.AimPoint;
 import br.com.etyllica.core.event.GUIEvent;
@@ -139,7 +140,8 @@ public class GridPerspective extends ApplicationGL {
 	@Override
 	public void reshape(Graphics3D drawable, int x, int y, int width, int height) {
 
-		GL2 gl = drawable.getGL().getGL2();
+		GL2 gl = drawable.getGL2();
+		GLU glu = drawable.getGLU();
 
 		gl.glViewport((int)x, (int)y, (int)w, (int)h);
 
@@ -198,7 +200,7 @@ public class GridPerspective extends ApplicationGL {
 		gl.glClearColor(1f, 1f, 1f, 1);
 				
 		//Transform by Aim
-		aimCamera(drawable.getGL().getGL2(), aim);
+		drawable.aimCamera(aim);
 
 		//Draw Scene
 		drawAxis(gl);

@@ -9,6 +9,7 @@ import java.awt.Color;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
+import javax.media.opengl.glu.GLU;
 
 import br.com.abby.util.CameraGL;
 import br.com.etyllica.core.event.GUIEvent;
@@ -49,7 +50,10 @@ public class Perspective extends ApplicationGL {
 		loading = 100;
 	}
 	
-	protected void lookCamera(GL2 gl){
+	protected void lookCamera(Graphics3D g) {
+		GL2 gl = g.getGL2();
+		GLU glu = g.getGLU();
+		
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glLoadIdentity();
 
@@ -58,7 +62,6 @@ public class Perspective extends ApplicationGL {
 		double targetz = 0;
 		
 		glu.gluLookAt( camera.getX(), camera.getY(), camera.getZ(), targetx, targety, targetz, 0, 1, 0 );
-
 	}
 	
 	protected void drawFloor(GL2 gl){
@@ -146,7 +149,8 @@ public class Perspective extends ApplicationGL {
 	@Override
 	public void reshape(Graphics3D g, int x, int y, int width, int height) {
 
-		GL2 gl = g.getGL().getGL2();
+		GL2 gl = g.getGL2();
+		GLU glu = g.getGLU();
 
 		gl.glViewport((int)x, (int)y, (int)w, (int)h);
 
@@ -197,7 +201,7 @@ public class Perspective extends ApplicationGL {
 		gl.glClearColor(1f, 1f, 1f, 1);
 				
 		//Transform by Camera
-		lookCamera(drawable.getGL().getGL2());		
+		lookCamera(drawable);
 
 		//Draw Scene
 		drawAxis(gl);
