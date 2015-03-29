@@ -112,7 +112,7 @@ public class Mesh extends AimPoint implements GL2Drawable {
 
 			for(Face face: group.getFaces()) {
 
-				if(face.vertex.length==3) {
+				if(face.vertexIndex.length==3) {
 
 					gl.glBegin(GL.GL_TRIANGLES);
 
@@ -122,9 +122,9 @@ public class Mesh extends AimPoint implements GL2Drawable {
 
 				}
 
-				for(int i=0;i<face.vertex.length;i++) {
+				for(int i=0;i<face.vertexIndex.length;i++) {
 
-					gl.glVertex3d(face.vertex[i].getX(), face.vertex[i].getY(), face.vertex[i].getZ());
+					gl.glVertex3d(face.vertexIndex[i].getX(), face.vertexIndex[i].getY(), face.vertexIndex[i].getZ());
 				}
 
 				gl.glEnd();
@@ -189,7 +189,7 @@ public class Mesh extends AimPoint implements GL2Drawable {
 
 			for(Face face: group.getFaces()) {
 
-				if(face.vertex.length==3) {
+				if(face.vertexIndex.length==3) {
 
 					gl.glBegin(GL.GL_TRIANGLES);
 
@@ -199,14 +199,14 @@ public class Mesh extends AimPoint implements GL2Drawable {
 
 				}
 
-				for(int i=0;i<face.vertex.length;i++) {
+				for(int i=0;i<face.vertexIndex.length;i++) {
 
 					if(drawTexture) {
 						//gl.glNormal3d(face.normal[i].getX(), face.normal[i].getY(), face.normal[i].getZ());
 						gl.glTexCoord2d(face.texture[i].getX(), face.texture[i].getY());
 					}
 
-					gl.glVertex3d(face.vertex[i].getX(), face.vertex[i].getY(), face.vertex[i].getZ());
+					gl.glVertex3d(face.vertexIndex[i].getX(), face.vertexIndex[i].getY(), face.vertexIndex[i].getZ());
 				}
 
 				gl.glEnd();
