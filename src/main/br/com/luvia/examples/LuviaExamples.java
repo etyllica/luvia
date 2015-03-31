@@ -8,9 +8,9 @@ import br.com.luvia.examples.Ortographic;
 import br.com.luvia.examples.Perspective;
 import br.com.luvia.examples.tutorial1.Tutorial1;
 
-public class LuviaEngine extends Luvia {
+public class LuviaExamples extends Luvia {
 
-	public LuviaEngine() {
+	public LuviaExamples() {
 		//super(640,480);
 		super(1024,576);
 	}
@@ -18,7 +18,7 @@ public class LuviaEngine extends Luvia {
 	// Main program
 	public static void main(String[] args) {
 
-		LuviaEngine engine = new LuviaEngine();
+		LuviaExamples engine = new LuviaExamples();
 		
 		engine.init();
 	}
@@ -30,9 +30,10 @@ public class LuviaEngine extends Luvia {
 						
 		//return new Tutorial1(w, h);
 		//return new Perspective(w, h);
-		return new Ortographic(w, h);
+		//return new Ortographic(w, h);
 		//return new MarkerApplication(w, h);
 		//return new GridPerspective(w, h);
+		return new RadialMarkerApplication(w, h);
 	}
 
 }
