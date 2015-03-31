@@ -124,7 +124,11 @@ public class Mesh extends AimPoint implements GL2Drawable {
 
 				for(int i=0;i<face.vertexIndex.length;i++) {
 
-					gl.glVertex3d(face.vertexIndex[i].getX(), face.vertexIndex[i].getY(), face.vertexIndex[i].getZ());
+					int index = face.vertexIndex[i];
+					
+					Vector3f vertex = vbo.getVertices().get(index);
+					
+					gl.glVertex3d(vertex.getX(), vertex.getY(), vertex.getZ());					
 				}
 
 				gl.glEnd();
@@ -206,7 +210,11 @@ public class Mesh extends AimPoint implements GL2Drawable {
 						gl.glTexCoord2d(face.texture[i].getX(), face.texture[i].getY());
 					}
 
-					gl.glVertex3d(face.vertexIndex[i].getX(), face.vertexIndex[i].getY(), face.vertexIndex[i].getZ());
+					int index = face.vertexIndex[i];
+					
+					Vector3f vertex = vbo.getVertices().get(index);
+					
+					gl.glVertex3d(vertex.getX(), vertex.getY(), vertex.getZ());					
 				}
 
 				gl.glEnd();
