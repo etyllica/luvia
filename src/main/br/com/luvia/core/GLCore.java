@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
 import javax.swing.JComponent;
@@ -141,10 +142,10 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 	private void resetGraphics(GLAutoDrawable drawable) {
 		glGraphics.setCanvas(drawable);
-
+		
 		graphic.setGraphics(glGraphics);
 		graphic.setDrawable(drawable);
-
+		
 		initGraphics(glGraphics);
 	}
 
@@ -240,6 +241,8 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		activeWindowGL.getApplication3D().display(graphic);
 
 		//Post Drawing
+		//Avoid 2D drawings being mixed with 3D Environment
+		graphic.getGL2().glClear(GL.GL_DEPTH_BUFFER_BIT);
 		resetGraphics(drawable);
 		draw(graphic);
 	}
