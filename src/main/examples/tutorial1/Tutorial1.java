@@ -1,4 +1,4 @@
-package br.com.luvia.examples.tutorial1;
+package examples.tutorial1;
 
 import java.awt.Color;
 

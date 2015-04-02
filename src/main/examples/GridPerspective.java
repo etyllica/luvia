@@ -1,4 +1,5 @@
-package br.com.luvia.examples;
+package examples;
+
 
 import static javax.media.opengl.GL.GL_LINEAR;
 import static javax.media.opengl.GL.GL_TEXTURE_2D;
@@ -11,7 +12,7 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
-import br.com.abby.util.CameraGL;
+import br.com.abby.linear.AimPoint;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
@@ -23,48 +24,39 @@ import br.com.luvia.loader.TextureLoader;
 
 import com.jogamp.opengl.util.texture.Texture;
 
-public class Perspective extends ApplicationGL {
+public class GridPerspective extends ApplicationGL {
 
 	private Texture floor;
 
-	private CameraGL camera;
-	
 	protected float mx = 0;
+	
 	protected float my = 0;
-
-	public Perspective(int w, int h) {
+	
+	protected boolean click = false;
+	
+	private AimPoint aim;
+	
+	public GridPerspective(int w, int h) {
 		super(w, h);
 	}
 
-
 	@Override
-	public void init(Graphics3D g) {
-		floor = TextureLoader.getInstance().loadTexture("/mark.png");		
+	public void init(Graphics3D drawable) {
+		
+		aim = new AimPoint(0, 5, 0);
+		
+		aim.setAngleY(180);
+		
+		floor = TextureLoader.getInstance().loadTexture("mark.png");
 	}
 	
 	@Override
 	public void load() {
-		
-		camera = new CameraGL(0,15,-10);
-		
+				
 		loading = 100;
 	}
-	
-	protected void lookCamera(Graphics3D g) {
-		GL2 gl = g.getGL2();
-		GLU glu = g.getGLU();
 		
-		gl.glMatrixMode(GL2.GL_MODELVIEW);
-		gl.glLoadIdentity();
-
-		double targetx = 0;
-		double targety = 0;
-		double targetz = 0;
-		
-		glu.gluLookAt( camera.getX(), camera.getY(), camera.getZ(), targetx, targety, targetz, 0, 1, 0 );
-	}
-	
-	protected void drawFloor(GL2 gl){
+	protected void drawFloor(GL2 gl) {
 
 		gl.glColor3d(1,1,1);
 
@@ -75,16 +67,16 @@ public class Perspective extends ApplicationGL {
 
 	}
 
-	private void drawGrid(GL2 gl, double x, double y){
+	private void drawGrid(GL2 gl, double x, double y) {
 
 		double tileSize = 5;
 
 		floor.enable(gl);
 		floor.bind(gl);
 
-		for(int j=0;j<y;j++){
+		for(int j=0;j<y;j++) {
 
-			for(int i=0;i<x;i++){
+			for(int i=0;i<x;i++) {
 				drawTile(gl, i, j, tileSize);
 			}
 			
@@ -93,7 +85,7 @@ public class Perspective extends ApplicationGL {
 		floor.disable(gl);
 	}
 
-	private void drawTile(GL2 gl, double x, double y, double tileSize){
+	private void drawTile(GL2 gl, double x, double y, double tileSize) {
 
 		gl.glBegin(GL2.GL_QUADS);
 
@@ -116,7 +108,7 @@ public class Perspective extends ApplicationGL {
 		gl.glEnd();
 	}
 
-	private void drawAxis(GL2 gl){
+	private void drawAxis(GL2 gl) {
 
 		double axisSize = 100;
 
@@ -147,10 +139,10 @@ public class Perspective extends ApplicationGL {
 	}
 
 	@Override
-	public void reshape(Graphics3D g, int x, int y, int width, int height) {
+	public void reshape(Graphics3D drawable, int x, int y, int width, int height) {
 
-		GL2 gl = g.getGL2();
-		GLU glu = g.getGLU();
+		GL2 gl = drawable.getGL2();
+		GLU glu = drawable.getGLU();
 
 		gl.glViewport((int)x, (int)y, (int)w, (int)h);
 
@@ -166,11 +158,19 @@ public class Perspective extends ApplicationGL {
 
 	}	
 
-	protected boolean click = false;
-
 	@Override
 	public GUIEvent updateKeyboard(KeyEvent event) {
 
+		if(event.isKeyDown(KeyEvent.TSK_RIGHT_ARROW)) {
+			aim.setOffsetAngleY(-5);
+			System.out.println(aim.getAngleY());
+		}
+		
+		if(event.isKeyDown(KeyEvent.TSK_LEFT_ARROW)) {
+			aim.setOffsetAngleY(+5);
+			System.out.println(aim.getAngleY());
+		}
+		
 		return GUIEvent.NONE;
 	}
 	
@@ -179,12 +179,12 @@ public class Perspective extends ApplicationGL {
 		mx = event.getX();
 		my = event.getY();
 
-		if(event.isButtonDown(MouseButton.MOUSE_BUTTON_LEFT)){
+		if(event.isButtonDown(MouseButton.MOUSE_BUTTON_LEFT)) {
 
 			click = true;
 		}
 
-		if(event.isButtonUp(MouseButton.MOUSE_BUTTON_LEFT)){
+		if(event.isButtonUp(MouseButton.MOUSE_BUTTON_LEFT)) {
 			click = false;
 		}
 
@@ -200,14 +200,13 @@ public class Perspective extends ApplicationGL {
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 		gl.glClearColor(1f, 1f, 1f, 1);
 				
-		//Transform by Camera
-		lookCamera(drawable);
+		//Transform by Aim
+		drawable.aimCamera(aim);
 
 		//Draw Scene
 		drawAxis(gl);
 
-		drawFloor(gl);
-		
+		drawFloor(gl);		
 
 		gl.glFlush();
 

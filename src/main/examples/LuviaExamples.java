@@ -1,12 +1,12 @@
-package br.com.luvia.examples;
+package examples;
 
 import br.com.luvia.Luvia;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.examples.GridPerspective;
-import br.com.luvia.examples.MarkerApplication;
-import br.com.luvia.examples.Ortographic;
-import br.com.luvia.examples.Perspective;
-import br.com.luvia.examples.tutorial1.Tutorial1;
+import examples.GridPerspective;
+import examples.MarkerApplication;
+import examples.Ortographic;
+import examples.Perspective;
+import examples.tutorial1.Tutorial1;
 
 public class LuviaExamples extends Luvia {
 

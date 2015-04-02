@@ -1,4 +1,4 @@
-package br.com.luvia.examples;
+package examples;
 
 import static javax.media.opengl.GL.GL_LINEAR;
 import static javax.media.opengl.GL.GL_TEXTURE_2D;
