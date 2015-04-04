@@ -34,12 +34,6 @@ public abstract class ApplicationGL extends Application implements G3DEventListe
 		clearBeforeDraw = false;
 	}
 	
-	@Override
-	public void timeUpdate(long now) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public void preDisplay(Graphics3D g) {
 		
 	}

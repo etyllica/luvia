@@ -104,12 +104,6 @@ public class DefaultLoadApplicationGL extends ApplicationGL implements LoadAppli
 	}
 
 	@Override
-	public void timeUpdate(long now) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void onChangeLoad(float load) {
 		this.loading = load;
 	}
