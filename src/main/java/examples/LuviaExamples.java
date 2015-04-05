@@ -7,6 +7,7 @@ import examples.MarkerApplication;
 import examples.Ortographic;
 import examples.Perspective;
 import examples.tutorial1.Tutorial1;
+import examples.tutorial2.Tutorial2;
 
 public class LuviaExamples extends Luvia {
 
@@ -26,14 +27,15 @@ public class LuviaExamples extends Luvia {
 	@Override
 	public ApplicationGL startApplication(){
 
-		initialSetup("../../");
+		initialSetup("../../../");
 						
 		//return new Tutorial1(w, h);
+		return new Tutorial2(w, h);
 		//return new Perspective(w, h);
 		//return new Ortographic(w, h);
 		//return new MarkerApplication(w, h);
 		//return new GridPerspective(w, h);
-		return new RadialMarkerApplication(w, h);
+		//return new RadialMarkerApplication(w, h);
 	}
 
 }
