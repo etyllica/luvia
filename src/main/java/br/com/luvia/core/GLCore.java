@@ -2,7 +2,11 @@ package br.com.luvia.core;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.image.MemoryImageSource;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
@@ -292,6 +296,16 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 	public JComponent getPanel() {
 		return canvas;
+	}
+	
+	public void hideDefaultCursor() {
+		
+		int[] pixels = new int[16 * 16];
+		
+		Cursor transparentCursor = Toolkit.getDefaultToolkit().createCustomCursor(
+				Toolkit.getDefaultToolkit().createImage( new MemoryImageSource(16, 16, pixels, 0, 16))
+				, new Point(0, 0), "invisibleCursor");
+		component.setCursor( transparentCursor );
 	}
 
 }
