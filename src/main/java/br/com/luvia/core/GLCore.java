@@ -70,6 +70,9 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	public JPanel glass;
 	
 	private Set<Loader> loaders = new HashSet<Loader>();
+	
+	private static final Font DEFAULT_FONT = new Font("ARIAL", Font.PLAIN, 14);
+	private static final Color DEFAULT_COLOR = Color.BLACK;
 
 	public GLCore(int w, int h) {
 		super();
@@ -102,6 +105,8 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 	public void setComponent(JFrame frame) {
 		this.component = frame;
+		this.componentBounds = frame.getBounds();
+		activeWindowGL.setLocation(frame.getX(), frame.getY());
 	}
 
 	public String getUrl() {
@@ -153,14 +158,10 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		initGraphics(glGraphics);
 	}
 
-	private final Font defaultFont = new Font("ARIAL", Font.PLAIN, 14);
-
-	private final Color defaultColor = Color.BLACK;
-
 	private void initGraphics(GLGraphics2D graphics) {
 		graphic.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
-		graphic.setColor(defaultColor);
-		graphic.setFont(defaultFont);
+		graphic.setColor(DEFAULT_COLOR);
+		graphic.setFont(DEFAULT_FONT);
 	}
 
 	@Override
@@ -270,6 +271,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	public void setMainApplication3D(ApplicationGL application3D) {
 
 		anotherApplication3D = application3D;
+		anotherApplication3D.setParent(activeWindowGL);
 		anotherApplication3D.setSession(activeWindowGL.getSession());
 
 		replaceWindow(activeWindowGL);
@@ -279,7 +281,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 	private void reload() {
 
-		activeWindowGL.reload(anotherApplication3D);
+		activeWindowGL.reload(anotherApplication3D);		
 
 		changeApp = true;
 	}

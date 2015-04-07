@@ -35,6 +35,7 @@ public abstract class Luvia {
 		this.h = h;
 		
 		luviaCore = new GLCore(w,h);
+		luviaCore.initMonitors(w, h);
 		
 		frame = createFrame(w, h);
 		luviaCore.setComponent(frame);
@@ -83,6 +84,9 @@ public abstract class Luvia {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		frame.addKeyListener(luviaCore.getControl().getKeyboard());
+		
+		//frame.setLocation(p);
+		luviaCore.moveToCenter(frame);
 				
 		return frame;
 	}
