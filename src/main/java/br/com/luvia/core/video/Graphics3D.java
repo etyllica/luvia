@@ -3,6 +3,7 @@ package br.com.luvia.core.video;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.geom.Point2D;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
@@ -193,6 +194,20 @@ public class Graphics3D extends Graphic {
 		drawable.getGL().getGL2().glLoadIdentity();
 		
 		glu.gluLookAt( camera.getX(), camera.getY(), camera.getZ(), camera.getTarget().getX(), camera.getTarget().getY(), camera.getTarget().getZ(), 0, 1, 0 );
+	}
+	
+	public void aimCamera(Point3D cameraPoint, double angleX, double angleY, double angleZ) {
+		GL2 gl = getGL2();
+		
+		gl.glMatrixMode(GL2.GL_MODELVIEW);
+							
+		gl.glLoadIdentity();
+		
+		gl.glRotated(360-angleX, 1, 0, 0);
+		gl.glRotated(360-angleY, 0, 1, 0);
+		gl.glRotated(360-angleZ, 0, 0, 1);
+		
+		gl.glTranslated(-cameraPoint.getX(), -cameraPoint.getY(), -cameraPoint.getZ());
 	}
 	
 	public void aimCamera(AimPoint aim) {
