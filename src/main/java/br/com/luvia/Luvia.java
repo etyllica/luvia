@@ -40,7 +40,7 @@ public abstract class Luvia {
 		this.h = h;
 		
 		luviaCore = new GLCore(w,h);
-		//luviaCore.initMonitors(w, h);
+		luviaCore.initMonitors(w, h);
 		
 		frame = createFrame(w, h);
 		luviaCore.setComponent(frame);
@@ -76,7 +76,7 @@ public abstract class Luvia {
 		frame.addKeyListener(luviaCore.getControl().getKeyboard());
 		
 		//frame.setLocation(p);
-		//luviaCore.moveToCenter(frame);
+		luviaCore.moveToCenter(frame);
 				
 		return frame;
 	}

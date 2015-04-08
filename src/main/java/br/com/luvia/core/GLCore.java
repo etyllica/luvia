@@ -92,7 +92,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 		animator = new FPSAnimator(REFRESH_FPS, true);
 		animator.add(canvas.getCanvas());
-		
+				
 		initLoaders();
 	}
 	
@@ -125,7 +125,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	public void initDefault() {
 		for(Loader loader:loaders) {
 			loader.setUrl(url);
-			loader.initLoader();
+			loader.start();;//TODO REMOCVE
 		}
 	}
 
@@ -272,6 +272,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 		anotherApplication3D = application3D;
 		anotherApplication3D.setSession(activeWindowGL.getSession());
+		anotherApplication3D.setParent(activeWindowGL);
 
 		replaceWindow(activeWindowGL);
 
