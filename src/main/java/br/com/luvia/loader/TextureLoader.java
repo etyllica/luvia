@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.media.opengl.GLContext;
 import javax.media.opengl.GLException;
 import javax.media.opengl.GLProfile;
 
@@ -18,8 +17,6 @@ import com.jogamp.opengl.util.texture.awt.AWTTextureIO;
 public class TextureLoader extends LoaderImpl {
 
 	private static TextureLoader instance = null;
-
-	private GLContext context; 
 
 	private TextureLoader() {
 		super();
@@ -37,18 +34,8 @@ public class TextureLoader extends LoaderImpl {
 	}
 
 	public Texture loadTexture(String fullPath, String textureName) {
-
-		context = GLContext.getCurrent();
 		
-		if(context==null) {
-
-			System.err.println("Force Current");
-			
-			context.makeCurrent();
-			
-		} else {
-
-			File file = new File(fullPath+textureName);
+		File file = new File(fullPath+textureName);
 
 			try {
 				//return TextureIO.newTexture(file, false);
@@ -65,8 +52,7 @@ public class TextureLoader extends LoaderImpl {
 				System.err.println("File not found: "+file);
 				e.printStackTrace();
 			}
-		}
-
+		
 		return null;
 	}
 
@@ -76,14 +62,6 @@ public class TextureLoader extends LoaderImpl {
 
 	public Texture loadTexture(BufferedImage buffer) {
 		return AWTTextureIO.newTexture(GLProfile.getGL2GL3(), buffer, false);
-	}
-
-	public GLContext getContext() {
-		return context;
-	}
-
-	public void setContext(GLContext context) {
-		this.context = context;
 	}
 
 }

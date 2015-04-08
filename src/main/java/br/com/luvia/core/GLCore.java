@@ -14,6 +14,7 @@ import java.util.concurrent.Executors;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
+import javax.media.opengl.GLContext;
 import javax.media.opengl.GLEventListener;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -97,9 +98,9 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	
 	private void initLoaders() {
 		loaders.add(ImageLoader.getInstance());
-		loaders.add(FontLoader.getInstance());
-		loaders.add(MeshLoader.getInstance());
+		loaders.add(FontLoader.getInstance());		
 		loaders.add(TextureLoader.getInstance());
+		loaders.add(MeshLoader.getInstance());		
 		loaders.add(GISInfoLoader.getInstance());
 	}
 
