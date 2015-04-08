@@ -13,6 +13,7 @@ import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
 import br.com.abby.linear.AimPoint;
+import br.com.etyllica.context.UpdateIntervalListener;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
@@ -34,7 +35,12 @@ public class GridPerspective extends ApplicationGL {
 	
 	protected boolean click = false;
 	
+	protected double turnSpeed = 1;
+	
 	private AimPoint aim;
+	
+	private boolean leftPressed = false;
+	private boolean rightPressed = false;
 	
 	public GridPerspective(int w, int h) {
 		super(w, h);
@@ -52,7 +58,6 @@ public class GridPerspective extends ApplicationGL {
 	
 	@Override
 	public void load() {
-				
 		loading = 100;
 	}
 		
@@ -64,11 +69,10 @@ public class GridPerspective extends ApplicationGL {
 		gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
 		drawGrid(gl,200,120);
-
 	}
 
 	private void drawGrid(GL2 gl, double x, double y) {
-
+		
 		double tileSize = 5;
 
 		floor.enable(gl);
@@ -156,19 +160,21 @@ public class GridPerspective extends ApplicationGL {
 
 		gl.glLoadIdentity();
 
-	}	
+	}
 
 	@Override
 	public GUIEvent updateKeyboard(KeyEvent event) {
 
 		if(event.isKeyDown(KeyEvent.TSK_RIGHT_ARROW)) {
-			aim.setOffsetAngleY(-5);
-			System.out.println(aim.getAngleY());
+			rightPressed = true;
+		} else if(event.isKeyUp(KeyEvent.TSK_RIGHT_ARROW)) {
+			rightPressed = false;
 		}
 		
 		if(event.isKeyDown(KeyEvent.TSK_LEFT_ARROW)) {
-			aim.setOffsetAngleY(+5);
-			System.out.println(aim.getAngleY());
+			leftPressed = true;			
+		} else if(event.isKeyUp(KeyEvent.TSK_LEFT_ARROW)) {
+			leftPressed = false;
 		}
 		
 		return GUIEvent.NONE;
@@ -194,6 +200,8 @@ public class GridPerspective extends ApplicationGL {
 	@Override
 	public void display(Graphics3D drawable) {
 
+		updateControls(0);
+		
 		GL2 gl = drawable.getGL().getGL2();
 
 		//TODO TEST
@@ -227,7 +235,20 @@ public class GridPerspective extends ApplicationGL {
 		//Draw Gui
 		g.setColor(Color.WHITE);
 		g.drawShadow(20,20, "Scene",Color.BLACK);
+		g.drawShadow(20,40, Double.toString(aim.getAngleY()),Color.BLACK);
 				
+	}
+
+	public void updateControls(long now) {
+				
+		if(leftPressed) {
+			aim.setOffsetAngleY(+turnSpeed);			
+		}
+		
+		if(rightPressed) {
+			aim.setOffsetAngleY(-turnSpeed);			
+		}
+		
 	}
 	
 }

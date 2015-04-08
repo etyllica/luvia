@@ -2,10 +2,8 @@ package br.com.luvia.core.context;
 
 import java.awt.Color;
 
-import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
-import br.com.abby.linear.AimPoint;
 import br.com.abby.linear.Point3D;
 import br.com.etyllica.context.Application;
 import br.com.luvia.core.G3DEventListener;

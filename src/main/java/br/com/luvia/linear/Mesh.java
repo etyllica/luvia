@@ -269,8 +269,6 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		
 		gl.glDisable(GL.GL_DEPTH_TEST);
 
-
-
 	}
 
 	public Set<Integer> getVertexSelection() {

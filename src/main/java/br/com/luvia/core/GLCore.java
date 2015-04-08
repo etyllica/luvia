@@ -41,7 +41,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 	private static final int UPDATE_DELAY = 20;
 
-	private static final int REFRESH_FPS = 20; // Display refresh frames per second
+	private static final int REFRESH_FPS = 60; // Display refresh frames per second
 
 	private GLGraphics2D glGraphics;
 
@@ -105,7 +105,6 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 	public void setComponent(JFrame frame) {
 		this.component = frame;
-		this.componentBounds = frame.getBounds();
 		activeWindowGL.setLocation(frame.getX(), frame.getY());
 	}
 
@@ -125,7 +124,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	public void initDefault() {
 		for(Loader loader:loaders) {
 			loader.setUrl(url);
-			loader.start();
+			loader.initLoader();
 		}
 	}
 
@@ -271,7 +270,6 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	public void setMainApplication3D(ApplicationGL application3D) {
 
 		anotherApplication3D = application3D;
-		anotherApplication3D.setParent(activeWindowGL);
 		anotherApplication3D.setSession(activeWindowGL.getSession());
 
 		replaceWindow(activeWindowGL);
@@ -281,7 +279,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 	private void reload() {
 
-		activeWindowGL.reload(anotherApplication3D);		
+		activeWindowGL.reload(anotherApplication3D);
 
 		changeApp = true;
 	}
@@ -292,7 +290,6 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	}
 
 	public void run() {
-
 		update(System.currentTimeMillis());
 	}
 

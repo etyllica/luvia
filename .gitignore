@@ -7,3 +7,4 @@ sdk/
 
 .classpath
 .project
+*.log

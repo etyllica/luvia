@@ -38,11 +38,14 @@ public class TextureLoader extends LoaderImpl {
 
 	public Texture loadTexture(String fullPath, String textureName) {
 
-		if(GLContext.getCurrent()==null) {
+		context = GLContext.getCurrent();
+		
+		if(context==null) {
 
 			System.err.println("Force Current");
-
+			
 			context.makeCurrent();
+			
 		} else {
 
 			File file = new File(fullPath+textureName);

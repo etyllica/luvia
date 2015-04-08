@@ -3,6 +3,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
@@ -15,9 +16,11 @@ public abstract class Luvia {
 
 	private static final long serialVersionUID = -6060864375960874373L;
 
-	private static final int UPDATE_DELAY = 40;    // Delay Between control updates
+	private static final int UPDATE_DELAY = 10;    // Delay Between control updates
 	private static final int TIME_UPDATE_INTERVAL = 80;    // Display refresh frames per second 
 
+	private ScheduledFuture<?> future;
+	
 	private ScheduledExecutorService executor;
 
 	protected int w = 640;
@@ -27,6 +30,8 @@ public abstract class Luvia {
 	
 	protected JFrame frame;
 	
+	protected String title = "Luvia - Window";
+	
 	// Constructor
 	public Luvia(int w, int h) {
 		super();
@@ -35,7 +40,7 @@ public abstract class Luvia {
 		this.h = h;
 		
 		luviaCore = new GLCore(w,h);
-		luviaCore.initMonitors(w, h);
+		//luviaCore.initMonitors(w, h);
 		
 		frame = createFrame(w, h);
 		luviaCore.setComponent(frame);
@@ -62,9 +67,22 @@ public abstract class Luvia {
 		
 		frame.setUndecorated(false);
 
-		frame.setTitle("Luvia - Window");
+		frame.setTitle(title);
 		
-		frame.addWindowListener(new WindowAdapter() {
+		frame.addWindowListener(buildWindowAdapter());
+		
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		frame.addKeyListener(luviaCore.getControl().getKeyboard());
+		
+		//frame.setLocation(p);
+		//luviaCore.moveToCenter(frame);
+				
+		return frame;
+	}
+
+	private WindowAdapter buildWindowAdapter() {
+		return new WindowAdapter() {
 			@Override 
 			public void windowClosing(WindowEvent e) {
 				// Use a dedicate thread to run the stop() to ensure that the
@@ -79,16 +97,7 @@ public abstract class Luvia {
 				}.start();
 			}
 			
-		});
-		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		frame.addKeyListener(luviaCore.getControl().getKeyboard());
-		
-		//frame.setLocation(p);
-		luviaCore.moveToCenter(frame);
-				
-		return frame;
+		};
 	}
 	
 	public void hideCursor() {
@@ -102,14 +111,13 @@ public abstract class Luvia {
 	protected void init() {
 		//startThread();
 		//TODO Update Methods
-		executor = Executors.newScheduledThreadPool(1);
+		executor = Executors.newSingleThreadScheduledExecutor();
 		
-		executor.scheduleAtFixedRate(luviaCore, UPDATE_DELAY, UPDATE_DELAY, TimeUnit.MILLISECONDS);
-		//executor.scheduleAtFixedRate(this, TIME_UPDATE_INTERVAL, TIME_UPDATE_INTERVAL, TimeUnit.MILLISECONDS);
+		future = executor.scheduleAtFixedRate(luviaCore, UPDATE_DELAY, UPDATE_DELAY, TimeUnit.MILLISECONDS);
 		
 		frame.add(luviaCore.getPanel());
 						
-		luviaCore.start();		
+		luviaCore.start();
 	}
 	
 
