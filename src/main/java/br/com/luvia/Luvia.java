@@ -1,4 +1,7 @@
 package br.com.luvia;
+import java.awt.AWTException;
+import java.awt.Rectangle;
+import java.awt.Robot;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.concurrent.Executors;
@@ -59,7 +62,7 @@ public abstract class Luvia {
 		luviaCore.setUrl(path);
 	}
 		
-	private JFrame createFrame(int w, int h) {
+	protected JFrame createFrame(int w, int h) {
 				
 		JFrame frame = new JFrame();
 				
@@ -120,6 +123,17 @@ public abstract class Luvia {
 		luviaCore.start();
 	}
 	
+	protected void centerCursor() {
+		try {
+			Robot robot = new Robot();
+			Rectangle bounds =  frame.getBounds();			
+			robot.mouseMove(bounds.x+bounds.width/2, bounds.y+bounds.height/2);
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}	
 
 	protected void initialSetup(String path) {
 		

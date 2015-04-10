@@ -19,15 +19,14 @@ public class LuviaExamples extends Luvia {
 	// Main program
 	public static void main(String[] args) {
 
-		LuviaExamples engine = new LuviaExamples();
-		
+		LuviaExamples engine = new LuviaExamples();		
 		engine.init();
 	}
 	
 	@Override
 	public ApplicationGL startApplication() {
 
-		initialSetup("../../");
+		initialSetup("../../../");
 						
 		//return new Tutorial1(w, h);
 		//return new Tutorial2(w, h);

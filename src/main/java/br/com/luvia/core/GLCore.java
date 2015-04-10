@@ -125,7 +125,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	public void initDefault() {
 		for(Loader loader:loaders) {
 			loader.setUrl(url);
-			loader.start();;//TODO REMOCVE
+			loader.initLoader();
 		}
 	}
 
