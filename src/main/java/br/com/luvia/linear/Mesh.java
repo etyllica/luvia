@@ -69,8 +69,13 @@ public class Mesh extends AimPoint implements GL2Drawable {
 	}
 
 	protected void loadMaterials() {
+		//For each group in VBO
 		for(Group group: vbo.getGroups()) {
-			materials.put(group, new Material(group.getMaterial()));
+			//If has a material
+			if(group.getMaterial() != null) {
+				materials.put(group, new Material(group.getMaterial()));	
+			}
+			
 		}
 	}
 	
