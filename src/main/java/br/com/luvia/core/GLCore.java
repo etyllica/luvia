@@ -269,7 +269,6 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	}
 
 	public void setMainApplication3D(ApplicationGL application3D) {
-
 		anotherApplication3D = application3D;
 		anotherApplication3D.setSession(activeWindowGL.getSession());
 		anotherApplication3D.setParent(activeWindowGL);
