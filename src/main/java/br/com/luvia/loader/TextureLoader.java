@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.media.opengl.GLContext;
 import javax.media.opengl.GLException;
 import javax.media.opengl.GLProfile;
 
@@ -18,6 +19,8 @@ public class TextureLoader extends LoaderImpl {
 
 	private static TextureLoader instance = null;
 
+	private static GLContext context;
+	
 	private TextureLoader() {
 		super();
 
@@ -27,6 +30,7 @@ public class TextureLoader extends LoaderImpl {
 	public static TextureLoader getInstance() {
 
 		if(instance==null) {
+			context = GLContext.getCurrent();
 			instance = new TextureLoader();
 		}
 
