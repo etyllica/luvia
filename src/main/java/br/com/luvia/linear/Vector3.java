@@ -7,13 +7,25 @@ public class Vector3 extends Point3D {
   public Vector3(double x, double y, double z) {
     super(x,y,z);
   }
+  
+  public Vector3(Point3D point) {
+    super(point);
+  }
 
   public Vector3 add(Vector3 other) {
     return new Vector3(x + other.x, y + other.y, z + other.z);
   }
+  
+  public Vector3 add(double vx, double vy, double vz) {
+    return new Vector3(x + vx, y + vy, z + vz);
+  }
 
   public Vector3 sub(Vector3 other) {
     return new Vector3(x - other.x, y - other.y, z - other.z);
+  }
+  
+  public Vector3 sub(double vx, double vy, double vz) {
+    return new Vector3(x - vx, y - vy, z - vz);
   }
 
   public Vector3 scale(double f) {
