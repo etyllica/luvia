@@ -2,7 +2,7 @@ package br.com.luvia.util;
 
 import br.com.luvia.linear.Vector3;
 
-public class CollisonUtils {
+public class CollisionUtils {
 
   /**
    * Based on http://stackoverflow.com/a/21114992
