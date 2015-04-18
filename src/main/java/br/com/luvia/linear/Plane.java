@@ -3,7 +3,7 @@ package br.com.luvia.linear;
 import br.com.etyllica.linear.Point3D;
 
 /**
- * A plane can be defined as ax + by + cz + d = 0
+ * A plane can be defined as ax + by + cz = d
  */
 public class Plane {
   double a = 0;

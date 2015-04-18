@@ -1,5 +1,7 @@
 package br.com.luvia.util;
 
+import br.com.luvia.linear.Line;
+import br.com.luvia.linear.Plane;
 import br.com.luvia.linear.Vector3;
 
 public class CollisionUtils {
@@ -36,6 +38,22 @@ public class CollisionUtils {
     // 4.
     return (u >= 0.0f && u <= dS21.dot(dS21)
         && v >= 0.0f && v <= dS31.dot(dS31));
+  }
+  
+  public static Vector3 intersectLinePlane(Line l, Plane p) {
+
+    double t = p.getA()*l.getT().getX()+p.getB()*l.getT().getY()+p.getC()*l.getT().getZ();
+    double i = p.getA()*l.getOrigin().getX()+p.getB()*l.getOrigin().getY()+p.getC()*l.getOrigin().getZ();
+    
+    t = (p.getD()-i)/t;
+    
+    double px = l.getOrigin().getX()+l.getT().getX()*t;
+    double py = l.getOrigin().getY()+l.getT().getY()*t;
+    double pz = l.getOrigin().getZ()+l.getT().getZ()*t;
+    
+    Vector3 point = new Vector3(px, py, pz);
+    
+    return point;
   }
 
 }
