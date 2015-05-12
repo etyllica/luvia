@@ -10,11 +10,13 @@ import br.com.luvia.core.video.Graphics3D;
 
 /**
  * Based on example found at: https://www3.ntu.edu.sg/home/ehchua/programming/opengl/JOGL2.0.html
- * The example had a bug, the author forgot to set the (triangle's) color 
+ * The example had a bug, the author forgot to translate the triangle 
  */
-public class Example1 extends ApplicationGL {
+public class Example2 extends ApplicationGL {
 
-  public Example1(int w, int h) {
+  private float angle = 0.0f;
+  
+  public Example2(int w, int h) {
     super(w, h);
   }
   
@@ -66,17 +68,37 @@ public class Example1 extends ApplicationGL {
 
   @Override
   public void display(Graphics3D g) {
-    GL2 gl = g.getGL2();  // get the OpenGL 2 graphics context
-    gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT); // clear color and depth buffers
-    gl.glLoadIdentity();  // reset the model-view matrix
+     render(g);
+     update();
+  }
+  
+  // Render a triangle
+  private void render(Graphics3D g) {
+     // Get the OpenGL graphics context
+     GL2 gl = g.getGL2();
+     // Clear the color and the depth buffers
+     gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
+     // Reset the view (x, y, z axes back to normal)
+     gl.glLoadIdentity();
+     
+     gl.glTranslatef(0.0f, 0.0f, -6.0f); // translate into the screen
 
-    gl.glTranslatef(0.0f, 0.0f, -6.0f); // translate into the screen
-    gl.glColor3f(1, 1, 1); //set the triangle color 
-    gl.glBegin(GL.GL_TRIANGLES); // draw using triangles
-       gl.glVertex3f(0.0f, 1.0f, 0.0f);
-       gl.glVertex3f(-1.0f, -1.0f, 0.0f);
-       gl.glVertex3f(1.0f, -1.0f, 0.0f);
-    gl.glEnd();
+     // Draw a triangle
+     float sin = (float)Math.sin(angle);
+     float cos = (float)Math.cos(angle);
+     gl.glBegin(GL.GL_TRIANGLES);
+        gl.glColor3f(1.0f, 0.0f, 0.0f);   // Red
+        gl.glVertex2d(-cos, -cos);
+        gl.glColor3f(0.0f, 1.0f, 0.0f);   // Green
+        gl.glVertex2d(0.0f, cos);
+        gl.glColor3f(0.0f, 0.0f, 1.0f);   // Blue
+        gl.glVertex2d(sin, -sin);
+     gl.glEnd();
+  }
+  
+  // Update the angle of the triangle after each frame
+  private void update() {
+     angle += 0.01f;
   }
   
 }
