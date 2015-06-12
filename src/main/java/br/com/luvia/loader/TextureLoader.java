@@ -20,7 +20,7 @@ public class TextureLoader extends LoaderImpl {
 	private static TextureLoader instance = null;
 
 	private static GLContext context;
-	
+
 	private TextureLoader() {
 		super();
 
@@ -29,7 +29,7 @@ public class TextureLoader extends LoaderImpl {
 
 	public static TextureLoader getInstance() {
 
-		if(instance==null) {
+		if(instance == null) {
 			context = GLContext.getCurrent();
 			instance = new TextureLoader();
 		}
@@ -37,31 +37,38 @@ public class TextureLoader extends LoaderImpl {
 		return instance;
 	}
 
-	public Texture loadTexture(String fullPath, String textureName) {
-		
+	public Texture loadTexture(String fullPath, String textureName, boolean flipVertical) {
 		File file = new File(fullPath+textureName);
 
-			try {
-				//return TextureIO.newTexture(file, false);
-				BufferedImage image = ImageIO.read(file);
-				if(image != null) {
-					ImageUtil.flipImageVertically(image);
-					return loadTexture(image);
-				}
-				
-			} catch (GLException e) {
-				System.err.println("Error creating texture from: "+file);
-				e.printStackTrace();
-			} catch (IOException e) {
-				System.err.println("File not found: "+file);
-				e.printStackTrace();
+		try {
+			//return TextureIO.newTexture(file, false);
+			BufferedImage image = ImageIO.read(file);
+			if(image != null && flipVertical) {
+				ImageUtil.flipImageVertically(image);
 			}
-		
+			return loadTexture(image);
+
+		} catch (GLException e) {
+			System.err.println("Error creating texture from: "+file);
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.err.println("File not found: "+file);
+			e.printStackTrace();
+		}
+
 		return null;
+	}
+
+	public Texture loadTexture(String fullPath, String textureName) {
+		return loadTexture(fullPath, textureName, true);
 	}
 
 	public Texture loadTexture(String textureName) {
 		return loadTexture(getPath()+folder, textureName);
+	}
+	
+	public Texture loadTexture(String textureName, boolean flipVertical) {
+		return loadTexture(getPath()+folder, textureName, flipVertical);
 	}
 
 	public Texture loadTexture(BufferedImage buffer) {
