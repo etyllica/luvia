@@ -6,6 +6,7 @@ import examples.custom.GridPerspective;
 import examples.custom.MarkerApplication;
 import examples.custom.Ortographic;
 import examples.custom.Perspective;
+import examples.custom.SkyboxGridPerspective;
 import examples.tutorial1.Tutorial1;
 import examples.tutorial2.Tutorial2;
 
@@ -33,8 +34,9 @@ public class LuviaExamples extends Luvia {
 		//return new Perspective(w, h);
 		//return new Ortographic(w, h);
 		//return new MarkerApplication(w, h);
-		return new GridPerspective(w, h);
+		//return new GridPerspective(w, h);
 		//return new RadialMarkerApplication(w, h);
+		return new SkyboxGridPerspective(w, h);
 	}
 
 }
