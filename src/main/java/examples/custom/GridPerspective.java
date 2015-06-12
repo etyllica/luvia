@@ -1,4 +1,4 @@
-package examples;
+package examples.custom;
 
 
 import static javax.media.opengl.GL.GL_LINEAR;

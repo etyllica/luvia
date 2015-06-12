@@ -1,4 +1,4 @@
-package examples;
+package examples.custom;
 
 import static javax.media.opengl.GL.GL_LINEAR;
 import static javax.media.opengl.GL.GL_TEXTURE_2D;
@@ -13,6 +13,7 @@ import javax.media.opengl.glu.GLU;
 
 import br.com.abby.util.CameraGL;
 import br.com.etyllica.core.event.GUIEvent;
+import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.input.mouse.MouseButton;
@@ -22,7 +23,7 @@ import br.com.luvia.loader.TextureLoader;
 
 import com.jogamp.opengl.util.texture.Texture;
 
-public class Ortographic extends ApplicationGL {
+public class Perspective extends ApplicationGL {
 
 	private Texture floor;
 
@@ -31,19 +32,20 @@ public class Ortographic extends ApplicationGL {
 	protected float mx = 0;
 	protected float my = 0;
 
-	public Ortographic(int w, int h) {
+	public Perspective(int w, int h) {
 		super(w, h);
 	}
 
+
 	@Override
-	public void init(Graphics3D drawable) {
-		floor = TextureLoader.getInstance().loadTexture("mark.png");
+	public void init(Graphics3D g) {
+		floor = TextureLoader.getInstance().loadTexture("/mark.png");		
 	}
 	
 	@Override
 	public void load() {
 		
-		camera = new CameraGL(0,15,1);
+		camera = new CameraGL(0,15,-10);
 		
 		loading = 100;
 	}
@@ -80,8 +82,14 @@ public class Ortographic extends ApplicationGL {
 		floor.enable(gl);
 		floor.bind(gl);
 
-		drawTile(gl, -.5, -.5, tileSize);
-		
+		for(int j=0;j<y;j++){
+
+			for(int i=0;i<x;i++){
+				drawTile(gl, i, j, tileSize);
+			}
+			
+		}
+
 		floor.disable(gl);
 	}
 
@@ -139,24 +147,18 @@ public class Ortographic extends ApplicationGL {
 	}
 
 	@Override
-	public void reshape(Graphics3D drawable, int x, int y, int width, int height) {
+	public void reshape(Graphics3D g, int x, int y, int width, int height) {
 
-		GL2 gl = drawable.getGL().getGL2();
+		GL2 gl = g.getGL2();
+		GLU glu = g.getGLU();
 
-		gl.glViewport (x, y, width, height);
+		gl.glViewport((int)x, (int)y, (int)w, (int)h);
 
 		gl.glMatrixMode(GL2.GL_PROJECTION);
 
 		gl.glLoadIdentity();
-		
-		double left = -10;
-		double right = +10;
-		double bottom = -10;
-		double top = +10;
-		
-		float aspect = (float)width / (float)height; 
-		
-		gl.glOrtho(left*aspect, right*aspect, bottom, top, 0.1, 500);		
+
+		glu.gluPerspective(60.0, (double) w / (double) h, 0.1, 500.0);
 
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 
@@ -167,18 +169,22 @@ public class Ortographic extends ApplicationGL {
 	protected boolean click = false;
 
 	@Override
+	public GUIEvent updateKeyboard(KeyEvent event) {
+
+		return GUIEvent.NONE;
+	}
+	
 	public GUIEvent updateMouse(PointerEvent event) {
 
 		mx = event.getX();
 		my = event.getY();
 
 		if(event.isButtonDown(MouseButton.MOUSE_BUTTON_LEFT)){
-			camera.setZ(camera.getZ()+0.1f);
+
 			click = true;
 		}
 
 		if(event.isButtonUp(MouseButton.MOUSE_BUTTON_LEFT)){
-			camera.setZ(camera.getZ()-0.1f);
 			click = false;
 		}
 
@@ -195,15 +201,18 @@ public class Ortographic extends ApplicationGL {
 		gl.glClearColor(1f, 1f, 1f, 1);
 				
 		//Transform by Camera
-		lookCamera(drawable);		
+		lookCamera(drawable);
 
 		//Draw Scene
 		drawAxis(gl);
 
 		drawFloor(gl);
 		
+
 		gl.glFlush();
-	}	
+
+	}
+	
 
 	@Override
 	public void draw(Graphic g) {
@@ -219,10 +228,7 @@ public class Ortographic extends ApplicationGL {
 		//Draw Gui
 		g.setColor(Color.WHITE);
 		g.drawShadow(20,20, "Scene",Color.BLACK);
-		//g.escreve(20,20,"Scene");
-		//System.out.println("w = "+w);
-		//System.out.println("h = "+h);
-		//g.drawLine(w/2, h/2, w/2+mx, h/2+my);
+				
 	}
 	
 }

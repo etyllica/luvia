@@ -1,4 +1,4 @@
-package examples;
+package examples.custom;
 
 import static javax.media.opengl.GL.GL_LINEAR;
 import static javax.media.opengl.GL.GL_TEXTURE_2D;
@@ -14,6 +14,7 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
+import br.com.abby.linear.Point3D;
 import br.com.abby.util.CameraGL;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
@@ -26,7 +27,7 @@ import br.com.luvia.loader.TextureLoader;
 
 import com.jogamp.opengl.util.texture.Texture;
 
-public class MarkerApplication extends ApplicationGL {
+public class RadialMarkerApplication extends ApplicationGL {
 
 	private Texture marker;
 	
@@ -42,8 +43,17 @@ public class MarkerApplication extends ApplicationGL {
 	private double angleY = 0;
 	
 	private double angleZ = 0;
+	
+	private Point3D originMarker;
+	private Point3D leftMarker;
+	
+	private double angleXY = 0;
+	private double angleXZ = 0;
+	private double angleYZ = 0;
+	
+	double tileSize = 5;
 
-	public MarkerApplication(int w, int h) {
+	public RadialMarkerApplication(int w, int h) {
 		super(w, h);
 	}
 
@@ -74,12 +84,16 @@ public class MarkerApplication extends ApplicationGL {
 	@Override
 	public void load() {
 		
-		camera = new CameraGL(0,15,1);
+		camera = new CameraGL(0,0,10);
+		
+		originMarker = new Point3D(0, 0);
+		
+		leftMarker = new Point3D(-2, -1.5);
 		
 		loading = 100;
 	}
 	
-	protected void lookCamera(Graphics3D g) {
+	/*protected void lookCamera(Graphics3D g) {
 		GL2 gl = g.getGL2();
 		GLU glu = g.getGLU();
 		
@@ -91,7 +105,7 @@ public class MarkerApplication extends ApplicationGL {
 		double targetz = 0;
 		
 		glu.gluLookAt( camera.getX(), camera.getY(), camera.getZ(), targetx, targety, targetz, 0, 1, 0 );
-	}
+	}*/
 	
 	protected void drawFloor(GL2 gl) {
 
@@ -105,15 +119,12 @@ public class MarkerApplication extends ApplicationGL {
 	}
 
 	private void drawGrid(GL2 gl, double x, double y) {
-
-		double tileSize = 5;
-
-		drawTile(gl, -.5, -.5, tileSize, marker);
 		
-		drawTile(gl, -2.5, -.5, tileSize, marker);
+		drawTile(gl, originMarker.getX(), originMarker.getY(), tileSize, marker);
 		
 	}
 
+	//Modified to draw tile from center
 	private void drawTile(GL2 gl, double x, double y, double tileSize, Texture texture) {
 
 		texture.enable(gl);
@@ -123,19 +134,19 @@ public class MarkerApplication extends ApplicationGL {
 
 		//(0,0)
 		gl.glTexCoord2d(0, 0);
-		gl.glVertex3d(x*tileSize, 0, y*tileSize);
+		gl.glVertex3d(x*tileSize-tileSize/2, 0, y*tileSize-tileSize/2);
 
 		//(1,0)
 		gl.glTexCoord2d(1, 0);
-		gl.glVertex3d(x*tileSize+tileSize, 0, y*tileSize);
+		gl.glVertex3d(x*tileSize-tileSize/2+tileSize, 0, y*tileSize-tileSize/2);
 
 		//(1,1)
 		gl.glTexCoord2d(1, 1);
-		gl.glVertex3d(x*tileSize+tileSize, 0, y*tileSize+tileSize);
+		gl.glVertex3d(x*tileSize+tileSize-tileSize/2, 0, y*tileSize+tileSize-tileSize/2);
 
 		//(0,1)
 		gl.glTexCoord2d(0, 1);
-		gl.glVertex3d(x*tileSize, 0, y*tileSize+tileSize);
+		gl.glVertex3d(x*tileSize-tileSize/2, 0, y*tileSize+tileSize-tileSize/2);
 
 		gl.glEnd();
 		
@@ -179,9 +190,9 @@ public class MarkerApplication extends ApplicationGL {
 		}
 		
 		if(leftArrow) {
-			angleY += 1;
+			angleZ += 1;
 		} else if(rightArrow) {
-			angleY -= 1;
+			angleZ -= 1;
 		}
 		
 	}
@@ -227,11 +238,11 @@ public class MarkerApplication extends ApplicationGL {
 		
 		if(event.isKeyDown(KeyEvent.TSK_VIRGULA)) {
 			
-			angleZ += 5;
+			angleY += 5;
 			
 		} else if(event.isKeyDown(KeyEvent.TSK_PONTO)) {
 			
-			angleZ -= 5;
+			angleY -= 5;
 			
 		}
 		
@@ -274,19 +285,35 @@ public class MarkerApplication extends ApplicationGL {
 
 		GL2 gl = drawable.getGL().getGL2();
 				
-		//Transform by Camera
-		lookCamera(drawable);
+		resetScene(drawable);
+		//Draw Scene
+		drawFloor(gl);
+		
+		resetScene(drawable);
+		
+		angleXY = leftMarker.angleXY(originMarker);
+		angleXZ = leftMarker.angleXZ(originMarker);
+		angleYZ = leftMarker.angleYZ(originMarker);
+		
+		//Angle XY turn in Z
+		gl.glRotated(angleXY, 0, 0, 1);
+		
+		drawTile(gl, leftMarker.getX(), leftMarker.getY(), tileSize, marker);
+
+		gl.glFlush();
+
+	}
+
+	protected void resetScene(Graphics3D drawable) {
+		GL2 gl = drawable.getGL().getGL2();
+		
+		drawable.updateCamera(camera);
+		
+		gl.glRotated(90, 1, 0, 0);
 		
 		gl.glRotated(angleX, 1, 0, 0);
 		gl.glRotated(angleY, 0, 1, 0);
 		gl.glRotated(angleZ, 0, 0, 1);
-
-		//Draw Scene
-		drawFloor(gl);
-		
-
-		gl.glFlush();
-
 	}
 	
 
@@ -302,6 +329,10 @@ public class MarkerApplication extends ApplicationGL {
 		g.drawShadow(20,60, "AngleY: "+(angleY),Color.BLACK);
 		
 		g.drawShadow(20,80, "AngleZ: "+(angleZ),Color.BLACK);
+		
+		g.drawShadow(20,100, "AngleXY: "+(angleXY),Color.BLACK);
+		g.drawShadow(20,130, "AngleXZ: "+(angleXZ),Color.BLACK);
+		g.drawShadow(20,160, "AngleYZ: "+(angleYZ),Color.BLACK);
 		
 		
 	}

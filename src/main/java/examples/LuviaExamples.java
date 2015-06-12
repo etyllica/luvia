@@ -2,10 +2,10 @@ package examples;
 
 import br.com.luvia.Luvia;
 import br.com.luvia.core.context.ApplicationGL;
-import examples.GridPerspective;
-import examples.MarkerApplication;
-import examples.Ortographic;
-import examples.Perspective;
+import examples.custom.GridPerspective;
+import examples.custom.MarkerApplication;
+import examples.custom.Ortographic;
+import examples.custom.Perspective;
 import examples.tutorial1.Tutorial1;
 import examples.tutorial2.Tutorial2;
 
@@ -26,7 +26,7 @@ public class LuviaExamples extends Luvia {
 	@Override
 	public ApplicationGL startApplication() {
 
-		initialSetup("../../../");
+		initialSetup("../../");
 						
 		//return new Tutorial1(w, h);
 		//return new Tutorial2(w, h);
