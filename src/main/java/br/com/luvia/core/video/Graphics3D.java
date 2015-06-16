@@ -3,7 +3,6 @@ package br.com.luvia.core.video;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.geom.Point2D;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
@@ -15,22 +14,24 @@ import javax.media.opengl.glu.GLUquadric;
 import org.jogamp.glg2d.GLGraphics2D;
 import org.lwjgl.util.vector.Vector3f;
 
-import com.jogamp.opengl.util.texture.Texture;
-
 import br.com.abby.linear.AimPoint;
 import br.com.abby.linear.Point3D;
 import br.com.abby.util.CameraGL;
 import br.com.etyllica.core.graphics.Graphic;
 
+import com.jogamp.opengl.util.texture.Texture;
+
 public class Graphics3D extends Graphic {
-	
+
 	private GLU glu;
-	
+
 	private GLAutoDrawable drawable;
+
+	private int DEFAULT_RESOLUTION = 16;
 
 	public Graphics3D(int width, int heigth) {
 		super(width,heigth);
-		
+
 		glu = new GLU(); // GL Utilities
 	}
 
@@ -38,7 +39,7 @@ public class Graphics3D extends Graphic {
 		this.screen = graphics;
 		this.screen.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);		
 	}
-	
+
 	public void setGraphics(GLGraphics2D graphics) {
 		this.screen = graphics;
 		this.screen.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -51,51 +52,51 @@ public class Graphics3D extends Graphic {
 	public void setDrawable(GLAutoDrawable drawable) {
 		this.drawable = drawable;
 	}	
-	
+
 	public int[] getViewPort() {
 		GL2 gl = drawable.getGL().getGL2();
-		
+
 		int viewport[] = new int[4];
 		gl.glGetIntegerv(GL.GL_VIEWPORT, viewport, 0);
 
 		return viewport;
 	}
-	
+
 	public void drawLine(Point3D a, Point3D b) {
 		GL2 gl = getGL2();
-		
+
 		gl.glBegin(GL.GL_LINES);
 		gl.glVertex3d(a.getX(), a.getY(), a.getZ());
 		gl.glVertex3d(b.getX(), b.getY(), b.getZ());
 		gl.glEnd();
 	}
-	
+
 	public void drawSphere(AimPoint point, double radius) {
-		
+
 		GL2 gl = drawable.getGL().getGL2();
-		
+
 		GLUquadric sphere = glu.gluNewQuadric();
 
 		glu.gluQuadricDrawStyle(sphere, GLU.GLU_FILL);
 		glu.gluQuadricTexture(sphere, true);
 		glu.gluQuadricNormals(sphere, GLU.GLU_SMOOTH);
-				  		
+
 		// draw a sphere
-        gl.glPushMatrix();                  
-            gl.glTranslated(point.getX(), point.getY(), point.getZ());
-            gl.glRotated(point.getAngleY(), 0, 1, 0);
-            gl.glRotated(point.getAngleX(), 1, 0, 0);
-            glu.gluSphere(sphere, radius, 32, 32);
-        gl.glPopMatrix();
+		gl.glPushMatrix();                  
+		gl.glTranslated(point.getX(), point.getY(), point.getZ());
+		gl.glRotated(point.getAngleY(), 0, 1, 0);
+		gl.glRotated(point.getAngleX(), 1, 0, 0);
+		glu.gluSphere(sphere, radius, 32, 32);
+		gl.glPopMatrix();
 	}
-	
+
 	public void drawTile(double x, double y, double tileSize, Texture texture) {
 
 		GL2 gl = drawable.getGL().getGL2();
-		
+
 		texture.enable(gl);
 		texture.bind(gl);
-		
+
 		gl.glBegin(GL2.GL_QUADS);
 
 		//(0,0)
@@ -115,10 +116,10 @@ public class Graphics3D extends Graphic {
 		gl.glVertex3d(x*tileSize, 0, y*tileSize+tileSize);
 
 		gl.glEnd();
-		
+
 		texture.disable(gl);
 	}
-	
+
 	public double[] getModelView() {
 
 		double modelView[] = new double[16];
@@ -135,13 +136,13 @@ public class Graphics3D extends Graphic {
 
 		return projection;
 	}
-	
+
 	public Point3D get3DPointerFromMouse(float mx, float my) {
-		
+
 		return get3DPointerFromMouse(mx, my, 0);
 
 	}
-	
+
 	public double[] get2DPositionFromPoint(double px, double py, double pz) {
 
 		double[] position = new double[3];
@@ -155,9 +156,9 @@ public class Graphics3D extends Graphic {
 		return position;
 
 	}
-	
+
 	public Point3D get3DPointerFromMouse(float mx, float my, float zPlane) {
-		
+
 		final int X = 0;
 		final int Y = 1;
 		final int Z = 2;
@@ -185,49 +186,49 @@ public class Graphics3D extends Graphic {
 		float fZ = v1.getZ() + (v2.getZ() - v1.getZ()) * t;
 
 		Point3D point = new Point3D(fX, 0, fZ);
-		
+
 		return point;
 	}
-	
+
 	public void updateCamera(CameraGL camera) {
 		drawable.getGL().getGL2().glMatrixMode(GL2.GL_MODELVIEW);
 		drawable.getGL().getGL2().glLoadIdentity();
-		
+
 		glu.gluLookAt( camera.getX(), camera.getY(), camera.getZ(), camera.getTarget().getX(), camera.getTarget().getY(), camera.getTarget().getZ(), 0, 1, 0 );
 	}
-	
+
 	public void aimCamera(Point3D cameraPoint, double angleX, double angleY, double angleZ) {
 		GL2 gl = getGL2();
-		
+
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
-							
+
 		gl.glLoadIdentity();
-		
+
 		gl.glRotated(360-angleX, 1, 0, 0);
 		gl.glRotated(360-angleY, 0, 1, 0);
 		gl.glRotated(360-angleZ, 0, 0, 1);
-		
+
 		gl.glTranslated(-cameraPoint.getX(), -cameraPoint.getY(), -cameraPoint.getZ());
 	}
-	
+
 	public void aimCamera(AimPoint aim) {
 		GL2 gl = getGL2();
-		
+
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
-							
+
 		gl.glLoadIdentity();
-		
+
 		gl.glRotated(360-aim.getAngleX(), 1, 0, 0);
 		gl.glRotated(360-aim.getAngleY(), 0, 1, 0);
 		gl.glRotated(360-aim.getAngleZ(), 0, 0, 1);
-		
+
 		gl.glTranslated(-aim.getX(), -aim.getY(), -aim.getZ());
 	}
 
 	public GLBase getGL() {
 		return drawable.getGL();
 	}
-	
+
 	public GL2 getGL2() {
 		return getGL().getGL2();
 	}
@@ -235,7 +236,7 @@ public class Graphics3D extends Graphic {
 	public GLU getGLU() {
 		return glu;
 	}
-	
+
 	public void drawPoint(Point3D point, Color color) {
 		drawSphere(0.01, point.getX(), point.getY(), point.getZ(), 16, color);
 	}
@@ -247,7 +248,7 @@ public class Graphics3D extends Graphic {
 		final int stacks = resolution;
 
 		GL2 gl = getGL2();
-		
+
 		gl.glPushMatrix();
 
 		glSetColor(color);
@@ -268,9 +269,9 @@ public class Graphics3D extends Graphic {
 
 		final int slices = resolution;
 		final int stacks = resolution;
-		
+
 		GL2 gl = getGL2();
-		
+
 		gl.glPushMatrix();
 
 		// Draw sphere (possible styles: FILL, LINE, POINT).
@@ -304,10 +305,54 @@ public class Graphics3D extends Graphic {
 		drawSphere(radius, x, y, z, 16);
 	}
 
+	public void drawSphere(double radius, int sections, int divisions) {
+		drawSphere(radius, 0, 0, 0, sections);
+	}
+
+	public void drawCube(double size) {
+
+		GL2 gl = getGL2();
+
+		gl.glPushMatrix();
+
+		gl.glColor3f(0.3f, 0.5f, 1f);
+
+		gl.glPushMatrix();
+		drawSquare(gl, size);        // front face
+		gl.glPopMatrix();
+
+		gl.glPushMatrix();
+		gl.glRotatef(180,0,1,0);
+		drawSquare(gl, size);        // back face
+		gl.glPopMatrix();
+
+		gl.glPushMatrix();
+		gl.glRotatef(-90,0,1,0);
+		drawSquare(gl, size);       // left face
+		gl.glPopMatrix();
+
+		gl.glPushMatrix();
+		gl.glRotatef(90,0,1,0);
+		drawSquare(gl, size);       // right face is magenta
+		gl.glPopMatrix();
+
+		gl.glPushMatrix();
+		gl.glRotatef(-90,1,0,0); // top face
+		drawSquare(gl, size);
+		gl.glPopMatrix();
+
+		gl.glPushMatrix();
+		gl.glRotatef(90,1,0,0); // bottom face
+		drawSquare(gl, size);
+		gl.glPopMatrix();
+
+		gl.glPopMatrix();
+	}
+
 	public void drawCube() {
 
 		GL2 gl = getGL2();
-		
+
 		gl.glPushMatrix();
 
 		gl.glColor3f(0.3f, 0.5f, 1f);
@@ -315,32 +360,32 @@ public class Graphics3D extends Graphic {
 		gl.glTranslated(0, 0.5, 0);
 
 		gl.glPushMatrix();
-		drawSquare(gl);        // front face
+		drawSquare(gl, 1);        // front face
 		gl.glPopMatrix();
 
 		gl.glPushMatrix();
 		gl.glRotatef(180,0,1,0);
-		drawSquare(gl);        // back face
+		drawSquare(gl, 1);        // back face
 		gl.glPopMatrix();
 
 		gl.glPushMatrix();
 		gl.glRotatef(-90,0,1,0);
-		drawSquare(gl);       // left face
+		drawSquare(gl, 1);       // left face
 		gl.glPopMatrix();
 
 		gl.glPushMatrix();
 		gl.glRotatef(90,0,1,0);
-		drawSquare(gl);       // right face is magenta
+		drawSquare(gl, 1);       // right face is magenta
 		gl.glPopMatrix();
 
 		gl.glPushMatrix();
 		gl.glRotatef(-90,1,0,0); // top face
-		drawSquare(gl);
+		drawSquare(gl, 1);
 		gl.glPopMatrix();
 
 		gl.glPushMatrix();
 		gl.glRotatef(90,1,0,0); // bottom face
-		drawSquare(gl);
+		drawSquare(gl, 1);
 		gl.glPopMatrix();
 
 		gl.glPopMatrix();
@@ -349,7 +394,7 @@ public class Graphics3D extends Graphic {
 	public void drawPyramid() {
 
 		GL2 gl = getGL2();
-		
+
 		float size = 1.0f/2;
 
 		gl.glPushMatrix();
@@ -389,28 +434,27 @@ public class Graphics3D extends Graphic {
 
 	}
 
-	public void drawSquare(GL2 gl) {
+	public void drawSquare(GL2 gl, double size) {
 
-		float size = 1.0f/2;
+		float halfSize = 1.0f/2;
 
-		gl.glTranslatef(0,0,size);
+		gl.glTranslatef(0,0,halfSize);
 
 		gl.glBegin(GL.GL_TRIANGLE_FAN);
-		gl.glVertex2f(-size,-size);    // Draw the square (before the
-		gl.glVertex2f(size,-size);     //   the translation is applied)
-		gl.glVertex2f(size,size);      //   on the xy-plane, with its
-		gl.glVertex2f(-size,size);     //   at (0,0,0).
+		gl.glVertex2f(-halfSize,-halfSize);    // Draw the square (before the
+		gl.glVertex2f(halfSize,-halfSize);     //   the translation is applied)
+		gl.glVertex2f(halfSize,halfSize);      //   on the xy-plane, with its
+		gl.glVertex2f(-halfSize,halfSize);     //   at (0,0,0).
 		gl.glEnd();
-
 	}
-	
+
 	/*
 	 * Draw camera model	
 	 */
 	public void drawCamera(CameraGL camera) {
 
 		GL2 gl = getGL2();
-		
+
 		Color color = camera.getColor();
 
 		gl.glLineWidth(0.5f);
@@ -460,13 +504,70 @@ public class Graphics3D extends Graphic {
 
 		gl.glPopMatrix();
 	}
-	
+
 	public void glSetColor(Color color) {
 		float red = ((float)color.getRed()/255);
 		float green = ((float)color.getGreen()/255);
 		float blue = ((float)color.getBlue()/255);
-				
+
 		getGL2().glColor3f(red, green, blue);
 	}
-	
+
+	public void drawCylinder(float radius, float height, int upAxis) {
+		GLUquadric quadric = generateSphereQuadric(glu);
+		glu.gluCylinder(quadric, radius, radius, height, DEFAULT_RESOLUTION, DEFAULT_RESOLUTION);
+		
+		//drawCylinder(radius, radius, height, DEFAULT_RESOLUTION, DEFAULT_RESOLUTION);
+	}
+
+	public void drawCylinder(float baseRadius, float topRadius, float height, int slices, int stacks) {
+
+		GL2 gl = getGL2();
+
+		float da, r, dr, dz;
+		float x, y, z, nz, nsign;
+		int i, j;
+
+		nsign = 1.0f;
+
+		da = 2.0f * (float)Math.PI / slices;
+		dr = (topRadius - baseRadius) / stacks;
+		dz = height / stacks;
+		nz = (baseRadius - topRadius) / height;
+		// Z component of normal vectors
+
+		float ds = 1.0f / slices;
+		float dt = 1.0f / stacks;
+		float t = 0.0f;
+		z = 0.0f;
+		r = baseRadius;
+		for (j = 0; j < stacks; j++) {
+			float s = 0.0f;
+			gl.glBegin(GL2.GL_QUAD_STRIP);
+			for (i = 0; i <= slices; i++) {
+				if (i == slices) {
+					x = (float)(Math.sin(0));
+					y = (float)(Math.cos(0));
+				} else {
+					x = (float)(Math.sin((i * da)));
+					y = (float)(Math.cos((i * da)));
+				}
+
+				gl.glNormal3f(x * nsign, y * nsign, nz * nsign);
+				gl.glTexCoord2f(s, t);
+				gl.glVertex3f((x * r), (y * r), z);
+
+				gl.glNormal3f((x * nsign), (y * nsign), (nz * nsign));
+				gl.glTexCoord2f(s, t + dt);
+				gl.glVertex3f((x * (r + dr)), (y * (r + dr)), (z + dz));						
+
+				s += ds;
+			} // for slices
+			gl.glEnd();
+			r += dr;
+			t += dt;
+			z += dz;
+		} // for stacks
+	}
+
 }

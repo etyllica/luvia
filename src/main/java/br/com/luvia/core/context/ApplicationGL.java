@@ -26,9 +26,7 @@ public abstract class ApplicationGL extends Application implements G3DEventListe
 	}
 	
 	private void init() {
-		
-		nextApplication = this;
-		
+		nextApplication = this;		
 		clearBeforeDraw = false;
 	}
 	
