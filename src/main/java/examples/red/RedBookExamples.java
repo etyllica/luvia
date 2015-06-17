@@ -15,7 +15,7 @@ public class RedBookExamples extends Luvia {
 		RedBookExamples examples = new RedBookExamples();		
 		examples.init();
 	}
-	
+
 	@Override
 	public ApplicationGL startApplication() {
 
