@@ -255,13 +255,12 @@ public class Graphics3D extends Graphic {
 
 		gl.glTranslated(x, y, z);
 
-		GLUquadric sphere = generateSphereQuadric(glu);
+		GLUquadric sphere = generateQuadric(glu);
 
 		glu.gluSphere(sphere, radius, slices, stacks);
-
 		glu.gluDeleteQuadric(sphere);
 
-		gl.glPopMatrix();		
+		gl.glPopMatrix();
 	}
 
 	public void drawSphere(double radius, double x,
@@ -275,30 +274,33 @@ public class Graphics3D extends Graphic {
 		gl.glPushMatrix();
 
 		// Draw sphere (possible styles: FILL, LINE, POINT).
-		gl.glColor3f(0.3f, 0.5f, 1f);
+		//gl.glColor3f(0.3f, 0.5f, 1f);
 
 		gl.glTranslated(x, y, z);
 
-		GLUquadric sphere = generateSphereQuadric(glu);
+		GLUquadric sphere = generateQuadric(glu);
 
 		glu.gluSphere(sphere, radius, slices, stacks);
-
 		glu.gluDeleteQuadric(sphere);
 
 		gl.glPopMatrix();		
 	}
 
-	private GLUquadric generateSphereQuadric(GLU glu) {		
-		GLUquadric sphere = glu.gluNewQuadric();
+	private GLUquadric generateQuadric(GLU glu) {		
+		GLUquadric quadric = glu.gluNewQuadric();
 
 		// Draw sphere (possible styles: FILL, LINE, POINT)
-		glu.gluQuadricDrawStyle(sphere, GLU.GLU_FILL);
-		glu.gluQuadricNormals(sphere, GLU.GLU_FLAT);
-		glu.gluQuadricOrientation(sphere, GLU.GLU_OUTSIDE);
+		glu.gluQuadricDrawStyle(quadric, GLU.GLU_FILL);
+		glu.gluQuadricNormals(quadric, GLU.GLU_FLAT);
+		glu.gluQuadricOrientation(quadric, GLU.GLU_OUTSIDE);
 
-		return sphere;
+		return quadric;
 	}
 
+	public void drawSphere(double radius) {
+		drawSphere(radius, 0, 0, 0, DEFAULT_RESOLUTION);
+	}
+	
 	public void drawSphere(double radius, double x,
 			double y, double z) {
 
@@ -312,10 +314,6 @@ public class Graphics3D extends Graphic {
 	public void drawCube(double size) {
 
 		GL2 gl = getGL2();
-
-		gl.glPushMatrix();
-
-		gl.glColor3f(0.3f, 0.5f, 1f);
 
 		gl.glPushMatrix();
 		drawSquare(gl, size);        // front face
@@ -344,8 +342,6 @@ public class Graphics3D extends Graphic {
 		gl.glPushMatrix();
 		gl.glRotatef(90,1,0,0); // bottom face
 		drawSquare(gl, size);
-		gl.glPopMatrix();
-
 		gl.glPopMatrix();
 	}
 
@@ -391,47 +387,68 @@ public class Graphics3D extends Graphic {
 		gl.glPopMatrix();
 	}
 
-	public void drawPyramid() {
+	public void drawPyramid(double size) {
 
 		GL2 gl = getGL2();
 
-		float size = 1.0f/2;
+		double halfSize = size/2;
 
 		gl.glPushMatrix();
-		//gl.glScaled(1.8, 1.8, 1.8);
-		//gl.glScaled(1, 1, 1);
-
-		//gl.glTranslated(0, 1, 0);
 
 		gl.glBegin(GL.GL_TRIANGLES);        // Drawing Using Triangles
-		gl.glColor3f(size, 0.0f, 0.0f);     // Red
-		gl.glVertex3f(0.0f, size, 0.0f);    // Top Of Triangle (Front)
-		gl.glColor3f(0.0f, size, 0.0f);     // Green
-		gl.glVertex3f(-size, -size, size);  // Left Of Triangle (Front)
-		gl.glColor3f(0.0f, 0.0f, size);     // Blue
-		gl.glVertex3f(size, -size, size);   // Right Of Triangle (Front)
-		gl.glColor3f(size, 0.0f, 0.0f);     // Red
-		gl.glVertex3f(0.0f, size, 0.0f);    // Top Of Triangle (Right)
-		gl.glColor3f(0.0f, 0.0f, size);     // Blue
-		gl.glVertex3f(size, -size, size);   // Left Of Triangle (Right)
-		gl.glColor3f(0.0f, size, 0.0f);     // Green
-		gl.glVertex3f(size, -size, -size);  // Right Of Triangle (Right)
-		gl.glColor3f(size, 0.0f, 0.0f);     // Red
-		gl.glVertex3f(0.0f, size, 0.0f);    // Top Of Triangle (Back)
-		gl.glColor3f(0.0f, size, 0.0f);     // Green
-		gl.glVertex3f(size, -size, -size);  // Left Of Triangle (Back)
-		gl.glColor3f(0.0f, 0.0f, size);     // Blue
-		gl.glVertex3f(-size, -size, -size); // Right Of Triangle (Back)
-		gl.glColor3f(size, 0.0f, 0.0f);     // Red
-		gl.glVertex3f(0.0f, size, 0.0f);    // Top Of Triangle (Left)
-		gl.glColor3f(0.0f, 0.0f, size);     // Blue
-		gl.glVertex3f(-size, -size, -size); // Left Of Triangle (Left)
-		gl.glColor3f(0.0f, size, 0.0f);     // Green
-		gl.glVertex3f(-size, -size, size);  // Right Of Triangle (Left)
+		gl.glVertex3d(0.0f, halfSize, 0.0f);    // Top Of Triangle (Front)
+		gl.glVertex3d(-halfSize, -halfSize, halfSize);  // Left Of Triangle (Front)
+		gl.glVertex3d(halfSize, -halfSize, halfSize);   // Right Of Triangle (Front)
+		gl.glVertex3d(0.0f, halfSize, 0.0f);    // Top Of Triangle (Right)
+		gl.glVertex3d(halfSize, -halfSize, halfSize);   // Left Of Triangle (Right)
+		gl.glVertex3d(halfSize, -halfSize, -halfSize);  // Right Of Triangle (Right)
+		gl.glVertex3d(0.0f, halfSize, 0.0f);    // Top Of Triangle (Back)
+		gl.glVertex3d(halfSize, -halfSize, -halfSize);  // Left Of Triangle (Back)
+		gl.glVertex3d(-halfSize, -halfSize, -halfSize); // Right Of Triangle (Back)
+		gl.glVertex3d(0.0f, halfSize, 0.0f);    // Top Of Triangle (Left)
+		gl.glVertex3d(-halfSize, -halfSize, -halfSize); // Left Of Triangle (Left)
+		gl.glVertex3d(-halfSize, -halfSize, halfSize);  // Right Of Triangle (Left)
 		gl.glEnd();                         // Finished Drawing The Triangle
 
 		gl.glPopMatrix();
+	}
+	
+	public void drawColoredPyramid(double size) {
 
+		GL2 gl = getGL2();
+
+		double halfSize = size/2;
+
+		gl.glPushMatrix();
+
+		gl.glBegin(GL.GL_TRIANGLES);        // Drawing Using Triangles
+		gl.glColor3d(halfSize, 0.0f, 0.0f);     // Red
+		gl.glVertex3d(0.0f, halfSize, 0.0f);    // Top Of Triangle (Front)
+		gl.glColor3d(0.0f, halfSize, 0.0f);     // Green
+		gl.glVertex3d(-halfSize, -halfSize, halfSize);  // Left Of Triangle (Front)
+		gl.glColor3d(0.0f, 0.0f, halfSize);     // Blue
+		gl.glVertex3d(halfSize, -halfSize, halfSize);   // Right Of Triangle (Front)
+		gl.glColor3d(halfSize, 0.0f, 0.0f);     // Red
+		gl.glVertex3d(0.0f, halfSize, 0.0f);    // Top Of Triangle (Right)
+		gl.glColor3d(0.0f, 0.0f, halfSize);     // Blue
+		gl.glVertex3d(halfSize, -halfSize, halfSize);   // Left Of Triangle (Right)
+		gl.glColor3d(0.0f, halfSize, 0.0f);     // Green
+		gl.glVertex3d(halfSize, -halfSize, -halfSize);  // Right Of Triangle (Right)
+		gl.glColor3d(halfSize, 0.0f, 0.0f);     // Red
+		gl.glVertex3d(0.0f, halfSize, 0.0f);    // Top Of Triangle (Back)
+		gl.glColor3d(0.0f, halfSize, 0.0f);     // Green
+		gl.glVertex3d(halfSize, -halfSize, -halfSize);  // Left Of Triangle (Back)
+		gl.glColor3d(0.0f, 0.0f, halfSize);     // Blue
+		gl.glVertex3d(-halfSize, -halfSize, -halfSize); // Right Of Triangle (Back)
+		gl.glColor3d(halfSize, 0.0f, 0.0f);     // Red
+		gl.glVertex3d(0.0f, halfSize, 0.0f);    // Top Of Triangle (Left)
+		gl.glColor3d(0.0f, 0.0f, halfSize);     // Blue
+		gl.glVertex3d(-halfSize, -halfSize, -halfSize); // Left Of Triangle (Left)
+		gl.glColor3d(0.0f, halfSize, 0.0f);     // Green
+		gl.glVertex3d(-halfSize, -halfSize, halfSize);  // Right Of Triangle (Left)
+		gl.glEnd();                         // Finished Drawing The Triangle
+
+		gl.glPopMatrix();
 	}
 
 	public void drawSquare(GL2 gl, double size) {
@@ -513,61 +530,56 @@ public class Graphics3D extends Graphic {
 		getGL2().glColor3f(red, green, blue);
 	}
 
-	public void drawCylinder(float radius, float height, int upAxis) {
-		GLUquadric quadric = generateSphereQuadric(glu);
-		glu.gluCylinder(quadric, radius, radius, height, DEFAULT_RESOLUTION, DEFAULT_RESOLUTION);
+	/**
+	 * Found at http://www.gamedev.net/topic/359467-draw-cylinder-with-triangle-strips/?view=findpost&p=3360321
+	 * @param radius
+	 * @param height
+	 */
+	public void drawCylinder(double radius, double height) {
+		GL2 gl = getGL2();
 		
-		//drawCylinder(radius, radius, height, DEFAULT_RESOLUTION, DEFAULT_RESOLUTION);
-	}
+		double numSteps = DEFAULT_RESOLUTION;
+		
+		double hl = height * 0.5f;
+		double a = 0.0;
+		double step = 2*Math.PI / numSteps;
+		
+		gl.glBegin(GL2.GL_TRIANGLE_STRIP);
+		for (int i = 0; i <= numSteps; ++i) {
+		    double x = Math.cos(a) * radius;
+		    double y = Math.sin(a) * radius;
+		    gl.glVertex3d(x,-hl, y);
+		    gl.glVertex3d(x, hl, y);
 
-	public void drawCylinder(float baseRadius, float topRadius, float height, int slices, int stacks) {
+		    a += step;
+		}
+		gl.glEnd();
+	}
+	
+	public void drawCylinder(double baseRadius, double topRadius, double height) {
+		drawCylinder(baseRadius, topRadius, height, 0, 0, 0);
+	}
+	
+	public void drawCylinder(double baseRadius, double topRadius, double height, double x, double y, double z) {
+		
+		final int slices = DEFAULT_RESOLUTION;
+		final int stacks = DEFAULT_RESOLUTION;
 
 		GL2 gl = getGL2();
 
-		float da, r, dr, dz;
-		float x, y, z, nz, nsign;
-		int i, j;
+		gl.glPushMatrix();
 
-		nsign = 1.0f;
+		// Draw sphere (possible styles: FILL, LINE, POINT).
+		//gl.glColor3f(0.3f, 0.5f, 1f);
 
-		da = 2.0f * (float)Math.PI / slices;
-		dr = (topRadius - baseRadius) / stacks;
-		dz = height / stacks;
-		nz = (baseRadius - topRadius) / height;
-		// Z component of normal vectors
+		gl.glTranslated(x, y, z);
 
-		float ds = 1.0f / slices;
-		float dt = 1.0f / stacks;
-		float t = 0.0f;
-		z = 0.0f;
-		r = baseRadius;
-		for (j = 0; j < stacks; j++) {
-			float s = 0.0f;
-			gl.glBegin(GL2.GL_QUAD_STRIP);
-			for (i = 0; i <= slices; i++) {
-				if (i == slices) {
-					x = (float)(Math.sin(0));
-					y = (float)(Math.cos(0));
-				} else {
-					x = (float)(Math.sin((i * da)));
-					y = (float)(Math.cos((i * da)));
-				}
+		GLUquadric cylinder = generateQuadric(glu);
 
-				gl.glNormal3f(x * nsign, y * nsign, nz * nsign);
-				gl.glTexCoord2f(s, t);
-				gl.glVertex3f((x * r), (y * r), z);
+		glu.gluCylinder(cylinder, baseRadius, topRadius, height, slices, stacks);
+		glu.gluDeleteQuadric(cylinder);
 
-				gl.glNormal3f((x * nsign), (y * nsign), (nz * nsign));
-				gl.glTexCoord2f(s, t + dt);
-				gl.glVertex3f((x * (r + dr)), (y * (r + dr)), (z + dz));						
-
-				s += ds;
-			} // for slices
-			gl.glEnd();
-			r += dr;
-			t += dt;
-			z += dz;
-		} // for stacks
+		gl.glPopMatrix();
 	}
-
+	
 }
