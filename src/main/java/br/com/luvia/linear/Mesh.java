@@ -46,20 +46,22 @@ public class Mesh extends AimPoint implements GL2Drawable {
 
 	private float scale = 1;
 
+	private int[] indexes = new int[10];
+
 	public Mesh() {
 		super(0,0,0);
 	}
-	
+
 	public Mesh(VBO vbo) {
 		super(0,0,0);
-		
+
 		this.vbo = vbo;
 		loadMaterials();
 	}
-	
+
 	public Mesh(String path) {
 		super(0,0,0);
-		
+
 		loadVBO(path);
 		loadMaterials();
 	}
@@ -75,10 +77,9 @@ public class Mesh extends AimPoint implements GL2Drawable {
 			if(group.getMaterial() != null) {
 				materials.put(group, new Material(group.getMaterial()));	
 			}
-			
 		}
 	}
-	
+
 	public boolean isDrawTexture() {
 		return drawTexture;
 	}
@@ -86,14 +87,6 @@ public class Mesh extends AimPoint implements GL2Drawable {
 	public void setDrawTexture(boolean drawTexture) {
 		this.drawTexture = drawTexture;
 	}
-
-	/*public Map<String, Material> getMaterials() {
-		return materials;
-	}
-
-	public void setMaterials(Map<String, Material> materials) {
-		this.materials = materials;
-	}*/
 
 	public List<Vector3f> getVertexes() {
 		return vbo.getVertices();
@@ -103,175 +96,171 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		this.vbo.setVertices(vertexes);
 	}
 
-	public void drawWireFrame(GL2 gl) {
+	public void wireframeRender(GL2 gl) {
 
-		gl.glEnable(GL.GL_CULL_FACE);
+		gl.glPushMatrix();
+
+		setupModel(gl);
 
 		// Turn on wireframe mode
 		gl.glPolygonMode(GL2.GL_FRONT, GL2.GL_LINE);
-		//gl.glPolygonMode(GL2.GL_BACK, GL2.GL_LINE);
-		//gl.glPolygonMode(GL2.GL_BACK, GL2.GL_FILL);
+		setupColor(gl);
 
-		// Draw Model		
+		drawTexture = false;
+		
+		// Draw Model
 		for(Group group: vbo.getGroups()) {
 
 			for(Face face: group.getFaces()) {
 
-				if(face.vertexIndex.length==3) {
+				int vertices = face.vertexIndex.length;
+				setupIndexes(vertices);
 
-					gl.glBegin(GL.GL_TRIANGLES);
-
-				}else{ //TODO Transform all faces in tris
-
-					gl.glBegin(GL2.GL_QUADS);
-
-				}
-
-				for(int i=0;i<face.vertexIndex.length;i++) {
-
-					int index = face.vertexIndex[i];
-					
-					Vector3f vertex = vbo.getVertices().get(index);
-					
-					gl.glVertex3d(vertex.getX(), vertex.getY(), vertex.getZ());					
-				}
-
+				gl.glBegin(GL2.GL_TRIANGLE_STRIP);
+				drawWireFrameFace(gl, face);
 				gl.glEnd();
-
-			}		
-
+			}
 		}
 
 		// Turn off wireframe mode
-		gl.glPolygonMode(GL2.GL_FRONT, GL2.GL_FILL);
-		//gl.glPolygonMode(GL2.GL_BACK, GL2.GL_FILL);
-
+		gl.glPolygonMode(GL2.GL_FRONT_AND_BACK, GL2.GL_FILL);
+		gl.glPopMatrix();
 	}
 
-	public void simpleDraw(GL2 gl) {
-		
+	private void setupIndexes(int vertices) {
+		if(vertices == 3) {
+			indexes[0] = 0;
+			indexes[1] = 1;
+			indexes[2] = 2;
+		} else if(vertices == 4) { //TODO Transform all faces in tris
+			indexes[0] = 0;
+			indexes[1] = 1;
+			indexes[2] = 3;
+			indexes[3] = 2;
+		}
+	}
+
+	public void texturedRender(GL2 gl) {
+
 		gl.glPushMatrix();
 
-		gl.glTranslated(x, y, z);
-		gl.glRotated(angleX, 1, 0, 0);
-		gl.glRotated(angleY, 0, 1, 0);
-		gl.glRotated(angleZ, 0, 0, 1);
-		gl.glScaled(scale, scale, scale);
+		gl.glEnable(GL.GL_CULL_FACE);
+		gl.glCullFace(GL.GL_BACK);
 
-		//gl.glTranslated(x, y, z);
+		setupModel(gl);
 
 		Texture texture = null;
 
 		for(Group group: vbo.getGroups()) {
 
 			drawTexture = false;
-
-			if(group.getMaterial()!=null) {
-
-				texture = materials.get(group).getTextureD();
-
-				if(texture==null) {
-					texture = materials.get(group).getTextureKd();
-				}
-
-				if(texture!=null) {
-					
-					drawTexture = true;
-				}//else {//System.err.println("textura não encontrada");}
-
-			}
-
-			if(drawTexture) {
-
-				gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-				// Use linear filter for texture if image is smaller than the original texture
-				gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-				texture.enable(gl);
-				texture.bind(gl);
-				
-			} else {
-				
-				gl.glColor3d((double)color.getRed()/255, (double)color.getGreen()/255, (double)color.getBlue()/255);
-				
-			}
+			texture = setupTexture(gl, texture, group);
 
 			for(Face face: group.getFaces()) {
 
-				if(face.vertexIndex.length==3) {
+				int vertices = face.vertexIndex.length;
+				setupIndexes(vertices);
 
-					gl.glBegin(GL.GL_TRIANGLES);
-
-				}else{ //TODO Transform all faces in tris
-
-					gl.glBegin(GL2.GL_QUADS);
-
-				}
-
-				for(int i=0;i<face.vertexIndex.length;i++) {
-
-					if(drawTexture) {
-						//gl.glNormal3d(face.normal[i].getX(), face.normal[i].getY(), face.normal[i].getZ());
-						gl.glTexCoord2d(face.texture[i].getX(), face.texture[i].getY());
-					}
-
-					int index = face.vertexIndex[i];
-					
-					Vector3f vertex = vbo.getVertices().get(index);
-					
-					gl.glVertex3d(vertex.getX(), vertex.getY(), vertex.getZ());					
-				}
-
+				gl.glBegin(GL2.GL_TRIANGLE_STRIP);
+				drawTexturedFace(gl,face);
 				gl.glEnd();
 
 			}
 
-			//TODO make it better
-			if(texture!=null) {
-
-				if(drawTexture) {
-
-					texture.disable(gl);
-
-				}
-
-				texture = null;
-
-			}
+			disableTexture(gl, texture);
 		}
 
+		gl.glPopMatrix();
 
-		/*for(int i=0;i<vertexes.size(); i++) {
+	}
 
-			gl.glPushMatrix();
+	private Texture setupTexture(GL2 gl, Texture texture, Group group) {
+		if(group.getMaterial() != null) {
+			texture = loadTexture(group);
+		}
 
-			float vsize = 0.01f;
+		if(drawTexture) {
+			gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			// Use linear filter for texture if image is smaller than the original texture
+			gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-			if(vertexSelection.contains(i)) {
-				gl.glColor3f(1,1,1);
-			}else{
-				//gl.glColor3i(0xdd,0x88,0x55);
-				gl.glColor3f(0.6f,0.4f,0.4f);
+			texture.enable(gl);
+			texture.bind(gl);
+		} else {
+			setupColor(gl);
+		}
+
+		return texture;
+	}
+
+	private void setupColor(GL2 gl) {
+		gl.glColor3d((double)color.getRed()/255, (double)color.getGreen()/255, (double)color.getBlue()/255);
+	}
+
+	private void disableTexture(GL2 gl, Texture texture) {
+		//TODO make it better
+		if(texture != null) {
+			if(drawTexture) {
+				texture.disable(gl);
+			}
+			texture = null;
+		}
+	}
+
+	private Texture loadTexture(Group group) {
+		Texture texture;
+
+		texture = materials.get(group).getTextureD();
+
+		if(texture == null) {
+			texture = materials.get(group).getTextureKd();
+		}
+
+		if(texture != null) {
+			drawTexture = true;
+		} else {
+			System.err.println("texture not found");
+		}
+
+		return texture;
+	}
+
+	private void setupModel(GL2 gl) {
+		gl.glTranslated(x, y, z);
+		gl.glRotated(angleX, 1, 0, 0);
+		gl.glRotated(angleY, 0, 1, 0);
+		gl.glRotated(angleZ, 0, 0, 1);
+		gl.glScaled(scale, scale, scale);
+	}
+
+	private void drawWireFrameFace(GL2 gl, Face face) {
+		for(int i = 0; i < face.vertexIndex.length; i++) {
+			int index = face.vertexIndex[indexes[i]];
+			Vector3f vertex = vbo.getVertices().get(index);
+			gl.glVertex3d(vertex.getX(), vertex.getY(), vertex.getZ());					
+		}
+	}
+
+	private void drawTexturedFace(GL2 gl, Face face) {
+		for(int i = 0; i < face.vertexIndex.length; i++) {
+
+			if(drawTexture) {
+				//gl.glNormal3d(face.normal[indexes[i]].getX(), face.normal[indexes[i]].getY(), face.normal[indexes[i]].getZ());
+				gl.glTexCoord2d(face.texture[indexes[i]].getX(), face.texture[indexes[i]].getY());
 			}
 
-			gl.glTranslated(vertexes.get(i).getX(), vertexes.get(i).getY(), vertexes.get(i).getZ());
-			//drawCube(gl, vsize);
-			gl.glPopMatrix();
-		}*/
-
-
-
-		gl.glPopMatrix();
-		
+			int index = face.vertexIndex[indexes[i]];
+			Vector3f vertex = vbo.getVertices().get(index);
+			gl.glVertex3d(vertex.getX(), vertex.getY(), vertex.getZ());
+		}
 	}
-	
+
 	@Override
 	public void draw(GL2 gl) {
 
 		gl.glEnable(GL.GL_DEPTH_TEST);
-
-		simpleDraw(gl);
-		
+		texturedRender(gl);
+		//drawWireFrame(gl);
 		gl.glDisable(GL.GL_DEPTH_TEST);
 
 	}
