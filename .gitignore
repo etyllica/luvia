@@ -4,6 +4,7 @@
 *.g
 *.v
 sdk/
+bin/
 
 .classpath
 .project
