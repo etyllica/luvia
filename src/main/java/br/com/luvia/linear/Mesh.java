@@ -15,6 +15,7 @@ import java.util.Set;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import br.com.abby.linear.AimPoint;
@@ -244,12 +245,17 @@ public class Mesh extends AimPoint implements GL2Drawable {
 	private void drawTexturedFace(GL2 gl, Face face) {
 		for(int i = 0; i < face.vertexIndex.length; i++) {
 
-			if(drawTexture) {
-				//gl.glNormal3d(face.normal[indexes[i]].getX(), face.normal[indexes[i]].getY(), face.normal[indexes[i]].getZ());
-				gl.glTexCoord2d(face.texture[indexes[i]].getX(), face.texture[indexes[i]].getY());
-			}
-
 			int index = face.vertexIndex[indexes[i]];
+			
+			if(drawTexture) {
+				//Vector3f normal = vbo.getNormals().get(face.normalIndex[index]);
+				//gl.glNormal3d(normal.getX(), normal.getY(), normal.getZ());
+				
+				Vector2f texture = vbo.getTextures().get(face.textureIndex[index]);
+				gl.glTexCoord2d(texture.getX(), texture.getY());
+			}
+			
+			
 			Vector3f vertex = vbo.getVertices().get(index);
 			gl.glVertex3d(vertex.getX(), vertex.getY(), vertex.getZ());
 		}
