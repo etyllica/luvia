@@ -311,10 +311,21 @@ public class Graphics3D extends Graphic {
 		drawSphere(radius, 0, 0, 0, sections);
 	}
 
+	public void drawWireCube(double size) {
+		GL2 gl = getGL2();
+		gl.glPolygonMode( GL.GL_FRONT_AND_BACK, GL2.GL_LINE );
+		drawCube(size);
+		gl.glPolygonMode( GL.GL_FRONT_AND_BACK, GL2.GL_FILL );
+	}
+	
 	public void drawCube(double size) {
 
 		GL2 gl = getGL2();
 
+		gl.glPushMatrix();
+		
+		gl.glTranslated(0, size/2, 0);
+		
 		gl.glPushMatrix();
 		drawSquare(gl, size);        // front face
 		gl.glPopMatrix();
@@ -342,6 +353,8 @@ public class Graphics3D extends Graphic {
 		gl.glPushMatrix();
 		gl.glRotatef(90,1,0,0); // bottom face
 		drawSquare(gl, size);
+		gl.glPopMatrix();
+		
 		gl.glPopMatrix();
 	}
 
