@@ -72,7 +72,19 @@ public class TextureLoader extends LoaderImpl {
 	}
 
 	public Texture loadTexture(BufferedImage buffer) {
+		setupContext();
+		
 		return AWTTextureIO.newTexture(GLProfile.getGL2GL3(), buffer, false);
+	}
+
+	private void setupContext() {
+		if(context == null) {
+			context = GLContext.getCurrent();
+		}
+		
+		if(context!=null) {
+			GLContext.getCurrent().makeCurrent();	
+		}
 	}
 
 }
