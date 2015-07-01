@@ -102,7 +102,7 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		gl.glPushMatrix();
 
 		setupModel(gl);
-
+		
 		// Turn on wireframe mode
 		gl.glPolygonMode(GL2.GL_FRONT, GL2.GL_LINE);
 		setupColor(gl);
@@ -245,30 +245,37 @@ public class Mesh extends AimPoint implements GL2Drawable {
 	private void drawTexturedFace(GL2 gl, Face face) {
 		for(int i = 0; i < face.vertexIndex.length; i++) {
 
-			int index = face.vertexIndex[indexes[i]];
+			int index = indexes[i];
+			
+			int vertexIndex = face.vertexIndex[index];
+			
+			//Set normals if has it
+			if(!vbo.getNormals().isEmpty() && face.normalIndex!=null) {
+				Vector3f normal = vbo.getNormals().get(face.normalIndex[index]);
+				gl.glNormal3d(normal.getX(), normal.getY(), normal.getZ());
+			}
 			
 			if(drawTexture) {
-				//Vector3f normal = vbo.getNormals().get(face.normalIndex[index]);
-				//gl.glNormal3d(normal.getX(), normal.getY(), normal.getZ());
-				
 				Vector2f texture = vbo.getTextures().get(face.textureIndex[index]);
 				gl.glTexCoord2d(texture.getX(), texture.getY());
 			}
 			
-			
-			Vector3f vertex = vbo.getVertices().get(index);
+			Vector3f vertex = vbo.getVertices().get(vertexIndex);
 			gl.glVertex3d(vertex.getX(), vertex.getY(), vertex.getZ());
 		}
 	}
 
 	@Override
 	public void draw(GL2 gl) {
-
 		gl.glEnable(GL.GL_DEPTH_TEST);
 		texturedRender(gl);
-		//drawWireFrame(gl);
 		gl.glDisable(GL.GL_DEPTH_TEST);
-
+	}
+	
+	public void drawAsWireFrame(GL2 gl) {
+		gl.glEnable(GL.GL_DEPTH_TEST);
+		wireframeRender(gl);
+		gl.glDisable(GL.GL_DEPTH_TEST);
 	}
 
 	public Set<Integer> getVertexSelection() {

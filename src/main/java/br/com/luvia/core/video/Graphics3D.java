@@ -71,6 +71,10 @@ public class Graphics3D extends Graphic {
 		gl.glEnd();
 	}
 
+	public void drawSphere(Point3D point, double radius) {
+		drawSphere(radius, point.getX(), point.getY(), point.getZ());
+	}
+	
 	public void drawSphere(AimPoint point, double radius) {
 
 		GL2 gl = drawable.getGL().getGL2();
