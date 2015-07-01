@@ -49,7 +49,6 @@ public abstract class Luvia {
 		luviaCore.setComponent(frame);
 
 		String path = PathHelper.currentDirectory();
-		
 		setPath(path);
 		
 		setMainApplication(startApplication());
@@ -136,16 +135,13 @@ public abstract class Luvia {
 	}	
 
 	protected void initialSetup(String path) {
-		
 		String directory = PathHelper.currentDirectory()+path;
-		
 		luviaCore.setUrl(directory);
 	}
 	
 	public abstract ApplicationGL startApplication();
 	
 	private void setMainApplication(ApplicationGL applicationGL) {
-
 		luviaCore.setMainApplication3D(applicationGL);
 	}
 	

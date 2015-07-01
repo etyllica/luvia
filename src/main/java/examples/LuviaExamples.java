@@ -27,7 +27,7 @@ public class LuviaExamples extends Luvia {
 	@Override
 	public ApplicationGL startApplication() {
 
-		initialSetup("../../");
+		initialSetup("../");
 						
 		//return new Tutorial1(w, h);
 		//return new Tutorial2(w, h);

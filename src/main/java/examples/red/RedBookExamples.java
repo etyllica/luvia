@@ -19,7 +19,7 @@ public class RedBookExamples extends Luvia {
 	@Override
 	public ApplicationGL startApplication() {
 
-		initialSetup("../../../../");
+		initialSetup("../../");
 
 		//return new Example1(w, h);
 		return new Example2(w, h);
