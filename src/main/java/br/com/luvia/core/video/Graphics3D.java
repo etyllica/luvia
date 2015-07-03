@@ -15,9 +15,11 @@ import org.jogamp.glg2d.GLGraphics2D;
 import org.lwjgl.util.vector.Vector3f;
 
 import br.com.abby.linear.AimPoint;
+import br.com.abby.linear.BoundingBox3D;
 import br.com.abby.linear.ColoredPoint3D;
 import br.com.abby.util.CameraGL;
 import br.com.etyllica.core.graphics.AWTGraphics;
+import br.com.etyllica.linear.Point3D;
 
 import com.jogamp.opengl.util.texture.Texture;
 
@@ -362,6 +364,39 @@ public class Graphics3D extends AWTGraphics {
 		gl.glPopMatrix();
 	}
 
+	public void drawBoundingBox(BoundingBox3D box) {
+		GL2 gl = getGL2();
+		
+		Point3D minPoint = box.getMinPoint();
+		Point3D maxPoint = box.getMaxPoint();
+		
+		gl.glBegin(GL2.GL_LINES);
+		drawBoundingLines(gl, minPoint, maxPoint);
+		drawBoundingLines(gl, maxPoint, minPoint);
+		
+		gl.glEnd();
+	}
+
+	private void drawBoundingLines(GL2 gl, Point3D minPoint, Point3D maxPoint) {
+		gl.glVertex3d(minPoint.getX(), minPoint.getY(), minPoint.getZ());
+		gl.glVertex3d(maxPoint.getX(), minPoint.getY(), minPoint.getZ());
+		
+		gl.glVertex3d(minPoint.getX(), minPoint.getY(), minPoint.getZ());
+		gl.glVertex3d(minPoint.getX(), maxPoint.getY(), minPoint.getZ());
+		
+		gl.glVertex3d(minPoint.getX(), minPoint.getY(), minPoint.getZ());
+		gl.glVertex3d(minPoint.getX(), minPoint.getY(), maxPoint.getZ());
+		
+		gl.glVertex3d(maxPoint.getX(), minPoint.getY(), maxPoint.getZ());
+		gl.glVertex3d(minPoint.getX(), minPoint.getY(), maxPoint.getZ());
+		
+		gl.glVertex3d(maxPoint.getX(), minPoint.getY(), maxPoint.getZ());
+		gl.glVertex3d(maxPoint.getX(), minPoint.getY(), minPoint.getZ());
+		
+		gl.glVertex3d(maxPoint.getX(), minPoint.getY(), minPoint.getZ());
+		gl.glVertex3d(maxPoint.getX(), maxPoint.getY(), minPoint.getZ());
+	}
+	
 	public void drawCube() {
 
 		GL2 gl = getGL2();
