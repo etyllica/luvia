@@ -97,10 +97,10 @@ public class Mesh extends AimPoint implements GL2Drawable {
 
 		gl.glPushMatrix();
 
-		setupModel(gl);
-		
 		// Turn on wireframe mode
 		gl.glPolygonMode(GL2.GL_FRONT, GL2.GL_LINE);
+		
+		setupModel(gl);
 		setupColor(gl);
 
 		drawTexture = false;
@@ -145,6 +145,7 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		gl.glCullFace(GL.GL_BACK);
 
 		setupModel(gl);
+		setupColor(gl);
 
 		Texture texture = null;
 
