@@ -1,0 +1,115 @@
+package examples.box;
+
+import javax.media.opengl.GL;
+import javax.media.opengl.GL2;
+import javax.media.opengl.glu.GLU;
+
+import br.com.abby.loader.MeshLoader;
+import br.com.abby.vbo.VBO;
+import br.com.etyllica.core.event.GUIEvent;
+import br.com.etyllica.core.event.KeyEvent;
+import br.com.etyllica.core.graphics.Graphic;
+import br.com.etyllica.core.graphics.SVGColor;
+import br.com.luvia.core.context.ApplicationGL;
+import br.com.luvia.core.video.Graphics3D;
+import br.com.luvia.linear.Mesh;
+
+public class BoxModel extends ApplicationGL {
+	
+	private VBO bunnyVBO;
+	
+	private Mesh bunny;
+	
+	private double angleY = 0;
+	
+	private boolean rotate = true;
+	
+	public BoxModel(int width, int height) {
+		super(width, height);
+	}
+		
+	@Override
+	public void init(Graphics3D g) {
+		GL2 gl = g.getGL2(); // get the OpenGL graphics context
+
+		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // set background (clear) color
+		gl.glClearDepth(1.0f);      // set clear depth value to farthest
+		gl.glEnable(GL.GL_DEPTH_TEST); // enables depth testing
+		gl.glDepthFunc(GL.GL_LEQUAL);  // the type of depth test to do
+		gl.glHint(GL2.GL_PERSPECTIVE_CORRECTION_HINT, GL.GL_NICEST); // best perspective correction
+		gl.glShadeModel(GL2.GL_SMOOTH); // blends colors nicely, and smoothes out lighting
+		
+		//Load bunny model
+		bunnyVBO = MeshLoader.getInstance().loadModel("bunny.obj");
+		bunny = new Mesh(bunnyVBO);
+		bunny.setColor(SVGColor.GHOST_WHITE);
+		
+		loading = 100;
+	}
+
+	@Override
+	public void load() {
+		loading = 50;
+	}
+	
+	@Override
+	public void display(Graphics3D g) {
+		GL2 gl = g.getGL2();  // get the OpenGL 2 graphics context
+		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT); // clear color and depth buffers
+		gl.glLoadIdentity();  // reset the model-view matrix
+		
+		gl.glTranslatef(0.0f, 0.0f, -15.0f); // translate into the screen
+		gl.glScaled(15, 15, 15);
+		gl.glRotated(angleY, 0, 1, 0);
+		
+		//Draw Bunny Model
+		bunny.draw(gl);
+		
+		//Draw Bounding Box
+		gl.glColor3f(0, 1, 1);
+		g.drawBoundingBox(bunnyVBO.getBoundingBox());
+		
+		//Rotate Model
+		if(rotate) {
+			angleY += 1;
+		}
+	}
+
+	@Override
+	public void reshape(Graphics3D g, int x, int y, int width, int height) {
+		GL2 gl = g.getGL2(); // get the OpenGL graphics context
+		GLU glu = g.getGLU();
+
+		if (height == 0) height = 1;   // prevent divide by zero
+		float aspect = (float)width / height;
+
+		// Set the view port (display area) to cover the entire window
+		gl.glViewport(0, 0, width, height);
+
+		// Setup perspective projection, with aspect ratio matches viewport
+		gl.glMatrixMode(GL2.GL_PROJECTION);  // choose projection matrix
+		gl.glLoadIdentity();             // reset projection matrix
+
+		glu.gluPerspective(45.0, aspect, 0.1, 100.0); // fovy, aspect, zNear, zFar
+
+		// Enable the model-view transform
+		gl.glMatrixMode(GL2.GL_MODELVIEW);
+		gl.glLoadIdentity(); // reset
+	}
+
+	public GUIEvent updateKeyboard(KeyEvent event) {
+		if(event.isKeyDown(KeyEvent.TSK_SPACE)) {
+			rotate = !rotate;
+		} else if(event.isKeyUp(KeyEvent.TSK_SPACE)) {
+			rotate = !rotate;
+		}
+		
+		return null;
+	}
+	
+	@Override
+	public void draw(Graphic g) {
+		
+	}
+	
+}
