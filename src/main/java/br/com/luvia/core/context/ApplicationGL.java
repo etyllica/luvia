@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import javax.media.opengl.GL2;
 
-import br.com.abby.linear.Point3D;
+import br.com.abby.linear.ColoredPoint3D;
 import br.com.etyllica.context.Application;
 import br.com.luvia.core.G3DEventListener;
 import br.com.luvia.core.video.Graphics3D;
@@ -45,7 +45,7 @@ public abstract class ApplicationGL extends Application implements G3DEventListe
 		return returnApplication3D;
 	}
 
-	protected Point3D transformPosition(Graphics3D g, Point3D point) {
+	protected ColoredPoint3D transformPosition(Graphics3D g, ColoredPoint3D point) {
 				
 		double[] m = g.getModelView();
 		
@@ -57,7 +57,7 @@ public abstract class ApplicationGL extends Application implements G3DEventListe
 		
 		//double w = m[3]*point.getX()+m[7]*point.getY()+m[11]*point.getZ()+m[15]*0;
 		
-		return new Point3D(x, y, z);
+		return new ColoredPoint3D(x, y, z);
 	}
 			
 	public void setColor(GL2 gl, Color color) {

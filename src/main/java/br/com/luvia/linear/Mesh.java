@@ -93,10 +93,6 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		return vbo.getVertices();
 	}
 
-	public void setVertexes(List<Vector3f> vertexes) {
-		this.vbo.setVertices(vertexes);
-	}
-
 	public void wireframeRender(GL2 gl) {
 
 		gl.glPushMatrix();

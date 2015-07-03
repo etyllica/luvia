@@ -15,19 +15,19 @@ import org.jogamp.glg2d.GLGraphics2D;
 import org.lwjgl.util.vector.Vector3f;
 
 import br.com.abby.linear.AimPoint;
-import br.com.abby.linear.Point3D;
+import br.com.abby.linear.ColoredPoint3D;
 import br.com.abby.util.CameraGL;
-import br.com.etyllica.core.graphics.Graphic;
+import br.com.etyllica.core.graphics.AWTGraphics;
 
 import com.jogamp.opengl.util.texture.Texture;
 
-public class Graphics3D extends Graphic {
+public class Graphics3D extends AWTGraphics {
 
 	private GLU glu;
 
 	private GLAutoDrawable drawable;
 
-	private int DEFAULT_RESOLUTION = 16;
+	public static int DEFAULT_RESOLUTION = 16;
 
 	public Graphics3D(int width, int heigth) {
 		super(width,heigth);
@@ -62,7 +62,7 @@ public class Graphics3D extends Graphic {
 		return viewport;
 	}
 
-	public void drawLine(Point3D a, Point3D b) {
+	public void drawLine(ColoredPoint3D a, ColoredPoint3D b) {
 		GL2 gl = getGL2();
 
 		gl.glBegin(GL.GL_LINES);
@@ -71,7 +71,7 @@ public class Graphics3D extends Graphic {
 		gl.glEnd();
 	}
 
-	public void drawSphere(Point3D point, double radius) {
+	public void drawSphere(ColoredPoint3D point, double radius) {
 		drawSphere(radius, point.getX(), point.getY(), point.getZ());
 	}
 	
@@ -141,7 +141,7 @@ public class Graphics3D extends Graphic {
 		return projection;
 	}
 
-	public Point3D get3DPointerFromMouse(float mx, float my) {
+	public ColoredPoint3D get3DPointerFromMouse(float mx, float my) {
 
 		return get3DPointerFromMouse(mx, my, 0);
 
@@ -161,7 +161,7 @@ public class Graphics3D extends Graphic {
 
 	}
 
-	public Point3D get3DPointerFromMouse(float mx, float my, float zPlane) {
+	public ColoredPoint3D get3DPointerFromMouse(float mx, float my, float zPlane) {
 
 		final int X = 0;
 		final int Y = 1;
@@ -189,7 +189,7 @@ public class Graphics3D extends Graphic {
 		float fX = v1.getX() + (v2.getX() - v1.getX()) * t;
 		float fZ = v1.getZ() + (v2.getZ() - v1.getZ()) * t;
 
-		Point3D point = new Point3D(fX, 0, fZ);
+		ColoredPoint3D point = new ColoredPoint3D(fX, 0, fZ);
 
 		return point;
 	}
@@ -201,7 +201,7 @@ public class Graphics3D extends Graphic {
 		glu.gluLookAt( camera.getX(), camera.getY(), camera.getZ(), camera.getTarget().getX(), camera.getTarget().getY(), camera.getTarget().getZ(), 0, 1, 0 );
 	}
 
-	public void aimCamera(Point3D cameraPoint, double angleX, double angleY, double angleZ) {
+	public void aimCamera(ColoredPoint3D cameraPoint, double angleX, double angleY, double angleZ) {
 		GL2 gl = getGL2();
 
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
@@ -241,7 +241,7 @@ public class Graphics3D extends Graphic {
 		return glu;
 	}
 
-	public void drawPoint(Point3D point, Color color) {
+	public void drawPoint(ColoredPoint3D point, Color color) {
 		drawSphere(0.01, point.getX(), point.getY(), point.getZ(), 16, color);
 	}
 
@@ -512,10 +512,10 @@ public class Graphics3D extends Graphic {
 		gl.glRotated(camera.angleXY()+30, 1, 0, 0);
 		gl.glRotated(camera.angleXZ()+180, 0, 0, 1);
 
-		Point3D ra = new Point3D(-0.1, 0.2, 0.1);
-		Point3D rb = new Point3D(0.1, 0.2, 0.1);
-		Point3D rc = new Point3D(-0.1, 0.2, -0.1);
-		Point3D rd = new Point3D(0.1, 0.2, -0.1);
+		ColoredPoint3D ra = new ColoredPoint3D(-0.1, 0.2, 0.1);
+		ColoredPoint3D rb = new ColoredPoint3D(0.1, 0.2, 0.1);
+		ColoredPoint3D rc = new ColoredPoint3D(-0.1, 0.2, -0.1);
+		ColoredPoint3D rd = new ColoredPoint3D(0.1, 0.2, -0.1);
 
 		drawPoint(ra, color);
 		drawPoint(rb, color);
@@ -527,7 +527,7 @@ public class Graphics3D extends Graphic {
 		drawLine(rd, rb);
 		drawLine(rd, rc);
 
-		Point3D origin = new Point3D();
+		ColoredPoint3D origin = new ColoredPoint3D();
 
 		drawLine(origin, ra);
 		drawLine(origin, rb);

@@ -242,11 +242,11 @@ public class GridPerspective extends ApplicationGL {
 	public void updateControls(long now) {
 				
 		if(leftPressed) {
-			aim.setOffsetAngleY(+turnSpeed);			
+			aim.offsetAngleY(+turnSpeed);			
 		}
 		
 		if(rightPressed) {
-			aim.setOffsetAngleY(-turnSpeed);			
+			aim.offsetAngleY(-turnSpeed);			
 		}
 		
 	}

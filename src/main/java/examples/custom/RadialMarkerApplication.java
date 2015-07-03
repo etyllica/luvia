@@ -14,13 +14,13 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
-import br.com.abby.linear.Point3D;
 import br.com.abby.util.CameraGL;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.input.mouse.MouseButton;
+import br.com.etyllica.linear.Point3D;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
 import br.com.luvia.loader.TextureLoader;
