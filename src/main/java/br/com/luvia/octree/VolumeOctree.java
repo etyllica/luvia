@@ -215,9 +215,59 @@ public class VolumeOctree<T> implements Octree<T> {
 	}
 
 	@Override
+	public Set<T> getData(BoundingBox3D box) {
+				
+		Set<OctreeNode<T>> result = new HashSet<OctreeNode<T>>();
+				
+		colide(box, root, result);
+		
+		Set<T> dataResult = new HashSet<T>();
+		
+		for(OctreeNode<T> node: result) {
+			dataResult.addAll(node.dataSet);
+		}
+		
+		return dataResult;
+	}
+	
+	@Override
 	public Set<OctreeNode<T>> getNodes(BoundingBox3D box) {
-		//Not implemented yet
-		return new HashSet<OctreeNode<T>>();
+		
+		Set<OctreeNode<T>> result = new HashSet<OctreeNode<T>>();
+		
+		colide(box, root, result);
+		
+		return result;
+	}
+	
+	private Set<OctreeNode<T>> colide(BoundingBox3D box, OctreeNode<T> node, Set<OctreeNode<T>> result) {
+				
+		if(box.contains(node.box)) {
+			//contains node and children
+			addNodeTree(node, result);
+		} else if(box.intersects(node.box)) {
+			//intersect node and some other nodes
+			checkNodeTree(box, node, result);
+		}
+		
+		return result;
+	}
+	
+	private void addNodeTree(OctreeNode<T> node, Set<OctreeNode<T>> result) {
+		result.add(node);
+		//System.out.println("added "+node.dataSet.size());
+		
+		for(OctreeNode<T> childNode : node.getChildrenNodes()) {
+			addNodeTree(childNode, result);
+		}
+	}
+	
+	private void checkNodeTree(BoundingBox3D box, OctreeNode<T> node, Set<OctreeNode<T>> result) {
+		//result.add(node);
+		
+		for(OctreeNode<T> childNode : node.getChildrenNodes()) {
+			colide(box, childNode, result);
+		}
 	}
 
 	public double getMinVolume() {

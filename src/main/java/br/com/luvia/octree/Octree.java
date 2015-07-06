@@ -20,6 +20,8 @@ public interface Octree<T> {
 	
 	public OctreeNode<T> getRoot();
 	
+	public Set<T> getData(BoundingBox3D box);
+	
 	public Set<OctreeNode<T>> getNodes(BoundingBox3D box);
 	
 }

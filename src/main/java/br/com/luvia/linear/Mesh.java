@@ -99,12 +99,12 @@ public class Mesh extends AimPoint implements GL2Drawable {
 
 		// Turn on wireframe mode
 		gl.glPolygonMode(GL2.GL_FRONT, GL2.GL_LINE);
-		
+
 		setupModel(gl);
 		setupColor(gl);
 
 		drawTexture = false;
-		
+
 		// Draw Model
 		for(Group group: vbo.getGroups()) {
 
@@ -137,13 +137,35 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		}
 	}
 
+	public void texturedRender(GL2 gl, Set<Face> set) {
+		
+		gl.glPushMatrix();
+
+		setupTextured(gl);
+		setupModel(gl);
+		setupColor(gl);
+		
+		Texture texture = null;
+
+		for(Group group: vbo.getGroups()) {
+
+			drawTexture = false;
+			texture = setupTexture(gl, texture, group);
+
+			drawSetFaces(gl, group, set);
+
+			disableTexture(gl, texture);
+		}
+
+		gl.glPopMatrix();
+		
+	}
+	
 	public void texturedRender(GL2 gl) {
 
 		gl.glPushMatrix();
 
-		gl.glEnable(GL.GL_CULL_FACE);
-		gl.glCullFace(GL.GL_BACK);
-
+		setupTextured(gl);
 		setupModel(gl);
 		setupColor(gl);
 
@@ -154,21 +176,46 @@ public class Mesh extends AimPoint implements GL2Drawable {
 			drawTexture = false;
 			texture = setupTexture(gl, texture, group);
 
-			for(Face face: group.getFaces()) {
-
-				int vertices = face.vertexIndex.length;
-				setupIndexes(vertices);
-
-				gl.glBegin(GL2.GL_TRIANGLE_STRIP);
-				drawTexturedFace(gl,face);
-				gl.glEnd();
-
-			}
+			drawFaces(gl, group);
 
 			disableTexture(gl, texture);
 		}
 
 		gl.glPopMatrix();
+	}
+
+	private void setupTextured(GL2 gl) {
+		gl.glEnable(GL.GL_CULL_FACE);
+		gl.glCullFace(GL.GL_BACK);
+	}
+
+	private void drawFaces(GL2 gl, Group group) {
+
+		for(Face face: group.getFaces()) {
+
+			int vertices = face.vertexIndex.length;
+			setupIndexes(vertices);
+
+			gl.glBegin(GL2.GL_TRIANGLE_STRIP);
+			drawTexturedFace(gl,face);
+			gl.glEnd();
+		}
+	}
+	
+	private void drawSetFaces(GL2 gl, Group group, Set<Face> set) {
+
+		for(Face face: group.getFaces()) {
+			if(!set.contains(face)) {
+				continue;
+			}
+			
+			int vertices = face.vertexIndex.length;
+			setupIndexes(vertices);
+
+			gl.glBegin(GL2.GL_TRIANGLE_STRIP);
+			drawTexturedFace(gl,face);
+			gl.glEnd();
+		}
 
 	}
 
@@ -243,20 +290,20 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		for(int i = 0; i < face.vertexIndex.length; i++) {
 
 			int index = indexes[i];
-			
+
 			int vertexIndex = face.vertexIndex[index];
-			
+
 			//Set normals if has it
 			if(!vbo.getNormals().isEmpty() && face.normalIndex!=null) {
 				Vector3f normal = vbo.getNormals().get(face.normalIndex[index]);
 				gl.glNormal3d(normal.getX(), normal.getY(), normal.getZ());
 			}
-			
+
 			if(drawTexture) {
 				Vector2f texture = vbo.getTextures().get(face.textureIndex[index]);
 				gl.glTexCoord2d(texture.getX(), texture.getY());
 			}
-			
+
 			Vector3f vertex = vbo.getVertices().get(vertexIndex);
 			gl.glVertex3d(vertex.getX(), vertex.getY(), vertex.getZ());
 		}
@@ -269,6 +316,12 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		gl.glDisable(GL.GL_DEPTH_TEST);
 	}
 	
+	public void draw(GL2 gl, Set<Face> faces) {
+		gl.glEnable(GL.GL_DEPTH_TEST);
+		texturedRender(gl, faces);
+		gl.glDisable(GL.GL_DEPTH_TEST);
+	}
+
 	public void drawAsWireFrame(GL2 gl) {
 		gl.glEnable(GL.GL_DEPTH_TEST);
 		wireframeRender(gl);
