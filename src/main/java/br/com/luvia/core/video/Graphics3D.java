@@ -18,7 +18,7 @@ import br.com.abby.linear.AimPoint;
 import br.com.abby.linear.BoundingBox3D;
 import br.com.abby.linear.ColoredPoint3D;
 import br.com.abby.util.CameraGL;
-import br.com.etyllica.core.graphics.AWTGraphics;
+import br.com.etyllica.awt.AWTGraphics;
 import br.com.etyllica.linear.Point3D;
 
 import com.jogamp.opengl.util.texture.Texture;
