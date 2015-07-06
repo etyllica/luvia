@@ -43,61 +43,68 @@ import br.com.etyllica.linear.Point3D;
  * 
  * Note: Luvia's orientation is Y-up
  */
-public class VolumeOctree implements Octree {
+public class VolumeOctree<T> implements Octree<T> {
 	
-	private OctreeNode root;
+	private OctreeNode<T> root;
 	
 	private double minVolume = 0.5;
+	
+	private double volumeFactor = 100;
 
 	public VolumeOctree(BoundingBox3D box) {
 		super();
-		root = new OctreeNode(box);
+		root = new OctreeNode<T>(box);
+		
+		minVolume = box.getVolume()/volumeFactor;
 	}
 
-	public OctreeNode getRoot() {
+	public OctreeNode<T> getRoot() {
 		return root;
 	}
 	
-	public void add(Point3D point) {
-		add(root, point);
+	public void add(Point3D point, T data) {
+		add(root, point, data);
 	}
 	
-	public void add(OctreeNode node, Point3D point) {
+	public void add(OctreeNode<T> node, Point3D point, T data) {
 		if(node.box.getVolume() >= minVolume) {
-			int c = calculateNode(node.box, point);
-			addToOctant(node, point, c);
+			addToOctant(node, point, data);
 		} else {
 			node.geometry.add(point);
+			node.dataSet.add(data);
 		}
 	}
 	
-	private void addToOctant(OctreeNode node, Point3D point, int c) {
+	private void addToOctant(OctreeNode<T> node, Point3D point, T data) {
+		
+		int c = calculateNode(node.box, point);
+		
 		switch (c) {
 		//Lower level octants
 		case 1:
-			addPointToSubNode(BELOW_LEFT_LOWER, node, point);
+			addPointToSubNode(BELOW_LEFT_LOWER, node, point, data);
 			break;
 		case 2:
-			addPointToSubNode(BELOW_LEFT_UPPER, node, point);
+			addPointToSubNode(BELOW_LEFT_UPPER, node, point, data);
 			break;
 		case 4:
-			addPointToSubNode(BELOW_RIGHT_LOWER, node, point);
+			addPointToSubNode(BELOW_RIGHT_LOWER, node, point, data);
 			break;
 		case 8:
-			addPointToSubNode(BELOW_RIGHT_UPPER, node, point);
+			addPointToSubNode(BELOW_RIGHT_UPPER, node, point, data);
 			break;
 			//Upper level octants
 		case 16:
-			addPointToSubNode(ABOVE_LEFT_LOWER, node, point);
+			addPointToSubNode(ABOVE_LEFT_LOWER, node, point, data);
 			break;
 		case 32:
-			addPointToSubNode(ABOVE_LEFT_UPPER, node, point);
+			addPointToSubNode(ABOVE_LEFT_UPPER, node, point, data);
 			break;
 		case 64:
-			addPointToSubNode(ABOVE_RIGHT_LOWER, node, point);
+			addPointToSubNode(ABOVE_RIGHT_LOWER, node, point, data);
 			break;
 		case 128:
-			addPointToSubNode(ABOVE_RIGHT_UPPER, node, point);
+			addPointToSubNode(ABOVE_RIGHT_UPPER, node, point, data);
 			break;
 
 		default:
@@ -106,21 +113,23 @@ public class VolumeOctree implements Octree {
 		}
 	}
 
-	private void addPointToSubNode(int index, OctreeNode node, Point3D point) {
-		if(node.children[index] == null) {
-			node.children[index] = new OctreeNode(subBox(node, index));
+	private void addPointToSubNode(int index, OctreeNode<T> node, Point3D point, T data) {
+		if(node.children.get(index) == null) {
+			BoundingBox3D box = subBox(node, index);
+			node.children.put(index, new OctreeNode<T>(box));
 		}
 
-		add(node.children[index], point);
+		add(node.children.get(index), point, data);
 	}
 
-	private BoundingBox3D subBox(OctreeNode node, int index) {
+	private BoundingBox3D subBox(OctreeNode<T> node, int index) {
 				
 		Point3D minPoint = new Point3D(node.box.getMinPoint());
 		Point3D maxPoint = new Point3D(node.box.getMaxPoint());
 		Point3D center = node.box.getCenter();
 		
-		double halfSize = (maxPoint.getX()-minPoint.getX())/2;
+		double halfX = (maxPoint.getX()-minPoint.getX())/2;
+		double halfZ = (maxPoint.getZ()-minPoint.getZ())/2;
 		
 		if(index < 4) {
 			maxPoint = center;
@@ -131,29 +140,29 @@ public class VolumeOctree implements Octree {
 		if(index == BELOW_LEFT_LOWER) {
 			//maxPoint = center;
 		} else if(index == BELOW_LEFT_UPPER) {
-			minPoint.offsetZ(halfSize);
-			maxPoint.offsetZ(halfSize);
+			minPoint.offsetZ(halfZ);
+			maxPoint.offsetZ(halfZ);
 		} else if(index == BELOW_RIGHT_LOWER) {
-			minPoint.offsetX(halfSize);
-			maxPoint.offsetX(halfSize);
+			minPoint.offsetX(halfX);
+			maxPoint.offsetX(halfX);
 		} else if(index == BELOW_RIGHT_UPPER) {
-			minPoint.offsetX(halfSize);
-			maxPoint.offsetX(halfSize);
-			minPoint.offsetZ(halfSize);
-			maxPoint.offsetZ(halfSize);
+			minPoint.offsetX(halfX);
+			maxPoint.offsetX(halfX);
+			minPoint.offsetZ(halfZ);
+			maxPoint.offsetZ(halfZ);
 		}
 		//Above Octants
 		else if(index == ABOVE_LEFT_LOWER) {
-			minPoint.offsetZ(-halfSize);
-			maxPoint.offsetZ(-halfSize);
-			minPoint.offsetX(-halfSize);
-			maxPoint.offsetX(-halfSize);
+			minPoint.offsetZ(-halfZ);
+			maxPoint.offsetZ(-halfZ);
+			minPoint.offsetX(-halfX);
+			maxPoint.offsetX(-halfX);
 		} else if(index == ABOVE_LEFT_UPPER) {
-			minPoint.offsetX(-halfSize);
-			maxPoint.offsetX(-halfSize);
+			minPoint.offsetX(-halfX);
+			maxPoint.offsetX(-halfX);
 		} else if(index == ABOVE_RIGHT_LOWER) {
-			minPoint.offsetZ(-halfSize);
-			maxPoint.offsetZ(-halfSize);
+			minPoint.offsetZ(-halfZ);
+			maxPoint.offsetZ(-halfZ);
 		} else if(index == ABOVE_RIGHT_UPPER) {
 			
 		}
@@ -172,11 +181,11 @@ public class VolumeOctree implements Octree {
 		double qy = point.getY();
 		double qz = point.getZ();
 
-		if (qz < center.getY()) {
+		if (qy < center.getY()) {
 			if (qx < center.getX()) {
-				if (qy < center.getZ()) {
+				if (qz < center.getZ()) {
 					c |= 1; // Below Bottom left
-				} else if (qy > center.getY()) {
+				} else if (qz > center.getZ()) {
 					c |= 2; // Below Top left
 				}
 			} else if (qx > center.getX()) {
@@ -186,17 +195,17 @@ public class VolumeOctree implements Octree {
 					c |= 8; // Below Top right
 				}
 			}
-		} else if (qz > center.getY()) {
+		} else if (qy > center.getY()) {
 			if (qx < center.getX()) {
-				if (qy < center.getZ()) {
+				if (qz < center.getZ()) {
 					c |= 16; // Above Bottom left
-				} else if (qy > center.getZ()) {
+				} else if (qz > center.getZ()) {
 					c |= 32; // Above Top left
 				}
 			} else if (qx > center.getX()) {
-				if (qy < center.getZ()) {
+				if (qz < center.getZ()) {
 					c |= 64; // Above Bottom right
-				} else if (qy > center.getZ()) {
+				} else if (qz > center.getZ()) {
 					c |= 128; // Above Top right
 				}
 			}
@@ -206,9 +215,9 @@ public class VolumeOctree implements Octree {
 	}
 
 	@Override
-	public Set<OctreeNode> getNodes(BoundingBox3D box) {
+	public Set<OctreeNode<T>> getNodes(BoundingBox3D box) {
 		//Not implemented yet
-		return new HashSet<OctreeNode>();
+		return new HashSet<OctreeNode<T>>();
 	}
 
 	public double getMinVolume() {

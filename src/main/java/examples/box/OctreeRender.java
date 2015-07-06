@@ -5,16 +5,23 @@ import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
 import br.com.abby.loader.MeshLoader;
+import br.com.abby.vbo.Face;
 import br.com.abby.vbo.VBO;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.graphics.SVGColor;
+import br.com.etyllica.linear.Point3D;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
 import br.com.luvia.linear.Mesh;
+import br.com.luvia.octree.Octree;
+import br.com.luvia.octree.OctreeNode;
+import br.com.luvia.octree.VolumeOctree;
 
-public class BoxModel extends ApplicationGL {
+public class OctreeRender extends ApplicationGL {
+	
+	private Octree<Face> octree;
 	
 	private VBO bunnyVBO;
 	
@@ -24,7 +31,7 @@ public class BoxModel extends ApplicationGL {
 	
 	private boolean rotate = true;
 	
-	public BoxModel(int width, int height) {
+	public OctreeRender(int width, int height) {
 		super(width, height);
 	}
 		
@@ -43,6 +50,13 @@ public class BoxModel extends ApplicationGL {
 		bunnyVBO = MeshLoader.getInstance().loadModel("bunny.obj");
 		bunny = new Mesh(bunnyVBO);
 		bunny.setColor(SVGColor.GHOST_WHITE);
+		
+		octree = new VolumeOctree<Face>(bunnyVBO.getBoundingBox());
+		
+		for (Face face:bunnyVBO.getFaces()) {
+			Point3D centroid = bunnyVBO.centroid(face);
+			octree.add(centroid, face);	
+		}
 		
 		loading = 100;
 	}
@@ -67,11 +81,27 @@ public class BoxModel extends ApplicationGL {
 		
 		//Draw Bounding Box
 		gl.glColor3f(0, 1, 1);
-		g.drawBoundingBox(bunnyVBO.getBoundingBox());
-		
+		//g.drawBoundingBox(bunnyVBO.getBoundingBox());
+		renderOctree(g, octree);
+				
 		//Rotate Model
 		if(rotate) {
 			angleY += 1;
+		}
+	}
+	
+	public void renderOctree(Graphics3D g, Octree<?> tree) {
+		
+		OctreeNode<?> root = tree.getRoot();
+		
+		renderOctreeNode(g, root);
+	}
+	
+	public void renderOctreeNode(Graphics3D g, OctreeNode<?> node) {
+		g.drawBoundingBox(node.getBox());
+		
+		for(OctreeNode<?> child: node.getChildrenNodes()) {
+			renderOctreeNode(g, child);
 		}
 	}
 

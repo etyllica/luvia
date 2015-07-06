@@ -1,16 +1,23 @@
 package br.com.luvia.octree;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import br.com.abby.linear.BoundingBox3D;
 import br.com.etyllica.linear.Point3D;
 
-public class OctreeNode {
+public class OctreeNode<T> {
 
 	protected BoundingBox3D box;
 
-	protected OctreeNode[] children;
+	protected Map<Integer, OctreeNode<T>> children;
+	
+	protected Set<T> dataSet = new HashSet<T>();
 
 	protected List<Point3D> geometry = new ArrayList<Point3D>();
 
@@ -18,12 +25,20 @@ public class OctreeNode {
 		super();
 		this.box = box;
 
-		children = new OctreeNode[8];
+		children = new HashMap<Integer, OctreeNode<T>>(8);
 	}
 
-	public OctreeNode[] getChildren() {
+	protected Map<Integer, OctreeNode<T>> getChildren() {
 		return children;
 	}
 	
+	public Collection<OctreeNode<T>> getChildrenNodes() {
+		return children.values();
+	}
+
+	public BoundingBox3D getBox() {
+		return box;
+	}
+		
 }
 

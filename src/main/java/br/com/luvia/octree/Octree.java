@@ -5,7 +5,7 @@ import java.util.Set;
 import br.com.abby.linear.BoundingBox3D;
 import br.com.etyllica.linear.Point3D;
 
-public interface Octree {
+public interface Octree<T> {
 	
 	public static final int BELOW_LEFT_LOWER = 0;
 	public static final int BELOW_LEFT_UPPER = 1;
@@ -16,8 +16,10 @@ public interface Octree {
 	public static final int ABOVE_RIGHT_LOWER = 6;
 	public static final int ABOVE_RIGHT_UPPER = 7;
 	
-	public void add(Point3D point);
+	public void add(Point3D point, T data);
 	
-	public Set<OctreeNode> getNodes(BoundingBox3D box);
+	public OctreeNode<T> getRoot();
+	
+	public Set<OctreeNode<T>> getNodes(BoundingBox3D box);
 	
 }
