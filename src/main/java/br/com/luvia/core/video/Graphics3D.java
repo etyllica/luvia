@@ -16,8 +16,9 @@ import org.lwjgl.util.vector.Vector3f;
 
 import br.com.abby.linear.AimPoint;
 import br.com.abby.linear.BoundingBox3D;
+import br.com.abby.linear.Camera3D;
 import br.com.abby.linear.ColoredPoint3D;
-import br.com.abby.util.CameraGL;
+import br.com.abby.linear.Frustrum;
 import br.com.etyllica.awt.AWTGraphics;
 import br.com.etyllica.linear.Point3D;
 
@@ -64,7 +65,7 @@ public class Graphics3D extends AWTGraphics {
 		return viewport;
 	}
 
-	public void drawLine(ColoredPoint3D a, ColoredPoint3D b) {
+	public void drawLine(Point3D a, Point3D b) {
 		GL2 gl = getGL2();
 
 		gl.glBegin(GL.GL_LINES);
@@ -196,7 +197,7 @@ public class Graphics3D extends AWTGraphics {
 		return point;
 	}
 
-	public void updateCamera(CameraGL camera) {
+	public void updateCamera(Camera3D camera) {
 		drawable.getGL().getGL2().glMatrixMode(GL2.GL_MODELVIEW);
 		drawable.getGL().getGL2().glLoadIdentity();
 
@@ -243,7 +244,7 @@ public class Graphics3D extends AWTGraphics {
 		return glu;
 	}
 
-	public void drawPoint(ColoredPoint3D point, Color color) {
+	public void drawPoint(Point3D point, Color color) {
 		drawSphere(0.01, point.getX(), point.getY(), point.getZ(), 16, color);
 	}
 
@@ -520,7 +521,7 @@ public class Graphics3D extends AWTGraphics {
 	/*
 	 * Draw camera model	
 	 */
-	public void drawCamera(CameraGL camera) {
+	public void drawCamera(Camera3D camera) {
 
 		GL2 gl = getGL2();
 
@@ -633,5 +634,65 @@ public class Graphics3D extends AWTGraphics {
 
 		gl.glPopMatrix();
 	}
+
+	public void drawFrustrum(Frustrum frustrum) {
+		GL2 gl = getGL2();
+		
+		gl.glPushMatrix();
+				
+		setColor(Color.RED);
+		
+		gl.glBegin(GL2.GL_LINES);
+		
+		//Draw Near Plane
+		vertex(gl, frustrum.nBottomLeft);
+		vertex(gl, frustrum.nBottomRight);
+		
+		vertex(gl, frustrum.nBottomLeft);
+		vertex(gl, frustrum.nTopRight);
+		
+		vertex(gl, frustrum.nTopLeft);
+		vertex(gl, frustrum.nTopRight);
+		
+		vertex(gl, frustrum.nTopLeft);
+		vertex(gl, frustrum.nBottomRight);
+		
+		//Draw Far Plane
+		vertex(gl, frustrum.fBottomLeft);
+		vertex(gl, frustrum.fBottomRight);
+		
+		vertex(gl, frustrum.fBottomLeft);
+		vertex(gl, frustrum.fTopRight);
+		
+		vertex(gl, frustrum.fTopLeft);
+		vertex(gl, frustrum.fTopRight);
+		
+		vertex(gl, frustrum.fTopLeft);
+		vertex(gl, frustrum.fBottomRight);
+		
+		//Draw Sides
+		vertex(gl, frustrum.nBottomLeft);
+		vertex(gl, frustrum.fBottomLeft);
+		
+		vertex(gl, frustrum.nBottomRight);
+		vertex(gl, frustrum.fBottomRight);
+		
+		vertex(gl, frustrum.nTopLeft);
+		vertex(gl, frustrum.fTopLeft);
+		
+		vertex(gl, frustrum.nTopRight);
+		vertex(gl, frustrum.fTopRight);
+		
+		gl.glEnd();
+		
+		gl.glPopMatrix();
+	}
 	
+	private void drawPlane(GL2 gl) {
+		
+	}
+
+	private void vertex(GL2 gl, Vector3f vertex) {
+		gl.glVertex3f(vertex.x, vertex.y, vertex.z);
+	}
 }
