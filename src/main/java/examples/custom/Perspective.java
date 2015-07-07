@@ -11,7 +11,7 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
-import br.com.abby.util.CameraGL;
+import br.com.abby.linear.Camera3D;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
@@ -27,7 +27,7 @@ public class Perspective extends ApplicationGL {
 
 	private Texture floor;
 
-	private CameraGL camera;
+	private Camera3D camera;
 	
 	protected float mx = 0;
 	protected float my = 0;
@@ -45,7 +45,7 @@ public class Perspective extends ApplicationGL {
 	@Override
 	public void load() {
 		
-		camera = new CameraGL(0,15,-10);
+		camera = new Camera3D(0,15,-10);
 		
 		loading = 100;
 	}

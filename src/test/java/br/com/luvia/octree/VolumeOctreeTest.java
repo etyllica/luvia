@@ -6,11 +6,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import br.com.abby.linear.BoundingBox3D;
+import br.com.abby.vbo.Face;
 import br.com.etyllica.linear.Point3D;
 
 public class VolumeOctreeTest {
 
-	private VolumeOctree tree;
+	private VolumeOctree<Face> tree;
 	
 	@Before
 	public void setUp() {
@@ -20,30 +21,30 @@ public class VolumeOctreeTest {
 		
 		BoundingBox3D box = new BoundingBox3D(minPoint, maxPoint);
 		
-		tree = new VolumeOctree(box);
+		tree = new VolumeOctree<Face>(box);
 	}
 	
 	@Test
 	public void testInit() {
-		OctreeNode root = tree.getRoot();
+		OctreeNode<Face> root = tree.getRoot();
 		
 		Assert.assertNotNull(root);
-		Assert.assertEquals(8, root.children.length);
+		Assert.assertEquals(8, root.children.size());
 	}
 	
 	@Test
 	public void testAddPoint() {
-		tree.add(new Point3D(1, 1));
+		tree.add(new Point3D(1, 1), null);
 		
-		OctreeNode root = tree.getRoot();
+		OctreeNode<Face> root = tree.getRoot();
 		
-		OctreeNode leftLower = root.children[Octree.BELOW_LEFT_LOWER];
+		OctreeNode<Face> leftLower = root.children.get(Octree.BELOW_LEFT_LOWER);
 		Assert.assertNotNull(leftLower);
 				
 		BoundingBox3D innerBox = leftLower.box;
 		Assert.assertEquals(15.625, innerBox.getVolume(), 0.1);
 		
-		Assert.assertNotNull(leftLower.children[Octree.BELOW_LEFT_LOWER]);
+		Assert.assertNotNull(leftLower.children.get(Octree.BELOW_LEFT_LOWER));
 	}
 	
 }
