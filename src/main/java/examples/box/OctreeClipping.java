@@ -15,12 +15,12 @@ import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.graphics.SVGColor;
 import br.com.etyllica.linear.Point3D;
+import br.com.etyllica.storage.octree.Octree;
+import br.com.etyllica.storage.octree.OctreeNode;
+import br.com.etyllica.storage.octree.VolumeOctree;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
 import br.com.luvia.linear.Mesh;
-import br.com.luvia.octree.Octree;
-import br.com.luvia.octree.OctreeNode;
-import br.com.luvia.octree.VolumeOctree;
 
 public class OctreeClipping extends ApplicationGL {
 	
@@ -63,7 +63,7 @@ public class OctreeClipping extends ApplicationGL {
 			Point3D centroid = bunnyVBO.centroid(face);
 			octree.add(centroid, face);
 		}
-				
+		
 		clippingBox = new BoundingBox3D(bunnyVBO.getBoundingBox());
 		clippingBox.getMinPoint().offsetX(-0.1);
 		clippingBox.getMaxPoint().offsetX(-0.1);

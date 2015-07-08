@@ -12,12 +12,12 @@ import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.graphics.SVGColor;
 import br.com.etyllica.linear.Point3D;
+import br.com.etyllica.storage.octree.Octree;
+import br.com.etyllica.storage.octree.OctreeNode;
+import br.com.etyllica.storage.octree.VolumeOctree;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
 import br.com.luvia.linear.Mesh;
-import br.com.luvia.octree.Octree;
-import br.com.luvia.octree.OctreeNode;
-import br.com.luvia.octree.VolumeOctree;
 
 public class OctreeRender extends ApplicationGL {
 	
