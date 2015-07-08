@@ -47,7 +47,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 	private Graphics3D graphic;
 
-	private String url;
+	private String path;
 
 	private GLG2DPanel canvas = new GLG2DPanel();
 
@@ -108,22 +108,20 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		activeWindowGL.setLocation(frame.getX(), frame.getY());
 	}
 
-	public String getUrl() {
-		return url;
+	public String getPath() {
+		return path;
 	}
 
-	public void setUrl(String url) {
+	public void setPath(String url) {
 
 		String s = IOHelper.fixPath(url);
 
-		this.url = s;
-		
-		initDefault();
+		this.path = s;
 	}
 	
 	public void initDefault() {
 		for(Loader loader:loaders) {
-			loader.setUrl(url);
+			loader.setUrl(path);
 			loader.initLoader();
 		}
 	}

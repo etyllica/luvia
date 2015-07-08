@@ -58,9 +58,9 @@ public abstract class Luvia {
 	}
 	
 	protected void setPath(String path) {
-		luviaCore.setUrl(path);
+		luviaCore.setPath(path);
 	}
-		
+	
 	protected JFrame createFrame(int w, int h) {
 				
 		JFrame frame = new JFrame();
@@ -136,7 +136,8 @@ public abstract class Luvia {
 
 	protected void initialSetup(String path) {
 		String directory = PathHelper.currentDirectory()+path;
-		luviaCore.setUrl(directory);
+		luviaCore.setPath(directory);
+		luviaCore.initDefault();
 	}
 	
 	public abstract ApplicationGL startApplication();
