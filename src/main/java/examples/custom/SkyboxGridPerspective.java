@@ -15,9 +15,9 @@ import javax.media.opengl.glu.GLU;
 import br.com.abby.linear.AimPoint;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
+import br.com.etyllica.core.event.MouseButton;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphic;
-import br.com.etyllica.core.input.mouse.MouseButton;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
 import br.com.luvia.geom.SkyBox;
@@ -169,15 +169,15 @@ public class SkyboxGridPerspective extends ApplicationGL {
 	@Override
 	public GUIEvent updateKeyboard(KeyEvent event) {
 
-		if(event.isKeyDown(KeyEvent.TSK_RIGHT_ARROW)) {
+		if(event.isKeyDown(KeyEvent.VK_RIGHT_ARROW)) {
 			rightPressed = true;
-		} else if(event.isKeyUp(KeyEvent.TSK_RIGHT_ARROW)) {
+		} else if(event.isKeyUp(KeyEvent.VK_RIGHT_ARROW)) {
 			rightPressed = false;
 		}
 		
-		if(event.isKeyDown(KeyEvent.TSK_LEFT_ARROW)) {
+		if(event.isKeyDown(KeyEvent.VK_LEFT_ARROW)) {
 			leftPressed = true;			
-		} else if(event.isKeyUp(KeyEvent.TSK_LEFT_ARROW)) {
+		} else if(event.isKeyUp(KeyEvent.VK_LEFT_ARROW)) {
 			leftPressed = false;
 		}
 		

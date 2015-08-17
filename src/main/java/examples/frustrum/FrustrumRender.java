@@ -8,16 +8,16 @@ import javax.media.opengl.glu.GLU;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import br.com.abby.core.loader.MeshLoader;
+import br.com.abby.core.vbo.Face;
+import br.com.abby.core.vbo.VBO;
 import br.com.abby.linear.Frustrum;
-import br.com.abby.loader.MeshLoader;
-import br.com.abby.vbo.Face;
-import br.com.abby.vbo.VBO;
-import br.com.etyllica.collision.CollisionStatus;
+import br.com.etyllica.awt.SVGColor;
+import br.com.etyllica.core.collision.CollisionStatus;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.graphics.Graphic;
-import br.com.etyllica.core.graphics.SVGColor;
-import br.com.etyllica.linear.Point3D;
+import br.com.etyllica.core.linear.Point3D;
 import br.com.etyllica.storage.octree.Octree;
 import br.com.etyllica.storage.octree.OctreeNode;
 import br.com.etyllica.storage.octree.VolumeOctree;
@@ -160,9 +160,9 @@ public class FrustrumRender extends ApplicationGL {
 	}
 
 	public GUIEvent updateKeyboard(KeyEvent event) {
-		if(event.isKeyDown(KeyEvent.TSK_SPACE)) {
+		if(event.isKeyDown(KeyEvent.VK_SPACE)) {
 			rotate = !rotate;
-		} else if(event.isKeyUp(KeyEvent.TSK_SPACE)) {
+		} else if(event.isKeyUp(KeyEvent.VK_SPACE)) {
 			rotate = !rotate;
 		}
 		

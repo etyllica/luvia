@@ -392,9 +392,9 @@ public class ForkLiftDemo extends DemoApplication {
 
 	@Override
 	public GUIEvent updateKeyboard(KeyEvent event) {
-		if(event.isAnyKeyDown(KeyEvent.TSK_SHIFT_LEFT, KeyEvent.TSK_SHIFT_RIGHT)) {
+		if(event.isAnyKeyDown(KeyEvent.VK_SHIFT_LEFT, KeyEvent.VK_SHIFT_RIGHT)) {
 			shiftPressed = true;
-		} else if (shiftPressed && event.isAnyKeyUp(KeyEvent.TSK_SHIFT_LEFT, KeyEvent.TSK_SHIFT_RIGHT)) {
+		} else if (shiftPressed && event.isAnyKeyUp(KeyEvent.VK_SHIFT_LEFT, KeyEvent.VK_SHIFT_RIGHT)) {
 			shiftPressed = false;
 		}
 
@@ -403,17 +403,17 @@ public class ForkLiftDemo extends DemoApplication {
 			if (shiftPressed) {
 
 				switch (event.getKey()) {
-				case KeyEvent.TSK_LEFT_ARROW: {
+				case KeyEvent.VK_LEFT_ARROW: {
 					liftHinge.setLimit(-PI / 16.0f, PI / 8.0f);
 					liftHinge.enableAngularMotor(true, -0.1f, 10.0f);
 					break;
 				}
-				case KeyEvent.TSK_RIGHT_ARROW: {
+				case KeyEvent.VK_RIGHT_ARROW: {
 					liftHinge.setLimit(-PI / 16.0f, PI / 8.0f);
 					liftHinge.enableAngularMotor(true, 0.1f, 10.0f);
 					break;
 				}
-				case KeyEvent.TSK_UP_ARROW: {
+				case KeyEvent.VK_UP_ARROW: {
 					forkSlider.setLowerLinLimit(0.1f);
 					forkSlider.setUpperLinLimit(3.9f);
 					forkSlider.setPoweredLinMotor(true);
@@ -421,7 +421,7 @@ public class ForkLiftDemo extends DemoApplication {
 					forkSlider.setTargetLinMotorVelocity(1.0f);
 					break;
 				}
-				case KeyEvent.TSK_DOWN_ARROW: {
+				case KeyEvent.VK_DOWN_ARROW: {
 					forkSlider.setLowerLinLimit(0.1f);
 					forkSlider.setUpperLinLimit(3.9f);
 					forkSlider.setPoweredLinMotor(true);
@@ -437,32 +437,32 @@ public class ForkLiftDemo extends DemoApplication {
 			} else {
 
 				switch (event.getKey()) {
-				case KeyEvent.TSK_LEFT_ARROW: {
+				case KeyEvent.VK_LEFT_ARROW: {
 					gVehicleSteering += steeringIncrement;
 					if (gVehicleSteering > steeringClamp) {
 						gVehicleSteering = steeringClamp;
 					}
 					break;
 				}
-				case KeyEvent.TSK_RIGHT_ARROW: {
+				case KeyEvent.VK_RIGHT_ARROW: {
 					gVehicleSteering -= steeringIncrement;
 					if (gVehicleSteering < -steeringClamp) {
 						gVehicleSteering = -steeringClamp;
 					}
 					break;
 				}
-				case KeyEvent.TSK_UP_ARROW: {
+				case KeyEvent.VK_UP_ARROW: {
 					gEngineForce = maxEngineForce;
 					gBreakingForce = 0.f;
 					break;
 				}
-				case KeyEvent.TSK_DOWN_ARROW: {
+				case KeyEvent.VK_DOWN_ARROW: {
 					gEngineForce = -maxEngineForce;
 					gBreakingForce = 0.f;
 					break;
 				}
 
-				case KeyEvent.TSK_F5:
+				case KeyEvent.VK_F5:
 					useDefaultCamera = !useDefaultCamera;
 					break;
 				default:
@@ -472,20 +472,20 @@ public class ForkLiftDemo extends DemoApplication {
 		} else {
 			switch (event.getKey()) {
 			
-			case KeyEvent.TSK_UP_ARROW: {
+			case KeyEvent.VK_UP_ARROW: {
 				lockForkSlider();
 				gEngineForce = 0.1f;
 				gBreakingForce = defaultBreakingForce;
 				break;
 			}
-			case KeyEvent.TSK_DOWN_ARROW: {
+			case KeyEvent.VK_DOWN_ARROW: {
 				lockForkSlider();
 				gEngineForce = 0.1f;
 				gBreakingForce = defaultBreakingForce;
 				break;
 			}
-			case KeyEvent.TSK_LEFT_ARROW:
-			case KeyEvent.TSK_RIGHT_ARROW: {
+			case KeyEvent.VK_LEFT_ARROW:
+			case KeyEvent.VK_RIGHT_ARROW: {
 				lockLiftHinge();
 				break;
 			}

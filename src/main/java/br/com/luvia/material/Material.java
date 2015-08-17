@@ -1,6 +1,6 @@
 package br.com.luvia.material;
 
-import br.com.abby.material.OBJMaterial;
+import br.com.abby.core.material.OBJMaterial;
 import br.com.luvia.loader.TextureLoader;
 
 import com.jogamp.opengl.util.texture.Texture;

@@ -20,7 +20,7 @@ import br.com.abby.linear.Camera3D;
 import br.com.abby.linear.ColoredPoint3D;
 import br.com.abby.linear.Frustrum;
 import br.com.etyllica.awt.AWTGraphics;
-import br.com.etyllica.linear.Point3D;
+import br.com.etyllica.core.linear.Point3D;
 
 import com.jogamp.opengl.util.texture.Texture;
 

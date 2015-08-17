@@ -511,11 +511,11 @@ public abstract class DemoApplication extends ApplicationGL {
 		if(event.getState() == KeyState.PRESSED) {
 
 			switch(event.getKey()) {
-			case KeyEvent.TSK_F1:
+			case KeyEvent.VK_F1:
 				break;
-			case KeyEvent.TSK_F2:
+			case KeyEvent.VK_F2:
 				break;
-			case KeyEvent.TSK_END:
+			case KeyEvent.VK_END:
 				int numObj = getDynamicsWorld().getNumCollisionObjects();
 				if (numObj != 0) {
 					CollisionObject obj = getDynamicsWorld().getCollisionObjectArray().getQuick(numObj - 1);
@@ -528,29 +528,29 @@ public abstract class DemoApplication extends ApplicationGL {
 					//delete obj;
 				}
 				break;
-			case KeyEvent.TSK_LEFT_ARROW:
+			case KeyEvent.VK_LEFT_ARROW:
 				stepLeft();
 				break;
-			case KeyEvent.TSK_RIGHT_ARROW:
+			case KeyEvent.VK_RIGHT_ARROW:
 				stepRight();
 				break;
-			case KeyEvent.TSK_UP_ARROW:
+			case KeyEvent.VK_UP_ARROW:
 				stepFront();
 				break;
-			case KeyEvent.TSK_DOWN_ARROW:
+			case KeyEvent.VK_DOWN_ARROW:
 				stepBack();
 				break;
-			case KeyEvent.TSK_PAGE_UP:
+			case KeyEvent.VK_PAGE_UP:
 				zoomIn();
 				break;
-			case KeyEvent.TSK_PAGE_DOWN:
+			case KeyEvent.VK_PAGE_DOWN:
 				zoomOut();
 				break;
-			case KeyEvent.TSK_HOME:
+			case KeyEvent.VK_HOME:
 				toggleIdle();
 				break;
 
-			case KeyEvent.TSK_H:
+			case KeyEvent.VK_H:
 				if ((debugMode & DebugDrawModes.NO_HELP_TEXT) != 0) {
 					debugMode = debugMode & (~DebugDrawModes.NO_HELP_TEXT);
 

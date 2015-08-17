@@ -1,6 +1,6 @@
 package br.com.luvia.core;
 
-import br.com.etyllica.context.Context;
+import br.com.etyllica.core.context.Context;
 import br.com.etyllica.gui.Window;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.context.DefaultLoadApplicationGL;

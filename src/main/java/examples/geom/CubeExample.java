@@ -73,7 +73,7 @@ public class CubeExample extends ApplicationGL {
 	
 	@Override
 	public GUIEvent updateKeyboard(KeyEvent event) {
-		if(event.isKeyDown(KeyEvent.TSK_SPACE)) {
+		if(event.isKeyDown(KeyEvent.VK_SPACE)) {
 			wireFrame = !wireFrame;
 		}
 		

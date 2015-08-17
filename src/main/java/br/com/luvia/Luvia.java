@@ -2,6 +2,7 @@ package br.com.luvia;
 import java.awt.AWTException;
 import java.awt.Rectangle;
 import java.awt.Robot;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.concurrent.Executors;
@@ -75,11 +76,13 @@ public abstract class Luvia {
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		frame.addKeyListener(luviaCore.getControl().getKeyboard());
+		frame.addKeyListener((KeyListener) luviaCore.getKeyboard());
+		
+		luviaCore.setComponent(frame);
 		
 		//frame.setLocation(p);
-		luviaCore.moveToCenter(frame);
-				
+		luviaCore.moveToCenter();
+		
 		return frame;
 	}
 

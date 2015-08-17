@@ -201,19 +201,19 @@ public class CharacterDemo extends DemoApplication {
 	@Override
 	public void specialKeyboardUp(int key, int x, int y, int modifiers) {
 		switch (key) {
-			case KeyEvent.TSK_UP_ARROW: {
+			case KeyEvent.VK_UP_ARROW: {
 				gForward = 0;
 				break;
 			}
-			case KeyEvent.TSK_DOWN_ARROW: {
+			case KeyEvent.VK_DOWN_ARROW: {
 				gBackward = 0;
 				break;
 			}
-			case KeyEvent.TSK_LEFT_ARROW: {
+			case KeyEvent.VK_LEFT_ARROW: {
 				gLeft = 0;
 				break;
 			}
-			case KeyEvent.TSK_RIGHT_ARROW: {
+			case KeyEvent.VK_RIGHT_ARROW: {
 				gRight = 0;
 				break;
 			}
@@ -226,23 +226,23 @@ public class CharacterDemo extends DemoApplication {
 	@Override
 	public void specialKeyboard(int key, int x, int y, int modifiers) {
 		switch (key) {
-			case KeyEvent.TSK_UP_ARROW: {
+			case KeyEvent.VK_UP_ARROW: {
 				gForward = 1;
 				break;
 			}
-			case KeyEvent.TSK_DOWN_ARROW: {
+			case KeyEvent.VK_DOWN_ARROW: {
 				gBackward = 1;
 				break;
 			}
-			case KeyEvent.TSK_LEFT_ARROW: {
+			case KeyEvent.VK_LEFT_ARROW: {
 				gLeft = 1;
 				break;
 			}
-			case KeyEvent.TSK_RIGHT_ARROW: {
+			case KeyEvent.VK_RIGHT_ARROW: {
 				gRight = 1;
 				break;
 			}
-			case KeyEvent.TSK_F1: {
+			case KeyEvent.VK_F1: {
 				if (character != null && character.canJump()) {
 					gJump = 1;
 				}

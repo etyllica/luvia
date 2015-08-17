@@ -18,11 +18,11 @@ import javax.media.opengl.GL2;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
+import br.com.abby.core.loader.MeshLoader;
+import br.com.abby.core.vbo.Face;
+import br.com.abby.core.vbo.Group;
+import br.com.abby.core.vbo.VBO;
 import br.com.abby.linear.AimPoint;
-import br.com.abby.loader.MeshLoader;
-import br.com.abby.vbo.Face;
-import br.com.abby.vbo.Group;
-import br.com.abby.vbo.VBO;
 import br.com.luvia.core.GL2Drawable;
 import br.com.luvia.material.Material;
 

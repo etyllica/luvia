@@ -9,7 +9,7 @@ import javax.media.opengl.GLContext;
 import javax.media.opengl.GLException;
 import javax.media.opengl.GLProfile;
 
-import br.com.etyllica.core.loader.LoaderImpl;
+import br.com.etyllica.loader.LoaderImpl;
 
 import com.jogamp.opengl.util.awt.ImageUtil;
 import com.jogamp.opengl.util.texture.Texture;

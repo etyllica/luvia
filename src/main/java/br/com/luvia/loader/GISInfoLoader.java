@@ -3,7 +3,7 @@ package br.com.luvia.loader;
 import java.io.File;
 import java.io.IOException;
 
-import br.com.etyllica.core.loader.LoaderImpl;
+import br.com.etyllica.loader.LoaderImpl;
 import br.com.luvia.gis.GISInfo;
 import br.com.luvia.loader.gis.TFWLoader;
 

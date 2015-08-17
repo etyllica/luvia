@@ -199,9 +199,9 @@ public class AccelerationExample extends DemoApplication {
 
 	@Override
 	public GUIEvent updateKeyboard(KeyEvent event) {
-		if(event.isAnyKeyDown(KeyEvent.TSK_SPACE)) {
+		if(event.isAnyKeyDown(KeyEvent.VK_SPACE)) {
 			pressed = true;
-		} else if(event.isAnyKeyUp(KeyEvent.TSK_SPACE)) {
+		} else if(event.isAnyKeyUp(KeyEvent.VK_SPACE)) {
 			pressed = false;
 		}
 

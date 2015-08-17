@@ -1,6 +1,6 @@
 package br.com.luvia.linear;
 
-import br.com.etyllica.linear.Point3D;
+import br.com.etyllica.core.linear.Point3D;
 
 /**
  * A plane can be defined as ax + by + cz = d

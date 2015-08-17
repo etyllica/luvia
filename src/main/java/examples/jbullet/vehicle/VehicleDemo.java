@@ -485,32 +485,32 @@ public class VehicleDemo extends DemoApplication {
 	@Override
 	public GUIEvent updateKeyboard(KeyEvent event) {
 
-		if(event.isKeyUp(KeyEvent.TSK_UP_ARROW)) {
+		if(event.isKeyUp(KeyEvent.VK_UP_ARROW)) {
 			gEngineForce = 0f;
-		} else if(event.isKeyUp(KeyEvent.TSK_DOWN_ARROW)) {
+		} else if(event.isKeyUp(KeyEvent.VK_DOWN_ARROW)) {
 			gBreakingForce = 0f;
 		}
 
-		if(event.isKeyDown(KeyEvent.TSK_LEFT_ARROW)) {
+		if(event.isKeyDown(KeyEvent.VK_LEFT_ARROW)) {
 			gVehicleSteering += steeringIncrement;
 			if (gVehicleSteering > steeringClamp) {
 				gVehicleSteering = steeringClamp;
 			}
 		}
 
-		if(event.isKeyDown(KeyEvent.TSK_RIGHT_ARROW)) {
+		if(event.isKeyDown(KeyEvent.VK_RIGHT_ARROW)) {
 			gVehicleSteering -= steeringIncrement;
 			if (gVehicleSteering < -steeringClamp) {
 				gVehicleSteering = -steeringClamp;
 			}
 		}
 
-		if(event.isKeyDown(KeyEvent.TSK_UP_ARROW)) {
+		if(event.isKeyDown(KeyEvent.VK_UP_ARROW)) {
 			gEngineForce = maxEngineForce;
 			gBreakingForce = 0.f;
 		}
 
-		if(event.isKeyDown(KeyEvent.TSK_DOWN_ARROW)) {
+		if(event.isKeyDown(KeyEvent.VK_DOWN_ARROW)) {
 			gBreakingForce = maxBreakingForce;
 			gEngineForce = 0.f;
 		}

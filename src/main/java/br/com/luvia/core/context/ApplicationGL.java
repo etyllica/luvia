@@ -5,7 +5,7 @@ import java.awt.Color;
 import javax.media.opengl.GL2;
 
 import br.com.abby.linear.ColoredPoint3D;
-import br.com.etyllica.context.Application;
+import br.com.etyllica.core.context.Application;
 import br.com.luvia.core.G3DEventListener;
 import br.com.luvia.core.video.Graphics3D;
 

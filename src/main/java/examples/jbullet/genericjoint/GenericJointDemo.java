@@ -131,7 +131,7 @@ public class GenericJointDemo extends DemoApplication {
 	}
 
 	public GUIEvent updateKeyboard(KeyEvent event) {
-		if(event.isAnyKeyDown(KeyEvent.TSK_E)) {
+		if(event.isAnyKeyDown(KeyEvent.VK_E)) {
 			spawnRagdoll(true);
 		}
 		

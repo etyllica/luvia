@@ -202,7 +202,7 @@ public class MovingConcaveDemo extends DemoApplication {
 	public GUIEvent updateKeyboard(KeyEvent event) {
 		super.updateKeyboard(event);
 		
-		if(event.isKeyDown(KeyEvent.TSK_SPACE)) {
+		if(event.isKeyDown(KeyEvent.VK_SPACE)) {
 			shootTrimesh(getCameraTargetPosition());
 		}
 		return GUIEvent.NONE;

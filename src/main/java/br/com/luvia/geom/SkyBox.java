@@ -2,7 +2,7 @@ package br.com.luvia.geom;
 
 import javax.media.opengl.GL2;
 
-import br.com.etyllica.linear.Point3D;
+import br.com.etyllica.core.linear.Point3D;
 import br.com.luvia.core.GL2Drawable;
 import br.com.luvia.loader.TextureLoader;
 

@@ -19,12 +19,12 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import br.com.abby.loader.MeshLoader;
+import br.com.abby.core.loader.MeshLoader;
 import br.com.etyllica.core.InnerCore;
 import br.com.etyllica.core.event.GUIEvent;
-import br.com.etyllica.core.loader.FontLoader;
-import br.com.etyllica.core.loader.Loader;
-import br.com.etyllica.core.loader.image.ImageLoader;
+import br.com.etyllica.loader.FontLoader;
+import br.com.etyllica.loader.Loader;
+import br.com.etyllica.loader.image.ImageLoader;
 import br.com.etyllica.util.io.IOHelper;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.context.DefaultLoadApplicationGL;
@@ -83,9 +83,9 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 		graphic = new Graphics3D(w,h);
 
-		canvas.addMouseMotionListener(mouse);
-		canvas.addMouseWheelListener(mouse);
-		canvas.addMouseListener(mouse);
+		canvas.addMouseMotionListener(getMouse());
+		canvas.addMouseWheelListener(getMouse());
+		canvas.addMouseListener(getMouse());
 
 		canvas.getCanvas().addGLEventListener(this);		
 
@@ -300,6 +300,18 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 				Toolkit.getDefaultToolkit().createImage( new MemoryImageSource(16, 16, pixels, 0, 16))
 				, new Point(0, 0), "invisibleCursor");
 		component.setCursor( transparentCursor );
+	}
+
+	@Override
+	public void initMonitors(int width, int height) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void moveToCenter() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

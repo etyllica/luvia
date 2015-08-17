@@ -2,7 +2,7 @@ package br.com.luvia.core.context;
 
 import java.awt.Color;
 
-import br.com.etyllica.context.load.LoadApplication;
+import br.com.etyllica.core.context.load.LoadApplication;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;

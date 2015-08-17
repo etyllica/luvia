@@ -17,9 +17,9 @@ import javax.media.opengl.glu.GLU;
 import br.com.abby.linear.Camera3D;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
+import br.com.etyllica.core.event.MouseButton;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphic;
-import br.com.etyllica.core.input.mouse.MouseButton;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
 import br.com.luvia.loader.TextureLoader;
@@ -189,47 +189,47 @@ public class MarkerApplication extends ApplicationGL {
 	@Override
 	public GUIEvent updateKeyboard(KeyEvent event) {
 		
-		if(event.isKeyDown(KeyEvent.TSK_UP_ARROW)) {
+		if(event.isKeyDown(KeyEvent.VK_UP_ARROW)) {
 			
 			upArrow = true;
 			
-		} else if (event.isKeyUp(KeyEvent.TSK_UP_ARROW)) {
+		} else if (event.isKeyUp(KeyEvent.VK_UP_ARROW)) {
 			
 			upArrow = false;
 		}
 				
-		if(event.isKeyDown(KeyEvent.TSK_DOWN_ARROW)) {
+		if(event.isKeyDown(KeyEvent.VK_DOWN_ARROW)) {
 			
 			downArrow = true;
 			
-		} else if(event.isKeyUp(KeyEvent.TSK_DOWN_ARROW)) {
+		} else if(event.isKeyUp(KeyEvent.VK_DOWN_ARROW)) {
 			
 			downArrow = false;
 		}
 		
-		if(event.isKeyDown(KeyEvent.TSK_LEFT_ARROW)) {
+		if(event.isKeyDown(KeyEvent.VK_LEFT_ARROW)) {
 			
 			leftArrow = true;
 			
-		} else if(event.isKeyUp(KeyEvent.TSK_LEFT_ARROW)) {
+		} else if(event.isKeyUp(KeyEvent.VK_LEFT_ARROW)) {
 			
 			leftArrow = false;
 		}
 		
-		if(event.isKeyDown(KeyEvent.TSK_RIGHT_ARROW)) {
+		if(event.isKeyDown(KeyEvent.VK_RIGHT_ARROW)) {
 			
 			rightArrow = true;
 			
-		} else if (event.isKeyUp(KeyEvent.TSK_RIGHT_ARROW)) {
+		} else if (event.isKeyUp(KeyEvent.VK_RIGHT_ARROW)) {
 			
 			rightArrow = false;
 		}
 		
-		if(event.isKeyDown(KeyEvent.TSK_VIRGULA)) {
+		if(event.isKeyDown(KeyEvent.VK_VIRGULA)) {
 			
 			angleZ += 5;
 			
-		} else if(event.isKeyDown(KeyEvent.TSK_PONTO)) {
+		} else if(event.isKeyDown(KeyEvent.VK_PONTO)) {
 			
 			angleZ -= 5;
 			
