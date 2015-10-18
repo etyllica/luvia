@@ -11,7 +11,6 @@ import br.com.abby.core.vbo.Face;
 import br.com.abby.core.vbo.VBO;
 import br.com.abby.linear.BoundingBox3D;
 import br.com.etyllica.awt.SVGColor;
-import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.core.linear.Point3D;
@@ -143,14 +142,12 @@ public class OctreeClipping extends ApplicationGL {
 		gl.glLoadIdentity(); // reset
 	}
 
-	public GUIEvent updateKeyboard(KeyEvent event) {
+	public void updateKeyboard(KeyEvent event) {
 		if(event.isKeyDown(KeyEvent.VK_SPACE)) {
 			rotate = !rotate;
 		} else if(event.isKeyUp(KeyEvent.VK_SPACE)) {
 			rotate = !rotate;
 		}
-		
-		return null;
 	}
 	
 	@Override

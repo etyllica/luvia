@@ -29,7 +29,6 @@ import java.nio.ByteOrder;
 import javax.media.opengl.GL2;
 import javax.vecmath.Vector3f;
 
-import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.luvia.core.video.Graphics3D;
 
@@ -483,7 +482,7 @@ public class VehicleDemo extends DemoApplication {
 	}
 
 	@Override
-	public GUIEvent updateKeyboard(KeyEvent event) {
+	public void updateKeyboard(KeyEvent event) {
 
 		if(event.isKeyUp(KeyEvent.VK_UP_ARROW)) {
 			gEngineForce = 0f;
@@ -516,8 +515,6 @@ public class VehicleDemo extends DemoApplication {
 		}
 
 		System.out.println(gEngineForce);
-
-		return null;
 	}
 
 	@Override

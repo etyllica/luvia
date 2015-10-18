@@ -32,7 +32,7 @@ public class Tutorial1 extends ApplicationGL {
 		exit.addAction(GUIEvent.MOUSE_LEFT_BUTTON_DOWN, new Action(this, "changeColor"));
 		exit.addAction(GUIEvent.MOUSE_RIGHT_BUTTON_DOWN, new Action(this, "clearColor"));
 		
-		add(exit);
+		addView(exit);
 				
 		loading = 100;
 	}

@@ -13,7 +13,6 @@ import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
 import br.com.abby.linear.AimPoint;
-import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.MouseButton;
 import br.com.etyllica.core.event.PointerEvent;
@@ -167,7 +166,7 @@ public class SkyboxGridPerspective extends ApplicationGL {
 	}
 
 	@Override
-	public GUIEvent updateKeyboard(KeyEvent event) {
+	public void updateKeyboard(KeyEvent event) {
 
 		if(event.isKeyDown(KeyEvent.VK_RIGHT_ARROW)) {
 			rightPressed = true;
@@ -180,11 +179,9 @@ public class SkyboxGridPerspective extends ApplicationGL {
 		} else if(event.isKeyUp(KeyEvent.VK_LEFT_ARROW)) {
 			leftPressed = false;
 		}
-		
-		return GUIEvent.NONE;
 	}
 	
-	public GUIEvent updateMouse(PointerEvent event) {
+	public void updateMouse(PointerEvent event) {
 
 		mx = event.getX();
 		my = event.getY();
@@ -197,8 +194,6 @@ public class SkyboxGridPerspective extends ApplicationGL {
 		if(event.isButtonUp(MouseButton.MOUSE_BUTTON_LEFT)) {
 			click = false;
 		}
-
-		return GUIEvent.NONE;
 	}
 
 	@Override

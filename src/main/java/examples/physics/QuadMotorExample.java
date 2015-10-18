@@ -9,7 +9,6 @@ import java.util.List;
 import javax.media.opengl.GL2;
 import javax.vecmath.Vector3f;
 
-import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.luvia.core.video.Graphics3D;
 
@@ -24,9 +23,7 @@ import com.bulletphysics.dynamics.DiscreteDynamicsWorld;
 import com.bulletphysics.dynamics.RigidBody;
 import com.bulletphysics.dynamics.RigidBodyConstructionInfo;
 import com.bulletphysics.dynamics.constraintsolver.ConstraintSolver;
-import com.bulletphysics.dynamics.constraintsolver.Point2PointConstraint;
 import com.bulletphysics.dynamics.constraintsolver.SequentialImpulseConstraintSolver;
-import com.bulletphysics.dynamics.constraintsolver.TypedConstraint;
 import com.bulletphysics.linearmath.DefaultMotionState;
 import com.bulletphysics.linearmath.Transform;
 import com.bulletphysics.util.ObjectArrayList;
@@ -240,14 +237,12 @@ public class QuadMotorExample extends DemoApplication {
 	}
 
 	@Override
-	public GUIEvent updateKeyboard(KeyEvent event) {
+	public void updateKeyboard(KeyEvent event) {
 		if(event.isAnyKeyDown(KeyEvent.VK_SPACE)) {
 			pressed = true;
 		} else if(event.isAnyKeyUp(KeyEvent.VK_SPACE)) {
 			pressed = false;
 		}
-
-		return null;
 	}
 
 }

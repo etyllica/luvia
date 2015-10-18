@@ -12,8 +12,6 @@ import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
 import br.com.abby.linear.Camera3D;
-import br.com.etyllica.core.event.GUIEvent;
-import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.MouseButton;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphic;
@@ -168,13 +166,7 @@ public class Perspective extends ApplicationGL {
 
 	protected boolean click = false;
 
-	@Override
-	public GUIEvent updateKeyboard(KeyEvent event) {
-
-		return GUIEvent.NONE;
-	}
-	
-	public GUIEvent updateMouse(PointerEvent event) {
+	public void updateMouse(PointerEvent event) {
 
 		mx = event.getX();
 		my = event.getY();
@@ -187,8 +179,6 @@ public class Perspective extends ApplicationGL {
 		if(event.isButtonUp(MouseButton.MOUSE_BUTTON_LEFT)){
 			click = false;
 		}
-
-		return GUIEvent.NONE;
 	}
 
 	@Override

@@ -29,7 +29,6 @@ import java.nio.ByteOrder;
 import javax.media.opengl.GL2;
 import javax.vecmath.Vector3f;
 
-import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.KeyState;
 import br.com.luvia.core.video.Graphics3D;
@@ -391,7 +390,7 @@ public class ForkLiftDemo extends DemoApplication {
 	private boolean shiftPressed = false;
 
 	@Override
-	public GUIEvent updateKeyboard(KeyEvent event) {
+	public void updateKeyboard(KeyEvent event) {
 		if(event.isAnyKeyDown(KeyEvent.VK_SHIFT_LEFT, KeyEvent.VK_SHIFT_RIGHT)) {
 			shiftPressed = true;
 		} else if (shiftPressed && event.isAnyKeyUp(KeyEvent.VK_SHIFT_LEFT, KeyEvent.VK_SHIFT_RIGHT)) {
@@ -493,8 +492,6 @@ public class ForkLiftDemo extends DemoApplication {
 				break;
 			}
 		}
-
-		return GUIEvent.NONE;
 	}
 
 	@Override

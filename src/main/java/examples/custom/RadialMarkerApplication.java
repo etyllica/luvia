@@ -15,7 +15,6 @@ import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
 import br.com.abby.linear.Camera3D;
-import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.MouseButton;
 import br.com.etyllica.core.event.PointerEvent;
@@ -198,7 +197,7 @@ public class RadialMarkerApplication extends ApplicationGL {
 	}
 	
 	@Override
-	public GUIEvent updateKeyboard(KeyEvent event) {
+	public void updateKeyboard(KeyEvent event) {
 		
 		if(event.isKeyDown(KeyEvent.VK_UP_ARROW)) {
 			
@@ -245,12 +244,10 @@ public class RadialMarkerApplication extends ApplicationGL {
 			angleY -= 5;
 			
 		}
-		
-		return GUIEvent.NONE;
 	}
 	
 	@Override
-	public GUIEvent updateMouse(PointerEvent event) {
+	public void updateMouse(PointerEvent event) {
 
 		mx = event.getX();
 		my = event.getY();
@@ -264,8 +261,6 @@ public class RadialMarkerApplication extends ApplicationGL {
 			camera.setZ(camera.getZ()-0.1f);
 			click = false;
 		}
-
-		return GUIEvent.NONE;
 	}
 
 	@Override

@@ -6,7 +6,6 @@ package examples.physics;
 import javax.media.opengl.GL2;
 import javax.vecmath.Vector3f;
 
-import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.luvia.core.video.Graphics3D;
 
@@ -198,14 +197,12 @@ public class AccelerationExample extends DemoApplication {
 	}
 
 	@Override
-	public GUIEvent updateKeyboard(KeyEvent event) {
+	public void updateKeyboard(KeyEvent event) {
 		if(event.isAnyKeyDown(KeyEvent.VK_SPACE)) {
 			pressed = true;
 		} else if(event.isAnyKeyUp(KeyEvent.VK_SPACE)) {
 			pressed = false;
 		}
-
-		return null;
 	}
 
 }

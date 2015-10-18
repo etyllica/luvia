@@ -33,7 +33,6 @@ import javax.vecmath.Matrix3f;
 import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3f;
 
-import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.KeyState;
 import br.com.etyllica.core.event.PointerEvent;
@@ -500,13 +499,13 @@ public abstract class DemoApplication extends ApplicationGL {
 	public void specialKeyboard(int key, int x, int y, int modifiers) {
 
 	}
-	
+
 	public void specialKeyboardUp(int key, int x, int y, int modifiers) {
 
 	}
 
 	@Override
-	public GUIEvent updateKeyboard(KeyEvent event) {
+	public void updateKeyboard(KeyEvent event) {
 
 		if(event.getState() == KeyState.PRESSED) {
 
@@ -559,14 +558,12 @@ public abstract class DemoApplication extends ApplicationGL {
 				}
 				break;
 			}
-			
+
 			specialKeyboard(event.getKey(),0,0,0);
 
 		} else if(event.getState() == KeyState.RELEASED) {
 			specialKeyboardUp(event.getKey(),0,0,0);
 		}
-
-		return GUIEvent.NONE;
 	}
 
 	private void moveAndDisplay(Graphics3D g) {
@@ -677,7 +674,7 @@ public abstract class DemoApplication extends ApplicationGL {
 	}
 
 	@Override
-	public GUIEvent updateMouse(PointerEvent event) {
+	public void updateMouse(PointerEvent event) {
 
 		int x = event.getX();
 		int y = event.getY();
@@ -771,8 +768,6 @@ public abstract class DemoApplication extends ApplicationGL {
 		default: {
 		}
 		}
-
-		return GUIEvent.NONE;
 	}
 
 	public void mouseMotionFunc(int x, int y) {

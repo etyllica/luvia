@@ -3,7 +3,6 @@ package br.com.luvia.core.context;
 import java.awt.Color;
 
 import br.com.etyllica.core.context.load.LoadApplication;
-import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphic;
@@ -79,13 +78,13 @@ public class DefaultLoadApplicationGL extends ApplicationGL implements LoadAppli
 	}
 
 	@Override
-	public GUIEvent updateMouse(PointerEvent event) {
-		return GUIEvent.NONE;
+	public void updateMouse(PointerEvent event) {
+
 	}
 
 	@Override
-	public GUIEvent updateKeyboard(KeyEvent event) {
-		return GUIEvent.NONE;
+	public void updateKeyboard(KeyEvent event) {
+		
 	}
 
 	@Override

@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import javax.media.opengl.GL2;
 
-import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.luvia.core.context.ApplicationGL;
@@ -72,12 +71,10 @@ public class SphereExample extends ApplicationGL {
 	}
 	
 	@Override
-	public GUIEvent updateKeyboard(KeyEvent event) {
+	public void updateKeyboard(KeyEvent event) {
 		if(event.isKeyDown(KeyEvent.VK_SPACE)) {
 			wireFrame = !wireFrame;
 		}
-		
-		return null;
 	}
 
 }

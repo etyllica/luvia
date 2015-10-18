@@ -29,7 +29,6 @@ package examples.jbullet.genericjoint;
 
 import javax.vecmath.Vector3f;
 
-import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.luvia.core.video.Graphics3D;
 
@@ -130,11 +129,9 @@ public class GenericJointDemo extends DemoApplication {
 		}
 	}
 
-	public GUIEvent updateKeyboard(KeyEvent event) {
+	public void updateKeyboard(KeyEvent event) {
 		if(event.isAnyKeyDown(KeyEvent.VK_E)) {
 			spawnRagdoll(true);
 		}
-		
-		return GUIEvent.NONE;
 	}	
 }
