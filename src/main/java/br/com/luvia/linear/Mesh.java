@@ -169,6 +169,12 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		setupModel(gl);
 		setupColor(gl);
 
+		simpleDraw(gl);
+
+		gl.glPopMatrix();
+	}
+
+	public void simpleDraw(GL2 gl) {
 		Texture texture = null;
 
 		for(Group group: vbo.getGroups()) {
@@ -180,8 +186,6 @@ public class Mesh extends AimPoint implements GL2Drawable {
 
 			disableTexture(gl, texture);
 		}
-
-		gl.glPopMatrix();
 	}
 
 	private void setupTextured(GL2 gl) {
