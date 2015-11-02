@@ -169,16 +169,11 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		graphic.setDrawable(drawable);
 		
 		if(changeApp) {
-
 			changeApplication(drawable);
-
 		} else {
-
 			updateSuperEvents(superEvent);
-
 			drawActiveWindow(drawable);
 		}
-
 	}
 
 	private void updateSuperEvents(GUIEvent event) {

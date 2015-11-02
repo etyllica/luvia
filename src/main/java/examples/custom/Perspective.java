@@ -91,8 +91,7 @@ public class Perspective extends ApplicationGL {
 		floor.disable(gl);
 	}
 
-	private void drawTile(GL2 gl, double x, double y, double tileSize){
-
+	private void drawTile(GL2 gl, double x, double y, double tileSize) {
 		gl.glBegin(GL2.GL_QUADS);
 
 		//(0,0)

@@ -10,6 +10,7 @@ import examples.custom.Ortographic;
 import examples.custom.Perspective;
 import examples.custom.SkyboxGridPerspective;
 import examples.frustrum.FrustrumRender;
+import examples.orthographic.GridMenuApplication;
 import examples.tutorial1.Tutorial1;
 import examples.tutorial2.Tutorial2;
 
@@ -43,7 +44,9 @@ public class LuviaExamples extends Luvia {
 		
 		//return new OctreeRender(w, h);
 		//return new OctreeClipping(w, h);
-		return new FrustrumRender(w, h);
+		//return new FrustrumRender(w, h);
+		
+		return new GridMenuApplication(w, h);
 	}
 
 }
