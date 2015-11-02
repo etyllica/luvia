@@ -47,7 +47,7 @@ public class Mesh extends AimPoint implements GL2Drawable {
 
 	private float scale = 1;
 
-	private int[] indexes = new int[10];
+	private int[] indexes = new int[16];
 
 	public Mesh() {
 		super(0,0,0);
@@ -109,7 +109,6 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		for(Group group: vbo.getGroups()) {
 
 			for(Face face: group.getFaces()) {
-
 				int vertices = face.vertexIndex.length;
 				setupIndexes(vertices);
 
@@ -162,7 +161,6 @@ public class Mesh extends AimPoint implements GL2Drawable {
 	}
 	
 	public void texturedRender(GL2 gl) {
-
 		gl.glPushMatrix();
 
 		setupTextured(gl);
@@ -258,17 +256,21 @@ public class Mesh extends AimPoint implements GL2Drawable {
 
 	private Texture loadTexture(Group group) {
 		Texture texture;
-
+		
+		String texturePath = group.getMaterial().getMapD();
 		texture = materials.get(group).getTextureD();
 
 		if(texture == null) {
+			texturePath = group.getMaterial().getMapKd();
 			texture = materials.get(group).getTextureKd();
 		}
 
 		if(texture != null) {
 			drawTexture = true;
 		} else {
-			System.err.println("texture not found");
+			if (!texturePath.isEmpty()) {
+				System.err.println("texture not found: "+texturePath);	
+			}
 		}
 
 		return texture;
@@ -291,7 +293,15 @@ public class Mesh extends AimPoint implements GL2Drawable {
 	}
 
 	private void drawTexturedFace(GL2 gl, Face face) {
-		for(int i = 0; i < face.vertexIndex.length; i++) {
+		
+		int count = face.vertexIndex.length;
+		
+		if(count >= indexes.length) {
+			//Face with many sizes
+			count = 16;
+		}
+		
+		for(int i = 0; i < count; i++) {
 
 			int index = indexes[i];
 
