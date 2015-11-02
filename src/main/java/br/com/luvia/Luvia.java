@@ -36,6 +36,8 @@ public abstract class Luvia {
 	
 	protected String title = "Luvia - Window";
 	
+	private boolean setupCalled = false;
+	
 	// Constructor
 	public Luvia(int w, int h) {
 		super();
@@ -49,10 +51,13 @@ public abstract class Luvia {
 		frame = createFrame(w, h);
 		luviaCore.setComponent(frame);
 
-		String path = PathHelper.currentDirectory();
-		setPath(path);
+		//String path = PathHelper.currentDirectory();
+		//setPath(path);
 		
 		setMainApplication(startApplication());
+		if(!setupCalled) {
+			initialSetup("");
+		}
 		
 		frame.requestFocus();
 		frame.setVisible(true);
@@ -67,15 +72,10 @@ public abstract class Luvia {
 		JFrame frame = new JFrame();
 				
 		frame.setSize(w, h);
-		
 		frame.setUndecorated(false);
-
 		frame.setTitle(title);
-		
 		frame.addWindowListener(buildWindowAdapter());
-		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
 		frame.addKeyListener((KeyListener) luviaCore.getKeyboard());
 		
 		luviaCore.setComponent(frame);
@@ -121,7 +121,7 @@ public abstract class Luvia {
 		future = executor.scheduleAtFixedRate(luviaCore, UPDATE_DELAY, UPDATE_DELAY, TimeUnit.MILLISECONDS);
 		
 		frame.add(luviaCore.getPanel());
-						
+		
 		luviaCore.start();
 	}
 	
@@ -135,12 +135,14 @@ public abstract class Luvia {
 			e.printStackTrace();
 		}
 		
-	}	
+	}
 
 	protected void initialSetup(String path) {
 		String directory = PathHelper.currentDirectory()+path;
 		luviaCore.setPath(directory);
 		luviaCore.initDefault();
+		
+		setupCalled = true;
 	}
 	
 	public abstract ApplicationGL startApplication();
