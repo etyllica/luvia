@@ -1,13 +1,19 @@
 package br.com.luvia.octree;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import br.com.abby.linear.BoundingBox3D;
-import br.com.abby.vbo.Face;
-import br.com.etyllica.linear.Point3D;
+import br.com.abby.core.vbo.Face;
+import br.com.etyllica.core.linear.Point3D;
+import br.com.etyllica.storage.octree.Octree;
+import br.com.etyllica.storage.octree.OctreeNode;
+import br.com.etyllica.storage.octree.VolumeOctree;
 
 public class VolumeOctreeTest {
 
@@ -29,7 +35,9 @@ public class VolumeOctreeTest {
 		OctreeNode<Face> root = tree.getRoot();
 		
 		Assert.assertNotNull(root);
-		Assert.assertEquals(8, root.children.size());
+		//Hash size allocated is 8
+		//Hash is empty
+		Assert.assertEquals(0, root.getChildrenNodes().size());
 	}
 	
 	@Test
@@ -38,13 +46,17 @@ public class VolumeOctreeTest {
 		
 		OctreeNode<Face> root = tree.getRoot();
 		
-		OctreeNode<Face> leftLower = root.children.get(Octree.BELOW_LEFT_LOWER);
+		List<OctreeNode<Face>> children = new ArrayList<OctreeNode<Face>>(root.getChildrenNodes());
+		
+		OctreeNode<Face> leftLower = children.get(Octree.BELOW_LEFT_LOWER);
+		List<OctreeNode<Face>> leftLowerChildren = new ArrayList<OctreeNode<Face>>(leftLower.getChildrenNodes());
+		
 		Assert.assertNotNull(leftLower);
 				
-		BoundingBox3D innerBox = leftLower.box;
+		BoundingBox3D innerBox = leftLower.getBox();
 		Assert.assertEquals(15.625, innerBox.getVolume(), 0.1);
 		
-		Assert.assertNotNull(leftLower.children.get(Octree.BELOW_LEFT_LOWER));
+		Assert.assertNotNull(leftLowerChildren.get(Octree.BELOW_LEFT_LOWER));
 	}
 	
 }
