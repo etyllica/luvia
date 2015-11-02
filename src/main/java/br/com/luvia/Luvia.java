@@ -51,13 +51,9 @@ public abstract class Luvia {
 		frame = createFrame(w, h);
 		luviaCore.setComponent(frame);
 
-		//String path = PathHelper.currentDirectory();
-		//setPath(path);
+		initialSetup("");
 		
 		setMainApplication(startApplication());
-		if(!setupCalled) {
-			initialSetup("");
-		}
 		
 		frame.requestFocus();
 		frame.setVisible(true);

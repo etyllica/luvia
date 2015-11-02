@@ -273,8 +273,8 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	}
 
 	private void reload() {
-
-		activeWindowGL.reload(anotherApplication3D);
+		//activeWindowGL.reload(anotherApplication3D);
+		activeWindowGL.setApplication(anotherApplication3D);
 
 		changeApp = true;
 	}
