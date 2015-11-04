@@ -4,6 +4,7 @@ import br.com.luvia.Luvia;
 import br.com.luvia.core.context.ApplicationGL;
 import examples.box.OctreeClipping;
 import examples.box.OctreeRender;
+import examples.collision.CollisionApplication;
 import examples.custom.GridPerspective;
 import examples.custom.MarkerApplication;
 import examples.custom.Ortographic;
@@ -31,7 +32,7 @@ public class LuviaExamples extends Luvia {
 	@Override
 	public ApplicationGL startApplication() {
 
-		//initialSetup("");
+		initialSetup("../../../");
 		
 		//return new Tutorial1(w, h);
 		//return new Tutorial2(w, h);
@@ -46,7 +47,7 @@ public class LuviaExamples extends Luvia {
 		//return new OctreeClipping(w, h);
 		//return new FrustrumRender(w, h);
 		
-		return new GridMenuApplication(w, h);
+		return new CollisionApplication(w, h);
 	}
 
 }
