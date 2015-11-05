@@ -34,7 +34,7 @@ public class BoundingBox implements Serializable {
 	public final Vector3 min = new Vector3();
 	public final Vector3 max = new Vector3();
 
-	private final Vector3 cnt = new Vector3();
+	protected final Vector3 cnt = new Vector3();
 	private final Vector3 dim = new Vector3();
 
 	/** @param out The {@link Vector3} to receive the center of the bounding box.

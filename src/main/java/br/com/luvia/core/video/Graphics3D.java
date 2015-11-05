@@ -368,7 +368,7 @@ public class Graphics3D extends AWTGraphics {
 	}
 	
 	public void drawBoundingBox(BoundingBox box) {
-		GL2 gl = getGL2();
+		GL2 gl = getGL2();		
 		
 		gl.glBegin(GL2.GL_LINES);
 		drawBoundingLines(gl, box.min, box.max);
