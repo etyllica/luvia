@@ -22,6 +22,8 @@ import br.com.abby.linear.Frustrum;
 import br.com.etyllica.awt.AWTGraphics;
 import br.com.etyllica.core.linear.Point3D;
 
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
 import com.jogamp.opengl.util.texture.Texture;
 
 public class Graphics3D extends AWTGraphics {
@@ -363,6 +365,35 @@ public class Graphics3D extends AWTGraphics {
 		gl.glPopMatrix();
 		
 		gl.glPopMatrix();
+	}
+	
+	public void drawBoundingBox(BoundingBox box) {
+		GL2 gl = getGL2();
+		
+		gl.glBegin(GL2.GL_LINES);
+		drawBoundingLines(gl, box.min, box.max);
+		drawBoundingLines(gl, box.max, box.min);
+		gl.glEnd();
+	}
+	
+	private void drawBoundingLines(GL2 gl, Vector3 minPoint, Vector3 maxPoint) {
+		gl.glVertex3d(minPoint.x, minPoint.y, minPoint.z);
+		gl.glVertex3d(maxPoint.x, minPoint.y, minPoint.z);
+		
+		gl.glVertex3d(minPoint.x, minPoint.y, minPoint.z);
+		gl.glVertex3d(minPoint.x, maxPoint.y, minPoint.z);
+		
+		gl.glVertex3d(minPoint.x, minPoint.y, minPoint.z);
+		gl.glVertex3d(minPoint.x, minPoint.y, maxPoint.z);
+		
+		gl.glVertex3d(maxPoint.x, minPoint.y, maxPoint.z);
+		gl.glVertex3d(minPoint.x, minPoint.y, maxPoint.z);
+		
+		gl.glVertex3d(maxPoint.x, minPoint.y, maxPoint.z);
+		gl.glVertex3d(maxPoint.x, minPoint.y, minPoint.z);
+		
+		gl.glVertex3d(maxPoint.x, minPoint.y, minPoint.z);
+		gl.glVertex3d(maxPoint.x, maxPoint.y, minPoint.z);
 	}
 
 	public void drawBoundingBox(BoundingBox3D box) {

@@ -233,6 +233,8 @@ public class CollisionApplication extends ApplicationGL {
 		
 		//Transform by Camera
 		drawable.updateCamera(camera);
+		
+		drawable.drawBoundingBox(box);
 
 		//Draw Scene
 		drawFloor(gl);
