@@ -32,12 +32,12 @@ import com.jogamp.opengl.util.texture.Texture;
 
 public class CollisionApplication extends ApplicationGL {
 
+	private Camera3D camera;
+	
 	private BoundingBox box;
 	private Texture marker;
 	private Texture active;
-	
-	private Camera3D camera;
-	
+		
 	private int markerCount = 6;
 	private float tileSize = 5;
 	
@@ -83,21 +83,7 @@ public class CollisionApplication extends ApplicationGL {
 						
 		loading = 100;
 	}
-	
-	protected void lookCamera(Graphics3D g) {
-		GL2 gl = g.getGL2();
-		GLU glu = g.getGLU();
 		
-		gl.glMatrixMode(GL2.GL_MODELVIEW);
-		gl.glLoadIdentity();
-
-		double targetx = 0;
-		double targety = 0;
-		double targetz = 0;
-		
-		glu.gluLookAt( camera.getX(), camera.getY(), camera.getZ(), targetx, targety, targetz, 0, 1, 0 );
-	}
-	
 	protected void drawFloor(GL2 gl) {
 		gl.glColor3d(1,1,1);
 

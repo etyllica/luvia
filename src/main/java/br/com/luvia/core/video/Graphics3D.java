@@ -21,6 +21,7 @@ import br.com.abby.linear.ColoredPoint3D;
 import br.com.abby.linear.Frustrum;
 import br.com.etyllica.awt.AWTGraphics;
 import br.com.etyllica.core.linear.Point3D;
+import br.com.luvia.linear.Billboard;
 
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
@@ -717,6 +718,31 @@ public class Graphics3D extends AWTGraphics {
 		gl.glEnd();
 		
 		gl.glPopMatrix();
+	}
+	
+	public void drawBillboard(Billboard billboard) {
+		GL2 gl = getGL2();
+						
+		Vector3 p00 = billboard.getP00();
+		Vector3 p10 = billboard.getP10();
+		Vector3 p11 = billboard.getP11();
+		Vector3 p01 = billboard.getP01();
+		
+		gl.glBegin(GL2.GL_TRIANGLE_STRIP);
+
+		gl.glTexCoord2d(0, 0);
+		gl.glVertex3f(p00.x, p00.y, p00.z);
+
+		gl.glTexCoord2d(1, 0);
+		gl.glVertex3f(p10.x, p10.y, p10.z);
+
+		gl.glTexCoord2d(0, 1);
+		gl.glVertex3f(p01.x, p01.y, p01.z);
+		
+		gl.glTexCoord2d(1, 1);
+		gl.glVertex3f(p11.x, p11.y, p11.z);
+
+		gl.glEnd();
 	}
 	
 	private void drawPlane(GL2 gl) {

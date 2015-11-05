@@ -49,5 +49,38 @@ public class DirectionUtil {
 		return new Vector3(x,y,z);
 	}
 
+	/**
+	 * Calculates the direction vector between 2 points
+	 * @param origin
+	 * @param destination
+	 * @return directional vector
+	 */
+	public static Vector3 direction(Vector3 origin, Vector3 destination) {
+		Vector3 direction = new Vector3(origin).sub(destination);
+		return direction.nor();
+	}
+	
+	/**
+	 * Calculates the direction vector between 2 points
+	 * @param origin
+	 * @param destination
+	 * @return directional vector
+	 */
+	public static void direction(Vector3 origin, Vector3 destination, Vector3 out) {
+		out.set(origin).sub(destination).nor();
+	}
+	
+	/**
+	 * Calculates the angle between 2 points
+	 * @param origin
+	 * @param destination
+	 * @return angle
+	 */
+	public static float angle(Vector3 origin, Vector3 destination) {
+		float dot = origin.dot(destination);
+		float len = origin.len()*destination.len();
+		float cos = dot/len;
+		return (float)Math.acos(cos);
+	}
 
 }

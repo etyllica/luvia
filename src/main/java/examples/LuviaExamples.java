@@ -14,6 +14,7 @@ import examples.frustrum.FrustrumRender;
 import examples.orthographic.GridMenuApplication;
 import examples.tutorial1.Tutorial1;
 import examples.tutorial2.Tutorial2;
+import examples.tutorial4.BillboardExample;
 
 public class LuviaExamples extends Luvia {
 
@@ -36,6 +37,7 @@ public class LuviaExamples extends Luvia {
 		
 		//return new Tutorial1(w, h);
 		//return new Tutorial2(w, h);
+		//return new Tutorial4(w, h);
 		//return new Perspective(w, h);
 		//return new Ortographic(w, h);
 		//return new MarkerApplication(w, h);
@@ -47,7 +49,8 @@ public class LuviaExamples extends Luvia {
 		//return new OctreeClipping(w, h);
 		//return new FrustrumRender(w, h);
 		
-		return new CollisionApplication(w, h);
+		//return new CollisionApplication(w, h);
+		return new BillboardExample(w, h);
 	}
 
 }
