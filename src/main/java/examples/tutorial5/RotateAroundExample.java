@@ -1,4 +1,4 @@
-package examples.tutorial4;	
+package examples.tutorial5;	
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -18,16 +18,20 @@ import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
 import br.com.luvia.linear.CustomBillboard;
 import br.com.luvia.loader.TextureLoader;
+import br.com.luvia.util.DirectionUtil;
 
 import com.badlogic.gdx.math.Vector3;
 import com.jogamp.opengl.util.texture.Texture;
 
-public class BillboardExample extends ApplicationGL {
+public class RotateAroundExample extends ApplicationGL {
 
 	private Camera3D camera;
 
 	private CustomBillboard billboard;
 	private Texture texture;
+	
+	private Vector3 sphereCenter;
+	private Vector3 rotationAxis;
 
 	private int markerCount = 3;
 
@@ -38,7 +42,7 @@ public class BillboardExample extends ApplicationGL {
 
 	private List<Boolean> activeMarkers = new ArrayList<Boolean>(markerCount);
 
-	public BillboardExample(int w, int h) {
+	public RotateAroundExample(int w, int h) {
 		super(w, h);
 	}
 
@@ -48,13 +52,18 @@ public class BillboardExample extends ApplicationGL {
 			activeMarkers.add(false);
 		}
 
-		billboard = new CustomBillboard(5,5,new Vector3(0,0,0));
-		billboard.turnTo(new Vector3(5,5,0));
+		billboard = new CustomBillboard(5,5,new Vector3(2,0,0));
+		billboard.turnTo(new Vector3(0,2,0));
 
 		BufferedImage spriteImage = ImageLoader.getInstance().getImage("active_mark.png");		
 		texture = TextureLoader.getInstance().loadTexture(spriteImage);
 
 		activeMarkers.add(1, true);
+		
+		sphereCenter = new Vector3(billboard.center).add(0,1,0);
+		rotationAxis = DirectionUtil.directionOrthogonal(sphereCenter, billboard.center);
+		
+		billboard.center.setZero();
 	}
 
 	@Override
@@ -102,31 +111,38 @@ public class BillboardExample extends ApplicationGL {
 
 	@Override
 	public void preDisplay(Graphics3D g) {
-
 		GL2 gl = g.getDrawable().getGL().getGL2();
 
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 		gl.glClearColor(1f, 1f, 1f, 1);
-
-		g.setColor(Color.YELLOW);
-		g.fillRect(10, 10, w, 60);
+		gl.glEnable(GL.GL_DEPTH_TEST);
 	}
+	
+	float angle = 2;
 
 	@Override
-	public void display(Graphics3D g) {
+	public void display(Graphics3D drawable) {
 
-		GL2 gl = g.getGL().getGL2();
+		GL2 gl = drawable.getGL().getGL2();
+		drawable.setColor(Color.WHITE);
 
-		g.setColor(Color.WHITE);
-		
 		//Transform by Camera
-		g.updateCamera(camera);
+		drawable.updateCamera(camera);
 
 		//Draw Billboard
 		texture.enable(gl);
 		texture.bind(gl);
-		g.drawBillboard(billboard);
+		drawable.drawBillboard(billboard);
 		texture.disable(gl);
+		
+		DirectionUtil.rotateAround(sphereCenter, billboard.center, rotationAxis, angle);
+		
+		billboard.turnTo(sphereCenter);
+		
+		gl.glPushMatrix();
+		drawable.setColor(Color.BLUE);
+		drawable.drawSphere(1, sphereCenter.x, sphereCenter.y, sphereCenter.z);
+		gl.glPopMatrix();
 
 		gl.glFlush();
 	}

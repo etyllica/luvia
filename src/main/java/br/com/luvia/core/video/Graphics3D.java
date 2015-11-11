@@ -722,11 +722,18 @@ public class Graphics3D extends AWTGraphics {
 	
 	public void drawBillboard(Billboard billboard) {
 		GL2 gl = getGL2();
-						
-		Vector3 p00 = billboard.getP00();
-		Vector3 p10 = billboard.getP10();
-		Vector3 p11 = billboard.getP11();
-		Vector3 p01 = billboard.getP01();
+		
+		Vector3 p00 = new Vector3(); 
+		billboard.getP00(p00);
+		
+		Vector3 p10 = new Vector3();
+		billboard.getP10(p10);
+		
+		Vector3 p11 = new Vector3();
+		billboard.getP11(p11);
+		
+		Vector3 p01 = new Vector3();
+		billboard.getP01(p01);
 		
 		gl.glBegin(GL2.GL_TRIANGLE_STRIP);
 

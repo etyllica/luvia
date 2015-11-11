@@ -56,8 +56,9 @@ public class DirectionUtil {
 	 * @return directional vector
 	 */
 	public static Vector3 direction(Vector3 origin, Vector3 destination) {
-		Vector3 direction = new Vector3(origin).sub(destination);
-		return direction.nor();
+		Vector3 out = new Vector3();
+		direction(origin, destination, out);
+		return out;
 	}
 	
 	/**
@@ -71,6 +72,28 @@ public class DirectionUtil {
 	}
 	
 	/**
+	 * Calculates the direction vector between 2 points
+	 * @param origin
+	 * @param destination
+	 * @return directional vector
+	 */
+	public static Vector3 directionOrthogonal(Vector3 origin, Vector3 destination) {
+		Vector3 out = new Vector3();
+		directionOrthogonal(origin, destination, out);
+		return out;
+	}
+	
+	/**
+	 * Calculate the orthogonal vector
+	 * @param origin
+	 * @param destination
+	 * @param out
+	 */
+	public static void directionOrthogonal(Vector3 origin, Vector3 destination, Vector3 out) {
+		out.set(origin).crs(destination).nor();
+	}
+	
+	/**
 	 * Calculates the angle between 2 points
 	 * @param origin
 	 * @param destination
@@ -81,6 +104,31 @@ public class DirectionUtil {
 		float len = origin.len()*destination.len();
 		float cos = dot/len;
 		return (float)Math.acos(cos);
+	}
+	
+	/**
+	 * Rotate a point around an anchor point based on axis and angle in degrees 
+	 * @param point
+	 * @param anchor
+	 * @param axis
+	 * @param angleInDegrees
+	 */
+	public static void rotateAround(Vector3 point, Vector3 anchor, float angleInDegrees) {
+		Vector3 axis = directionOrthogonal(point, anchor);
+		rotateAround(point, anchor, axis, angleInDegrees);
+	}
+	
+	/**
+	 * Rotate a point around an anchor point based on axis and angle in degrees 
+	 * @param point
+	 * @param anchor
+	 * @param axis
+	 * @param angleInDegrees
+	 */
+	public static void rotateAround(Vector3 point, Vector3 anchor, Vector3 axis, float angleInDegrees) {
+		point.sub(anchor);
+		point.rotate(axis, angleInDegrees);
+		point.add(anchor);
 	}
 
 }

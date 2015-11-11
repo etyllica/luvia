@@ -12,11 +12,11 @@ import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
 import br.com.luvia.linear.Mesh;
 
-public class Tutorial3 extends ApplicationGL {
+public class SimpleMeshExample extends ApplicationGL {
 	
 	private Mesh bunny;
 	
-	public Tutorial3(int width, int height) {
+	public SimpleMeshExample(int width, int height) {
 		super(width, height);
 	}
 		

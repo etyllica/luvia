@@ -1,19 +1,15 @@
-package examples.tutorial2;
+package examples.tutorial1;
 
 import java.awt.Color;
 
-import br.com.etyllica.core.event.Action;
-import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.graphics.Graphic;
-import br.com.etyllica.gui.Button;
-import br.com.etyllica.gui.label.TextLabel;
 import br.com.etyllica.layer.ImageLayer;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
 
-public class Tutorial2 extends ApplicationGL {
+public class OrthographicDrawingExample extends ApplicationGL {
 
-	public Tutorial2(int width, int height) {
+	public OrthographicDrawingExample(int width, int height) {
 		super(width, height);
 	}
 	
@@ -26,8 +22,7 @@ public class Tutorial2 extends ApplicationGL {
 
 	@Override
 	public void load() {
-		
-		layer = new ImageLayer("mark.png");
+		layer = new ImageLayer("active_mark.png");
 		
 		loading = 100;
 	}

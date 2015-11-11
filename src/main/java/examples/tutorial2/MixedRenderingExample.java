@@ -1,4 +1,4 @@
-package examples.tutorial1;
+package examples.tutorial2;
 
 import java.awt.Color;
 
@@ -10,9 +10,9 @@ import br.com.etyllica.gui.label.TextLabel;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
 
-public class Tutorial1 extends ApplicationGL {
+public class MixedRenderingExample extends ApplicationGL {
 
-	public Tutorial1(int width, int height) {
+	public MixedRenderingExample(int width, int height) {
 		super(width, height);
 	}
 	
@@ -49,11 +49,11 @@ public class Tutorial1 extends ApplicationGL {
 
 	}
 		
-	public void changeColor(){
+	public void changeColor() {
 		this.color = Color.BLACK;
 	}
 	
-	public void clearColor(){
+	public void clearColor() {
 		this.color = Color.WHITE;
 	}
 
