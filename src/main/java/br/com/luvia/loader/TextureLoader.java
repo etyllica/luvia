@@ -13,6 +13,8 @@ import br.com.etyllica.loader.LoaderImpl;
 
 import com.jogamp.opengl.util.awt.ImageUtil;
 import com.jogamp.opengl.util.texture.Texture;
+import com.jogamp.opengl.util.texture.TextureData;
+import com.jogamp.opengl.util.texture.TextureIO;
 import com.jogamp.opengl.util.texture.awt.AWTTextureIO;
 
 public class TextureLoader extends LoaderImpl {
@@ -36,8 +38,18 @@ public class TextureLoader extends LoaderImpl {
 
 		return instance;
 	}
-
-	public Texture loadTexture(String fullPath, String textureName, boolean flipVertical) {
+	
+	private void setupContext() {
+		if(context == null) {
+			context = GLContext.getCurrent();
+		}
+		
+		if(context!=null) {
+			GLContext.getCurrent().makeCurrent();	
+		}
+	}
+	
+	public BufferedImage loadBuffer(String fullPath, String textureName, boolean flipVertical) {
 		File file = new File(fullPath+textureName);
 
 		try {
@@ -46,7 +58,7 @@ public class TextureLoader extends LoaderImpl {
 			if(image != null && flipVertical) {
 				ImageUtil.flipImageVertically(image);
 			}
-			return loadTexture(image);
+			return image;
 
 		} catch (GLException e) {
 			System.err.println("Error creating texture from: "+file);
@@ -57,6 +69,11 @@ public class TextureLoader extends LoaderImpl {
 		}
 
 		return null;
+	}
+
+	public Texture loadTexture(String fullPath, String textureName, boolean flipVertical) {
+		BufferedImage buffer = loadBuffer(fullPath, textureName, flipVertical);
+		return loadTexture(buffer);
 	}
 
 	public Texture loadTexture(String fullPath, String textureName) {
@@ -76,15 +93,33 @@ public class TextureLoader extends LoaderImpl {
 		
 		return AWTTextureIO.newTexture(GLProfile.getGL2GL3(), buffer, false);
 	}
+	
+	//TextureData methods
+	public TextureData loadTextureData(String fullPath, String textureName, boolean flipVertical) {
+		BufferedImage buffer = loadBuffer(fullPath, textureName, flipVertical);
+		return loadTextureData(buffer);
+	}
 
-	private void setupContext() {
-		if(context == null) {
-			context = GLContext.getCurrent();
-		}
+	public TextureData loadTextureData(String fullPath, String textureName) {
+		return loadTextureData(fullPath, textureName, true);
+	}
+
+	public TextureData loadTextureData(String textureName) {
+		return loadTextureData(getPath()+folder, textureName);
+	}
+	
+	public TextureData loadTextureData(String textureName, boolean flipVertical) {
+		return loadTextureData(getPath()+folder, textureName, flipVertical);
+	}
+	
+	public TextureData loadTextureData(BufferedImage buffer) {
+		setupContext();
 		
-		if(context!=null) {
-			GLContext.getCurrent().makeCurrent();	
-		}
+		return AWTTextureIO.newTextureData(GLProfile.getGL2GL3(), buffer, false);
+	}
+
+	public Texture loadTexture(TextureData textureData) {
+		return TextureIO.newTexture(textureData);
 	}
 
 }
