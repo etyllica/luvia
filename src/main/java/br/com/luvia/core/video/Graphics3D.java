@@ -21,7 +21,10 @@ import br.com.abby.linear.ColoredPoint3D;
 import br.com.abby.linear.Frustrum;
 import br.com.etyllica.awt.AWTGraphics;
 import br.com.etyllica.core.linear.Point3D;
+import br.com.luvia.linear.Billboard;
 
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
 import com.jogamp.opengl.util.texture.Texture;
 
 public class Graphics3D extends AWTGraphics {
@@ -364,6 +367,35 @@ public class Graphics3D extends AWTGraphics {
 		
 		gl.glPopMatrix();
 	}
+	
+	public void drawBoundingBox(BoundingBox box) {
+		GL2 gl = getGL2();		
+		
+		gl.glBegin(GL2.GL_LINES);
+		drawBoundingLines(gl, box.min, box.max);
+		drawBoundingLines(gl, box.max, box.min);
+		gl.glEnd();
+	}
+	
+	private void drawBoundingLines(GL2 gl, Vector3 minPoint, Vector3 maxPoint) {
+		gl.glVertex3d(minPoint.x, minPoint.y, minPoint.z);
+		gl.glVertex3d(maxPoint.x, minPoint.y, minPoint.z);
+		
+		gl.glVertex3d(minPoint.x, minPoint.y, minPoint.z);
+		gl.glVertex3d(minPoint.x, maxPoint.y, minPoint.z);
+		
+		gl.glVertex3d(minPoint.x, minPoint.y, minPoint.z);
+		gl.glVertex3d(minPoint.x, minPoint.y, maxPoint.z);
+		
+		gl.glVertex3d(maxPoint.x, minPoint.y, maxPoint.z);
+		gl.glVertex3d(minPoint.x, minPoint.y, maxPoint.z);
+		
+		gl.glVertex3d(maxPoint.x, minPoint.y, maxPoint.z);
+		gl.glVertex3d(maxPoint.x, minPoint.y, minPoint.z);
+		
+		gl.glVertex3d(maxPoint.x, minPoint.y, minPoint.z);
+		gl.glVertex3d(maxPoint.x, maxPoint.y, minPoint.z);
+	}
 
 	public void drawBoundingBox(BoundingBox3D box) {
 		GL2 gl = getGL2();
@@ -686,6 +718,38 @@ public class Graphics3D extends AWTGraphics {
 		gl.glEnd();
 		
 		gl.glPopMatrix();
+	}
+	
+	public void drawBillboard(Billboard billboard) {
+		GL2 gl = getGL2();
+		
+		Vector3 p00 = new Vector3(); 
+		billboard.getP00(p00);
+		
+		Vector3 p10 = new Vector3();
+		billboard.getP10(p10);
+		
+		Vector3 p11 = new Vector3();
+		billboard.getP11(p11);
+		
+		Vector3 p01 = new Vector3();
+		billboard.getP01(p01);
+		
+		gl.glBegin(GL2.GL_TRIANGLE_STRIP);
+
+		gl.glTexCoord2d(0, 0);
+		gl.glVertex3f(p00.x, p00.y, p00.z);
+
+		gl.glTexCoord2d(1, 0);
+		gl.glVertex3f(p10.x, p10.y, p10.z);
+
+		gl.glTexCoord2d(0, 1);
+		gl.glVertex3f(p01.x, p01.y, p01.z);
+		
+		gl.glTexCoord2d(1, 1);
+		gl.glVertex3f(p11.x, p11.y, p11.z);
+
+		gl.glEnd();
 	}
 	
 	private void drawPlane(GL2 gl) {

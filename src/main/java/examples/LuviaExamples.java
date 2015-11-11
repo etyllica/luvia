@@ -4,15 +4,20 @@ import br.com.luvia.Luvia;
 import br.com.luvia.core.context.ApplicationGL;
 import examples.box.OctreeClipping;
 import examples.box.OctreeRender;
+import examples.collision.CollisionApplication;
 import examples.custom.GridPerspective;
 import examples.custom.MarkerApplication;
 import examples.custom.Ortographic;
 import examples.custom.Perspective;
 import examples.custom.SkyboxGridPerspective;
 import examples.frustrum.FrustrumRender;
+import examples.mesh.MeshExample;
 import examples.orthographic.GridMenuApplication;
-import examples.tutorial1.Tutorial1;
-import examples.tutorial2.Tutorial2;
+import examples.tutorial1.OrthographicDrawingExample;
+import examples.tutorial2.MixedRenderingExample;
+import examples.tutorial3.SimpleMeshExample;
+import examples.tutorial4.BillboardExample;
+import examples.tutorial5.RotateAroundExample;
 
 public class LuviaExamples extends Luvia {
 
@@ -31,10 +36,13 @@ public class LuviaExamples extends Luvia {
 	@Override
 	public ApplicationGL startApplication() {
 
-		//initialSetup("");
+		initialSetup("../../../");
 		
-		//return new Tutorial1(w, h);
-		//return new Tutorial2(w, h);
+		//return new MixedRenderingExample(w, h);
+		//return new OrthographicDrawingExample(w, h);
+		//return new SimpleMeshExample(w, h);
+		//return new BillboardExample(w, h);
+		//return new RotateAroundExample(w, h);
 		//return new Perspective(w, h);
 		//return new Ortographic(w, h);
 		//return new MarkerApplication(w, h);
@@ -46,7 +54,9 @@ public class LuviaExamples extends Luvia {
 		//return new OctreeClipping(w, h);
 		//return new FrustrumRender(w, h);
 		
-		return new GridMenuApplication(w, h);
+		//return new CollisionApplication(w, h);
+		return new MeshExample(w, h);		
+		
 	}
 
 }

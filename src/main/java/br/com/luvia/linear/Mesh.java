@@ -137,7 +137,6 @@ public class Mesh extends AimPoint implements GL2Drawable {
 	}
 
 	public void texturedRender(GL2 gl, Set<Face> set) {
-		
 		gl.glPushMatrix();
 
 		setupTextured(gl);
@@ -157,19 +156,13 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		}
 
 		gl.glPopMatrix();
-		
 	}
 	
 	public void texturedRender(GL2 gl) {
-		gl.glPushMatrix();
-
-		setupTextured(gl);
 		setupModel(gl);
 		setupColor(gl);
 
 		simpleDraw(gl);
-
-		gl.glPopMatrix();
 	}
 
 	public void simpleDraw(GL2 gl) {
@@ -230,6 +223,7 @@ public class Mesh extends AimPoint implements GL2Drawable {
 			gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			// Use linear filter for texture if image is smaller than the original texture
 			gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			gl.glTexEnvi(GL2.GL_TEXTURE_ENV, GL2.GL_TEXTURE_ENV_MODE, GL2.GL_DECAL);
 
 			texture.enable(gl);
 			texture.bind(gl);
@@ -325,9 +319,12 @@ public class Mesh extends AimPoint implements GL2Drawable {
 
 	@Override
 	public void draw(GL2 gl) {
+		gl.glPushMatrix();
 		gl.glEnable(GL.GL_DEPTH_TEST);
+		setupTextured(gl);
 		texturedRender(gl);
 		gl.glDisable(GL.GL_DEPTH_TEST);
+		gl.glPopMatrix();
 	}
 	
 	public void draw(GL2 gl, Set<Face> faces) {
