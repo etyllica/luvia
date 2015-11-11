@@ -1,11 +1,8 @@
 package br.com.luvia.core.context;
 
-import java.awt.Color;
-
-import javax.media.opengl.GL2;
-
 import br.com.abby.linear.ColoredPoint3D;
 import br.com.etyllica.core.context.Application;
+import br.com.etyllica.core.graphics.Graphic;
 import br.com.luvia.core.G3DEventListener;
 import br.com.luvia.core.video.Graphics3D;
 
@@ -59,13 +56,11 @@ public abstract class ApplicationGL extends Application implements G3DEventListe
 		
 		return new ColoredPoint3D(x, y, z);
 	}
-			
-	public void setColor(GL2 gl, Color color) {
-		float red = ((float)color.getRed()/255);
-		float green = ((float)color.getGreen()/255);
-		float blue = ((float)color.getBlue()/255);
-				
-		gl.glColor3f(red, green, blue);
-	}
 	
+	@Override
+	public void load() { }
+
+	@Override
+	public void draw(Graphic g) { }
+		
 }
