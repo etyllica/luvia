@@ -9,10 +9,9 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
-import br.com.abby.linear.Camera3D;
+import br.com.abby.linear.Camera;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
-import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.loader.image.ImageLoader;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
@@ -25,7 +24,7 @@ import com.jogamp.opengl.util.texture.Texture;
 
 public class RotateAroundExample extends ApplicationGL {
 
-	private Camera3D camera;
+	private Camera camera;
 
 	private CustomBillboard billboard;
 	private Texture texture;
@@ -68,7 +67,7 @@ public class RotateAroundExample extends ApplicationGL {
 
 	@Override
 	public void load() {
-		camera = new Camera3D(0, 15, 0.001);
+		camera = new Camera(0, 15, 0.001);
 		loading = 100;
 	}
 
@@ -145,11 +144,6 @@ public class RotateAroundExample extends ApplicationGL {
 		gl.glPopMatrix();
 
 		gl.glFlush();
-	}
-
-	@Override
-	public void draw(Graphic g) {
-
 	}
 
 }

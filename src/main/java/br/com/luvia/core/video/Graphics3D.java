@@ -16,7 +16,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import br.com.abby.linear.AimPoint;
 import br.com.abby.linear.BoundingBox3D;
-import br.com.abby.linear.Camera3D;
+import br.com.abby.linear.Camera;
 import br.com.abby.linear.ColoredPoint3D;
 import br.com.abby.linear.Frustrum;
 import br.com.etyllica.awt.AWTGraphics;
@@ -200,7 +200,7 @@ public class Graphics3D extends AWTGraphics {
 		return point;
 	}
 
-	public void updateCamera(Camera3D camera) {
+	public void updateCamera(Camera camera) {
 		drawable.getGL().getGL2().glMatrixMode(GL2.GL_MODELVIEW);
 		drawable.getGL().getGL2().glLoadIdentity();
 
@@ -553,7 +553,7 @@ public class Graphics3D extends AWTGraphics {
 	/*
 	 * Draw camera model	
 	 */
-	public void drawCamera(Camera3D camera) {
+	public void drawCamera(Camera camera) {
 
 		GL2 gl = getGL2();
 
@@ -759,4 +759,13 @@ public class Graphics3D extends AWTGraphics {
 	private void vertex(GL2 gl, Vector3f vertex) {
 		gl.glVertex3f(vertex.x, vertex.y, vertex.z);
 	}
+
+	public boolean supportsExtension(String string) {
+		return false;
+	}
+
+	public float getDeltaTime() {
+		return 0;
+	}
+
 }

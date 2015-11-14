@@ -1,5 +1,7 @@
 package br.com.luvia.core.context;
 
+import com.badlogic.gdx.Application.ApplicationType;
+
 import br.com.abby.linear.ColoredPoint3D;
 import br.com.etyllica.core.context.Application;
 import br.com.etyllica.core.graphics.Graphic;
@@ -62,5 +64,34 @@ public abstract class ApplicationGL extends Application implements G3DEventListe
 
 	@Override
 	public void draw(Graphic g) { }
-		
+
+	//LibGDX methods
+	public void debug(String tag, String message) {
+		System.out.println(tag+" "+message);
+	}
+	
+	public void debug(String tag, String message, Exception exception) {
+		System.out.println(tag+" "+message+" "+exception);
+	}
+	
+	public void log(String tag, String message) {
+		System.out.println(tag+" "+message);
+	}
+	
+	public void log(String tag, String message, Exception exception) {
+		System.out.println(tag+" "+message+" "+exception);
+	}
+	
+	public void error(String tag, String message) {
+		System.err.println(tag+" "+message);
+	}
+	
+	public void error(String tag, String message, Throwable exception) {
+		System.err.println(tag+" "+message+" "+exception);
+	}
+
+	public ApplicationType getType() {
+		return ApplicationType.Desktop;
+	}
+
 }

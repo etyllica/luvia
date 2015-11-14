@@ -14,7 +14,7 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
-import br.com.abby.linear.Camera3D;
+import br.com.abby.linear.Camera;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphic;
@@ -30,7 +30,7 @@ public class GridMenuApplication extends ApplicationGL {
 	private Texture marker;
 	private Texture active;
 	
-	private Camera3D camera;
+	private Camera camera;
 	
 	private int markerCount = 6;
 	private double tileSize = 5;
@@ -62,7 +62,7 @@ public class GridMenuApplication extends ApplicationGL {
 	
 	@Override
 	public void load() {
-		camera = new Camera3D(0, 10, 0.001);
+		camera = new Camera(0, 10, 0.001);
 		
 		loading = 100;
 	}

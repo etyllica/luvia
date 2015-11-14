@@ -14,7 +14,7 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
-import br.com.abby.linear.Camera3D;
+import br.com.abby.linear.Camera;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.MouseButton;
 import br.com.etyllica.core.event.PointerEvent;
@@ -32,7 +32,7 @@ import com.jogamp.opengl.util.texture.Texture;
 
 public class CollisionApplication extends ApplicationGL {
 
-	private Camera3D camera;
+	private Camera camera;
 	
 	private BoundingBox box;
 	private Texture marker;
@@ -79,7 +79,7 @@ public class CollisionApplication extends ApplicationGL {
 	
 	@Override
 	public void load() {
-		camera = new Camera3D(0, 15, 0.001);
+		camera = new Camera(0, 15, 0.001);
 						
 		loading = 100;
 	}

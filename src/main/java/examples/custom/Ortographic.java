@@ -11,7 +11,7 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
-import br.com.abby.linear.Camera3D;
+import br.com.abby.linear.Camera;
 import br.com.etyllica.core.event.MouseButton;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphic;
@@ -25,7 +25,7 @@ public class Ortographic extends ApplicationGL {
 
 	private Texture floor;
 
-	private Camera3D camera;
+	private Camera camera;
 	
 	protected float mx = 0;
 	protected float my = 0;
@@ -42,7 +42,7 @@ public class Ortographic extends ApplicationGL {
 	@Override
 	public void load() {
 		
-		camera = new Camera3D(0,15,1);
+		camera = new Camera(0,15,1);
 		
 		loading = 100;
 	}

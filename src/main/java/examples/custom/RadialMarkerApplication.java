@@ -14,7 +14,7 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
-import br.com.abby.linear.Camera3D;
+import br.com.abby.linear.Camera;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.MouseButton;
 import br.com.etyllica.core.event.PointerEvent;
@@ -30,7 +30,7 @@ public class RadialMarkerApplication extends ApplicationGL {
 
 	private Texture marker;
 	
-	private Camera3D camera;
+	private Camera camera;
 	
 	protected float mx = 0;
 	protected float my = 0;
@@ -83,7 +83,7 @@ public class RadialMarkerApplication extends ApplicationGL {
 	@Override
 	public void load() {
 		
-		camera = new Camera3D(0,0,10);
+		camera = new Camera(0,0,10);
 		
 		originMarker = new Point3D(0, 0);
 		
