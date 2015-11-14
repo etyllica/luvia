@@ -242,6 +242,10 @@ public class Graphics3D extends AWTGraphics {
 	public GL2 getGL2() {
 		return getGL().getGL2();
 	}
+	
+	public GLBase getGL3() {
+		return getGL().getGL3();
+	}
 
 	public GLU getGLU() {
 		return glu;

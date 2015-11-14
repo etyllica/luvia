@@ -18,6 +18,7 @@ import examples.tutorial2.MixedRenderingExample;
 import examples.tutorial3.SimpleMeshExample;
 import examples.tutorial4.BillboardExample;
 import examples.tutorial5.RotateAroundExample;
+import examples.tutorial6.LightExample;
 
 public class LuviaExamples extends Luvia {
 
@@ -55,7 +56,8 @@ public class LuviaExamples extends Luvia {
 		//return new FrustrumRender(w, h);
 		
 		//return new CollisionApplication(w, h);
-		return new MeshExample(w, h);		
+		//return new MeshExample(w, h);		
+		return new LightExample(w, h);
 		
 	}
 
