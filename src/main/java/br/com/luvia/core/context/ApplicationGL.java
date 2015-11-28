@@ -10,8 +10,6 @@ public abstract class ApplicationGL extends Application implements G3DEventListe
 		
 	protected double zoom = 1;
 	
-	protected ApplicationGL returnApplication3D = this;
-	
 	public ApplicationGL(int w, int h) {
 		super(w,h);
 		init();
@@ -36,10 +34,6 @@ public abstract class ApplicationGL extends Application implements G3DEventListe
 	@Override
 	public void dispose(Graphics3D g) {
 		// TODO Auto-generated method stub
-	}
-	
-	public ApplicationGL getReturnApplication3D() {
-		return returnApplication3D;
 	}
 
 	protected ColoredPoint3D transformPosition(Graphics3D g, ColoredPoint3D point) {
