@@ -75,7 +75,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	private static final Color DEFAULT_COLOR = Color.BLACK;
 
 	public GLCore(int w, int h) {
-		super();
+		super(w, h);
 
 		activeWindowGL = new WindowGL(0, 0, w, h);
 
