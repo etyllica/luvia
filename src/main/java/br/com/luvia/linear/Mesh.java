@@ -99,7 +99,7 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		// Turn on wireframe mode
 		gl.glPolygonMode(GL2.GL_FRONT, GL2.GL_LINE);
 
-		setupModel(gl);
+		applyTransform(gl);
 		setupColor(gl);
 
 		drawTexture = false;
@@ -139,7 +139,7 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		gl.glPushMatrix();
 
 		setupTextured(gl);
-		setupModel(gl);
+		applyTransform(gl);
 		setupColor(gl);
 		
 		Texture texture = null;
@@ -158,7 +158,7 @@ public class Mesh extends AimPoint implements GL2Drawable {
 	}
 	
 	public void texturedRender(GL2 gl) {
-		setupModel(gl);
+		applyTransform(gl);
 		setupColor(gl);
 
 		simpleDraw(gl);
@@ -269,7 +269,7 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		return texture;
 	}
 
-	private void setupModel(GL2 gl) {
+	public void applyTransform(GL2 gl) {
 		gl.glTranslated(x, y, z);
 		gl.glRotated(angleX, 1, 0, 0);
 		gl.glRotated(angleY, 0, 1, 0);
