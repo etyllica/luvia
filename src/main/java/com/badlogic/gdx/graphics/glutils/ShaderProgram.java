@@ -22,6 +22,8 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
+import javax.media.opengl.GL2;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -193,7 +195,7 @@ public class ShaderProgram implements Disposable {
 	}
 
 	private int loadShader (int type, String source) {
-		GL20 gl = Gdx.gl20;
+		GL2 gl = Gdx.gl20;
 		IntBuffer intbuf = BufferUtils.newIntBuffer(1);
 
 		int shader = gl.glCreateShader(type);

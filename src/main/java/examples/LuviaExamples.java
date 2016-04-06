@@ -55,9 +55,9 @@ public class LuviaExamples extends Luvia {
 		//return new OctreeClipping(w, h);
 		//return new FrustrumRender(w, h);
 		
-		//return new CollisionApplication(w, h);
+		return new CollisionApplication(w, h);
 		//return new MeshExample(w, h);		
-		return new LightExample(w, h);
+		//return new LightExample(w, h);
 		
 	}
 

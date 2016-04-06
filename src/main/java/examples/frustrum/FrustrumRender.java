@@ -6,8 +6,6 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
-import org.lwjgl.util.vector.Vector3f;
-
 import br.com.abby.core.loader.MeshLoader;
 import br.com.abby.core.vbo.Face;
 import br.com.abby.core.vbo.VBO;
@@ -23,6 +21,8 @@ import br.com.etyllica.storage.octree.VolumeOctree;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
 import br.com.luvia.linear.Mesh;
+
+import com.badlogic.gdx.math.Vector3;
 
 public class FrustrumRender extends ApplicationGL {
 	
@@ -151,7 +151,7 @@ public class FrustrumRender extends ApplicationGL {
 		glu.gluPerspective(angle, aspect, nearDistance, farDistance); // fovy, aspect, zNear, zFar
 		
 		frustrum.setCamInternals(angle, aspect, nearDistance, 1);
-		frustrum.setCamDef(new Vector3f(0, 1, 0.6f), new Vector3f(0, 0, 0), new Vector3f(0, 1, 0));
+		frustrum.setCamDef(new Vector3(0, 1, 0.6f), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
 
 		// Enable the model-view transform
 		gl.glMatrixMode(GL2.GL_MODELVIEW);

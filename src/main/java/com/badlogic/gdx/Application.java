@@ -16,6 +16,8 @@
 
 package com.badlogic.gdx;
 
+import com.badlogic.gdx.Application.ApplicationType;
+
 /** <p>
  * An <code>Application</code> is the main entry point of your project. It sets up a window and rendering surface and manages the
  * different aspects of your application, namely {@link Graphics}, {@link Audio}, {@link Input} and {@link Files}. Think of an
@@ -104,5 +106,13 @@ public interface Application {
 	public static final int LOG_DEBUG = 3;
 	public static final int LOG_INFO = 2;
 	public static final int LOG_ERROR = 1;
-
+	
+	void debug(String tag, String message);
+	void debug(String tag, String message, Exception exception);
+	void log(String tag, String message);
+	void log(String tag, String message, Exception exception);
+	void error(String tag, String message);
+	void error(String tag, String message, Throwable exception);
+	ApplicationType getType();
+	
 }

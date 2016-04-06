@@ -24,7 +24,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.VertexAttributes;
-import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.utils.BufferUtils;
 
 /** <p>
@@ -151,12 +150,11 @@ public class VertexBufferObject implements VertexData {
 
 	@Override
 	public void bind (ShaderProgram shader, int[] locations) {
-		final GL20 gl = Gdx.gl20;
-
-		gl.glBindBuffer(GL20.GL_ARRAY_BUFFER, bufferHandle);
+		
+		Gdx.gl20.glBindBuffer(GL20.GL_ARRAY_BUFFER, bufferHandle);
 		if (isDirty) {
 			byteBuffer.limit(buffer.limit() * 4);
-			gl.glBufferData(GL20.GL_ARRAY_BUFFER, byteBuffer.limit(), byteBuffer, usage);
+			Gdx.gl20.glBufferData(GL20.GL_ARRAY_BUFFER, byteBuffer.limit(), byteBuffer, usage);
 			isDirty = false;
 		}
 
@@ -196,7 +194,6 @@ public class VertexBufferObject implements VertexData {
 
 	@Override
 	public void unbind (final ShaderProgram shader, final int[] locations) {
-		final GL20 gl = Gdx.gl20;
 		final int numAttributes = attributes.size();
 		if (locations == null) {
 			for (int i = 0; i < numAttributes; i++) {
@@ -208,7 +205,7 @@ public class VertexBufferObject implements VertexData {
 				if (location >= 0) shader.disableVertexAttribute(location);
 			}
 		}
-		gl.glBindBuffer(GL20.GL_ARRAY_BUFFER, 0);
+		Gdx.gl20.glBindBuffer(GL20.GL_ARRAY_BUFFER, 0);
 		isBound = false;
 	}
 
@@ -224,9 +221,9 @@ public class VertexBufferObject implements VertexData {
 		tmpHandle.clear();
 		tmpHandle.put(bufferHandle);
 		tmpHandle.flip();
-		GL20 gl = Gdx.gl20;
-		gl.glBindBuffer(GL20.GL_ARRAY_BUFFER, 0);
-		gl.glDeleteBuffers(1, tmpHandle);
+
+		Gdx.gl20.glBindBuffer(GL20.GL_ARRAY_BUFFER, 0);
+		Gdx.gl20.glDeleteBuffers(1, tmpHandle);
 		bufferHandle = 0;
 		BufferUtils.disposeUnsafeByteBuffer(byteBuffer);
 	}

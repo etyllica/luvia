@@ -10,7 +10,6 @@ import br.com.etyllica.core.event.PointerEvent;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
@@ -41,8 +40,7 @@ public class LightExample extends ApplicationGL {
 		Gdx.gl = drawable.getGL2();
 		Gdx.gl20 = drawable.getGL2();
 		Gdx.gl30 = drawable.getGL3();
-		Gdx.app = new Application() {
-		};
+		Gdx.app = this;
 		
 		cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         cam.position.set(10f, 10f, 10f);
