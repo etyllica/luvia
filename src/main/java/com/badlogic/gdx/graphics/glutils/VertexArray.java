@@ -19,6 +19,8 @@ package com.badlogic.gdx.graphics.glutils;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 
+import javax.media.opengl.GL2;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.VertexAttribute;
@@ -103,7 +105,7 @@ public class VertexArray implements VertexData {
 
 	@Override
 	public void bind (final ShaderProgram shader, final int[] locations) {
-		final GL20 gl = Gdx.gl20;
+		final GL2 gl = Gdx.gl20;
 		final int numAttributes = attributes.size();
 		byteBuffer.limit(buffer.limit() * 4);
 		if (locations == null) {
@@ -154,7 +156,7 @@ public class VertexArray implements VertexData {
 
 	@Override
 	public void unbind (ShaderProgram shader, int[] locations) {
-		final GL20 gl = Gdx.gl20;
+		final GL2 gl = Gdx.gl20;
 		final int numAttributes = attributes.size();
 		if (locations == null) {
 			for (int i = 0; i < numAttributes; i++) {

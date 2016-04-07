@@ -20,41 +20,24 @@ import java.util.Stack;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.assets.loaders.AssetLoader;
-import com.badlogic.gdx.assets.loaders.BitmapFontLoader;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
-import com.badlogic.gdx.assets.loaders.I18NBundleLoader;
-import com.badlogic.gdx.assets.loaders.MusicLoader;
 import com.badlogic.gdx.assets.loaders.ParticleEffectLoader;
 import com.badlogic.gdx.assets.loaders.PixmapLoader;
-import com.badlogic.gdx.assets.loaders.SkinLoader;
-import com.badlogic.gdx.assets.loaders.SoundLoader;
 import com.badlogic.gdx.assets.loaders.TextureAtlasLoader;
 import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
-import com.badlogic.gdx.graphics.g2d.PolygonRegion;
-import com.badlogic.gdx.graphics.g2d.PolygonRegionLoader;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.loader.G3dModelLoader;
-import com.badlogic.gdx.graphics.g3d.loader.ObjLoader;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.badlogic.gdx.utils.I18NBundle;
-import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.ObjectIntMap;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectSet;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.badlogic.gdx.utils.UBJsonReader;
 import com.badlogic.gdx.utils.async.AsyncExecutor;
 import com.badlogic.gdx.utils.async.ThreadUtils;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
@@ -85,19 +68,19 @@ public class AssetManager implements Disposable {
 
 	/** Creates a new AssetManager with all default loaders. */
 	public AssetManager (FileHandleResolver resolver) {
-		setLoader(BitmapFont.class, new BitmapFontLoader(resolver));
-		setLoader(Music.class, new MusicLoader(resolver));
+		//setLoader(BitmapFont.class, new BitmapFontLoader(resolver));
+		//setLoader(Music.class, new MusicLoader(resolver));
 		setLoader(Pixmap.class, new PixmapLoader(resolver));
-		setLoader(Sound.class, new SoundLoader(resolver));
+		//setLoader(Sound.class, new SoundLoader(resolver));
 		setLoader(TextureAtlas.class, new TextureAtlasLoader(resolver));
 		setLoader(Texture.class, new TextureLoader(resolver));
-		setLoader(Skin.class, new SkinLoader(resolver));
+		//setLoader(Skin.class, new SkinLoader(resolver));
 		setLoader(ParticleEffect.class, new ParticleEffectLoader(resolver));
-		setLoader(PolygonRegion.class, new PolygonRegionLoader(resolver));
-		setLoader(I18NBundle.class, new I18NBundleLoader(resolver));
-		setLoader(Model.class, ".g3dj", new G3dModelLoader(new JsonReader(), resolver));
-		setLoader(Model.class, ".g3db", new G3dModelLoader(new UBJsonReader(), resolver));
-		setLoader(Model.class, ".obj", new ObjLoader(resolver));
+		//setLoader(PolygonRegion.class, new PolygonRegionLoader(resolver));
+		//setLoader(I18NBundle.class, new I18NBundleLoader(resolver));
+		//setLoader(Model.class, ".g3dj", new G3dModelLoader(new JsonReader(), resolver));
+		//setLoader(Model.class, ".g3db", new G3dModelLoader(new UBJsonReader(), resolver));
+		//setLoader(Model.class, ".obj", new ObjLoader(resolver));
 		executor = new AsyncExecutor(1);
 	}
 

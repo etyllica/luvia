@@ -20,6 +20,8 @@ import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
+import javax.media.opengl.GL2;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.VertexAttribute;
@@ -160,7 +162,7 @@ public class VertexBufferObjectSubData implements VertexData {
 
 	@Override
 	public void bind (final ShaderProgram shader, final int[] locations) {
-		final GL20 gl = Gdx.gl20;
+		final GL2 gl = Gdx.gl20;
 
 		gl.glBindBuffer(GL20.GL_ARRAY_BUFFER, bufferHandle);
 		if (isDirty) {
@@ -204,7 +206,7 @@ public class VertexBufferObjectSubData implements VertexData {
 
 	@Override
 	public void unbind (final ShaderProgram shader, final int[] locations) {
-		final GL20 gl = Gdx.gl20;
+		final GL2 gl = Gdx.gl20;
 		final int numAttributes = attributes.size();
 		if (locations == null) {
 			for (int i = 0; i < numAttributes; i++) {
@@ -232,7 +234,7 @@ public class VertexBufferObjectSubData implements VertexData {
 		tmpHandle.clear();
 		tmpHandle.put(bufferHandle);
 		tmpHandle.flip();
-		GL20 gl = Gdx.gl20;
+		GL2 gl = Gdx.gl20;
 		gl.glBindBuffer(GL20.GL_ARRAY_BUFFER, 0);
 		gl.glDeleteBuffers(1, tmpHandle);
 		bufferHandle = 0;
