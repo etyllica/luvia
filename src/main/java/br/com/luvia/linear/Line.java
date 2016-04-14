@@ -1,6 +1,9 @@
 package br.com.luvia.linear;
 
+import com.badlogic.gdx.math.Vector3;
+
 import br.com.etyllica.core.linear.Point3D;
+import br.com.luvia.util.VectorUtil;
 
 public class Line {
 
@@ -8,7 +11,7 @@ public class Line {
   
   protected Vector3 t;
   
-  public Line(double x, double xt, double y, double yt, double z, double zt) {
+  public Line(float x, float xt, float y, float yt, float z, float zt) {
     super();
     origin = new Vector3(x,y,z);
     t = new Vector3(xt,yt,zt);
@@ -17,8 +20,8 @@ public class Line {
   public Line(Point3D p, Point3D q) {
     super();
     
-    this.origin = new Vector3(p);    
-    this.t = new Vector3(q).sub(origin);    
+    this.origin = VectorUtil.pointToVector(p);    
+    this.t = VectorUtil.pointToVector(q).sub(origin);
   }
 
   public Vector3 getOrigin() {

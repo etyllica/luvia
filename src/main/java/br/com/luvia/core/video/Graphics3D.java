@@ -3,6 +3,8 @@ package br.com.luvia.core.video;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
@@ -12,7 +14,7 @@ import javax.media.opengl.glu.GLU;
 import javax.media.opengl.glu.GLUquadric;
 
 import org.jogamp.glg2d.GLGraphics2D;
-import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.BufferUtils;
 
 import br.com.abby.linear.AimPoint;
 import br.com.abby.linear.BoundingBox3D;
@@ -25,6 +27,7 @@ import br.com.luvia.linear.Billboard;
 
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
+import com.badlogic.gdx.math.collision.Ray;
 import com.jogamp.opengl.util.texture.Texture;
 
 public class Graphics3D extends AWTGraphics {
@@ -148,9 +151,11 @@ public class Graphics3D extends AWTGraphics {
 	}
 
 	public ColoredPoint3D get3DPointerFromMouse(float mx, float my) {
-
 		return get3DPointerFromMouse(mx, my, 0);
-
+	}
+	
+	public void get3DPointFrom2D(float mx, float my, double[] out) {
+		get3DPointFrom2D(mx, my, 0, out);
 	}
 
 	public double[] get2DPositionFromPoint(double px, double py, double pz) {
@@ -167,37 +172,75 @@ public class Graphics3D extends AWTGraphics {
 
 	}
 
-	public ColoredPoint3D get3DPointerFromMouse(float mx, float my, float zPlane) {
+	public void get3DPointFrom2D(float mx, float my, float zPlane, double[] out) {
+		GL2 gl = getGL2();
+		
+		FloatBuffer projection = BufferUtils.createFloatBuffer(16);
+		FloatBuffer modelview = BufferUtils.createFloatBuffer(16);
+		IntBuffer viewport = BufferUtils.createIntBuffer(16);
+		
+		gl.glGetFloatv(GL2.GL_PROJECTION_MATRIX, projection);
+		gl.glGetFloatv(GL2.GL_MODELVIEW_MATRIX, modelview);
+		gl.glGetIntegerv(GL2.GL_VIEWPORT, viewport);
 
-		final int X = 0;
-		final int Y = 1;
-		final int Z = 2;
+		FloatBuffer positionNear = BufferUtils.createFloatBuffer(3);
+		FloatBuffer positionFar = BufferUtils.createFloatBuffer(3);
 
-		int[] viewport = getViewPort();
-		double[] modelview = getModelView();
-		double[] projection = getProjection();
-
-		//World near Coordinates
-		double wncoord[] = new double[4];
-
-		//World far Coordinates
-		double wfcoord[] = new double[4];
-
-		glu.gluUnProject((double) mx, (double) my, 0.0, modelview, 0, projection, 0, viewport, 0, wncoord, 0);
-		Vector3f v1 = new Vector3f ((float)wncoord[X], (float)wncoord[Y], (float)wncoord[Z] );
-
-		glu.gluUnProject((double) mx, (double) my, 1.0, modelview, 0, projection, 0, viewport, 0, wfcoord, 0);
-		Vector3f v2 = new Vector3f ((float)wfcoord[X], (float)wfcoord[Y], (float)wfcoord[Z] );
-
-		float t = (v1.getY() - zPlane) / (v1.getY() - v2.getY());
+		glu.gluUnProject(mx, viewport.get(3) - my, 0f, modelview, projection, viewport, positionNear);
+		glu.gluUnProject(mx, viewport.get(3) - my, 1f, modelview, projection, viewport, positionFar);
+		
+		Vector3 v1 = new Vector3(positionNear.get(0), positionNear.get(1), positionNear.get(2));
+		Vector3 v2 = new Vector3(positionFar.get(0), positionFar.get(1), positionFar.get(2));
+		
+		float t = (v1.y - zPlane) / (v1.y - v2.y);
 
 		// so here are the desired (x, y) coordinates
-		float fX = v1.getX() + (v2.getX() - v1.getX()) * t;
-		float fZ = v1.getZ() + (v2.getZ() - v1.getZ()) * t;
+		float fX = v1.x + (v2.x - v1.x) * t;
+		float fZ = v1.z + (v2.z - v1.z) * t;
 
-		ColoredPoint3D point = new ColoredPoint3D(fX, 0, fZ);
+		out[0] = fX;
+		out[1] = zPlane;
+		out[2] = fZ;
+	}
+	
+	public ColoredPoint3D get3DPointerFromMouse(float mx, float my, float zPlane) {
+
+		double[] out = new double[3];
+		get3DPointFrom2D(mx, my, zPlane, out);
+		
+		ColoredPoint3D point = new ColoredPoint3D(out[0], out[1], out[2]);
 
 		return point;
+	}
+	
+	public Ray getCameraRay(int mx, int my) {
+		GL2 gl = getGL2();
+		
+		FloatBuffer projection = BufferUtils.createFloatBuffer(16);
+		FloatBuffer modelview = BufferUtils.createFloatBuffer(16);
+		IntBuffer viewport = BufferUtils.createIntBuffer(16);
+		
+		gl.glGetFloatv(GL2.GL_PROJECTION_MATRIX, projection);
+		gl.glGetFloatv(GL2.GL_MODELVIEW_MATRIX, modelview);
+		gl.glGetIntegerv(GL2.GL_VIEWPORT, viewport);
+
+		FloatBuffer positionNear = BufferUtils.createFloatBuffer(3);
+		FloatBuffer positionFar = BufferUtils.createFloatBuffer(3);
+
+		glu.gluUnProject(mx, viewport.get(3) - my, 0f, modelview, projection, viewport, positionNear);
+		glu.gluUnProject(mx, viewport.get(3) - my, 1f, modelview, projection, viewport, positionFar);
+
+		Ray ray = new Ray(
+		    new Vector3(
+		        positionNear.get(0),
+		        positionNear.get(1),
+		        positionNear.get(2)),
+		    new Vector3(
+		        positionFar.get(0),
+		        positionFar.get(1),
+		        positionFar.get(2)));
+		
+		return ray;
 	}
 
 	public void updateCamera(Camera camera) {
@@ -241,6 +284,10 @@ public class Graphics3D extends AWTGraphics {
 
 	public GL2 getGL2() {
 		return getGL().getGL2();
+	}
+	
+	public GLBase getGL3() {
+		return getGL().getGL3();
 	}
 
 	public GLU getGLU() {
@@ -329,12 +376,15 @@ public class Graphics3D extends AWTGraphics {
 	}
 	
 	public void drawCube(double size) {
-
+		drawCube(size, 0, 0, 0);
+	}
+	
+	public void drawCube(double size, double x, double y, double z) {
 		GL2 gl = getGL2();
 
 		gl.glPushMatrix();
 		
-		gl.glTranslated(0, size/2, 0);
+		gl.glTranslated(x, y+size/2, z);
 		
 		gl.glPushMatrix();
 		drawSquare(gl, size);        // front face
@@ -756,7 +806,7 @@ public class Graphics3D extends AWTGraphics {
 		
 	}
 
-	private void vertex(GL2 gl, Vector3f vertex) {
+	private void vertex(GL2 gl, Vector3 vertex) {
 		gl.glVertex3f(vertex.x, vertex.y, vertex.z);
 	}
 

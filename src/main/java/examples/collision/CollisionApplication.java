@@ -24,9 +24,6 @@ import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
 import br.com.luvia.loader.TextureLoader;
 
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.math.collision.Ray;
 import com.jogamp.opengl.util.texture.Texture;
 
@@ -34,22 +31,24 @@ public class CollisionApplication extends ApplicationGL {
 
 	private Camera camera;
 	
-	private BoundingBox box;
+	private Texture background;
 	private Texture marker;
 	private Texture active;
 		
-	private int markerCount = 6;
-	private float tileSize = 5;
+	private int markerCount = 5;
+	private float tileSize = 5.5f;
 	
 	protected float mx = 0;
 	protected float my = 0;
 
 	protected boolean click = false;
 	
+	int area = 0;
+	
 	private List<Boolean> activeMarkers = new ArrayList<>(markerCount);
 	
 	private Ray ray;
-
+	
 	public CollisionApplication(int w, int h) {
 		super(w, h);
 	}
@@ -60,23 +59,28 @@ public class CollisionApplication extends ApplicationGL {
 			activeMarkers.add(false);
 		}
 		
-		//Init First Box
-		float x = (float)(-1.5f*tileSize);
-		float y = 0;
-		float z = (float)(-1f*tileSize);
-		box = new BoundingBox(new Vector3(x,y,z), new Vector3(x+tileSize,y-0.001f,z+tileSize));
-		
-		Vector3 center = box.getCenter(new Vector3());
-		ray = new Ray(center, new Vector3(0, -1, 0));
-		
 		BufferedImage markImage = ImageLoader.getInstance().getImage("mark.png");
 		BufferedImage activeMarkImage = ImageLoader.getInstance().getImage("active_mark.png");
 		marker = TextureLoader.getInstance().loadTexture(markImage);
 		active = TextureLoader.getInstance().loadTexture(activeMarkImage);
 		
-		activeMarkers.add(3, true);
+		background = TextureLoader.getInstance().loadTexture(ImageLoader.getInstance().getImage("background.jpg"));
+		
+		activate(3);
 	}
 	
+	private void activate(int index) {
+		activeMarkers.set(index, true);
+	}
+	
+	private void unactivate(int index) {
+		activeMarkers.set(index, false);
+	}
+	
+	private void toggle(int index) {
+		activeMarkers.set(index, !activeMarkers.get(index));
+	}
+		
 	@Override
 	public void load() {
 		camera = new Camera(0, 15, 0.001);
@@ -90,7 +94,43 @@ public class CollisionApplication extends ApplicationGL {
 		gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
+		drawBackground(gl);
+		
 		drawGrid(gl,200,120);
+	}
+
+	private void drawBackground(GL2 gl) {
+		background.enable(gl);
+		background.bind(gl);
+		
+		float scale = 2.2f;
+		float tileSizeW = 16*scale;
+		float tileSizeH = 9*scale;
+
+		float x = -0.5f;
+		float y = -0.5f;		
+				
+		gl.glBegin(GL2.GL_QUADS);
+		
+		//(0,0)
+		gl.glTexCoord2d(0, 0);
+		gl.glVertex3d(x*tileSizeW, 0, y*tileSizeH);
+
+		//(1,0)
+		gl.glTexCoord2d(1, 0);
+		gl.glVertex3d(x*tileSizeW+tileSizeW, 0, y*tileSizeH);
+
+		//(1,1)
+		gl.glTexCoord2d(1, 1);
+		gl.glVertex3d(x*tileSizeW+tileSizeW, 0, y*tileSizeH+tileSizeH);
+
+		//(0,1)
+		gl.glTexCoord2d(0, 1);
+		gl.glVertex3d(x*tileSizeW, 0, y*tileSizeH+tileSizeH);
+
+		gl.glEnd();
+		
+		background.disable(gl);
 	}
 
 	private void drawGrid(GL2 gl, double x, double y) {
@@ -99,27 +139,20 @@ public class CollisionApplication extends ApplicationGL {
 		Texture texture = marker;
 		
 		int count = 0;
-		for(int i=0;i<3;i++) {
+		for(int i=0;i<markerCount;i++) {
 			if (!activeMarkers.get(count)) {
 				texture = marker;
 			} else {
 				texture = active;
 			}
 			
-			//Upper Row
-			drawTile(gl, -1.5+i+(i*spacing), -1, tileSize, texture);
-			count++;
-		}
-		
-		for(int i=0;i<3;i++) {
-			if (!activeMarkers.get(count)) {
-				texture = marker;
-			} else {
-				texture = active;
+			float size = tileSize;
+			
+			if(count == area) {
+				size = tileSize*1.05f;
 			}
 			
-			//Lower Row
-			drawTile(gl, -1.5+i+(i*spacing), spacing, tileSize, texture);
+			drawTile(gl, -3+i+(i*spacing), -.5, size, texture);
 			count++;
 		}
 	}
@@ -186,17 +219,13 @@ public class CollisionApplication extends ApplicationGL {
 	
 	@Override
 	public void updateMouse(PointerEvent event) {
+		
+		if (event.getX()<w) {
+			area = event.getX()/(w/markerCount);			
+		}
+		
 		if (event.isButtonDown(MouseButton.MOUSE_BUTTON_LEFT)) {
-			
-			//Verify collision
-			Vector3 hit = new Vector3();
-			if(Intersector.intersectRayBounds(ray, box, hit)) {
-				System.out.println("hit!");
-				System.out.println(hit.x+" "+hit.y+" "+hit.z);
-			} else {
-				System.out.println(":(");
-				System.out.println(hit.x+" "+hit.y+" "+hit.z);
-			}
+			toggle(area);
 		}
 	}
 
@@ -220,8 +249,6 @@ public class CollisionApplication extends ApplicationGL {
 		//Transform by Camera
 		drawable.updateCamera(camera);
 		
-		drawable.drawBoundingBox(box);
-
 		//Draw Scene
 		drawFloor(gl);
 

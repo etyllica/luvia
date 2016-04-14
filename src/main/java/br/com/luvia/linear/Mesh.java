@@ -15,9 +15,6 @@ import java.util.Set;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
-
 import br.com.abby.core.loader.MeshLoader;
 import br.com.abby.core.vbo.Face;
 import br.com.abby.core.vbo.Group;
@@ -26,6 +23,8 @@ import br.com.abby.linear.AimPoint;
 import br.com.luvia.core.GL2Drawable;
 import br.com.luvia.material.Material;
 
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.jogamp.opengl.util.texture.Texture;
 
 /**
@@ -89,7 +88,7 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		this.drawTexture = drawTexture;
 	}
 
-	public List<Vector3f> getVertexes() {
+	public List<Vector3> getVertexes() {
 		return vbo.getVertices();
 	}
 
@@ -100,7 +99,7 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		// Turn on wireframe mode
 		gl.glPolygonMode(GL2.GL_FRONT, GL2.GL_LINE);
 
-		setupModel(gl);
+		applyTransform(gl);
 		setupColor(gl);
 
 		drawTexture = false;
@@ -140,7 +139,7 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		gl.glPushMatrix();
 
 		setupTextured(gl);
-		setupModel(gl);
+		applyTransform(gl);
 		setupColor(gl);
 		
 		Texture texture = null;
@@ -159,7 +158,7 @@ public class Mesh extends AimPoint implements GL2Drawable {
 	}
 	
 	public void texturedRender(GL2 gl) {
-		setupModel(gl);
+		applyTransform(gl);
 		setupColor(gl);
 
 		simpleDraw(gl);
@@ -270,7 +269,7 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		return texture;
 	}
 
-	private void setupModel(GL2 gl) {
+	public void applyTransform(GL2 gl) {
 		gl.glTranslated(x, y, z);
 		gl.glRotated(angleX, 1, 0, 0);
 		gl.glRotated(angleY, 0, 1, 0);
@@ -281,8 +280,8 @@ public class Mesh extends AimPoint implements GL2Drawable {
 	private void drawWireFrameFace(GL2 gl, Face face) {
 		for(int i = 0; i < face.vertexIndex.length; i++) {
 			int index = face.vertexIndex[indexes[i]];
-			Vector3f vertex = vbo.getVertices().get(index);
-			gl.glVertex3d(vertex.getX(), vertex.getY(), vertex.getZ());					
+			Vector3 vertex = vbo.getVertices().get(index);
+			gl.glVertex3f(vertex.x, vertex.y, vertex.z);					
 		}
 	}
 
@@ -303,17 +302,17 @@ public class Mesh extends AimPoint implements GL2Drawable {
 
 			//Set normals if has it
 			if(!vbo.getNormals().isEmpty() && face.normalIndex!=null) {
-				Vector3f normal = vbo.getNormals().get(face.normalIndex[index]);
-				gl.glNormal3d(normal.getX(), normal.getY(), normal.getZ());
+				Vector3 normal = vbo.getNormals().get(face.normalIndex[index]);
+				gl.glNormal3f(normal.x, normal.y, normal.x);
 			}
 
 			if(drawTexture) {
-				Vector2f texture = vbo.getTextures().get(face.textureIndex[index]);
-				gl.glTexCoord2d(texture.getX(), texture.getY());
+				Vector2 texture = vbo.getTextures().get(face.textureIndex[index]);
+				gl.glTexCoord2f(texture.x, texture.y);
 			}
 
-			Vector3f vertex = vbo.getVertices().get(vertexIndex);
-			gl.glVertex3d(vertex.getX(), vertex.getY(), vertex.getZ());
+			Vector3 vertex = vbo.getVertices().get(vertexIndex);
+			gl.glVertex3f(vertex.x, vertex.y, vertex.z);
 		}
 	}
 

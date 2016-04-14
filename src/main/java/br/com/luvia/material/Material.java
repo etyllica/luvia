@@ -13,9 +13,7 @@ import com.jogamp.opengl.util.texture.Texture;
  */
 
 public class Material {
-	
-	private OBJMaterial material;
-	
+		
 	//Ambient Color
 	private Texture textureKa = null;
 	
@@ -32,9 +30,7 @@ public class Material {
 	
 	public Material(OBJMaterial material) {
 		super();
-		
-		this.material = material;
-		
+				
 		if(!material.getMapD().isEmpty()) {
 			setTextureD(TextureLoader.getInstance().loadTexture("", material.getMapD()));
 		}
@@ -46,7 +42,6 @@ public class Material {
 		if(!material.getMapKa().isEmpty()) {
 			setTextureKa(TextureLoader.getInstance().loadTexture("", material.getMapKa()));	
 		}
-		
 	}
 
 	public Texture getTextureKa() {

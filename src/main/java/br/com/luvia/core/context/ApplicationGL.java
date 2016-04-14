@@ -1,12 +1,16 @@
 package br.com.luvia.core.context;
 
+import javax.media.opengl.GL2;
+
 import br.com.abby.linear.ColoredPoint3D;
 import br.com.etyllica.core.context.Application;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.luvia.core.G3DEventListener;
 import br.com.luvia.core.video.Graphics3D;
 
-public abstract class ApplicationGL extends Application implements G3DEventListener {
+import com.badlogic.gdx.math.Matrix4;
+
+public abstract class ApplicationGL extends Application implements com.badlogic.gdx.Application, G3DEventListener {
 		
 	protected double zoom = 1;
 	
@@ -57,6 +61,27 @@ public abstract class ApplicationGL extends Application implements G3DEventListe
 		return new ColoredPoint3D(x, y, z);
 	}
 	
+	protected int[] getViewPort(Graphics3D g) {
+		return g.getViewPort();
+	}
+
+	protected double[] getModelView(Graphics3D g) {
+		return g.getModelView();
+	}
+	
+	protected double[] getProjection(Graphics3D g) {
+		return g.getProjection();
+	}
+	
+	protected Matrix4 getProjectionMatrix(Graphics3D g) {
+		GL2 gl = g.getGL2();
+		
+		float[] projection = new float[16];
+		gl.glGetFloatv(GL2.GL_PROJECTION_MATRIX, projection, 0);
+
+		return new Matrix4(projection);
+	}
+	
 	@Override
 	public void load() { }
 
@@ -86,6 +111,10 @@ public abstract class ApplicationGL extends Application implements G3DEventListe
 	
 	public void error(String tag, String message, Throwable exception) {
 		System.err.println(tag+" "+message+" "+exception);
+	}
+
+	public ApplicationType getType() {
+		return ApplicationType.Desktop;
 	}
 
 }

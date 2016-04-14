@@ -10,6 +10,7 @@ import javax.media.opengl.GLException;
 import javax.media.opengl.GLProfile;
 
 import br.com.etyllica.loader.LoaderImpl;
+import br.com.etyllica.loader.image.ImageLoader;
 
 import com.jogamp.opengl.util.awt.ImageUtil;
 import com.jogamp.opengl.util.texture.Texture;
@@ -120,6 +121,15 @@ public class TextureLoader extends LoaderImpl {
 
 	public Texture loadTexture(TextureData textureData) {
 		return TextureIO.newTexture(textureData);
+	}
+
+	public Texture loadTextureFromFile(String path) {
+		return loadTextureFromFile(path, false);
+	}
+	
+	public Texture loadTextureFromFile(String path, boolean absolute) {
+		BufferedImage image = ImageLoader.getInstance().getImage(path, absolute);
+		return loadTexture(image);
 	}
 
 }

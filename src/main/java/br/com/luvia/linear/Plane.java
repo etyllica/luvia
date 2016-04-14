@@ -1,6 +1,9 @@
 package br.com.luvia.linear;
 
+import com.badlogic.gdx.math.Vector3;
+
 import br.com.etyllica.core.linear.Point3D;
+import br.com.luvia.util.VectorUtil;
 
 /**
  * A plane can be defined as ax + by + cz = d
@@ -40,13 +43,13 @@ public class Plane {
   public Plane(Point3D p, Point3D q, Point3D r) {
     super();
     
-    Vector3 vp = new Vector3(p);
-    Vector3 pq = new Vector3(q).sub(vp);
-    Vector3 pr = new Vector3(r).sub(vp);
+    Vector3 vp = VectorUtil.pointToVector(p);
+    Vector3 pq = VectorUtil.pointToVector(q).sub(vp);
+    Vector3 pr = VectorUtil.pointToVector(r).sub(vp);
     
-    a = pq.getY()*pr.getZ()-pq.getZ()*pr.getY();
-    b = pq.getX()*pr.getZ()-pq.getZ()*pr.getX();
-    c = pq.getX()*pr.getY()-pq.getY()*pr.getX();
+    a = pq.y*pr.z-pq.z*pr.y;
+    b = pq.x*pr.z-pq.z*pr.x;
+    c = pq.x*pr.z-pq.y*pr.x;
     d = -(a*p.getX()+b*p.getY()+c*p.getZ());    
   }
 
