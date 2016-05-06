@@ -5,6 +5,7 @@ import br.com.luvia.core.context.ApplicationGL;
 import examples.box.OctreeClipping;
 import examples.box.OctreeRender;
 import examples.collision.CollisionApplication;
+import examples.custom.GridCubePerspective;
 import examples.custom.GridPerspective;
 import examples.custom.MarkerApplication;
 import examples.custom.Ortographic;
@@ -48,6 +49,7 @@ public class LuviaExamples extends Luvia {
 		//return new Ortographic(w, h);
 		//return new MarkerApplication(w, h);
 		//return new GridPerspective(w, h);
+		return new GridCubePerspective(w, h);
 		//return new RadialMarkerApplication(w, h);
 		//return new SkyboxGridPerspective(w, h);
 		
@@ -55,7 +57,7 @@ public class LuviaExamples extends Luvia {
 		//return new OctreeClipping(w, h);
 		//return new FrustrumRender(w, h);
 		
-		return new CollisionApplication(w, h);
+		//return new CollisionApplication(w, h);
 		//return new MeshExample(w, h);		
 		//return new LightExample(w, h);
 		
