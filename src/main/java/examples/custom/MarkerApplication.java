@@ -188,12 +188,10 @@ public class MarkerApplication extends ApplicationGL {
 	@Override
 	public void updateKeyboard(KeyEvent event) {
 		
-		if(event.isKeyDown(KeyEvent.VK_UP_ARROW)) {
-			
+		if(event.isKeyDown(KeyEvent.VK_UP_ARROW)) {			
 			upArrow = true;
 			
-		} else if (event.isKeyUp(KeyEvent.VK_UP_ARROW)) {
-			
+		} else if (event.isKeyUp(KeyEvent.VK_UP_ARROW)) {			
 			upArrow = false;
 		}
 				

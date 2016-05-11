@@ -27,16 +27,18 @@ public class GridPerspective extends ApplicationGL {
 
 	private Texture floor;
 
-	protected float mx = 0;
-	
+	protected float mx = 0;	
 	protected float my = 0;
 	
 	protected boolean click = false;
 	
 	protected double turnSpeed = 1;
+	protected double walkSpeed = 0.5;
 	
 	private AimPoint aim;
 	
+	private boolean upPressed = false;
+	private boolean downPressed = false;
 	private boolean leftPressed = false;
 	private boolean rightPressed = false;
 	
@@ -163,12 +165,24 @@ public class GridPerspective extends ApplicationGL {
 	@Override
 	public void updateKeyboard(KeyEvent event) {
 
+		if(event.isKeyDown(KeyEvent.VK_UP_ARROW)) {
+			upPressed = true;
+		} else if(event.isKeyUp(KeyEvent.VK_UP_ARROW)) {
+			upPressed = false;
+		}
+		
+		if(event.isKeyDown(KeyEvent.VK_DOWN_ARROW)) {
+			downPressed = true;
+		} else if(event.isKeyUp(KeyEvent.VK_DOWN_ARROW)) {
+			downPressed = false;
+		}
+		
 		if(event.isKeyDown(KeyEvent.VK_RIGHT_ARROW)) {
 			rightPressed = true;
 		} else if(event.isKeyUp(KeyEvent.VK_RIGHT_ARROW)) {
 			rightPressed = false;
 		}
-		
+
 		if(event.isKeyDown(KeyEvent.VK_LEFT_ARROW)) {
 			leftPressed = true;			
 		} else if(event.isKeyUp(KeyEvent.VK_LEFT_ARROW)) {
@@ -235,10 +249,18 @@ public class GridPerspective extends ApplicationGL {
 
 	public void updateControls(long now) {
 				
+		if(upPressed) {
+			aim.moveXZ(-walkSpeed);
+		}
+		
+		if(downPressed) {
+			aim.moveXZ(walkSpeed);			
+		}
+		
 		if(leftPressed) {
 			aim.offsetAngleY(+turnSpeed);			
 		}
-		
+
 		if(rightPressed) {
 			aim.offsetAngleY(-turnSpeed);			
 		}
