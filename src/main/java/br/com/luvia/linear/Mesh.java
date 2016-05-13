@@ -7,7 +7,6 @@ import static javax.media.opengl.GL.GL_TEXTURE_MAG_FILTER;
 import static javax.media.opengl.GL.GL_TEXTURE_MIN_FILTER;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -23,6 +22,7 @@ import br.com.abby.linear.AimPoint;
 import br.com.luvia.core.GL2Drawable;
 import br.com.luvia.material.Material;
 
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.jogamp.opengl.util.texture.Texture;
@@ -36,8 +36,6 @@ import com.jogamp.opengl.util.texture.Texture;
 
 public class Mesh extends AimPoint implements GL2Drawable {
 
-	private Set<Integer> vertexSelection = new HashSet<Integer>();
-
 	private VBO vbo;
 
 	private Map<Group, Material> materials = new HashMap<Group, Material>();
@@ -47,6 +45,8 @@ public class Mesh extends AimPoint implements GL2Drawable {
 	private float scale = 1;
 
 	private int[] indexes = new int[16];
+	
+	public Matrix4 transform = new Matrix4();
 
 	public Mesh() {
 		super(0,0,0);
@@ -274,7 +274,8 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		gl.glRotated(angleX, 1, 0, 0);
 		gl.glRotated(angleY, 0, 1, 0);
 		gl.glRotated(angleZ, 0, 0, 1);
-		gl.glScaled(scale, scale, scale);
+		//gl.glScaled(scale, scale, scale);
+		gl.glMultMatrixf(transform.val, 0);
 	}
 
 	private void drawWireFrameFace(GL2 gl, Face face) {
@@ -338,20 +339,25 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		gl.glDisable(GL.GL_DEPTH_TEST);
 	}
 
-	public Set<Integer> getVertexSelection() {
-		return vertexSelection;
-	}
-
-	public void setVertexSelection(Set<Integer> vertexSelection) {
-		this.vertexSelection = vertexSelection;
-	}
-
 	public float getScale() {
 		return scale;
 	}
 
 	public void setScale(float scale) {
 		this.scale = scale;
+		transform.scl(scale);
+	}
+	
+	public void rotateX(float angle) {
+		transform.rotate(Vector3.X.mul(transform), angle);
+	}
+	
+	public void rotateY(float angle) {
+		transform.rotate(Vector3.Y.mul(transform), angle);		
+	}
+	
+	public void rotateZ(float angle) {
+		transform.rotate(Vector3.Z.mul(transform), angle);
 	}
 
 }
