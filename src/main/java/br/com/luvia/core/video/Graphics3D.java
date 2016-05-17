@@ -274,7 +274,7 @@ public class Graphics3D extends AWTGraphics {
 		gl.glRotated(360-aim.getAngleX(), 1, 0, 0);
 		gl.glRotated(360-aim.getAngleY(), 0, 1, 0);
 		gl.glRotated(360-aim.getAngleZ(), 0, 0, 1);
-
+		
 		gl.glTranslated(-aim.getX(), -aim.getY(), -aim.getZ());
 	}
 

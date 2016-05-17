@@ -1,4 +1,4 @@
-package examples.custom;
+package examples.stamp;
 
 
 import static javax.media.opengl.GL.GL_LINEAR;
@@ -8,38 +8,38 @@ import static javax.media.opengl.GL.GL_TEXTURE_MIN_FILTER;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
+import com.jogamp.opengl.util.texture.Texture;
+
 import br.com.abby.core.loader.MeshLoader;
+import br.com.abby.core.vbo.VBO;
 import br.com.abby.linear.AimPoint;
-import br.com.abby.linear.OrientedBoundingBox;
+import br.com.abby.linear.ColoredPoint3D;
+import br.com.etyllica.awt.SVGColor;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.MouseButton;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphic;
-import br.com.etyllica.layer.ImageLayer;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
 import br.com.luvia.linear.Mesh;
 import br.com.luvia.loader.TextureLoader;
 
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.Ray;
-import com.jogamp.opengl.util.texture.Texture;
-
-public class GridCubePerspective extends ApplicationGL {
-
-	private ImageLayer orangeAim;
-	private ImageLayer blueAim;
+public class StampApplication extends ApplicationGL {
 	
 	private Mesh stone;
 	private Mesh tree;
 	private Texture floor;
+	private List<Mesh> stones = new ArrayList<Mesh>();
 
 	protected int mx = 0;
 	protected int my = 0;
@@ -64,10 +64,13 @@ public class GridCubePerspective extends ApplicationGL {
 	double tileSize = 1;
 	int colide = NONE;
 	int selected = NONE;
+	
+	private VBO stoneMesh;
 
-	private List<OrientedBoundingBox> cubes;
-
-	public GridCubePerspective(int w, int h) {
+	Set<ColoredPoint3D> bsp = new HashSet<ColoredPoint3D>();
+	private ColoredPoint3D position;
+	
+	public StampApplication(int w, int h) {
 		super(w, h);
 	}
 
@@ -89,16 +92,9 @@ public class GridCubePerspective extends ApplicationGL {
 		gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, GL.GL_NEAREST);
 		gl.glTexEnvi(GL2.GL_TEXTURE_ENV, GL2.GL_TEXTURE_ENV_MODE, GL2.GL_DECAL);
 
-		cubes = new ArrayList<OrientedBoundingBox>();
-		cubes.add(new OrientedBoundingBox(1).translate(20, 1, 7));
-		cubes.add(new OrientedBoundingBox(1).translate(22, 1, 7));
-		cubes.add(new OrientedBoundingBox(1).translate(24, 1, 7));
-		cubes.add(new OrientedBoundingBox(1).translate(26, 1, 7));
-		cubes.add(new OrientedBoundingBox(1).translate(28, 1, 7));
-		cubes.add(new OrientedBoundingBox(1).translate(30, 1, 7));
-		cubes.add(new OrientedBoundingBox(1).translate(32, 1, 7));
-
-		stone = new Mesh(MeshLoader.getInstance().loadModel("stone/stone.obj"));
+		stoneMesh = MeshLoader.getInstance().loadModel("stone/stone.obj");
+		
+		stone = new Mesh(stoneMesh);
 		stone.setColor(Color.WHITE);
 		stone.offsetX(35);
 		stone.offsetY(0.5);
@@ -113,13 +109,6 @@ public class GridCubePerspective extends ApplicationGL {
 		tree.setScale(1.5f);
 
 		floor = TextureLoader.getInstance().loadTexture("mark.png");
-	}
-
-	@Override
-	public void load() {
-		orangeAim = new ImageLayer("cross_orange.png");
-		blueAim = new ImageLayer("cross_blue.png");
-		loading = 100;
 	}
 
 	protected void drawFloor(GL2 gl) {
@@ -325,45 +314,38 @@ public class GridCubePerspective extends ApplicationGL {
 		//Transform by Aim
 		drawable.aimCamera(aim);
 		
-
 		//Draw Scene
 		drawAxis(gl);
 		drawFloor(gl);
 		
+		position = drawable.get3DPointerFromMouse(mx, my);
 		
-		Ray ray = drawable.getCameraRay(mx+32, my);
+		int currentX = (int)(position.getX()/tileSize);
+		int currentZ = (int)(position.getZ()/tileSize);
+		
 		if(drawRay) {
-			drawRay(gl, ray);
-		}
-		
-		colide = -1;
-		
-		for (int i = 0; i<cubes.size(); i++) {
-
-			OrientedBoundingBox cube = cubes.get(i);
+			drawRay(gl, drawable.getCameraRay(mx+32, my));
 			
-			if(Intersector.intersectRayBounds(ray, cube) > 0) {
-				colide = i;
-				if(!click) {
-					drawable.setColor(Color.YELLOW);
-				} else {
-					selected = i;
-					drawable.setColor(Color.BLUE);
-				}
+			/*System.out.println(currentX);
+			System.out.println(currentZ);*/
+			
+			if(!bsp.contains(position)) {
 				
-			} else {
-				drawable.setColor(Color.GREEN);		
+				Mesh mesh = new Mesh(stoneMesh);
+				mesh.setColor(Color.WHITE);
+				mesh.offsetX(currentX+1);
+				mesh.offsetY(0.5);
+				mesh.offsetZ(currentZ+1);
+				mesh.setScale(0.4f);
+				
+				stones.add(mesh);
+				bsp.add(position);
 			}
-			
-			if(selected == i) {
-				drawable.setColor(Color.BLUE);
-			}
-			
-			gl.glPushMatrix();
-			gl.glMultMatrixf(cube.transform.val, 0);			
-			drawable.drawBoundingBox(cube);
-			gl.glPopMatrix();
+			drawable.setColor(SVGColor.PINK);
+		} else {
+			drawable.setColor(SVGColor.GREEN);
 		}
+		drawTile(gl, currentX, currentZ, tileSize);
 		
 		//Draw Models
 		//Start batch
@@ -372,6 +354,12 @@ public class GridCubePerspective extends ApplicationGL {
 		gl.glPushMatrix();
 		stone.texturedRender(gl);
 		gl.glPopMatrix();
+		
+		for (Mesh mesh : stones) {
+			gl.glPushMatrix();
+			mesh.texturedRender(gl);
+			gl.glPopMatrix();	
+		}
 
 		gl.glPushMatrix();
 		gl.glDisable(GL.GL_CULL_FACE);
@@ -385,9 +373,7 @@ public class GridCubePerspective extends ApplicationGL {
 		gl.glDisable(GL.GL_DEPTH_TEST);
 
 		gl.glFlush();
-
 	}
-
 
 	@Override
 	public void draw(Graphic g) {
@@ -397,14 +383,10 @@ public class GridCubePerspective extends ApplicationGL {
 		g.drawShadow(20,60, "Scene",Color.BLACK);
 		g.drawShadow(20,80, Double.toString(aim.getAngleY()),Color.BLACK);
 		
-		orangeAim.simpleDraw(g, mx-orangeAim.getW()/2, my-orangeAim.getH()/2);
+		//orangeAim.simpleDraw(g, mx-orangeAim.getW()/2, my-orangeAim.getH()/2);
 	}
 
 	public void updateControls(long now) {
-
-		//stone.rotateY(10);
-		cubes.get(6).rotateY(0.5f);
-		//stone.transform.translate(10, 0, 0);
 		
 		if(forwardPressed) {
 			aim.moveXZ(-walkSpeed);

@@ -5,7 +5,7 @@ import br.com.luvia.core.context.ApplicationGL;
 import examples.box.OctreeClipping;
 import examples.box.OctreeRender;
 import examples.collision.CollisionApplication;
-import examples.custom.GridCubePerspective;
+import examples.collision.OrientedBoxCollision;
 import examples.custom.GridPerspective;
 import examples.custom.MarkerApplication;
 import examples.custom.Ortographic;
@@ -14,6 +14,7 @@ import examples.custom.SkyboxGridPerspective;
 import examples.frustrum.FrustrumRender;
 import examples.mesh.MeshExample;
 import examples.orthographic.GridMenuApplication;
+import examples.stamp.StampApplication;
 import examples.tutorial1.OrthographicDrawingExample;
 import examples.tutorial2.MixedRenderingExample;
 import examples.tutorial3.SimpleMeshExample;
@@ -38,7 +39,8 @@ public class LuviaExamples extends Luvia {
 	@Override
 	public ApplicationGL startApplication() {
 
-		initialSetup("../../../");
+		//initialSetup("../../../");
+		initialSetup("../");
 		
 		//return new MixedRenderingExample(w, h);
 		//return new OrthographicDrawingExample(w, h);
@@ -49,7 +51,7 @@ public class LuviaExamples extends Luvia {
 		//return new Ortographic(w, h);
 		//return new MarkerApplication(w, h);
 		//return new GridPerspective(w, h);
-		return new GridCubePerspective(w, h);
+		//return new OrientedBoxCollision(w, h);
 		//return new RadialMarkerApplication(w, h);
 		//return new SkyboxGridPerspective(w, h);
 		
@@ -60,7 +62,7 @@ public class LuviaExamples extends Luvia {
 		//return new CollisionApplication(w, h);
 		//return new MeshExample(w, h);		
 		//return new LightExample(w, h);
-		
+		return new StampApplication(w, h);
 	}
 
 }
