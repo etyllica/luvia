@@ -22,7 +22,6 @@ import com.jogamp.opengl.util.texture.Texture;
 
 import br.com.abby.core.loader.MeshLoader;
 import br.com.abby.core.vbo.VBO;
-import br.com.abby.linear.AimPoint;
 import br.com.abby.linear.ColoredPoint3D;
 import br.com.etyllica.awt.SVGColor;
 import br.com.etyllica.core.event.KeyEvent;
@@ -30,6 +29,7 @@ import br.com.etyllica.core.event.MouseButton;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphic;
 import br.com.luvia.core.context.ApplicationGL;
+import br.com.luvia.core.controller.FlyView;
 import br.com.luvia.core.video.Graphics3D;
 import br.com.luvia.linear.Mesh;
 import br.com.luvia.loader.TextureLoader;
@@ -45,18 +45,8 @@ public class StampApplication extends ApplicationGL {
 	protected int my = 0;
 
 	protected boolean click = false;
-
-	protected double turnSpeed = 1;
-	protected double walkSpeed = 0.5;
-
-	private AimPoint aim;
-
-	private boolean forwardPressed = false;
-	private boolean rewardPressed = false;
-	private boolean upPressed = false;
-	private boolean downPressed = false;
-	private boolean leftPressed = false;
-	private boolean rightPressed = false;
+	
+	private FlyView view;
 
 	private static final int NONE = -1;
 	
@@ -76,8 +66,8 @@ public class StampApplication extends ApplicationGL {
 
 	@Override
 	public void init(Graphics3D drawable) {
-		aim = new AimPoint(30, 1.6, 0);
-		aim.setAngleY(180);
+		view = new FlyView(30, 1.6f, 0);
+		view.getAim().setAngleY(180);
 
 		GL2 gl = drawable.getGL2(); // get the OpenGL graphics context
 
@@ -99,7 +89,7 @@ public class StampApplication extends ApplicationGL {
 		stone.offsetX(35);
 		stone.offsetY(0.5);
 		stone.offsetZ(7);
-		stone.setScale(0.4f);
+		stone.setScale(0.3f);
 
 		tree = new Mesh(MeshLoader.getInstance().loadModel("bamboo/bamboo.obj"));
 		tree.offsetX(30);
@@ -213,8 +203,8 @@ public class StampApplication extends ApplicationGL {
 		}
 
 		gl.glBegin(GL.GL_LINES);
-		gl.glVertex3d(aim.getX(), 1, aim.getZ());
-		gl.glVertex3d(aim.getX()+v.x, aim.getY()+v.y, aim.getZ()+v.z);
+		gl.glVertex3d(view.getX(), 1, view.getZ());
+		gl.glVertex3d(view.getX()+v.x, view.getY()+v.y, view.getZ()+v.z);
 		gl.glEnd();
 	}
 
@@ -239,46 +229,11 @@ public class StampApplication extends ApplicationGL {
 
 	@Override
 	public void updateKeyboard(KeyEvent event) {
+		view.updateKeyboard(event);
 
-		if(event.isKeyDown(KeyEvent.VK_W)) {
-			forwardPressed = true;
-		} else if(event.isKeyUp(KeyEvent.VK_W)) {
-			forwardPressed = false;
-		}
-
-		if(event.isKeyDown(KeyEvent.VK_S)) {
-			rewardPressed = true;
-		} else if(event.isKeyUp(KeyEvent.VK_S)) {
-			rewardPressed = false;
-		}
-
-		if(event.isKeyDown(KeyEvent.VK_UP_ARROW)) {
-			upPressed = true;
-		} else if(event.isKeyUp(KeyEvent.VK_UP_ARROW)) {
-			upPressed = false;
-		}
-
-		if(event.isKeyDown(KeyEvent.VK_DOWN_ARROW)) {
-			downPressed = true;
-		} else if(event.isKeyUp(KeyEvent.VK_DOWN_ARROW)) {
-			downPressed = false;
-		}
-
-		if(event.isKeyDown(KeyEvent.VK_RIGHT_ARROW)) {
-			rightPressed = true;
-		} else if(event.isKeyUp(KeyEvent.VK_RIGHT_ARROW)) {
-			rightPressed = false;
-		}
-
-		if(event.isKeyDown(KeyEvent.VK_LEFT_ARROW)) {
-			leftPressed = true;			
-		} else if(event.isKeyUp(KeyEvent.VK_LEFT_ARROW)) {
-			leftPressed = false;
-		}
-
-		if(event.isKeyDown(KeyEvent.VK_SPACE)) {
+		if(event.isKeyDown(KeyEvent.VK_R)) {
 			drawRay = true;
-		} else if(event.isKeyUp(KeyEvent.VK_SPACE)) {
+		} else if(event.isKeyUp(KeyEvent.VK_R)) {
 			drawRay = false;
 		}
 	}
@@ -303,8 +258,7 @@ public class StampApplication extends ApplicationGL {
 
 	@Override
 	public void display(Graphics3D drawable) {
-
-		updateControls(0);
+		view.updateControls(0);
 
 		GL2 gl = drawable.getGL().getGL2();
 
@@ -312,7 +266,7 @@ public class StampApplication extends ApplicationGL {
 		gl.glClearColor(1f, 1f, 1f, 1);
 
 		//Transform by Aim
-		drawable.aimCamera(aim);
+		drawable.aimCamera(view.getAim());
 		
 		//Draw Scene
 		drawAxis(gl);
@@ -326,17 +280,15 @@ public class StampApplication extends ApplicationGL {
 		if(drawRay) {
 			drawRay(gl, drawable.getCameraRay(mx+32, my));
 			
-			/*System.out.println(currentX);
-			System.out.println(currentZ);*/
-			
 			if(!bsp.contains(position)) {
 				
+				//Add stone
 				Mesh mesh = new Mesh(stoneMesh);
 				mesh.setColor(Color.WHITE);
-				mesh.offsetX(currentX+1);
+				mesh.offsetX(currentX+1.4f);
 				mesh.offsetY(0.5);
-				mesh.offsetZ(currentZ+1);
-				mesh.setScale(0.4f);
+				mesh.offsetZ(currentZ+0.5f);
+				mesh.setScale(0.3f);
 				
 				stones.add(mesh);
 				bsp.add(position);
@@ -381,37 +333,9 @@ public class StampApplication extends ApplicationGL {
 		//Draw Gui
 		g.setColor(Color.WHITE);
 		g.drawShadow(20,60, "Scene",Color.BLACK);
-		g.drawShadow(20,80, Double.toString(aim.getAngleY()),Color.BLACK);
+		g.drawShadow(20,80, Double.toString(view.getAim().getAngleY()),Color.BLACK);
 		
 		//orangeAim.simpleDraw(g, mx-orangeAim.getW()/2, my-orangeAim.getH()/2);
-	}
-
-	public void updateControls(long now) {
-		
-		if(forwardPressed) {
-			aim.moveXZ(-walkSpeed);
-		}
-
-		if(rewardPressed) {
-			aim.moveXZ(walkSpeed);	
-		}
-
-		if(upPressed) {
-			aim.offsetAngleX(turnSpeed);
-		}
-
-		if(downPressed) {
-			aim.offsetAngleX(-turnSpeed);
-		}
-
-		if(leftPressed) {
-			aim.offsetAngleY(+turnSpeed);			
-		}
-
-		if(rightPressed) {
-			aim.offsetAngleY(-turnSpeed);			
-		}
-
 	}
 
 }
