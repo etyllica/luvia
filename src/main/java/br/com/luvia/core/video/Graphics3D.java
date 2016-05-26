@@ -270,7 +270,7 @@ public class Graphics3D extends AWTGraphics {
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 
 		gl.glLoadIdentity();
-
+		
 		gl.glRotated(360-aim.getAngleX(), 1, 0, 0);
 		gl.glRotated(360-aim.getAngleY(), 0, 1, 0);
 		gl.glRotated(360-aim.getAngleZ(), 0, 0, 1);
@@ -426,7 +426,7 @@ public class Graphics3D extends AWTGraphics {
 		drawBoundingLines(gl, box.max, box.min);
 		gl.glEnd();
 	}
-	
+		
 	private void drawBoundingLines(GL2 gl, Vector3 minPoint, Vector3 maxPoint) {
 		gl.glVertex3d(minPoint.x, minPoint.y, minPoint.z);
 		gl.glVertex3d(maxPoint.x, minPoint.y, minPoint.z);

@@ -7,10 +7,10 @@ import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
 import br.com.abby.core.loader.MeshLoader;
+import br.com.abby.storage.octree.Octree;
+import br.com.abby.storage.octree.OctreeNode;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.graphics.Graphic;
-import br.com.etyllica.storage.octree.Octree;
-import br.com.etyllica.storage.octree.OctreeNode;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
 import br.com.luvia.linear.Mesh;

@@ -353,7 +353,7 @@ public class Mesh extends AimPoint implements GL2Drawable {
 	}
 	
 	public void rotateY(float angle) {
-		transform.rotate(Vector3.Y.mul(transform), angle);		
+		transform.rotate(Vector3.Y.mul(transform), angle);
 	}
 	
 	public void rotateZ(float angle) {
