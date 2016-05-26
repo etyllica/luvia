@@ -134,7 +134,7 @@ public abstract class Luvia {
 	}
 
 	protected void initialSetup(String path) {
-		String directory = PathHelper.currentDirectory()+path;
+		String directory = PathHelper.currentFileDirectory()+path;
 		luviaCore.setPath(directory);
 		luviaCore.initDefault();
 		
