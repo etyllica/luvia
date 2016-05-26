@@ -2,7 +2,7 @@ package examples.tutorial1;
 
 import java.awt.Color;
 
-import br.com.etyllica.core.graphics.Graphic;
+import br.com.etyllica.core.graphics.Graphics;
 import br.com.etyllica.layer.ImageLayer;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
@@ -40,7 +40,7 @@ public class OrthographicDrawingExample extends ApplicationGL {
 	}
 
 	@Override
-	public void draw(Graphic g) {
+	public void draw(Graphics g) {
 		g.setColor(Color.BLUE);
 		g.fillRect(0, 0, w, h);
 		

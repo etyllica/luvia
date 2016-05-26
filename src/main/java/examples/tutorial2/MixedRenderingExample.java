@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import br.com.etyllica.core.event.Action;
 import br.com.etyllica.core.event.GUIEvent;
-import br.com.etyllica.core.graphics.Graphic;
+import br.com.etyllica.core.graphics.Graphics;
 import br.com.etyllica.gui.Button;
 import br.com.etyllica.gui.label.TextLabel;
 import br.com.luvia.core.context.ApplicationGL;
@@ -58,7 +58,7 @@ public class MixedRenderingExample extends ApplicationGL {
 	}
 
 	@Override
-	public void draw(Graphic g) {
+	public void draw(Graphics g) {
 		g.setColor(color);
 		g.fillRect(0, 0, w, h);
 	}

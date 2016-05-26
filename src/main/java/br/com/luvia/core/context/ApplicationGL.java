@@ -4,7 +4,7 @@ import javax.media.opengl.GL2;
 
 import br.com.abby.linear.ColoredPoint3D;
 import br.com.etyllica.core.context.Application;
-import br.com.etyllica.core.graphics.Graphic;
+import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.G3DEventListener;
 import br.com.luvia.core.video.Graphics3D;
 
@@ -86,7 +86,7 @@ public abstract class ApplicationGL extends Application implements com.badlogic.
 	public void load() { }
 
 	@Override
-	public void draw(Graphic g) { }
+	public void draw(Graphics g) { }
 
 	//LibGDX methods
 	public void debug(String tag, String message) {

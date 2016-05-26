@@ -5,7 +5,6 @@ import java.awt.Color;
 import javax.media.opengl.GL2;
 
 import br.com.etyllica.core.event.KeyEvent;
-import br.com.etyllica.core.graphics.Graphic;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
 
@@ -63,11 +62,6 @@ public class CubeExample extends ApplicationGL {
 		gl.glLoadIdentity();             // reset projection matrix
 		gl.glFrustum(-1.0, 1.0, -1.0, 1.0, 1.5, 20.0);
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
-	}
-
-	@Override
-	public void draw(Graphic g) {
-		
 	}
 	
 	@Override

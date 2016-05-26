@@ -12,7 +12,6 @@ import javax.media.opengl.glu.GLU;
 import br.com.abby.linear.Camera;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
-import br.com.etyllica.core.graphics.Graphic;
 import br.com.etyllica.loader.image.ImageLoader;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
@@ -129,11 +128,6 @@ public class BillboardExample extends ApplicationGL {
 		texture.disable(gl);
 
 		gl.glFlush();
-	}
-
-	@Override
-	public void draw(Graphic g) {
-
 	}
 
 }

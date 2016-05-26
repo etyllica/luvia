@@ -37,7 +37,6 @@ import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.KeyState;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.event.PointerState;
-import br.com.etyllica.core.graphics.Graphic;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
 
@@ -137,12 +136,6 @@ public abstract class DemoApplication extends ApplicationGL {
 
 	public void load() {
 		loading = 100;
-	}
-
-	@Override
-	public void draw(Graphic g) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public abstract void initPhysics(Graphics3D g) throws Exception;

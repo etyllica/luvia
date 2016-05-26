@@ -7,7 +7,6 @@ import javax.media.opengl.glu.GLU;
 import br.com.abby.core.loader.MeshLoader;
 import br.com.abby.core.vbo.VBO;
 import br.com.etyllica.awt.SVGColor;
-import br.com.etyllica.core.graphics.Graphic;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
 import br.com.luvia.linear.Mesh;
@@ -78,11 +77,6 @@ public class SimpleMeshExample extends ApplicationGL {
 		// Enable the model-view transform
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 		gl.glLoadIdentity(); // reset
-	}
-
-	@Override
-	public void draw(Graphic g) {
-		
 	}
 	
 }

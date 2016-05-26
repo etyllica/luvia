@@ -2,7 +2,7 @@ package br.com.luvia.core.context;
 
 import br.com.etyllica.core.context.Application;
 import br.com.etyllica.core.context.Context;
-import br.com.etyllica.core.graphics.Graphic;
+import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.G3DEventListener;
 
 public abstract class ApplicationWrapper extends ApplicationGL implements G3DEventListener {
@@ -21,7 +21,7 @@ public abstract class ApplicationWrapper extends ApplicationGL implements G3DEve
 	}
 	
 	@Override
-	public void draw(Graphic g) {
+	public void draw(Graphics g) {
 		application.draw(g);
 	}
 	

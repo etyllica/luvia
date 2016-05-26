@@ -14,7 +14,7 @@ import javax.media.opengl.glu.GLU;
 import br.com.abby.linear.Camera;
 import br.com.etyllica.core.event.MouseButton;
 import br.com.etyllica.core.event.PointerEvent;
-import br.com.etyllica.core.graphics.Graphic;
+import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
 import br.com.luvia.loader.TextureLoader;
@@ -203,7 +203,7 @@ public class Ortographic extends ApplicationGL {
 	}	
 
 	@Override
-	public void draw(Graphic g) {
+	public void draw(Graphics g) {
 
 		int size = 100;
 

@@ -4,7 +4,6 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
-import br.com.etyllica.core.graphics.Graphic;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
 
@@ -20,12 +19,6 @@ public class Example1 extends ApplicationGL {
 
 	@Override
 	public void load() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void draw(Graphic g) {
 		// TODO Auto-generated method stub
 
 	}
