@@ -250,7 +250,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	}
 
 	@Override
-	protected void changeApplication() {
+	public void changeApplication() {
 
 		ApplicationGL nextApplication = (ApplicationGL)activeWindowGL.getApplication3D().getNextApplication();
 		
