@@ -16,7 +16,7 @@ import br.com.etyllica.core.graphics.Graphics;
 import br.com.etyllica.core.linear.Point3D;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
-import br.com.luvia.linear.Mesh;
+import br.com.luvia.graphics.ModelInstance;
 
 public class OctreeRender extends ApplicationGL {
 	
@@ -24,7 +24,7 @@ public class OctreeRender extends ApplicationGL {
 	
 	private VBO bunnyVBO;
 	
-	private Mesh bunny;
+	private ModelInstance bunny;
 	
 	private double angleY = 0;
 	
@@ -47,7 +47,7 @@ public class OctreeRender extends ApplicationGL {
 		
 		//Load bunny model
 		bunnyVBO = MeshLoader.getInstance().loadModel("bunny.obj");
-		bunny = new Mesh(bunnyVBO);
+		bunny = new ModelInstance(bunnyVBO);
 		bunny.setColor(SVGColor.GHOST_WHITE);
 		
 		octree = new VolumeOctree<Face>(bunnyVBO.getBoundingBox());

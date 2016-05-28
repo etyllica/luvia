@@ -1,4 +1,4 @@
-package br.com.luvia.linear;
+package br.com.luvia.graphics;
 
 
 import static javax.media.opengl.GL.GL_LINEAR;
@@ -6,6 +6,7 @@ import static javax.media.opengl.GL.GL_TEXTURE_2D;
 import static javax.media.opengl.GL.GL_TEXTURE_MAG_FILTER;
 import static javax.media.opengl.GL.GL_TEXTURE_MIN_FILTER;
 
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +19,6 @@ import br.com.abby.core.loader.MeshLoader;
 import br.com.abby.core.vbo.Face;
 import br.com.abby.core.vbo.Group;
 import br.com.abby.core.vbo.VBO;
-import br.com.abby.linear.AimPoint;
 import br.com.luvia.core.GL2Drawable;
 import br.com.luvia.material.Material;
 
@@ -34,7 +34,7 @@ import com.jogamp.opengl.util.texture.Texture;
  *
  */
 
-public class Mesh extends AimPoint implements GL2Drawable {
+public class ModelInstance implements GL2Drawable {
 
 	private VBO vbo;
 
@@ -42,25 +42,31 @@ public class Mesh extends AimPoint implements GL2Drawable {
 
 	private boolean drawTexture = true;
 
-	private float scale = 1;
-
 	private int[] indexes = new int[16];
 	
 	public Matrix4 transform = new Matrix4();
-
-	public Mesh() {
-		super(0,0,0);
+	
+	//TODO Move to material
+	private Color color = Color.BLACK;
+	
+	public ModelInstance() {
+		this(0,0,0);
+	}
+	
+	public ModelInstance(float x, float y, float z) {
+		super();
+		this.transform.setToTranslation(x, y, z);
 	}
 
-	public Mesh(VBO vbo) {
-		super(0,0,0);
+	public ModelInstance(VBO model) {
+		this(0,0,0);
 
-		this.vbo = vbo;
+		this.vbo = model;
 		loadMaterials();
 	}
 
-	public Mesh(String path) {
-		super(0,0,0);
+	public ModelInstance(String path) {
+		this(0,0,0);
 
 		loadVBO(path);
 		loadMaterials();
@@ -270,11 +276,6 @@ public class Mesh extends AimPoint implements GL2Drawable {
 	}
 
 	public void applyTransform(GL2 gl) {
-		gl.glTranslated(x, y, z);
-		gl.glRotated(angleX, 1, 0, 0);
-		gl.glRotated(angleY, 0, 1, 0);
-		gl.glRotated(angleZ, 0, 0, 1);
-		//gl.glScaled(scale, scale, scale);
 		gl.glMultMatrixf(transform.val, 0);
 	}
 
@@ -339,12 +340,15 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		gl.glDisable(GL.GL_DEPTH_TEST);
 	}
 
-	public float getScale() {
-		return scale;
+	public Vector3 getScale() {
+		return transform.getScale(new Vector3());
 	}
 
 	public void setScale(float scale) {
-		this.scale = scale;
+		transform.scl(scale);
+	}
+	
+	public void setScale(Vector3 scale) {
 		transform.scl(scale);
 	}
 	
@@ -360,4 +364,24 @@ public class Mesh extends AimPoint implements GL2Drawable {
 		transform.rotate(Vector3.Z.mul(transform), angle);
 	}
 
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+	public void offsetX(float offsetX) {
+		transform.translate(offsetX, 0, 0);
+	}
+	
+	public void offsetY(float offsetY) {
+		transform.translate(0, offsetY, 0);
+	}
+	
+	public void offsetZ(float offsetZ) {
+		transform.translate(0, 0, offsetZ);
+	}
+	
 }

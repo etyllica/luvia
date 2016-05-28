@@ -1,4 +1,4 @@
-package br.com.luvia.linear;
+package br.com.luvia.math;
 
 import com.badlogic.gdx.math.Vector3;
 

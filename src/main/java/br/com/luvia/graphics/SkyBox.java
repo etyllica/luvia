@@ -1,4 +1,4 @@
-package br.com.luvia.geom;
+package br.com.luvia.graphics;
 
 import javax.media.opengl.GL2;
 

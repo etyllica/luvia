@@ -31,15 +31,15 @@ import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.controller.FlyView;
 import br.com.luvia.core.video.Graphics3D;
-import br.com.luvia.linear.Mesh;
+import br.com.luvia.graphics.ModelInstance;
 import br.com.luvia.loader.TextureLoader;
 
 public class StampApplication extends ApplicationGL {
 	
-	private Mesh stone;
-	private Mesh tree;
+	private ModelInstance stone;
+	private ModelInstance tree;
 	private Texture floor;
-	private List<Mesh> stones = new ArrayList<Mesh>();
+	private List<ModelInstance> stones = new ArrayList<ModelInstance>();
 
 	protected int mx = 0;
 	protected int my = 0;
@@ -84,16 +84,16 @@ public class StampApplication extends ApplicationGL {
 
 		stoneMesh = MeshLoader.getInstance().loadModel("stone/stone.obj");
 		
-		stone = new Mesh(stoneMesh);
+		stone = new ModelInstance(stoneMesh);
 		stone.setColor(Color.WHITE);
 		stone.offsetX(35);
-		stone.offsetY(0.5);
+		stone.offsetY(0.5f);
 		stone.offsetZ(7);
 		stone.setScale(0.3f);
 
-		tree = new Mesh(MeshLoader.getInstance().loadModel("bamboo/bamboo.obj"));
+		tree = new ModelInstance(MeshLoader.getInstance().loadModel("bamboo/bamboo.obj"));
 		tree.offsetX(30);
-		tree.offsetY(0.5);
+		tree.offsetY(0.5f);
 		tree.offsetZ(7);
 		tree.setColor(Color.WHITE);
 		tree.setScale(1.5f);
@@ -283,10 +283,10 @@ public class StampApplication extends ApplicationGL {
 			if(!bsp.contains(position)) {
 				
 				//Add stone
-				Mesh mesh = new Mesh(stoneMesh);
+				ModelInstance mesh = new ModelInstance(stoneMesh);
 				mesh.setColor(Color.WHITE);
 				mesh.offsetX(currentX+1.4f);
-				mesh.offsetY(0.5);
+				mesh.offsetY(0.5f);
 				mesh.offsetZ(currentZ+0.5f);
 				mesh.setScale(0.3f);
 				
@@ -307,7 +307,7 @@ public class StampApplication extends ApplicationGL {
 		stone.texturedRender(gl);
 		gl.glPopMatrix();
 		
-		for (Mesh mesh : stones) {
+		for (ModelInstance mesh : stones) {
 			gl.glPushMatrix();
 			mesh.texturedRender(gl);
 			gl.glPopMatrix();	

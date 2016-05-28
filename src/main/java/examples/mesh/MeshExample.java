@@ -13,12 +13,12 @@ import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
-import br.com.luvia.linear.Mesh;
+import br.com.luvia.graphics.ModelInstance;
 
 public class MeshExample extends ApplicationGL {
 			
-	private Mesh stone;
-	private Mesh tree;
+	private ModelInstance stone;
+	private ModelInstance tree;
 	
 	private double angleY = 0;
 	private boolean rotate = true;
@@ -43,13 +43,13 @@ public class MeshExample extends ApplicationGL {
 		gl.glTexEnvi(GL2.GL_TEXTURE_ENV, GL2.GL_TEXTURE_ENV_MODE, GL2.GL_DECAL);
 		
 		//Load models
-		stone = new Mesh(MeshLoader.getInstance().loadModel("stone/stone.obj"));
+		stone = new ModelInstance(MeshLoader.getInstance().loadModel("stone/stone.obj"));
 		stone.setColor(Color.WHITE);
 		stone.offsetX(-2);
-		stone.offsetY(0.5);
+		stone.offsetY(0.5f);
 		stone.setScale(0.5f);
 		
-		tree = new Mesh(MeshLoader.getInstance().loadModel("bamboo/bamboo.obj"));
+		tree = new ModelInstance(MeshLoader.getInstance().loadModel("bamboo/bamboo.obj"));
 		tree.setColor(Color.WHITE);
 		tree.setScale(1.5f);
 		

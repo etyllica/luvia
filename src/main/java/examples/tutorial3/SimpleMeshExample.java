@@ -9,11 +9,11 @@ import br.com.abby.core.vbo.VBO;
 import br.com.etyllica.awt.SVGColor;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
-import br.com.luvia.linear.Mesh;
+import br.com.luvia.graphics.ModelInstance;
 
 public class SimpleMeshExample extends ApplicationGL {
 	
-	private Mesh bunny;
+	private ModelInstance bunny;
 	
 	public SimpleMeshExample(int width, int height) {
 		super(width, height);
@@ -33,7 +33,7 @@ public class SimpleMeshExample extends ApplicationGL {
 		
 		//Load bunny model
 		VBO bunnyVBO = MeshLoader.getInstance().loadModel("bunny.obj");
-		bunny = new Mesh(bunnyVBO);
+		bunny = new ModelInstance(bunnyVBO);
 		bunny.setColor(SVGColor.GHOST_WHITE);
 		
 		loading = 100;

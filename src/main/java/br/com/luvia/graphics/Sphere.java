@@ -1,4 +1,4 @@
-package br.com.luvia.geom;
+package br.com.luvia.graphics;
 
 import br.com.luvia.core.video.Graphics3D;
 

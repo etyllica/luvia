@@ -38,8 +38,7 @@ public class LuviaExamples extends Luvia {
 	@Override
 	public ApplicationGL startApplication() {
 
-		//initialSetup("../../../");
-		initialSetup("../");
+		initialSetup("../../../");
 		
 		//return new MixedRenderingExample(w, h);
 		//return new OrthographicDrawingExample(w, h);

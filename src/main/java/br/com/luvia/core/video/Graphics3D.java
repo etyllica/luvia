@@ -23,7 +23,7 @@ import br.com.abby.linear.ColoredPoint3D;
 import br.com.abby.linear.Frustrum;
 import br.com.etyllica.awt.AWTGraphics;
 import br.com.etyllica.core.linear.Point3D;
-import br.com.luvia.linear.Billboard;
+import br.com.luvia.graphics.Billboard;
 
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
