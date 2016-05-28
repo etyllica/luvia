@@ -22,7 +22,6 @@ import br.com.abby.core.vbo.VBO;
 import br.com.luvia.core.GL2Drawable;
 import br.com.luvia.material.Material;
 
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.jogamp.opengl.util.texture.Texture;
@@ -34,7 +33,7 @@ import com.jogamp.opengl.util.texture.Texture;
  *
  */
 
-public class ModelInstance implements GL2Drawable {
+public class ModelInstance extends GeometricForm implements GL2Drawable {
 
 	private VBO vbo;
 
@@ -43,12 +42,7 @@ public class ModelInstance implements GL2Drawable {
 	private boolean drawTexture = true;
 
 	private int[] indexes = new int[16];
-	
-	public Matrix4 transform = new Matrix4();
-	
-	//TODO Move to material
-	private Color color = Color.BLACK;
-	
+		
 	public ModelInstance() {
 		this(0,0,0);
 	}
@@ -338,50 +332,6 @@ public class ModelInstance implements GL2Drawable {
 		gl.glEnable(GL.GL_DEPTH_TEST);
 		wireframeRender(gl);
 		gl.glDisable(GL.GL_DEPTH_TEST);
-	}
-
-	public Vector3 getScale() {
-		return transform.getScale(new Vector3());
-	}
-
-	public void setScale(float scale) {
-		transform.scl(scale);
-	}
-	
-	public void setScale(Vector3 scale) {
-		transform.scl(scale);
-	}
-	
-	public void rotateX(float angle) {
-		transform.rotate(Vector3.X.mul(transform), angle);
-	}
-	
-	public void rotateY(float angle) {
-		transform.rotate(Vector3.Y.mul(transform), angle);
-	}
-	
-	public void rotateZ(float angle) {
-		transform.rotate(Vector3.Z.mul(transform), angle);
-	}
-
-	public Color getColor() {
-		return color;
-	}
-
-	public void setColor(Color color) {
-		this.color = color;
-	}
-
-	public void offsetX(float offsetX) {
-		transform.translate(offsetX, 0, 0);
-	}
-	
-	public void offsetY(float offsetY) {
-		transform.translate(0, offsetY, 0);
-	}
-	
-	public void offsetZ(float offsetZ) {
-		transform.translate(0, 0, offsetZ);
 	}
 	
 }

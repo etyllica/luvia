@@ -1,5 +1,7 @@
 package br.com.luvia.graphics;
 
+import com.badlogic.gdx.math.Vector3;
+
 import br.com.luvia.core.video.Graphics3D;
 
 public class Sphere extends GeometricForm {
@@ -12,7 +14,8 @@ public class Sphere extends GeometricForm {
 	}
 
 	public void draw(Graphics3D g) {
-		g.drawSphere(radius, x, y, z, Graphics3D.DEFAULT_RESOLUTION, color);	  
+		Vector3 position = position();
+		g.drawSphere(radius, position.x, position.y, position.z, Graphics3D.DEFAULT_RESOLUTION, color);	  
 	}
 
 }

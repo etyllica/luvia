@@ -818,4 +818,14 @@ public class Graphics3D extends AWTGraphics {
 		return 0;
 	}
 
+
+	public float[] colorAsArray(Color color) {
+		float r = (float)color.getRed()/255;
+		float g = (float)color.getGreen()/255;
+		float b = (float)color.getBlue()/255;
+		
+		float[] array = new float[]{r,g,b};
+		return array;
+	}
+
 }
