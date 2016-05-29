@@ -4,6 +4,7 @@ import br.com.luvia.Luvia;
 import br.com.luvia.core.context.ApplicationGL;
 import examples.box.OctreeClipping;
 import examples.box.OctreeRender;
+import examples.collision.AxisCollision;
 import examples.collision.CollisionApplication;
 import examples.collision.OrientedBoxCollision;
 import examples.custom.GridPerspective;
@@ -60,7 +61,8 @@ public class LuviaExamples extends Luvia {
 		//return new CollisionApplication(w, h);
 		//return new MeshExample(w, h);		
 		//return new LightExample(w, h);
-		return new StampApplication(w, h);
+		//return new StampApplication(w, h);
+		return new AxisCollision(w, h);
 	}
 
 }
