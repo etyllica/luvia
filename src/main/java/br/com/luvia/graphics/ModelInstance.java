@@ -6,7 +6,6 @@ import static javax.media.opengl.GL.GL_TEXTURE_2D;
 import static javax.media.opengl.GL.GL_TEXTURE_MAG_FILTER;
 import static javax.media.opengl.GL.GL_TEXTURE_MIN_FILTER;
 
-import java.awt.Color;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,16 +14,16 @@ import java.util.Set;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
-import br.com.abby.core.loader.MeshLoader;
-import br.com.abby.core.vbo.Face;
-import br.com.abby.core.vbo.Group;
-import br.com.abby.core.vbo.VBO;
-import br.com.luvia.core.GL2Drawable;
-import br.com.luvia.material.Material;
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.jogamp.opengl.util.texture.Texture;
+
+import br.com.abby.core.loader.MeshLoader;
+import br.com.abby.core.model.Face;
+import br.com.abby.core.model.Group;
+import br.com.abby.core.model.Model;
+import br.com.luvia.core.GL2Drawable;
+import br.com.luvia.material.Material;
 
 /**
  * 
@@ -35,7 +34,7 @@ import com.jogamp.opengl.util.texture.Texture;
 
 public class ModelInstance extends GeometricForm implements GL2Drawable {
 
-	private VBO vbo;
+	private Model model;
 
 	private Map<Group, Material> materials = new HashMap<Group, Material>();
 
@@ -52,10 +51,10 @@ public class ModelInstance extends GeometricForm implements GL2Drawable {
 		this.transform.setToTranslation(x, y, z);
 	}
 
-	public ModelInstance(VBO model) {
+	public ModelInstance(Model model) {
 		this(0,0,0);
 
-		this.vbo = model;
+		this.model = model;
 		loadMaterials();
 	}
 
@@ -67,12 +66,12 @@ public class ModelInstance extends GeometricForm implements GL2Drawable {
 	}
 
 	protected void loadVBO(String path) {
-		vbo = MeshLoader.getInstance().loadModel(path);
+		model = MeshLoader.getInstance().loadModel(path);
 	}
 
 	protected void loadMaterials() {
 		//For each group in VBO
-		for(Group group: vbo.getGroups()) {
+		for(Group group: model.getGroups()) {
 			//If has a material
 			if(group.getMaterial() != null) {
 				materials.put(group, new Material(group.getMaterial()));	
@@ -89,7 +88,7 @@ public class ModelInstance extends GeometricForm implements GL2Drawable {
 	}
 
 	public List<Vector3> getVertexes() {
-		return vbo.getVertices();
+		return model.getVertices();
 	}
 
 	public void wireframeRender(GL2 gl) {
@@ -105,7 +104,7 @@ public class ModelInstance extends GeometricForm implements GL2Drawable {
 		drawTexture = false;
 
 		// Draw Model
-		for(Group group: vbo.getGroups()) {
+		for(Group group: model.getGroups()) {
 
 			for(Face face: group.getFaces()) {
 				int vertices = face.vertexIndex.length;
@@ -144,7 +143,7 @@ public class ModelInstance extends GeometricForm implements GL2Drawable {
 		
 		Texture texture = null;
 
-		for(Group group: vbo.getGroups()) {
+		for(Group group: model.getGroups()) {
 
 			drawTexture = false;
 			texture = setupTexture(gl, texture, group);
@@ -167,7 +166,7 @@ public class ModelInstance extends GeometricForm implements GL2Drawable {
 	public void simpleDraw(GL2 gl) {
 		Texture texture = null;
 
-		for(Group group: vbo.getGroups()) {
+		for(Group group: model.getGroups()) {
 
 			drawTexture = false;
 			texture = setupTexture(gl, texture, group);
@@ -276,7 +275,7 @@ public class ModelInstance extends GeometricForm implements GL2Drawable {
 	private void drawWireFrameFace(GL2 gl, Face face) {
 		for(int i = 0; i < face.vertexIndex.length; i++) {
 			int index = face.vertexIndex[indexes[i]];
-			Vector3 vertex = vbo.getVertices().get(index);
+			Vector3 vertex = model.getVertices().get(index);
 			gl.glVertex3f(vertex.x, vertex.y, vertex.z);					
 		}
 	}
@@ -297,17 +296,17 @@ public class ModelInstance extends GeometricForm implements GL2Drawable {
 			int vertexIndex = face.vertexIndex[index];
 
 			//Set normals if has it
-			if(!vbo.getNormals().isEmpty() && face.normalIndex!=null) {
-				Vector3 normal = vbo.getNormals().get(face.normalIndex[index]);
+			if(!model.getNormals().isEmpty() && face.normalIndex!=null) {
+				Vector3 normal = model.getNormals().get(face.normalIndex[index]);
 				gl.glNormal3f(normal.x, normal.y, normal.x);
 			}
 
 			if(drawTexture) {
-				Vector2 texture = vbo.getTextures().get(face.textureIndex[index]);
+				Vector2 texture = model.getTextures().get(face.textureIndex[index]);
 				gl.glTexCoord2f(texture.x, texture.y);
 			}
 
-			Vector3 vertex = vbo.getVertices().get(vertexIndex);
+			Vector3 vertex = model.getVertices().get(vertexIndex);
 			gl.glVertex3f(vertex.x, vertex.y, vertex.z);
 		}
 	}
@@ -332,6 +331,10 @@ public class ModelInstance extends GeometricForm implements GL2Drawable {
 		gl.glEnable(GL.GL_DEPTH_TEST);
 		wireframeRender(gl);
 		gl.glDisable(GL.GL_DEPTH_TEST);
+	}
+
+	public Model getModel() {
+		return model;
 	}
 	
 }

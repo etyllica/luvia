@@ -3,13 +3,11 @@ package br.com.luvia.loader.gis;
 import java.io.File;
 import java.io.IOException;
 
-import junit.framework.TestCase;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import br.com.luvia.gis.GISInfo;
-import br.com.luvia.loader.gis.TFWLoader;
+import junit.framework.TestCase;
 
 public class TFWLoaderTest extends TestCase {
 	

@@ -5,8 +5,8 @@ import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
 import br.com.abby.core.loader.MeshLoader;
-import br.com.abby.core.vbo.Face;
-import br.com.abby.core.vbo.VBO;
+import br.com.abby.core.model.Face;
+import br.com.abby.core.model.Model;
 import br.com.abby.storage.octree.Octree;
 import br.com.abby.storage.octree.OctreeNode;
 import br.com.abby.storage.octree.VolumeOctree;
@@ -22,7 +22,7 @@ public class OctreeRender extends ApplicationGL {
 	
 	private Octree<Face> octree;
 	
-	private VBO bunnyVBO;
+	private Model bunnyVBO;
 	
 	private ModelInstance bunny;
 	

@@ -21,7 +21,7 @@ import com.badlogic.gdx.math.collision.Ray;
 import com.jogamp.opengl.util.texture.Texture;
 
 import br.com.abby.core.loader.MeshLoader;
-import br.com.abby.core.vbo.VBO;
+import br.com.abby.core.model.Model;
 import br.com.abby.linear.ColoredPoint3D;
 import br.com.etyllica.awt.SVGColor;
 import br.com.etyllica.core.event.KeyEvent;
@@ -55,7 +55,7 @@ public class StampApplication extends ApplicationGL {
 	int colide = NONE;
 	int selected = NONE;
 	
-	private VBO stoneMesh;
+	private Model stoneMesh;
 
 	Set<ColoredPoint3D> bsp = new HashSet<ColoredPoint3D>();
 	private ColoredPoint3D position;

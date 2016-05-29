@@ -1,11 +1,10 @@
 package br.com.luvia.loader;
 
-import java.io.File;
 import java.io.IOException;
 
 import br.com.etyllica.loader.LoaderImpl;
 import br.com.luvia.graphics.Block;
-import br.com.luvia.loader.block.BlockJsonLoader;
+import br.com.luvia.loader.block.json.BlockJsonLoader;
 
 public class BlockLoader extends LoaderImpl {
 
@@ -14,7 +13,7 @@ public class BlockLoader extends LoaderImpl {
 	private BlockLoader() {
 		super();
 
-		folder = "assets/images/";
+		folder = "assets/models/blocks/";
 	}
 
 	public static BlockLoader getInstance() {
@@ -26,22 +25,15 @@ public class BlockLoader extends LoaderImpl {
 		return instance;
 	}
 
-	public Block loadInfo(String fileName) {
-		return loadInfo(getPath()+folder, fileName);
+	public Block loadBlock(String fileName) throws IOException {
+		return loadBlock(getPath()+folder, fileName);
 	}
 	
-	public Block loadInfo(String fullPath, String fileName) {
+	public Block loadBlock(String fullPath, String fileName) throws IOException {
 
-			File file = new File(fullPath+fileName);
+		String filePath = fullPath+fileName;
 
-			try {
-				return new BlockJsonLoader().loadBlock(file);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		return null;
+		return new BlockJsonLoader().loadBlock(filePath);
 	}
 
 }

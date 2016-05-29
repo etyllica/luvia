@@ -4,6 +4,6 @@ import java.io.IOException;
 
 import br.com.luvia.graphics.Block;
 
-public interface BlockFileLoader {
-	public Block loadBlock(String path) throws IOException;
+public interface BlockWriter {
+	public void saveBlock(Block block, String path) throws IOException;
 }

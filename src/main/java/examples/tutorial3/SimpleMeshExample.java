@@ -5,7 +5,7 @@ import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
 import br.com.abby.core.loader.MeshLoader;
-import br.com.abby.core.vbo.VBO;
+import br.com.abby.core.model.Model;
 import br.com.etyllica.awt.SVGColor;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.video.Graphics3D;
@@ -32,7 +32,7 @@ public class SimpleMeshExample extends ApplicationGL {
 		gl.glShadeModel(GL2.GL_SMOOTH); // blends colors nicely, and smoothes out lighting
 		
 		//Load bunny model
-		VBO bunnyVBO = MeshLoader.getInstance().loadModel("bunny.obj");
+		Model bunnyVBO = MeshLoader.getInstance().loadModel("bunny.obj");
 		bunny = new ModelInstance(bunnyVBO);
 		bunny.setColor(SVGColor.GHOST_WHITE);
 		
