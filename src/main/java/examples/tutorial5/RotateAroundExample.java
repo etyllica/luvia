@@ -67,7 +67,7 @@ public class RotateAroundExample extends ApplicationGL {
 
 	@Override
 	public void load() {
-		camera = new Camera(0, 15, 0.001);
+		camera = new Camera(0, 15, 0.001f);
 		loading = 100;
 	}
 

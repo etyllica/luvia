@@ -58,7 +58,7 @@ public class BillboardExample extends ApplicationGL {
 
 	@Override
 	public void load() {
-		camera = new Camera(0, 15, 0.001);
+		camera = new Camera(0, 15f, 0.001f);
 		loading = 100;
 	}
 

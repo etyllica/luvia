@@ -61,7 +61,7 @@ public class GridMenuApplication extends ApplicationGL {
 	
 	@Override
 	public void load() {
-		camera = new Camera(0, 10, 0.001);
+		camera = new Camera(0, 10f, 0.001f);
 		
 		loading = 100;
 	}

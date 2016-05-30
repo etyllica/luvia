@@ -79,6 +79,15 @@ public class Graphics3D extends AWTGraphics {
 		gl.glVertex3d(b.getX(), b.getY(), b.getZ());
 		gl.glEnd();
 	}
+	
+	public void drawLine(Point3D a, Vector3 b) {
+		GL2 gl = getGL2();
+
+		gl.glBegin(GL.GL_LINES);
+		gl.glVertex3d(a.getX(), a.getY(), a.getZ());
+		gl.glVertex3f(b.x, b.y, b.z);
+		gl.glEnd();
+	}
 
 	public void drawSphere(ColoredPoint3D point, double radius) {
 		drawSphere(radius, point.getX(), point.getY(), point.getZ());
@@ -242,7 +251,7 @@ public class Graphics3D extends AWTGraphics {
 		drawable.getGL().getGL2().glMatrixMode(GL2.GL_MODELVIEW);
 		drawable.getGL().getGL2().glLoadIdentity();
 
-		glu.gluLookAt( camera.getX(), camera.getY(), camera.getZ(), camera.getTarget().getX(), camera.getTarget().getY(), camera.getTarget().getZ(), 0, 1, 0 );
+		glu.gluLookAt( camera.getX(), camera.getY(), camera.getZ(), camera.getTarget().x, camera.getTarget().y, camera.getTarget().z, 0, 1, 0 );
 	}
 
 	public void aimCamera(ColoredPoint3D cameraPoint, double angleX, double angleY, double angleZ) {
@@ -291,6 +300,10 @@ public class Graphics3D extends AWTGraphics {
 
 	public void drawPoint(Point3D point, Color color) {
 		drawSphere(0.01, point.getX(), point.getY(), point.getZ(), 16, color);
+	}
+	
+	public void drawPoint(Vector3 point, Color color) {
+		drawSphere(0.01, point.x, point.y, point.z, 16, color);
 	}
 
 	public void drawSphere(double radius, double x,
