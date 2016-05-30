@@ -49,6 +49,36 @@ public class GeometricForm {
 		this.color = color;
 	}
 
+	public void setX(float x) {
+		Vector3 position = transform.getTranslation(new Vector3());
+		transform.setToTranslation(x, position.y, position.z);
+	}
+	
+	public float getX() {
+		Vector3 position = transform.getTranslation(new Vector3());
+		return position.x;
+	}
+	
+	public void setY(float y) {
+		Vector3 position = transform.getTranslation(new Vector3());
+		transform.setToTranslation(position.x, y, position.z);
+	}
+	
+	public float getY() {
+		Vector3 position = transform.getTranslation(new Vector3());
+		return position.y;
+	}
+	
+	public void setZ(float z) {
+		Vector3 position = transform.getTranslation(new Vector3());
+		transform.setToTranslation(position.x, position.y, z);
+	}
+	
+	public float getZ() {
+		Vector3 position = transform.getTranslation(new Vector3());
+		return position.z;
+	}
+	
 	public void offsetX(float offsetX) {
 		transform.translate(offsetX, 0, 0);
 	}
