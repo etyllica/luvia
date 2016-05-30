@@ -230,15 +230,10 @@ public class Graphics3D extends AWTGraphics {
 		glu.gluUnProject(mx, viewport.get(3) - my, 0f, modelview, projection, viewport, positionNear);
 		glu.gluUnProject(mx, viewport.get(3) - my, 1f, modelview, projection, viewport, positionFar);
 
-		Ray ray = new Ray(
-		    new Vector3(
-		        positionNear.get(0),
-		        positionNear.get(1),
-		        positionNear.get(2)),
-		    new Vector3(
-		        positionFar.get(0),
-		        positionFar.get(1),
-		        positionFar.get(2)));
+		Vector3 origin = new Vector3(positionNear.get(0), positionNear.get(1), positionNear.get(2));
+		Vector3 direction = new Vector3(positionFar.get(0)-origin.x, positionFar.get(1)-origin.y, positionFar.get(2)-origin.z);
+
+		Ray ray = new Ray(origin, direction);
 		
 		return ray;
 	}

@@ -186,7 +186,7 @@ public class OrientedBoxCollision extends ApplicationGL {
 		//Draw Scene
 		drawAxis(gl);
 		
-		Ray ray = drawable.getCameraRay(mx+32, my);
+		Ray ray = drawable.getCameraRay(mx, my);
 		if(drawRay) {
 			drawRay(gl, ray);
 		}
