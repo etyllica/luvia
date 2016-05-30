@@ -1,4 +1,4 @@
-package br.com.luvia.core.video;
+package br.com.luvia.core.graphics;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

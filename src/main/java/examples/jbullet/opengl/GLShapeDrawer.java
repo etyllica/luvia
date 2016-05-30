@@ -25,7 +25,7 @@ package examples.jbullet.opengl;
 
 import java.nio.FloatBuffer;
 
-import br.com.luvia.core.video.Graphics3D;
+import br.com.luvia.core.graphics.Graphics3D;
 
 import com.bulletphysics.util.ObjectArrayList;
 import com.bulletphysics.collision.broadphase.BroadphaseNativeType;

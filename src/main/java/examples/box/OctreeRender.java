@@ -15,7 +15,7 @@ import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.etyllica.core.linear.Point3D;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.video.Graphics3D;
+import br.com.luvia.core.graphics.Graphics3D;
 import br.com.luvia.graphics.ModelInstance;
 
 public class OctreeRender extends ApplicationGL {

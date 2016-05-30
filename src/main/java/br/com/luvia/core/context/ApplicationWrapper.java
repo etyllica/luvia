@@ -3,7 +3,7 @@ package br.com.luvia.core.context;
 import br.com.etyllica.core.context.Application;
 import br.com.etyllica.core.context.Context;
 import br.com.etyllica.core.graphics.Graphics;
-import br.com.luvia.core.G3DEventListener;
+import br.com.luvia.core.graphics.G3DEventListener;
 
 public abstract class ApplicationWrapper extends ApplicationGL implements G3DEventListener {
 	

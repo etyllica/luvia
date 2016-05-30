@@ -3,7 +3,7 @@ package com.badlogic.gdx;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLBase;
 
-import br.com.luvia.core.video.Graphics3D;
+import br.com.luvia.core.graphics.Graphics3D;
 
 public class Gdx {
 

@@ -10,7 +10,7 @@ import javax.media.opengl.GL2;
 import javax.vecmath.Vector3f;
 
 import br.com.etyllica.core.event.KeyEvent;
-import br.com.luvia.core.video.Graphics3D;
+import br.com.luvia.core.graphics.Graphics3D;
 
 import com.bulletphysics.collision.broadphase.BroadphaseInterface;
 import com.bulletphysics.collision.broadphase.DbvtBroadphase;

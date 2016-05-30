@@ -37,7 +37,7 @@ import java.util.zip.GZIPOutputStream;
 import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3f;
 
-import br.com.luvia.core.video.Graphics3D;
+import br.com.luvia.core.graphics.Graphics3D;
 
 import com.bulletphysics.BulletGlobals;
 import com.bulletphysics.BulletStats;

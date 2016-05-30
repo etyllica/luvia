@@ -8,7 +8,7 @@ import br.com.abby.linear.Camera;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.video.Graphics3D;
+import br.com.luvia.core.graphics.Graphics3D;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

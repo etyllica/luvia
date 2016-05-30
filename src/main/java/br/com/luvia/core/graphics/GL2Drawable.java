@@ -1,4 +1,4 @@
-package br.com.luvia.core;
+package br.com.luvia.core.graphics;
 
 import javax.media.opengl.GL2;
 

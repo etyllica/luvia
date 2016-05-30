@@ -12,7 +12,7 @@ import br.com.abby.storage.octree.OctreeNode;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.video.Graphics3D;
+import br.com.luvia.core.graphics.Graphics3D;
 import br.com.luvia.graphics.ModelInstance;
 
 public class MeshExample extends ApplicationGL {

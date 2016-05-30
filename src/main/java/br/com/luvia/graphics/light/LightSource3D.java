@@ -5,7 +5,7 @@ import java.nio.FloatBuffer;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
-import br.com.luvia.core.video.Graphics3D;
+import br.com.luvia.core.graphics.Graphics3D;
 import br.com.luvia.graphics.GeometricForm;
 
 import com.badlogic.gdx.math.Vector3;

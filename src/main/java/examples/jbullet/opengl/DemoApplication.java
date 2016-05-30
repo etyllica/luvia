@@ -38,7 +38,7 @@ import br.com.etyllica.core.event.KeyState;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.event.PointerState;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.video.Graphics3D;
+import br.com.luvia.core.graphics.Graphics3D;
 
 import com.bulletphysics.BulletGlobals;
 import com.bulletphysics.BulletStats;

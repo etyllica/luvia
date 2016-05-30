@@ -3,7 +3,7 @@ package br.com.luvia.graphics;
 import javax.media.opengl.GL2;
 
 import br.com.etyllica.core.linear.Point3D;
-import br.com.luvia.core.GL2Drawable;
+import br.com.luvia.core.graphics.GL2Drawable;
 import br.com.luvia.loader.TextureLoader;
 
 import com.jogamp.opengl.util.texture.Texture;

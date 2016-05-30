@@ -8,7 +8,7 @@ import br.com.abby.core.loader.MeshLoader;
 import br.com.abby.core.model.Model;
 import br.com.etyllica.awt.SVGColor;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.video.Graphics3D;
+import br.com.luvia.core.graphics.Graphics3D;
 import br.com.luvia.graphics.ModelInstance;
 
 public class SimpleMeshExample extends ApplicationGL {

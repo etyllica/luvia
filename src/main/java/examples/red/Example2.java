@@ -5,7 +5,7 @@ import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.video.Graphics3D;
+import br.com.luvia.core.graphics.Graphics3D;
 
 /**
  * Based on example found at: https://www3.ntu.edu.sg/home/ehchua/programming/opengl/JOGL2.0.html

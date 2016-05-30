@@ -2,7 +2,7 @@ package br.com.luvia.graphics;
 
 import com.badlogic.gdx.math.Vector3;
 
-import br.com.luvia.core.video.Graphics3D;
+import br.com.luvia.core.graphics.Graphics3D;
 
 public class Sphere extends GeometricForm {
 

@@ -5,8 +5,8 @@ import javax.media.opengl.GL2;
 import br.com.abby.linear.ColoredPoint3D;
 import br.com.etyllica.core.context.Application;
 import br.com.etyllica.core.graphics.Graphics;
-import br.com.luvia.core.G3DEventListener;
-import br.com.luvia.core.video.Graphics3D;
+import br.com.luvia.core.graphics.G3DEventListener;
+import br.com.luvia.core.graphics.Graphics3D;
 
 import com.badlogic.gdx.math.Matrix4;
 

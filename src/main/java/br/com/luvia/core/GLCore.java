@@ -30,7 +30,7 @@ import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.context.DefaultLoadApplicationGL;
 import br.com.luvia.core.glg2d.GLG2DPanel;
 import br.com.luvia.core.glg2d.GLGraphics2D;
-import br.com.luvia.core.video.Graphics3D;
+import br.com.luvia.core.graphics.Graphics3D;
 import br.com.luvia.loader.GISInfoLoader;
 import br.com.luvia.loader.TextureLoader;
 

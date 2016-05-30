@@ -5,7 +5,7 @@ import java.awt.Color;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.etyllica.layer.ImageLayer;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.video.Graphics3D;
+import br.com.luvia.core.graphics.Graphics3D;
 
 public class OrthographicDrawingExample extends ApplicationGL {
 

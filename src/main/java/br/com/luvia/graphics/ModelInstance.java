@@ -22,7 +22,7 @@ import br.com.abby.core.loader.MeshLoader;
 import br.com.abby.core.model.Face;
 import br.com.abby.core.model.Group;
 import br.com.abby.core.model.Model;
-import br.com.luvia.core.GL2Drawable;
+import br.com.luvia.core.graphics.GL2Drawable;
 import br.com.luvia.material.Material;
 
 /**

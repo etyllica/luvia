@@ -6,7 +6,7 @@ import javax.media.opengl.GL2;
 
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.video.Graphics3D;
+import br.com.luvia.core.graphics.Graphics3D;
 
 public class SphereExample extends ApplicationGL {
 

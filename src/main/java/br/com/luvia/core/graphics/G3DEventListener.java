@@ -1,6 +1,5 @@
-package br.com.luvia.core;
+package br.com.luvia.core.graphics;
 
-import br.com.luvia.core.video.Graphics3D;
 
 public interface G3DEventListener {
 
