@@ -3,15 +3,9 @@ package examples.collision;
 
 import java.awt.Color;
 
-import javax.lang.model.type.IntersectionType;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
-
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.BoundingBox;
-import com.badlogic.gdx.math.collision.Ray;
 
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.MouseButton;
@@ -21,6 +15,11 @@ import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.controller.FlyView;
 import br.com.luvia.core.graphics.Graphics3D;
 
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
+import com.badlogic.gdx.math.collision.Ray;
+
 public class AxisCollision extends ApplicationGL {
 
 	protected int mx = 0;
@@ -29,25 +28,32 @@ public class AxisCollision extends ApplicationGL {
 	protected boolean click = false;
 
 	protected FlyView view;
-	
+
 	private static final int NONE = -1;
-	
+	private static final int X = 0;
+	private static final int Y = 1;
+	private static final int Z = 2;
+
 	boolean drawRay = false;
 	boolean drawBoundingBoxes = true;
-	
+
 	double tileSize = 1;
-	int colide = NONE;
 	int selected = NONE;
+	int sx, sy;
+	float value;
 
 	float axisSize = 100f;
 	float axisWidth = 2.5f;
-	
+	float speed = 0.1f;
+
 	BoundingBox xAxis;
 	BoundingBox yAxis;
 	BoundingBox zAxis;
 	private static final BoundingBox NO_AXIS = new BoundingBox();
 	BoundingBox collisionAxis;
-	
+
+	Vector3 position = new Vector3();
+
 	public AxisCollision(int w, int h) {
 		super(w, h);
 	}
@@ -69,7 +75,7 @@ public class AxisCollision extends ApplicationGL {
 		gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, GL.GL_NEAREST);
 		gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, GL.GL_NEAREST);
 		gl.glTexEnvi(GL2.GL_TEXTURE_ENV, GL2.GL_TEXTURE_ENV_MODE, GL2.GL_DECAL);
-		
+
 		xAxis = new BoundingBox(new Vector3(0, -axisWidth/2, -axisWidth/2), new Vector3(axisSize, axisWidth/2, axisWidth/2));
 		yAxis = new BoundingBox(new Vector3(-axisWidth/2, 0, -axisWidth/2), new Vector3(axisWidth/2, axisSize, axisWidth/2));
 		zAxis = new BoundingBox(new Vector3(-axisWidth/2, -axisWidth/2, 0), new Vector3(axisWidth/2, axisWidth/2, axisSize));
@@ -111,11 +117,7 @@ public class AxisCollision extends ApplicationGL {
 		v.scl(axisSize);
 
 		//Draw Camera Axis
-		if (colide >= 0) {
-			gl.glColor3d(1.0, 0.0, 0.0);
-		} else {
-			gl.glColor3d(0.0, 0.0, 1.0);
-		}
+		gl.glColor3d(0.0, 0.0, 1.0);
 
 		gl.glBegin(GL.GL_LINES);
 		gl.glVertex3d(view.getX(), 1, view.getZ());
@@ -157,13 +159,53 @@ public class AxisCollision extends ApplicationGL {
 
 		mx = event.getX();
 		my = event.getY();
-		
+
 		if(event.isButtonDown(MouseButton.MOUSE_BUTTON_LEFT)) {
-			click = true;
+
+			if(!click) {
+				click = true;
+
+				if (collisionAxis == xAxis) {
+					selected = X;
+					sx = mx;
+					sy = my;
+					value = position.x;
+				} else if(collisionAxis == yAxis) {
+					selected = Y;
+					sx = mx;
+					sy = my;
+					value = position.y;
+				} else if(collisionAxis == zAxis) {
+					selected = Z;
+					sx = mx;
+					sy = my;
+					value = position.z;
+				}
+			}
+
 		} else if(event.isButtonUp(MouseButton.MOUSE_BUTTON_LEFT)) {
 			click = false;
+			selected = NONE;
 		}
-		
+
+		if (selected != NONE) {
+
+			int deltaX = mx-sx;
+			int deltaY = my-sy;
+			
+			if (selected == X) {
+				float offset = speed*deltaX;
+				position.x = value-offset;
+			} else if (selected == Y) {
+				float offset = speed*deltaY;
+				position.y = value-offset;
+			} else if (selected == Z) {
+				float offset = speed*(deltaX+deltaY)/2;
+				position.z = value-offset;
+			}
+
+		}
+
 		if(event.isButtonDown(MouseButton.MOUSE_BUTTON_RIGHT)) {
 			drawRay = true;
 		} else if(event.isButtonUp(MouseButton.MOUSE_BUTTON_RIGHT)) {
@@ -183,48 +225,48 @@ public class AxisCollision extends ApplicationGL {
 
 		//Transform by Aim
 		drawable.aimCamera(view.getAim());
-		
+
+		gl.glTranslatef(position.x, position.y, position.z);
+
 		//Draw Scene
 		drawAxis(gl);
-		
-		if (collisionAxis != xAxis) {
-			gl.glColor3d(1.0, 0.0, 0.0);
-		} else {
+
+		if (selected == X || collisionAxis == xAxis) {
 			gl.glColor3d(1.0, 1.0, 0.0);
+		} else {
+			gl.glColor3d(1.0, 0.0, 0.0);
 		}
 		drawable.drawBoundingBox(xAxis);
-		
-		if (collisionAxis != yAxis) {
-			gl.glColor3d(0.0, 1.0, 0.0);
-		} else {
+
+		if (selected == Y || collisionAxis == yAxis) {
 			gl.glColor3d(1.0, 1.0, 0.0);
+		} else {
+			gl.glColor3d(0.0, 1.0, 0.0);
 		}
 		drawable.drawBoundingBox(yAxis);
-		
-		if (collisionAxis != zAxis) {
-			gl.glColor3d(0.0, 0.0, 1.0);
-		} else {
+
+		if (selected == Z || collisionAxis == zAxis) {
 			gl.glColor3d(1.0, 1.0, 0.0);
+		} else {
+			gl.glColor3d(0.0, 0.0, 1.0);
 		}
 		drawable.drawBoundingBox(zAxis);
-		
+
 		Ray ray = drawable.getCameraRay(mx, my);
 		if(drawRay) {
 			drawRay(gl, ray);
 		}
-		
+
 		if (Intersector.intersectRayBoundsFast(ray, xAxis)) {
 			collisionAxis = xAxis;
 		} else if (Intersector.intersectRayBoundsFast(ray, yAxis)) {
 			collisionAxis = yAxis;
 		} else if (Intersector.intersectRayBoundsFast(ray, zAxis)) {
 			collisionAxis = zAxis;
-		} else {
+		} else if(selected == NONE) {
 			collisionAxis = NO_AXIS;
 		}
-		
-		colide = -1;
-		
+
 		gl.glFlush();
 
 	}
@@ -237,7 +279,7 @@ public class AxisCollision extends ApplicationGL {
 		g.setColor(Color.WHITE);
 		g.drawShadow(20,60, "Scene",Color.BLACK);
 		g.drawShadow(20,80, Double.toString(view.getAim().getAngleY()),Color.BLACK);
-		
+
 		//orangeAim.simpleDraw(g, mx-orangeAim.getW()/2, my-orangeAim.getH()/2);
 	}
 
