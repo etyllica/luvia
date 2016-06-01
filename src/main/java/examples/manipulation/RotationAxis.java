@@ -1,4 +1,4 @@
-package examples.collision;
+package examples.manipulation;
 
 
 import java.awt.Color;
@@ -16,15 +16,17 @@ import br.com.luvia.core.controller.FlyView;
 import br.com.luvia.core.graphics.Graphics3D;
 
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.math.collision.Ray;
 
-public class AxisCollision extends ApplicationGL {
+public class RotationAxis extends ApplicationGL {
 
 	protected int mx = 0;
 	protected int my = 0;
-
+	
 	protected boolean click = false;
 
 	protected FlyView view;
@@ -41,6 +43,7 @@ public class AxisCollision extends ApplicationGL {
 	int selected = NONE;
 	int sx, sy;
 	float value;
+	float lastOffset;
 
 	float axisSize = 100f;
 	float axisWidth = 2.5f;
@@ -52,9 +55,11 @@ public class AxisCollision extends ApplicationGL {
 	private static final BoundingBox NO_AXIS = new BoundingBox();
 	BoundingBox collisionAxis;
 
-	Vector3 position = new Vector3();
+	Matrix4 transform = new Matrix4();
+	Quaternion rotation = new Quaternion();
+	Vector3 rotationAxis = new Vector3();
 
-	public AxisCollision(int w, int h) {
+	public RotationAxis(int w, int h) {
 		super(w, h);
 	}
 
@@ -106,9 +111,8 @@ public class AxisCollision extends ApplicationGL {
 		gl.glVertex3d(0.0, 0.0, 0.0);
 		gl.glVertex3d(0, 0, axisSize);
 		gl.glEnd();
-
 	}
-
+	
 	private void drawRay(GL2 gl, Ray ray) {
 
 		float axisSize = 50;
@@ -169,17 +173,23 @@ public class AxisCollision extends ApplicationGL {
 					selected = X;
 					sx = mx;
 					sy = my;
-					value = position.x;
+					transform.getRotation(rotation);
+					value = rotation.getAxisAngle(Vector3.X);
+					lastOffset = 0;
 				} else if(collisionAxis == yAxis) {
 					selected = Y;
 					sx = mx;
 					sy = my;
-					value = position.y;
+					transform.getRotation(rotation);
+					value = rotation.getAxisAngle(Vector3.Y);
+					lastOffset = 0;
 				} else if(collisionAxis == zAxis) {
 					selected = Z;
 					sx = mx;
 					sy = my;
-					value = position.z;
+					transform.getRotation(rotation);
+					value = rotation.getAxisAngle(Vector3.Z);
+					lastOffset = 0;
 				}
 			}
 
@@ -194,14 +204,24 @@ public class AxisCollision extends ApplicationGL {
 			int deltaY = my-sy;
 			
 			if (selected == X) {
-				float offset = speed*deltaX;
-				position.x = value-offset;
+				float offset = (speed*deltaX);
+
+				transform.rotate(Vector3.Z, -lastOffset);
+				transform.rotate(Vector3.Z, value-offset);
+				lastOffset = value-offset;
 			} else if (selected == Y) {
-				float offset = speed*deltaY;
-				position.y = value-offset;
+				float offset = (speed*deltaY);
+				
+				transform.rotate(Vector3.X, -lastOffset);
+				transform.rotate(Vector3.X, value-offset);
+				lastOffset = value-offset;
+				
 			} else if (selected == Z) {
-				float offset = speed*(deltaX+deltaY)/2;
-				position.z = value-offset;
+				float offset = (speed*(deltaX+deltaY)/2);
+								
+				transform.rotate(Vector3.Y, -lastOffset);
+				transform.rotate(Vector3.Y, value-offset);
+				lastOffset = value-offset;
 			}
 
 		}
@@ -225,10 +245,12 @@ public class AxisCollision extends ApplicationGL {
 
 		//Transform by Aim
 		drawable.aimCamera(view.getAim());
-
-		gl.glTranslatef(position.x, position.y, position.z);
-
+		
 		//Draw Scene
+		drawable.setColor(Color.BLACK);
+		drawable.drawGrid(1, 150, 150);
+		
+		gl.glMultMatrixf(transform.val, 0);
 		drawAxis(gl);
 
 		if (selected == X || collisionAxis == xAxis) {

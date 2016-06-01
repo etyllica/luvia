@@ -607,6 +607,32 @@ public class Graphics3D extends AWTGraphics {
 		gl.glVertex2f(-halfSize,halfSize);     //   at (0,0,0).
 		gl.glEnd();
 	}
+	
+	public void drawGrid(float size, int rows, int columns) {
+		GL2 gl = getGL2();
+		
+		gl.glColor3d(1.0, 0.0, 0.0);
+		
+		//Axis Width
+		gl.glLineWidth(1f);
+		
+		//Draw Rows
+		gl.glBegin(GL.GL_LINES);
+		
+		int x = 0, y = 0;
+		
+		for (int i = 0;i < rows; i++) {
+			gl.glVertex3d(x+size*i, 0.0, y+size*columns);
+			gl.glVertex3d(x+size*i, 0, y);
+		}
+		
+		for (int j = 0;j < columns; j++) {
+			gl.glVertex3d(x+size*rows, 0.0, y+size*j);
+			gl.glVertex3d(x, 0, y+size*j);
+		}
+		
+		gl.glEnd();
+	}
 
 	/*
 	 * Draw camera model	
