@@ -7,6 +7,12 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
+import com.badlogic.gdx.math.collision.Ray;
+
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.MouseButton;
 import br.com.etyllica.core.event.PointerEvent;
@@ -14,13 +20,6 @@ import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.controller.FlyView;
 import br.com.luvia.core.graphics.Graphics3D;
-
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Quaternion;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.BoundingBox;
-import com.badlogic.gdx.math.collision.Ray;
 
 public class RotationAxis extends ApplicationGL {
 
@@ -32,12 +31,19 @@ public class RotationAxis extends ApplicationGL {
 	protected FlyView view;
 
 	private static final int NONE = -1;
-	private static final int X = 0;
-	private static final int Y = 1;
-	private static final int Z = 2;
+	private static final int AXIS_X = 0;
+	private static final int AXIS_Y = 1;
+	private static final int AXIS_Z = 2;
 
 	boolean drawRay = false;
 	boolean drawBoundingBoxes = true;
+	boolean rotating = false;
+	
+	boolean turnRight = false;
+	boolean turnLeft = false;
+	float keyboardAngle = 0;
+	float turnSpeed = 1;
+	
 
 	double tileSize = 1;
 	int selected = NONE;
@@ -56,8 +62,8 @@ public class RotationAxis extends ApplicationGL {
 	BoundingBox collisionAxis;
 
 	Matrix4 transform = new Matrix4();
-	Quaternion rotation = new Quaternion();
-	Vector3 rotationAxis = new Vector3();
+	
+	Vector3 axis = new Vector3();
 
 	public RotationAxis(int w, int h) {
 		super(w, h);
@@ -113,6 +119,20 @@ public class RotationAxis extends ApplicationGL {
 		gl.glEnd();
 	}
 	
+	private void drawOriginalAxis(GL2 gl) {
+
+		//Draw Axis
+		gl.glLineWidth(axisWidth*3);
+
+		gl.glBegin(GL.GL_LINES);
+		//Draw Rotation Axis
+		gl.glColor3d(0.8, 0.2, 0.8);
+		gl.glVertex3d(0.0, 0.0, 0.0);
+		gl.glVertex3d(axis.x*axisSize, axis.y*axisSize, axis.z*axisSize);
+		gl.glEnd();
+
+	}
+	
 	private void drawRay(GL2 gl, Ray ray) {
 
 		float axisSize = 50;
@@ -157,6 +177,24 @@ public class RotationAxis extends ApplicationGL {
 		} else if(event.isKeyUp(KeyEvent.VK_R)) {
 			drawRay = false;
 		}
+		
+		if(event.isKeyDown(KeyEvent.VK_L)) {
+			turnRight = true;
+		} else if(event.isKeyUp(KeyEvent.VK_L)) {
+			turnRight = false;
+		}
+		
+		if(event.isKeyDown(KeyEvent.VK_K)) {
+			turnLeft = true;
+		} else if(event.isKeyUp(KeyEvent.VK_K)) {
+			turnLeft = false;
+		}
+		
+		if(event.isAnyKeyDown(KeyEvent.VK_CTRL_LEFT, KeyEvent.VK_CTRL_RIGHT)) {
+			rotating = true;
+		} else if(event.isAnyKeyUp(KeyEvent.VK_CTRL_LEFT, KeyEvent.VK_CTRL_RIGHT)) {
+			rotating = false;
+		}
 	}
 
 	public void updateMouse(PointerEvent event) {
@@ -170,27 +208,27 @@ public class RotationAxis extends ApplicationGL {
 				click = true;
 
 				if (collisionAxis == xAxis) {
-					selected = X;
+					selected = AXIS_X;
 					sx = mx;
 					sy = my;
-					transform.getRotation(rotation);
-					value = rotation.getAxisAngle(Vector3.X);
-					lastOffset = 0;
+					
+					axis = Vector3.X;
 				} else if(collisionAxis == yAxis) {
-					selected = Y;
+					selected = AXIS_Y;
 					sx = mx;
 					sy = my;
-					transform.getRotation(rotation);
-					value = rotation.getAxisAngle(Vector3.Y);
-					lastOffset = 0;
+					
+					axis = Vector3.Y;
 				} else if(collisionAxis == zAxis) {
-					selected = Z;
+					selected = AXIS_Z;
 					sx = mx;
 					sy = my;
-					transform.getRotation(rotation);
-					value = rotation.getAxisAngle(Vector3.Z);
-					lastOffset = 0;
+					
+					axis = Vector3.Z;
 				}
+				
+				value = 0;
+				lastOffset = 0;
 			}
 
 		} else if(event.isButtonUp(MouseButton.MOUSE_BUTTON_LEFT)) {
@@ -198,32 +236,29 @@ public class RotationAxis extends ApplicationGL {
 			selected = NONE;
 		}
 
-		if (selected != NONE) {
+		if (click && selected != NONE) {
 
 			int deltaX = mx-sx;
 			int deltaY = my-sy;
 			
-			if (selected == X) {
-				float offset = (speed*deltaX);
-
-				transform.rotate(Vector3.Z, -lastOffset);
-				transform.rotate(Vector3.Z, value-offset);
-				lastOffset = value-offset;
-			} else if (selected == Y) {
-				float offset = (speed*deltaY);
-				
-				transform.rotate(Vector3.X, -lastOffset);
-				transform.rotate(Vector3.X, value-offset);
-				lastOffset = value-offset;
-				
-			} else if (selected == Z) {
-				float offset = (speed*(deltaX+deltaY)/2);
-								
-				transform.rotate(Vector3.Y, -lastOffset);
-				transform.rotate(Vector3.Y, value-offset);
-				lastOffset = value-offset;
+			float offset = 0;
+			
+			if(turnRight||turnLeft) {
+				offset = keyboardAngle;
 			}
-
+			
+			if (selected == AXIS_X) {
+				offset = (speed*deltaX);
+			} else if (selected == AXIS_Y) {
+				offset = (speed*deltaY);
+			} else if (selected == AXIS_Z) {
+				offset = (speed*(deltaX+deltaY)/2);
+			}
+			
+			transform.rotate(axis, -lastOffset);
+			transform.rotate(axis, -offset);
+			
+			lastOffset = -offset;
 		}
 
 		if(event.isButtonDown(MouseButton.MOUSE_BUTTON_RIGHT)) {
@@ -250,49 +285,50 @@ public class RotationAxis extends ApplicationGL {
 		drawable.setColor(Color.BLACK);
 		drawable.drawGrid(1, 150, 150);
 		
+		gl.glPushMatrix();
 		gl.glMultMatrixf(transform.val, 0);
+		drawOriginalAxis(gl);
 		drawAxis(gl);
 
-		if (selected == X || collisionAxis == xAxis) {
+		if (selected == AXIS_X || collisionAxis == xAxis) {
 			gl.glColor3d(1.0, 1.0, 0.0);
 		} else {
 			gl.glColor3d(1.0, 0.0, 0.0);
 		}
 		drawable.drawBoundingBox(xAxis);
 
-		if (selected == Y || collisionAxis == yAxis) {
+		if (selected == AXIS_Y || collisionAxis == yAxis) {
 			gl.glColor3d(1.0, 1.0, 0.0);
 		} else {
 			gl.glColor3d(0.0, 1.0, 0.0);
 		}
 		drawable.drawBoundingBox(yAxis);
 
-		if (selected == Z || collisionAxis == zAxis) {
+		if (selected == AXIS_Z || collisionAxis == zAxis) {
 			gl.glColor3d(1.0, 1.0, 0.0);
 		} else {
 			gl.glColor3d(0.0, 0.0, 1.0);
 		}
 		drawable.drawBoundingBox(zAxis);
+		gl.glPopMatrix();
 
 		Ray ray = drawable.getCameraRay(mx, my);
 		if(drawRay) {
 			drawRay(gl, ray);
 		}
-
-		if (Intersector.intersectRayBoundsFast(ray, xAxis)) {
+		
+		if (Intersector.intersectRayBoundsFast(ray, xAxis, transform)) {
 			collisionAxis = xAxis;
-		} else if (Intersector.intersectRayBoundsFast(ray, yAxis)) {
+		} else if (Intersector.intersectRayBoundsFast(ray, yAxis, transform)) {
 			collisionAxis = yAxis;
-		} else if (Intersector.intersectRayBoundsFast(ray, zAxis)) {
+		} else if (Intersector.intersectRayBoundsFast(ray, zAxis, transform)) {
 			collisionAxis = zAxis;
 		} else if(selected == NONE) {
 			collisionAxis = NO_AXIS;
 		}
 
 		gl.glFlush();
-
 	}
-
 
 	@Override
 	public void draw(Graphics g) {
@@ -307,6 +343,16 @@ public class RotationAxis extends ApplicationGL {
 
 	public void updateControls(long now) {		
 		view.updateControls(now);
+		
+		if (rotating) {
+			transform.rotate(axis, 1);
+		}
+		
+		if (turnRight) {
+			keyboardAngle += turnSpeed;
+		} else if (turnLeft) {
+			keyboardAngle -= turnSpeed;
+		}
 	}
 
 }
