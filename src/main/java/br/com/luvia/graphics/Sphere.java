@@ -2,9 +2,10 @@ package br.com.luvia.graphics;
 
 import com.badlogic.gdx.math.Vector3;
 
+import br.com.abby.linear.Shape;
 import br.com.luvia.core.graphics.Graphics3D;
 
-public class Sphere extends GeometricForm {
+public class Sphere extends Shape {
 
 	private double radius = 1;
 

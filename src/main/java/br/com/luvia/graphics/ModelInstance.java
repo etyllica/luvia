@@ -22,6 +22,7 @@ import br.com.abby.core.loader.MeshLoader;
 import br.com.abby.core.model.Face;
 import br.com.abby.core.model.Group;
 import br.com.abby.core.model.Model;
+import br.com.abby.linear.Shape;
 import br.com.luvia.core.graphics.GL2Drawable;
 import br.com.luvia.material.Material;
 
@@ -32,7 +33,7 @@ import br.com.luvia.material.Material;
  *
  */
 
-public class ModelInstance extends GeometricForm implements GL2Drawable {
+public class ModelInstance extends Shape implements GL2Drawable {
 
 	private Model model;
 

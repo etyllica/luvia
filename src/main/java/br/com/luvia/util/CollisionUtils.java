@@ -1,7 +1,7 @@
 package br.com.luvia.util;
 
-import br.com.luvia.math.Line;
-import br.com.luvia.math.Plane;
+import br.com.luvia.graphics.Line;
+import br.com.luvia.graphics.Plane;
 
 import com.badlogic.gdx.math.Vector3;
 

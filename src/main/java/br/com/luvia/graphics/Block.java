@@ -1,13 +1,16 @@
 package br.com.luvia.graphics;
 
+import br.com.abby.linear.Shape;
+
 import com.badlogic.gdx.graphics.g3d.environment.BaseLight;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Block used in grid
  */
-public class Block extends GeometricForm {
+public class Block extends Shape {
 
 	int version;//X measure
 	//BoundingBox measures

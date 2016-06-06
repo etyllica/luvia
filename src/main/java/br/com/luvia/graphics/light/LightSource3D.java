@@ -5,12 +5,12 @@ import java.nio.FloatBuffer;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
+import br.com.abby.linear.Shape;
 import br.com.luvia.core.graphics.Graphics3D;
-import br.com.luvia.graphics.GeometricForm;
 
 import com.badlogic.gdx.math.Vector3;
 
-public class LightSource3D extends GeometricForm {
+public class LightSource3D extends Shape {
 
 	public void configureLight(Graphics3D g, int lightId) {
 		GL2 gl = g.getGL2();
