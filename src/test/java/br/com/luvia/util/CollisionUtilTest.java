@@ -6,8 +6,8 @@ import org.junit.Test;
 
 import com.badlogic.gdx.math.Vector3;
 
-import br.com.luvia.math.Line;
-import br.com.luvia.math.Plane;
+import br.com.luvia.graphics.Line;
+import br.com.luvia.graphics.Plane;
 
 public class CollisionUtilTest {
 
