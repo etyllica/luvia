@@ -88,7 +88,7 @@ public class FrustrumRender extends ApplicationGL {
 		g.drawFrustrum(frustrum);
 				
 		//Draw Bunny Model
-		bunny.draw(gl);
+		bunny.draw(g);
 		
 		//Draw Bounding Box
 		gl.glColor3f(0, 1, 1);

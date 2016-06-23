@@ -31,9 +31,8 @@ public class RotationAxis extends ApplicationGL {
 	protected FlyView view;
 
 	private static final int NONE = -1;
-	private static final int AXIS_X = 0;
-	private static final int AXIS_Y = 1;
-	private static final int AXIS_Z = 2;
+	private static final int AXIS_H = 4;
+	private static final int AXIS_V = 5;
 
 	boolean drawRay = false;
 	boolean drawBoundingBoxes = true;
@@ -52,12 +51,12 @@ public class RotationAxis extends ApplicationGL {
 	float lastOffset;
 
 	float axisSize = 100f;
-	float axisWidth = 2.5f;
+	float axisWidth = 1.5f;
 	float speed = 0.1f;
 
-	BoundingBox xAxis;
-	BoundingBox yAxis;
-	BoundingBox zAxis;
+	BoundingBox vAxis;
+	BoundingBox hAxis;
+	
 	private static final BoundingBox NO_AXIS = new BoundingBox();
 	BoundingBox collisionAxis;
 
@@ -87,9 +86,9 @@ public class RotationAxis extends ApplicationGL {
 		gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, GL.GL_NEAREST);
 		gl.glTexEnvi(GL2.GL_TEXTURE_ENV, GL2.GL_TEXTURE_ENV_MODE, GL2.GL_DECAL);
 
-		xAxis = new BoundingBox(new Vector3(0, -axisWidth/2, -axisWidth/2), new Vector3(axisSize, axisWidth/2, axisWidth/2));
-		yAxis = new BoundingBox(new Vector3(-axisWidth/2, 0, -axisWidth/2), new Vector3(axisWidth/2, axisSize, axisWidth/2));
-		zAxis = new BoundingBox(new Vector3(-axisWidth/2, -axisWidth/2, 0), new Vector3(axisWidth/2, axisWidth/2, axisSize));
+		vAxis = new BoundingBox(new Vector3(-axisSize/8, -axisWidth/2, -axisSize/8), new Vector3(axisSize/8, axisWidth/2, axisSize/8));
+		hAxis = new BoundingBox(new Vector3(-axisSize/8, -axisSize/8, -axisWidth/2), new Vector3(axisSize/8, axisSize/8, axisWidth/2));
+		
 	}
 
 	private void drawAxis(GL2 gl) {
@@ -207,24 +206,18 @@ public class RotationAxis extends ApplicationGL {
 			if(!click) {
 				click = true;
 
-				if (collisionAxis == xAxis) {
-					selected = AXIS_X;
+				if (collisionAxis == vAxis) {
+					selected = AXIS_H;
 					sx = mx;
 					sy = my;
 					
-					axis = Vector3.X;
-				} else if(collisionAxis == yAxis) {
-					selected = AXIS_Y;
+					axis = new Vector3(Vector3.Y).scl(-1);
+				} else if(collisionAxis == hAxis) {
+					selected = AXIS_V;
 					sx = mx;
 					sy = my;
 					
-					axis = Vector3.Y;
-				} else if(collisionAxis == zAxis) {
-					selected = AXIS_Z;
-					sx = mx;
-					sy = my;
-					
-					axis = Vector3.Z;
+					axis = new Vector3(Vector3.Z);
 				}
 				
 				value = 0;
@@ -247,12 +240,10 @@ public class RotationAxis extends ApplicationGL {
 				offset = keyboardAngle;
 			}
 			
-			if (selected == AXIS_X) {
+			if (selected == AXIS_H) {
 				offset = (speed*deltaX);
-			} else if (selected == AXIS_Y) {
+			} else if (selected == AXIS_V) {
 				offset = (speed*deltaY);
-			} else if (selected == AXIS_Z) {
-				offset = (speed*(deltaX+deltaY)/2);
 			}
 			
 			transform.rotate(axis, -lastOffset);
@@ -290,26 +281,20 @@ public class RotationAxis extends ApplicationGL {
 		drawOriginalAxis(gl);
 		drawAxis(gl);
 
-		if (selected == AXIS_X || collisionAxis == xAxis) {
+		if (selected == AXIS_H || collisionAxis == vAxis) {
 			gl.glColor3d(1.0, 1.0, 0.0);
 		} else {
 			gl.glColor3d(1.0, 0.0, 0.0);
 		}
-		drawable.drawBoundingBox(xAxis);
+		drawable.drawBoundingBox(vAxis);
 
-		if (selected == AXIS_Y || collisionAxis == yAxis) {
+		if (selected == AXIS_V || collisionAxis == hAxis) {
 			gl.glColor3d(1.0, 1.0, 0.0);
 		} else {
 			gl.glColor3d(0.0, 1.0, 0.0);
 		}
-		drawable.drawBoundingBox(yAxis);
+		drawable.drawBoundingBox(hAxis);
 
-		if (selected == AXIS_Z || collisionAxis == zAxis) {
-			gl.glColor3d(1.0, 1.0, 0.0);
-		} else {
-			gl.glColor3d(0.0, 0.0, 1.0);
-		}
-		drawable.drawBoundingBox(zAxis);
 		gl.glPopMatrix();
 
 		Ray ray = drawable.getCameraRay(mx, my);
@@ -317,12 +302,10 @@ public class RotationAxis extends ApplicationGL {
 			drawRay(gl, ray);
 		}
 		
-		if (Intersector.intersectRayBoundsFast(ray, xAxis, transform)) {
-			collisionAxis = xAxis;
-		} else if (Intersector.intersectRayBoundsFast(ray, yAxis, transform)) {
-			collisionAxis = yAxis;
-		} else if (Intersector.intersectRayBoundsFast(ray, zAxis, transform)) {
-			collisionAxis = zAxis;
+		if (Intersector.intersectRayBoundsFast(ray, vAxis, transform)) {
+			collisionAxis = vAxis;
+		} else if (Intersector.intersectRayBoundsFast(ray, hAxis, transform)) {
+			collisionAxis = hAxis;
 		} else if(selected == NONE) {
 			collisionAxis = NO_AXIS;
 		}

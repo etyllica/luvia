@@ -197,28 +197,27 @@ public class SkyboxGridPerspective extends ApplicationGL {
 	}
 
 	@Override
-	public void display(Graphics3D drawable) {
+	public void display(Graphics3D g) {
 
 		updateControls(0);
 		
-		GL2 gl = drawable.getGL().getGL2();
+		GL2 gl = g.getGL().getGL2();
 
 		//TODO TEST
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 		gl.glClearColor(1f, 1f, 1f, 1);
 				
 		//Transform by Aim
-		drawable.aimCamera(aim);
+		g.aimCamera(aim);
 
 		//Draw Scene
 		drawAxis(gl);
 
 		//drawFloor(gl);
 
-		skyBox.draw(gl);
+		skyBox.draw(g);
 		
 		gl.glFlush();
-
 	}
 	
 

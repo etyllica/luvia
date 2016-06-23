@@ -76,7 +76,7 @@ public class OctreeRender extends ApplicationGL {
 		gl.glRotated(angleY, 0, 1, 0);
 		
 		//Draw Bunny Model
-		bunny.draw(gl);
+		bunny.draw(g);
 		
 		//Draw Bounding Box
 		gl.glColor3f(0, 1, 1);

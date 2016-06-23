@@ -23,7 +23,8 @@ import br.com.abby.core.model.Face;
 import br.com.abby.core.model.Group;
 import br.com.abby.core.model.Model;
 import br.com.abby.linear.Shape;
-import br.com.luvia.core.graphics.GL2Drawable;
+import br.com.luvia.core.graphics.GLDrawable;
+import br.com.luvia.core.graphics.Graphics3D;
 import br.com.luvia.material.Material;
 
 /**
@@ -33,7 +34,7 @@ import br.com.luvia.material.Material;
  *
  */
 
-public class ModelInstance extends Shape implements GL2Drawable {
+public class ModelInstance extends Shape implements GLDrawable {
 
 	private Model model;
 
@@ -313,7 +314,9 @@ public class ModelInstance extends Shape implements GL2Drawable {
 	}
 
 	@Override
-	public void draw(GL2 gl) {
+	public void draw(Graphics3D g) {
+		GL2 gl = g.getGL2();
+		
 		gl.glPushMatrix();
 		gl.glEnable(GL.GL_DEPTH_TEST);
 		setupTextured(gl);

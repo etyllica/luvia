@@ -54,7 +54,7 @@ public class SimpleMeshExample extends ApplicationGL {
 		gl.glColor3f(1, 1, 1); //set the triangle color
 		gl.glScaled(5, 5, 5);
 				
-		bunny.draw(gl);
+		bunny.draw(g);
 	}
 
 	@Override

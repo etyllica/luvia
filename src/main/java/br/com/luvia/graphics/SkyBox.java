@@ -3,12 +3,13 @@ package br.com.luvia.graphics;
 import javax.media.opengl.GL2;
 
 import br.com.etyllica.core.linear.Point3D;
-import br.com.luvia.core.graphics.GL2Drawable;
+import br.com.luvia.core.graphics.GLDrawable;
+import br.com.luvia.core.graphics.Graphics3D;
 import br.com.luvia.loader.TextureLoader;
 
 import com.jogamp.opengl.util.texture.Texture;
 
-public class SkyBox extends Point3D implements GL2Drawable {
+public class SkyBox extends Point3D implements GLDrawable {
 	
 	private Texture texture;
 	private double size = 500;
@@ -18,7 +19,9 @@ public class SkyBox extends Point3D implements GL2Drawable {
 	}
 
 	@Override
-	public void draw(GL2 gl) {
+	public void draw(Graphics3D g) {
+		GL2 gl = g.getGL2();
+		
 		texture.enable(gl);
 		texture.bind(gl);
 		gl.glColor3f(1, 1, 1);
