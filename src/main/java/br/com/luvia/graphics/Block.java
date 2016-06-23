@@ -11,17 +11,16 @@ import java.util.List;
  * Block used in grid
  */
 public class Block extends Shape {
-
-	int version;//X measure
+	protected int version;
 	//BoundingBox measures
-	int rows = 1;//X measure
-	int columns = 1;//Y measure
-	int height = 1;//Z measure
+	protected int rows = 1;//X measure
+	protected int columns = 1;//Y measure
+	protected int height = 1;//Z measure
 	
 	String[] models;
 	
-	List<BaseLight> lights = new ArrayList<BaseLight>();
-	List<ModelInstance> instances = new ArrayList<ModelInstance>();
+	protected List<BaseLight> lights = new ArrayList<BaseLight>();
+	protected List<ModelInstance> instances = new ArrayList<ModelInstance>();
 	
 	public Block() {
 		super();

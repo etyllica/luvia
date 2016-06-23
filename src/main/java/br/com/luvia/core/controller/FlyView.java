@@ -10,13 +10,13 @@ public class FlyView {
 	protected double turnSpeed = 5;
 	protected double walkSpeed = 2.5;
 
-	private boolean forwardPressed = false;
-	private boolean backwardPressed = false;
-	private boolean upPressed = false;
-	private boolean downPressed = false;
-	private boolean leftPressed = false;
-	private boolean rightPressed = false;
-	private boolean spacePressed = false;
+	protected boolean forwardPressed = false;
+	protected boolean backwardPressed = false;
+	protected boolean upPressed = false;
+	protected boolean downPressed = false;
+	protected boolean leftPressed = false;
+	protected boolean rightPressed = false;
+	protected boolean spacePressed = false;
 
 	public FlyView(float x, float y, float z) {
 		aim = new AimPoint(x, y, z);
