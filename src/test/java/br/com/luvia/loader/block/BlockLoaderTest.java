@@ -35,11 +35,24 @@ public class BlockLoaderTest extends TestCase {
 			}
 		});
 	}
+
+	@Test
+	public void testSave() {
+		String path = "test_block.block";
+       
+		try {
+			Block block = loader.loadBlock(path);
+			loader.saveBlock(block, "test_saved.block");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	@Test
 	public void testLoad() {
 		
-		String path = "test_block.blk";
+		String path = "test_block.block";
 		
 		Block block = null;
 		

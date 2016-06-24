@@ -100,14 +100,14 @@ public class ModelInstance extends Shape implements GLDrawable {
 		// Turn on wireframe mode
 		gl.glPolygonMode(GL2.GL_FRONT, GL2.GL_LINE);
 
-		applyTransform(gl);
 		setupColor(gl);
-
+		applyTransform(gl);
+		
 		drawTexture = false;
 
 		// Draw Model
 		for(Group group: model.getGroups()) {
-
+			
 			for(Face face: group.getFaces()) {
 				int vertices = face.vertexIndex.length;
 				setupIndexes(vertices);
@@ -147,8 +147,7 @@ public class ModelInstance extends Shape implements GLDrawable {
 
 		for(Group group: model.getGroups()) {
 
-			drawTexture = false;
-			texture = setupTexture(gl, texture, group);
+			texture = setupGroup(gl, texture, group);
 
 			drawSetFaces(gl, group, set);
 
@@ -157,11 +156,10 @@ public class ModelInstance extends Shape implements GLDrawable {
 
 		gl.glPopMatrix();
 	}
-	
+		
 	public void texturedRender(GL2 gl) {
 		applyTransform(gl);
-		setupColor(gl);
-
+		
 		simpleDraw(gl);
 	}
 
@@ -169,9 +167,8 @@ public class ModelInstance extends Shape implements GLDrawable {
 		Texture texture = null;
 
 		for(Group group: model.getGroups()) {
-
-			drawTexture = false;
-			texture = setupTexture(gl, texture, group);
+			
+			texture = setupGroup(gl, texture, group);
 
 			drawFaces(gl, group);
 
@@ -236,6 +233,10 @@ public class ModelInstance extends Shape implements GLDrawable {
 
 	private void setupColor(GL2 gl) {
 		gl.glColor3d((double)color.getRed()/255, (double)color.getGreen()/255, (double)color.getBlue()/255);
+	}
+	
+	private void setupColor(GL2 gl, Vector3 color) {
+		gl.glColor3f(color.x, color.y, color.z);
 	}
 
 	private void disableTexture(GL2 gl, Texture texture) {
@@ -335,6 +336,20 @@ public class ModelInstance extends Shape implements GLDrawable {
 		gl.glEnable(GL.GL_DEPTH_TEST);
 		wireframeRender(gl);
 		gl.glDisable(GL.GL_DEPTH_TEST);
+	}
+	
+	private Texture setupGroup(GL2 gl, Texture texture, Group group) {
+		drawTexture = false;
+		//Setup texture
+		texture = setupTexture(gl, texture, group);
+		
+		//Setup diffuse color
+		if (group.getMaterial().getKd() == null) {
+			setupColor(gl);
+		} else {
+			setupColor(gl, group.getMaterial().getKd());
+		}
+		return texture;
 	}
 
 	public Model getModel() {

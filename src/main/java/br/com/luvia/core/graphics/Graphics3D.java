@@ -25,6 +25,7 @@ import br.com.etyllica.awt.AWTGraphics;
 import br.com.etyllica.core.linear.Point3D;
 import br.com.luvia.graphics.Billboard;
 
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.math.collision.Ray;
@@ -427,12 +428,21 @@ public class Graphics3D extends AWTGraphics {
 	}
 	
 	public void drawBoundingBox(BoundingBox box) {
-		GL2 gl = getGL2();		
+		GL2 gl = getGL2();
 		
 		gl.glBegin(GL2.GL_LINES);
 		drawBoundingLines(gl, box.min, box.max);
 		drawBoundingLines(gl, box.max, box.min);
 		gl.glEnd();
+	}
+	
+	public void drawBoundingBox(BoundingBox box, Matrix4 transform) {
+		GL2 gl = getGL2();
+		
+		gl.glPushMatrix();
+		gl.glMultMatrixf(transform.val, 0);
+		drawBoundingBox(box);
+		gl.glPopMatrix();
 	}
 		
 	private void drawBoundingLines(GL2 gl, Vector3 minPoint, Vector3 maxPoint) {
@@ -610,9 +620,7 @@ public class Graphics3D extends AWTGraphics {
 	
 	public void drawGrid(float size, int rows, int columns) {
 		GL2 gl = getGL2();
-		
-		gl.glColor3d(1.0, 0.0, 0.0);
-		
+				
 		//Axis Width
 		gl.glLineWidth(1f);
 		

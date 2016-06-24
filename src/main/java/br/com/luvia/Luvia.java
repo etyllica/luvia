@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 
+import br.com.etyllica.awt.core.AWTCore;
 import br.com.etyllica.util.PathHelper;
 import br.com.luvia.core.GLCore;
 import br.com.luvia.core.context.ApplicationGL;
@@ -117,6 +118,8 @@ public abstract class Luvia {
 		future = executor.scheduleAtFixedRate(luviaCore, UPDATE_DELAY, UPDATE_DELAY, TimeUnit.MILLISECONDS);
 		
 		frame.add(luviaCore.getPanel());
+		
+		AWTCore.hideDefaultCursor(frame);
 		
 		luviaCore.start();
 	}

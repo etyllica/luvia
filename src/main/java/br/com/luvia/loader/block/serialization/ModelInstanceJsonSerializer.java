@@ -16,16 +16,16 @@ import br.com.luvia.graphics.ModelInstance;
 
 public class ModelInstanceJsonSerializer implements JsonSerializer<ModelInstance>, JsonDeserializer<ModelInstance> {
 
-	private static final String JSON_ID = "id";
+	private static final String JSON_PATH = "path";
 	private static final String JSON_TRANSFORM = "transform";
-	private static final String JSON_COLOR = "transform";
+	private static final String JSON_COLOR = "color";
 	
 	@Override
 	public JsonElement serialize(ModelInstance model, Type type, JsonSerializationContext context) {
 		JsonObject json = new JsonObject();
 
-		json.add(JSON_ID, new JsonPrimitive(model.getModel().getPath()));
-		json.add(JSON_TRANSFORM, context.serialize(model.transform));
+		json.add(JSON_PATH, new JsonPrimitive(model.getModel().getPath()));
+		json.add(JSON_TRANSFORM, context.serialize(model.transform.val));
 		json.add(JSON_COLOR, context.serialize(model.getColor()));
 		
 		return json;

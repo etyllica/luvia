@@ -26,14 +26,16 @@ public class BlockLoader extends LoaderImpl {
 	}
 
 	public Block loadBlock(String fileName) throws IOException {
-		return loadBlock(getPath()+folder, fileName);
+		return loadBlock(fullPath(), fileName);
 	}
-	
+
 	public Block loadBlock(String fullPath, String fileName) throws IOException {
-
 		String filePath = fullPath+fileName;
-
 		return new BlockJsonLoader().loadBlock(filePath);
+	}
+
+	public void saveBlock(Block block, String fileName) throws IOException {
+		new BlockJsonLoader().saveBlock(block, fileName);       
 	}
 
 }
