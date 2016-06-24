@@ -43,7 +43,7 @@ public class ModelInstance extends Shape implements GLDrawable {
 	private boolean drawTexture = true;
 
 	private int[] indexes = new int[16];
-		
+	
 	public ModelInstance() {
 		this(0,0,0);
 	}
@@ -216,7 +216,7 @@ public class ModelInstance extends Shape implements GLDrawable {
 			texture = loadTexture(group);
 		}
 
-		if(drawTexture) {
+		if(texture != null && drawTexture) {
 			gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			// Use linear filter for texture if image is smaller than the original texture
 			gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -339,7 +339,6 @@ public class ModelInstance extends Shape implements GLDrawable {
 	}
 	
 	private Texture setupGroup(GL2 gl, Texture texture, Group group) {
-		drawTexture = false;
 		//Setup texture
 		texture = setupTexture(gl, texture, group);
 		
