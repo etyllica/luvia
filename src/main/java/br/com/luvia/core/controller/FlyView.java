@@ -2,21 +2,26 @@ package br.com.luvia.core.controller;
 
 import br.com.abby.linear.AimPoint;
 import br.com.etyllica.core.event.KeyEvent;
+import br.com.etyllica.core.event.PointerEvent;
 
 public class FlyView {
 
-	private AimPoint aim;
+	protected AimPoint aim;
 
 	protected double turnSpeed = 5;
 	protected double walkSpeed = 2.5;
 
 	protected boolean forwardPressed = false;
 	protected boolean backwardPressed = false;
+	protected boolean strafeLeftPressed = false;
+	protected boolean strafeRightPressed = false;
+	
 	protected boolean upPressed = false;
 	protected boolean downPressed = false;
 	protected boolean leftPressed = false;
 	protected boolean rightPressed = false;
-	protected boolean spacePressed = false;
+	protected boolean liftPressed = false;
+	protected boolean divePressed = false;
 
 	public FlyView(float x, float y, float z) {
 		aim = new AimPoint(x, y, z);
@@ -68,8 +73,12 @@ public class FlyView {
 			aim.offsetAngleY(-turnSpeed);			
 		}
 
-		if(spacePressed) {
+		if(liftPressed) {
 			aim.offsetY(+walkSpeed);			
+		}
+		
+		if(divePressed) {
+			aim.offsetY(-walkSpeed);			
 		}
 
 	}
@@ -112,10 +121,20 @@ public class FlyView {
 		}
 
 		if(event.isKeyDown(KeyEvent.VK_SPACE)) {
-			spacePressed = true;
+			liftPressed = true;
 		} else if(event.isKeyUp(KeyEvent.VK_SPACE)) {
-			spacePressed = false;
+			liftPressed = false;
 		}
+		
+		if(event.isKeyDown(KeyEvent.VK_N)) {
+			divePressed = true;
+		} else if(event.isKeyUp(KeyEvent.VK_N)) {
+			divePressed = false;
+		}
+	}
+	
+	public void updateMouse(PointerEvent event) {
+		
 	}
 
 }
