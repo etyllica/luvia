@@ -29,6 +29,7 @@ public class BlockJsonSerializer implements JsonSerializer<Block>, JsonDeseriali
 	private static final String JSON_HEIGHT = "height";
 	private static final String JSON_OBJECTS = "objects";
 	
+	private static final String JSON_ID = "id";
 	private static final String JSON_PATH = "path";
 	private static final String JSON_TRANSFORM = "transform";
 	
@@ -36,6 +37,7 @@ public class BlockJsonSerializer implements JsonSerializer<Block>, JsonDeseriali
 	public JsonElement serialize(Block block, Type type, JsonSerializationContext context) {
 		JsonObject element = new JsonObject();
 
+		element.add(JSON_ID, new JsonPrimitive(block.getId()));
 		element.add(JSON_VERSION, new JsonPrimitive(BLOCK_VERSION));
 		element.add(JSON_ROWS, new JsonPrimitive(block.getRows()));
 		element.add(JSON_COLUMNS, new JsonPrimitive(block.getColumns()));
@@ -64,11 +66,13 @@ public class BlockJsonSerializer implements JsonSerializer<Block>, JsonDeseriali
 		
 		Block block = new Block();
 
+		String id = json.get(JSON_ID).getAsString();
 		int version = json.get(JSON_VERSION).getAsInt();
 		int columns = json.get(JSON_COLUMNS).getAsInt();
     	int rows = json.get(JSON_ROWS).getAsInt();
     	int height = json.get(JSON_HEIGHT).getAsInt();
     	
+    	block.setId(id);
     	block.setVersion(version);
     	block.setColumns(columns);
     	block.setRows(rows);

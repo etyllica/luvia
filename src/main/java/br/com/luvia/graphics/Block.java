@@ -17,6 +17,7 @@ import com.badlogic.gdx.math.collision.BoundingBox;
  * Block used in grid
  */
 public class Block extends Shape implements GLDrawable {
+	protected String id;
 	protected int version;
 	//BoundingBox measures
 	protected int rows = 1;//X measure
@@ -78,6 +79,14 @@ public class Block extends Shape implements GLDrawable {
 		this.height = height;
 	}
 	
+	public String getId() {
+		return id;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
+	
 	public int getVersion() {
 		return version;
 	}
@@ -92,9 +101,10 @@ public class Block extends Shape implements GLDrawable {
 		
 		gl.glPushMatrix();
 		gl.glMultMatrixf(transform.val, 0);
-		for(ModelInstance instance:instances) {
+		for (ModelInstance instance : instances) {
 			instance.draw(g);
 		}
 		gl.glPopMatrix();
 	}
+
 }
