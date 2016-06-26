@@ -11,12 +11,12 @@ import br.com.etyllica.util.io.IOHelper;
 import br.com.luvia.graphics.Block;
 import br.com.luvia.graphics.ModelInstance;
 import br.com.luvia.loader.BlockLoader;
-import br.com.luvia.loader.block.BlockReaderLoader;
+import br.com.luvia.loader.block.BlockReader;
 import br.com.luvia.loader.block.BlockWriter;
 import br.com.luvia.loader.block.serialization.BlockJsonSerializer;
 import br.com.luvia.loader.block.serialization.ModelInstanceJsonSerializer;
 
-public class BlockJsonLoader implements BlockReaderLoader, BlockWriter {
+public class BlockJsonLoader implements BlockReader, BlockWriter {
 
 	public Block loadBlock(String path) throws IOException {
 		Gson json = createGson();
