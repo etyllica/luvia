@@ -65,9 +65,9 @@ public class GL2StringDrawer extends AbstractTextDrawer {
 
 		Font font = getFont();
 
-		if(font==null){
+		if (font == null) {
 			System.err.println(this.getClass().getSimpleName()+": Font is NULL");
-		}else{
+		} else {
 
 			TextRenderer renderer = getRenderer(font);
 
