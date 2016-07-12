@@ -33,7 +33,8 @@ public class LuviaExamples extends Luvia {
 
 	// Main program
 	public static void main(String[] args) {
-		LuviaExamples engine = new LuviaExamples();		
+		LuviaExamples engine = new LuviaExamples();
+		engine.setIcon("cross_blue.png");
 		engine.init();
 	}
 	

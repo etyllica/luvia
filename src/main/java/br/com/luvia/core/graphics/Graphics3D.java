@@ -620,7 +620,7 @@ public class Graphics3D extends AWTGraphics {
 	
 	public void drawGrid(float size, int rows, int columns) {
 		GL2 gl = getGL2();
-				
+		
 		//Axis Width
 		gl.glLineWidth(1f);
 		

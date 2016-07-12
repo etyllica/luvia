@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.JFrame;
 
 import br.com.etyllica.awt.core.AWTCore;
+import br.com.etyllica.loader.image.ImageLoader;
 import br.com.etyllica.util.PathHelper;
 import br.com.luvia.core.GLCore;
 import br.com.luvia.core.context.ApplicationGL;
@@ -35,6 +36,7 @@ public abstract class Luvia {
 	
 	protected JFrame frame;
 	
+	protected String icon = "";
 	protected String title = "Luvia - Window";
 	
 	private boolean setupCalled = false;
@@ -120,10 +122,17 @@ public abstract class Luvia {
 		frame.add(luviaCore.getPanel());
 		
 		AWTCore.hideDefaultCursor(frame);
+		updateIcon();
 		
 		luviaCore.start();
 	}
 	
+	private void updateIcon() {
+		if(!icon.isEmpty()) {
+			frame.setIconImage(ImageLoader.getInstance().getImage(icon));
+		}
+	}
+
 	protected void centerCursor() {
 		try {
 			Robot robot = new Robot();
@@ -148,6 +157,10 @@ public abstract class Luvia {
 	
 	private void setMainApplication(ApplicationGL applicationGL) {
 		luviaCore.setMainApplication3D(applicationGL);
+	}
+	
+	protected void setIcon(String icon) {
+		this.icon = icon;
 	}
 	
 }
