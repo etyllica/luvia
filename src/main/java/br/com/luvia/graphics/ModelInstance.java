@@ -73,8 +73,10 @@ public class ModelInstance extends Shape implements GLDrawable {
         //For each group in VBO
         for(Group group: model.getGroups()) {
             //If has a material
-            if(group.getMaterial() != null) {
+            if(group.getMaterial() != Group.NULL_MATERIAL) {
                 materials.put(group, new Material(group.getMaterial()));   
+            } else {
+            	materials.put(group, new Material());
             }
         }
     }
@@ -276,8 +278,11 @@ public class ModelInstance extends Shape implements GLDrawable {
             }
 
             if(drawTexture) {
-                Vector2 texture = model.getTextures().get(face.textureIndex[i]);
-                gl.glTexCoord2f(texture.x, texture.y);
+            	int textureIndex = face.textureIndex[i];
+            	if(model.getTextures().size() > textureIndex) {
+            		Vector2 texture = model.getTextures().get(textureIndex);
+                    gl.glTexCoord2f(texture.x, texture.y);
+            	}
             }
 
             Vector3 vertex = model.getVertices().get(vertexIndex);
