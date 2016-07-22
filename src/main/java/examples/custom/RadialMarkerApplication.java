@@ -253,12 +253,12 @@ public class RadialMarkerApplication extends ApplicationGL {
 		my = event.getY();
 
 		if(event.isButtonDown(MouseButton.MOUSE_BUTTON_LEFT)) {
-			camera.setZ(camera.getZ()+0.1f);
+			camera.position.z += 0.1f;
 			click = true;
 		}
 
 		if(event.isButtonUp(MouseButton.MOUSE_BUTTON_LEFT)) {
-			camera.setZ(camera.getZ()-0.1f);
+			camera.position.z -= 0.1f;
 			click = false;
 		}
 	}
@@ -328,8 +328,6 @@ public class RadialMarkerApplication extends ApplicationGL {
 		g.drawShadow(20,100, "AngleXY: "+(angleXY),Color.BLACK);
 		g.drawShadow(20,130, "AngleXZ: "+(angleXZ),Color.BLACK);
 		g.drawShadow(20,160, "AngleYZ: "+(angleYZ),Color.BLACK);
-		
-		
 	}
 	
 }

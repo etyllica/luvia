@@ -89,7 +89,7 @@ public class MarkerApplication extends ApplicationGL {
 		double targety = 0;
 		double targetz = 0;
 		
-		glu.gluLookAt( camera.getX(), camera.getY(), camera.getZ(), targetx, targety, targetz, 0, 1, 0 );
+		glu.gluLookAt( camera.position.x, camera.position.y, camera.position.z, targetx, targety, targetz, 0, 1, 0 );
 	}
 	
 	protected void drawFloor(GL2 gl) {
@@ -240,19 +240,18 @@ public class MarkerApplication extends ApplicationGL {
 		my = event.getY();
 
 		if(event.isButtonDown(MouseButton.MOUSE_BUTTON_LEFT)) {
-			camera.setZ(camera.getZ()+0.1f);
+			camera.position.z += 0.1f;
 			click = true;
 		}
 
 		if(event.isButtonUp(MouseButton.MOUSE_BUTTON_LEFT)) {
-			camera.setZ(camera.getZ()-0.1f);
+			camera.position.z -= 0.1f;
 			click = false;
 		}
 	}
 
 	@Override
 	public void preDisplay(Graphics3D g) {
-		
 		GL2 gl = g.getDrawable().getGL().getGL2();
 
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);

@@ -26,7 +26,6 @@ public class OctreeClipping extends ApplicationGL {
 	private Octree<Face> octree;
 	
 	private Model bunnyVBO;
-	
 	private ModelInstance bunny;
 	
 	private double angleY = 0;

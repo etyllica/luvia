@@ -59,7 +59,7 @@ public class Perspective extends ApplicationGL {
 		double targety = 0;
 		double targetz = 0;
 		
-		glu.gluLookAt( camera.getX(), camera.getY(), camera.getZ(), targetx, targety, targetz, 0, 1, 0 );
+		glu.gluLookAt( camera.position.x, camera.position.y, camera.position.z, targetx, targety, targetz, 0, 1, 0 );
 	}
 	
 	protected void drawFloor(GL2 gl){

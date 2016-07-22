@@ -8,8 +8,6 @@ import javax.media.opengl.GL2;
 import br.com.abby.linear.Shape;
 import br.com.luvia.core.graphics.Graphics3D;
 
-import com.badlogic.gdx.math.Vector3;
-
 public class LightSource3D extends Shape {
 
 	public void configureLight(Graphics3D g, int lightId) {
@@ -21,7 +19,6 @@ public class LightSource3D extends Shape {
 		gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, mat_specular, 0);
 		gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SHININESS, mat_shininess, 0);
 
-		Vector3 position = position();
 		FloatBuffer lightPosition = FloatBuffer.wrap(new float[]{position.x,position.y,position.z});
 		gl.glLightfv(lightId, GL2.GL_POSITION, lightPosition);
 
