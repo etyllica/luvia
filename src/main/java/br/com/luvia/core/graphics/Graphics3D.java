@@ -89,6 +89,15 @@ public class Graphics3D extends AWTGraphics {
 		gl.glVertex3f(b.x, b.y, b.z);
 		gl.glEnd();
 	}
+	
+	public void drawLine(Vector3 a, Vector3 b) {
+		GL2 gl = getGL2();
+
+		gl.glBegin(GL.GL_LINES);
+		gl.glVertex3d(a.x, a.y, a.z);
+		gl.glVertex3f(b.x, b.y, b.z);
+		gl.glEnd();
+	}
 
 	public void drawSphere(ColoredPoint3D point, double radius) {
 		drawSphere(radius, point.getX(), point.getY(), point.getZ());
@@ -252,7 +261,7 @@ public class Graphics3D extends AWTGraphics {
 		drawable.getGL().getGL2().glMatrixMode(GL2.GL_MODELVIEW);
 		drawable.getGL().getGL2().glLoadIdentity();
 
-		glu.gluLookAt( camera.getX(), camera.getY(), camera.getZ(), camera.getTarget().x, camera.getTarget().y, camera.getTarget().z, 0, 1, 0 );
+		glu.gluLookAt( camera.position.x, camera.position.y, camera.position.z, camera.getTarget().x, camera.getTarget().y, camera.getTarget().z, 0, 1, 0 );
 	}
 
 	public void aimCamera(ColoredPoint3D cameraPoint, double angleX, double angleY, double angleZ) {
@@ -655,18 +664,18 @@ public class Graphics3D extends AWTGraphics {
 		glSetColor(color);
 
 		//Draw origin point
-		drawPoint(camera, color);
+		drawPoint(camera.position, color);
 
 		//Draw target point
 		drawPoint(camera.getTarget(), color);
 
 		//Draw target line
-		drawLine(camera, camera.getTarget());
+		drawLine(camera.position, camera.getTarget());
 
 		//Draw Camera as 3D Model
 		gl.glPushMatrix();
 
-		gl.glTranslated(camera.getX(), camera.getY(), camera.getZ());
+		gl.glTranslated(camera.position.x, camera.position.y, camera.position.z);
 
 		gl.glRotated(90, 0, 1, 0);
 		gl.glRotated(camera.angleXY()+30, 1, 0, 0);
@@ -694,7 +703,7 @@ public class Graphics3D extends AWTGraphics {
 		drawLine(origin, rc);
 		drawLine(origin, rd);
 
-		gl.glTranslated(-camera.getX(), -camera.getY(), -camera.getZ());
+		gl.glTranslated(-camera.position.x, -camera.position.y, -camera.position.z);
 
 		gl.glPopMatrix();
 	}
@@ -830,24 +839,20 @@ public class Graphics3D extends AWTGraphics {
 		gl.glBegin(GL2.GL_TRIANGLE_STRIP);
 
 		gl.glTexCoord2d(0, 0);
-		gl.glVertex3f(p00.x, p00.y, p00.z);
+		drawVertex(p00);
 
 		gl.glTexCoord2d(1, 0);
-		gl.glVertex3f(p10.x, p10.y, p10.z);
+		drawVertex(p10);
 
 		gl.glTexCoord2d(0, 1);
-		gl.glVertex3f(p01.x, p01.y, p01.z);
+		drawVertex(p01);
 		
 		gl.glTexCoord2d(1, 1);
-		gl.glVertex3f(p11.x, p11.y, p11.z);
+		drawVertex(p11);
 
 		gl.glEnd();
 	}
 	
-	private void drawPlane(GL2 gl) {
-		
-	}
-
 	private void vertex(GL2 gl, Vector3 vertex) {
 		gl.glVertex3f(vertex.x, vertex.y, vertex.z);
 	}
@@ -868,6 +873,16 @@ public class Graphics3D extends AWTGraphics {
 		
 		float[] array = new float[]{r,g,b};
 		return array;
+	}
+
+	public void drawVertex(Vector3 vector3) {
+		GL2 gl = getGL2();
+		gl.glVertex3f(vector3.x, vector3.y, vector3.z);
+	}
+
+	public void setColorRGB(Vector3 color) {
+		GL2 gl = getGL2();
+		gl.glColor3f(color.x/0xff, color.y/0xff, color.z/0xff);
 	}
 
 }

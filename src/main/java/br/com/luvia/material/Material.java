@@ -28,6 +28,10 @@ public class Material {
 	
 	private Texture textureD = null;	
 	
+	public Material() {
+		super();
+	}
+	
 	public Material(OBJMaterial material) {
 		super();
 				
@@ -43,7 +47,7 @@ public class Material {
 			setTextureKa(TextureLoader.getInstance().loadTexture("", material.getMapKa()));	
 		}
 	}
-
+	
 	public Texture getTextureKa() {
 		return textureKa;
 	}
