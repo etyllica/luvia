@@ -74,15 +74,12 @@ public class ShapeAnimation extends AnimationScript {
 		return this;
 	}
 
-	@Override
 	public ShapeAnimation twice() {
-		super.twice();
-		return this;
+		return loop(2);
 	}
 	
-	@Override
 	public ShapeAnimation loop(int loop) {
-		super.twice();
+		this.loop = loop;
 		return this;
 	}
 
