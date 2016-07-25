@@ -17,6 +17,11 @@ public class SkyBox extends Point3D implements GLDrawable {
 	public SkyBox(String path) {
 		texture = TextureLoader.getInstance().loadTexture(path, false);		
 	}
+	
+	public SkyBox(String path, double size) {
+		this(path);
+		this.size = size;
+	}
 
 	@Override
 	public void draw(Graphics3D g) {

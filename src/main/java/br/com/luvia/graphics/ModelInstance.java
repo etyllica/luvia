@@ -123,7 +123,7 @@ public class ModelInstance extends Shape implements GLDrawable {
     public void texturedRender(GL2 gl, Set<Face> set) {
         gl.glPushMatrix();
 
-        setupTextured(gl);
+        setupTextureAttribs(gl);
         applyTransform(gl);
         setupColor(gl);
        
@@ -159,9 +159,13 @@ public class ModelInstance extends Shape implements GLDrawable {
         }
     }
 
-    private void setupTextured(GL2 gl) {
+    private void setupTextureAttribs(GL2 gl) {
         gl.glEnable(GL.GL_CULL_FACE);
         gl.glCullFace(GL.GL_BACK);
+    }
+    
+    private void resetTextureAttribs(GL2 gl) {
+        gl.glDisable(GL.GL_CULL_FACE);
     }
 
     private void drawFaces(GL2 gl, Group group) {
@@ -295,10 +299,9 @@ public class ModelInstance extends Shape implements GLDrawable {
         GL2 gl = g.getGL2();
        
         gl.glPushMatrix();
-        gl.glEnable(GL.GL_DEPTH_TEST);
-        setupTextured(gl);
+        setupTextureAttribs(gl);
         texturedRender(gl);
-        gl.glDisable(GL.GL_DEPTH_TEST);
+        resetTextureAttribs(gl);
         gl.glPopMatrix();
     }
    
