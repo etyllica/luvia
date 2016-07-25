@@ -285,7 +285,7 @@ public class PositionAxis extends ApplicationGL {
 	}
 
 	public void updateControls(long now) {		
-		view.updateControls(now);
+		view.update(now);
 	}
 
 }

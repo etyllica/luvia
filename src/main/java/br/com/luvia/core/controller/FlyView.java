@@ -1,6 +1,7 @@
 package br.com.luvia.core.controller;
 
 import br.com.abby.linear.AimPoint;
+import br.com.abby.linear.Camera;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.PointerEvent;
 
@@ -8,8 +9,8 @@ public class FlyView {
 
 	protected AimPoint aim;
 
-	protected double turnSpeed = 5;
-	protected double walkSpeed = 2.5;
+	public float turnSpeed = 4f;
+	public float walkSpeed = 2.5f;
 
 	protected boolean forwardPressed = false;
 	protected boolean backwardPressed = false;
@@ -26,6 +27,10 @@ public class FlyView {
 	public FlyView(float x, float y, float z) {
 		aim = new AimPoint(x, y, z);
 	}
+	
+	public FlyView(Camera camera) {
+		aim = new AimPoint(camera.position.x, camera.position.y, camera.position.z);
+	}
 
 	public AimPoint getAim() {
 		return aim;
@@ -35,19 +40,19 @@ public class FlyView {
 		this.aim = aim;
 	}
 
-	public double getX() {
-		return aim.getX();
+	public float getX() {
+		return aim.x;
 	}
 
-	public double getY() {
-		return aim.getY();
+	public float getY() {
+		return aim.y;
 	}
 
-	public double getZ() {
-		return aim.getZ();
+	public float getZ() {
+		return aim.z;
 	}
 
-	public void updateControls(long now) {
+	public void update(long now) {
 
 		if(forwardPressed) {
 			aim.moveXZ(-walkSpeed);
@@ -74,11 +79,11 @@ public class FlyView {
 		}
 
 		if(liftPressed) {
-			aim.offsetY(+walkSpeed);			
+			aim.y += walkSpeed;
 		}
 		
 		if(divePressed) {
-			aim.offsetY(-walkSpeed);			
+			aim.y -= walkSpeed;
 		}
 
 	}

@@ -115,7 +115,7 @@ public class Graphics3D extends AWTGraphics {
 
 		// draw a sphere
 		gl.glPushMatrix();                  
-		gl.glTranslated(point.getX(), point.getY(), point.getZ());
+		gl.glTranslated(point.x, point.y, point.z);
 		gl.glRotated(point.getAngleY(), 0, 1, 0);
 		gl.glRotated(point.getAngleX(), 1, 0, 0);
 		glu.gluSphere(sphere, radius, 32, 32);
@@ -264,7 +264,7 @@ public class Graphics3D extends AWTGraphics {
 		glu.gluLookAt( camera.position.x, camera.position.y, camera.position.z, camera.getTarget().x, camera.getTarget().y, camera.getTarget().z, 0, 1, 0 );
 	}
 
-	public void aimCamera(ColoredPoint3D cameraPoint, double angleX, double angleY, double angleZ) {
+	public void aimCamera(Vector3 cameraPoint, double angleX, double angleY, double angleZ) {
 		GL2 gl = getGL2();
 
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
@@ -275,7 +275,7 @@ public class Graphics3D extends AWTGraphics {
 		gl.glRotated(360-angleY, 0, 1, 0);
 		gl.glRotated(360-angleZ, 0, 0, 1);
 
-		gl.glTranslated(-cameraPoint.getX(), -cameraPoint.getY(), -cameraPoint.getZ());
+		gl.glTranslated(-cameraPoint.x, -cameraPoint.y, -cameraPoint.z);
 	}
 
 	public void aimCamera(AimPoint aim) {
@@ -289,7 +289,7 @@ public class Graphics3D extends AWTGraphics {
 		gl.glRotated(360-aim.getAngleY(), 0, 1, 0);
 		gl.glRotated(360-aim.getAngleZ(), 0, 0, 1);
 		
-		gl.glTranslated(-aim.getX(), -aim.getY(), -aim.getZ());
+		gl.glTranslated(-aim.x, -aim.y, -aim.z);
 	}
 
 	public GLBase getGL() {
