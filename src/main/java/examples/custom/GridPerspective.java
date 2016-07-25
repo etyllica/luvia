@@ -12,12 +12,12 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
-import br.com.abby.linear.AimPoint;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.MouseButton;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.context.ApplicationGL;
+import br.com.luvia.core.controller.FlyView;
 import br.com.luvia.core.graphics.Graphics3D;
 import br.com.luvia.loader.TextureLoader;
 
@@ -32,16 +32,8 @@ public class GridPerspective extends ApplicationGL {
 	
 	protected boolean click = false;
 	
-	protected double turnSpeed = 1;
-	protected double walkSpeed = 0.5;
-	
-	private AimPoint aim;
-	
-	private boolean upPressed = false;
-	private boolean downPressed = false;
-	private boolean leftPressed = false;
-	private boolean rightPressed = false;
-	
+	protected FlyView view;
+		
 	public GridPerspective(int w, int h) {
 		super(w, h);
 	}
@@ -49,9 +41,8 @@ public class GridPerspective extends ApplicationGL {
 	@Override
 	public void init(Graphics3D drawable) {
 		
-		aim = new AimPoint(0, 5, 0);
-		
-		aim.setAngleY(180);
+		view = new FlyView(0,2,0);
+		view.getAim().setAngleY(180);
 		
 		floor = TextureLoader.getInstance().loadTexture("mark.png");
 	}
@@ -79,11 +70,9 @@ public class GridPerspective extends ApplicationGL {
 		floor.bind(gl);
 
 		for(int j=0;j<y;j++) {
-
 			for(int i=0;i<x;i++) {
 				drawTile(gl, i, j, tileSize);
 			}
-			
 		}
 
 		floor.disable(gl);
@@ -164,34 +153,12 @@ public class GridPerspective extends ApplicationGL {
 
 	@Override
 	public void updateKeyboard(KeyEvent event) {
-
-		if(event.isKeyDown(KeyEvent.VK_UP_ARROW)) {
-			upPressed = true;
-		} else if(event.isKeyUp(KeyEvent.VK_UP_ARROW)) {
-			upPressed = false;
-		}
-		
-		if(event.isKeyDown(KeyEvent.VK_DOWN_ARROW)) {
-			downPressed = true;
-		} else if(event.isKeyUp(KeyEvent.VK_DOWN_ARROW)) {
-			downPressed = false;
-		}
-		
-		if(event.isKeyDown(KeyEvent.VK_RIGHT_ARROW)) {
-			rightPressed = true;
-		} else if(event.isKeyUp(KeyEvent.VK_RIGHT_ARROW)) {
-			rightPressed = false;
-		}
-
-		if(event.isKeyDown(KeyEvent.VK_LEFT_ARROW)) {
-			leftPressed = true;			
-		} else if(event.isKeyUp(KeyEvent.VK_LEFT_ARROW)) {
-			leftPressed = false;
-		}
+		view.updateKeyboard(event);
 	}
 	
 	public void updateMouse(PointerEvent event) {
-
+		view.updateMouse(event);
+		
 		mx = event.getX();
 		my = event.getY();
 
@@ -207,9 +174,6 @@ public class GridPerspective extends ApplicationGL {
 
 	@Override
 	public void display(Graphics3D drawable) {
-
-		updateControls(0);
-		
 		GL2 gl = drawable.getGL().getGL2();
 
 		//TODO TEST
@@ -217,15 +181,14 @@ public class GridPerspective extends ApplicationGL {
 		gl.glClearColor(1f, 1f, 1f, 1);
 				
 		//Transform by Aim
-		drawable.aimCamera(aim);
+		drawable.aimCamera(view.getAim());
 
 		//Draw Scene
 		drawAxis(gl);
 
-		drawFloor(gl);		
+		drawFloor(gl);
 
 		gl.glFlush();
-
 	}
 	
 
@@ -243,28 +206,13 @@ public class GridPerspective extends ApplicationGL {
 		//Draw Gui
 		g.setColor(Color.WHITE);
 		g.drawShadow(20,20, "Scene",Color.BLACK);
-		g.drawShadow(20,40, Double.toString(aim.getAngleY()),Color.BLACK);
-				
+		g.drawShadow(20,40, Double.toString(view.getAim().getAngleY()),Color.BLACK);
+		
 	}
 
-	public void updateControls(long now) {
-				
-		if(upPressed) {
-			aim.moveXZ(-walkSpeed);
-		}
-		
-		if(downPressed) {
-			aim.moveXZ(walkSpeed);			
-		}
-		
-		if(leftPressed) {
-			aim.offsetAngleY(+turnSpeed);			
-		}
-
-		if(rightPressed) {
-			aim.offsetAngleY(-turnSpeed);			
-		}
-		
+	@Override
+	public void update(long now) {
+		view.update(now);
 	}
 	
 }

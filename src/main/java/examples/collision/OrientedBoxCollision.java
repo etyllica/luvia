@@ -243,7 +243,7 @@ public class OrientedBoxCollision extends ApplicationGL {
 		cubes.get(6).rotateY(0.5f);
 		//stone.transform.translate(10, 0, 0);
 		
-		view.updateControls(now);
+		view.update(now);
 	}
 
 }

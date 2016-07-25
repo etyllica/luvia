@@ -258,7 +258,7 @@ public class StampApplication extends ApplicationGL {
 
 	@Override
 	public void display(Graphics3D drawable) {
-		view.updateControls(0);
+		view.update(0);
 
 		GL2 gl = drawable.getGL().getGL2();
 
