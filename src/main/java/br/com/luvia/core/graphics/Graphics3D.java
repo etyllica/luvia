@@ -839,16 +839,16 @@ public class Graphics3D extends AWTGraphics {
 		gl.glBegin(GL2.GL_TRIANGLE_STRIP);
 
 		gl.glTexCoord2d(0, 0);
-		drawVertex(p00);
+		vertex(p00);
 
 		gl.glTexCoord2d(1, 0);
-		drawVertex(p10);
+		vertex(p10);
 
 		gl.glTexCoord2d(0, 1);
-		drawVertex(p01);
+		vertex(p01);
 		
 		gl.glTexCoord2d(1, 1);
-		drawVertex(p11);
+		vertex(p11);
 
 		gl.glEnd();
 	}
@@ -875,7 +875,7 @@ public class Graphics3D extends AWTGraphics {
 		return array;
 	}
 
-	public void drawVertex(Vector3 vector3) {
+	public void vertex(Vector3 vector3) {
 		GL2 gl = getGL2();
 		gl.glVertex3f(vector3.x, vector3.y, vector3.z);
 	}
