@@ -11,6 +11,7 @@ import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.controller.FlyView;
 import br.com.luvia.core.graphics.Graphics3D;
 import br.com.luvia.graphics.Cone;
+import br.com.luvia.graphics.Cylinder;
 
 public class ConeDrawing extends ApplicationGL {
 
@@ -19,6 +20,7 @@ public class ConeDrawing extends ApplicationGL {
 	
 	protected FlyView view;
 	private Cone cone;
+	private Cylinder cylinder;
 
 	public ConeDrawing(int w, int h) {
 		super(w, h);
@@ -29,7 +31,9 @@ public class ConeDrawing extends ApplicationGL {
 		view = new FlyView(0, 3.6f, -10);
 		view.getAim().setAngleY(180);
 		
-		cone = new Cone(6);
+		cone = new Cone(6, 6, 3);
+		cylinder = new Cylinder(6, 6, 3);
+		cylinder.transform.translate(8, 0, 0);
 
 		GL2 gl = drawable.getGL2(); // get the OpenGL graphics context
 
@@ -88,6 +92,8 @@ public class ConeDrawing extends ApplicationGL {
 		
 		drawable.setColor(Color.BLUE);
 		cone.draw(drawable);
+		drawable.setColor(Color.GREEN);
+		cylinder.draw(drawable);
 
 		gl.glFlush();
 	}
