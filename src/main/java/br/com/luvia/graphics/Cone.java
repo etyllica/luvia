@@ -39,5 +39,5 @@ public class Cone extends BaseCone {
 		}
 		gl.glEnd();
 	}
-	
+		
 }

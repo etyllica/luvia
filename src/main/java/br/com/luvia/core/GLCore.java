@@ -4,6 +4,7 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.image.MemoryImageSource;
@@ -21,6 +22,8 @@ import javax.swing.JPanel;
 
 import br.com.abby.core.loader.MeshLoader;
 import br.com.etyllica.core.InnerCore;
+import br.com.etyllica.core.context.Application;
+import br.com.etyllica.core.engine.EtyllicaFrame;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.loader.FontLoader;
 import br.com.etyllica.loader.Loader;
@@ -305,6 +308,30 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 	@Override
 	public void moveToCenter() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setEngine(EtyllicaFrame frame) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void startEngine() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void startCore(Application application) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
 		
 	}

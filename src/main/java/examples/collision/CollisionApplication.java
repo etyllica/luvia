@@ -26,6 +26,8 @@ import br.com.luvia.loader.TextureLoader;
 import com.badlogic.gdx.math.collision.Ray;
 import com.jogamp.opengl.util.texture.Texture;
 
+import examples.simple.StandardExample;
+
 public class CollisionApplication extends ApplicationGL {
 
 	private Camera camera;
@@ -45,9 +47,7 @@ public class CollisionApplication extends ApplicationGL {
 	int area = 0;
 	
 	private List<Boolean> activeMarkers = new ArrayList<>(markerCount);
-	
-	private Ray ray;
-	
+		
 	public CollisionApplication(int w, int h) {
 		super(w, h);
 	}
@@ -186,34 +186,7 @@ public class CollisionApplication extends ApplicationGL {
 
 	@Override
 	public void reshape(Graphics3D drawable, int x, int y, int width, int height) {
-
-		GL2 gl = drawable.getGL2();
-		GLU glu = drawable.getGLU();
-
-		gl.glViewport (x, y, width, height);
-
-		gl.glMatrixMode(GL2.GL_PROJECTION);
-
-		gl.glLoadIdentity();
-				
-		float aspect = (float)width / (float)height; 
-		
-		glu.gluPerspective(60, aspect, 1, 100);
-
-		gl.glMatrixMode(GL2.GL_MODELVIEW);
-
-		gl.glLoadIdentity();
-
-	}
-	
-	@Override
-	public void update(long now) {
-		
-	}
-	
-	@Override
-	public void updateKeyboard(KeyEvent event) {
-		
+		StandardExample.standardScene(drawable, x, y, width, height);
 	}
 	
 	@Override
@@ -253,6 +226,5 @@ public class CollisionApplication extends ApplicationGL {
 
 		gl.glFlush();
 	}
-
 	
 }

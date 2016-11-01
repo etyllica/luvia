@@ -627,28 +627,34 @@ public class Graphics3D extends AWTGraphics {
 		gl.glEnd();
 	}
 	
-	public void drawGrid(float size, int rows, int columns) {
+	public void drawGrid(float x, float y, float z, float size, int rows, int columns) {
 		GL2 gl = getGL2();
 		
 		//Axis Width
 		gl.glLineWidth(1f);
+		gl.glTranslatef(-x/2, -y/2, -z/2);
 		
 		//Draw Rows
 		gl.glBegin(GL.GL_LINES);
 		
-		int x = 0, y = 0;
+		int a = 0, b = 0;
 		
 		for (int i = 0;i < rows; i++) {
-			gl.glVertex3d(x+size*i, 0.0, y+size*columns);
-			gl.glVertex3d(x+size*i, 0, y);
+			gl.glVertex3d(a+size*i, 0.0, b+size*columns);
+			gl.glVertex3d(a+size*i, 0, b);
 		}
 		
 		for (int j = 0;j < columns; j++) {
-			gl.glVertex3d(x+size*rows, 0.0, y+size*j);
-			gl.glVertex3d(x, 0, y+size*j);
+			gl.glVertex3d(a+size*rows, 0.0, b+size*j);
+			gl.glVertex3d(a, 0, b+size*j);
 		}
 		
 		gl.glEnd();
+		gl.glTranslatef(x/2, y/2, z/2);
+	}
+	
+	public void drawGrid(float size, int rows, int columns) {
+		drawGrid(rows*size, 0, columns/size, size, rows, columns);
 	}
 
 	/*

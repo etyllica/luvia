@@ -5,17 +5,19 @@ import br.com.luvia.core.context.ApplicationGL;
 import examples.box.OctreeClipping;
 import examples.box.OctreeRender;
 import examples.collision.CollisionApplication;
+import examples.collision.ConeCollision;
 import examples.collision.OrientedBoxCollision;
 import examples.custom.GridPerspective;
 import examples.custom.MarkerApplication;
 import examples.custom.Ortographic;
 import examples.custom.Perspective;
-import examples.custom.SkyboxGridPerspective;
 import examples.frustrum.FrustrumRender;
 import examples.manipulation.PositionAxis;
 import examples.manipulation.RotationAxis;
 import examples.mesh.MeshExample;
 import examples.orthographic.GridMenuApplication;
+import examples.simple.ConeDrawing;
+import examples.skybox.SkyboxExample;
 import examples.stamp.StampApplication;
 import examples.tutorial1.OrthographicDrawingExample;
 import examples.tutorial2.MixedRenderingExample;
@@ -34,6 +36,7 @@ public class LuviaExamples extends Luvia {
 	// Main program
 	public static void main(String[] args) {
 		LuviaExamples engine = new LuviaExamples();
+		engine.setTitle("Luvia Examples");
 		engine.setIcon("cross_blue.png");
 		engine.init();
 	}
@@ -54,7 +57,7 @@ public class LuviaExamples extends Luvia {
 		//return new GridPerspective(w, h);
 		//return new OrientedBoxCollision(w, h);
 		//return new RadialMarkerApplication(w, h);
-		//return new SkyboxGridPerspective(w, h);
+		//return new SkyboxExample(w, h);
 		
 		//return new OctreeRender(w, h);
 		//return new OctreeClipping(w, h);
@@ -66,7 +69,9 @@ public class LuviaExamples extends Luvia {
 		//return new StampApplication(w, h);
 		
 		//return new PositionAxis(w, h);
-		return new RotationAxis(w, h);
+		//return new RotationAxis(w, h);
+		//return new ConeDrawing(w, h);
+		return new ConeCollision(w, h);
 	}
 
 }

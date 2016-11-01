@@ -7,11 +7,6 @@ import java.util.List;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
-import javax.media.opengl.glu.GLU;
-
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.Ray;
 
 import br.com.abby.linear.OrientedBoundingBox;
 import br.com.etyllica.core.event.KeyEvent;
@@ -22,6 +17,11 @@ import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.controller.FlyView;
 import br.com.luvia.core.graphics.Graphics3D;
 
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.collision.Ray;
+
+import examples.simple.StandardExample;
+
 public class OrientedBoxCollision extends ApplicationGL {
 
 	protected int mx = 0;
@@ -30,13 +30,13 @@ public class OrientedBoxCollision extends ApplicationGL {
 	protected boolean click = false;
 
 	protected FlyView view;
-	
-	private static final int NONE = -1;
-	
-	boolean drawRay = false;
-	double tileSize = 1;
-	int colide = NONE;
-	int selected = NONE;
+
+	protected static final int NONE = -1;
+
+	protected boolean drawRay = false;
+	protected double tileSize = 1;
+	protected int colide = NONE;
+	protected int selected = NONE;
 
 	private List<OrientedBoundingBox> cubes;
 
@@ -72,73 +72,9 @@ public class OrientedBoxCollision extends ApplicationGL {
 		cubes.add(new OrientedBoundingBox(1).translate(32, 1, 7));
 	}
 
-	private void drawAxis(GL2 gl) {
-
-		double axisSize = 100;
-
-		//Draw Axis
-		gl.glLineWidth(2.5f);
-
-		//Draw X Axis
-		gl.glColor3d(1.0, 0.0, 0.0);
-		gl.glBegin(GL.GL_LINES);
-		gl.glVertex3d(0.0, 0.0, 0.0);
-		gl.glVertex3d(axisSize, 0, 0);
-		gl.glEnd();
-
-		//Draw Y Axis
-		gl.glColor3d(0.0, 1.0, 0.0);
-		gl.glBegin(GL.GL_LINES);
-		gl.glVertex3d(0.0, 0.0, 0.0);
-		gl.glVertex3d(0, axisSize, 0);
-		gl.glEnd();
-
-		//Draw Z Axis
-		gl.glColor3d(0.0, 0.0, 1.0);
-		gl.glBegin(GL.GL_LINES);
-		gl.glVertex3d(0.0, 0.0, 0.0);
-		gl.glVertex3d(0, 0, axisSize);
-		gl.glEnd();
-
-	}
-
-	private void drawRay(GL2 gl, Ray ray) {
-
-		float axisSize = 50;
-
-		Vector3 v = new Vector3(ray.direction);
-		v.scl(axisSize);
-
-		//Draw Camera Axis
-		if (colide >= 0) {
-			gl.glColor3d(1.0, 0.0, 0.0);
-		} else {
-			gl.glColor3d(0.0, 0.0, 1.0);
-		}
-
-		gl.glBegin(GL.GL_LINES);
-		gl.glVertex3d(view.getX(), 1, view.getZ());
-		gl.glVertex3d(view.getX()+v.x, view.getY()+v.y, view.getZ()+v.z);
-		gl.glEnd();
-	}
-
 	@Override
 	public void reshape(Graphics3D drawable, int x, int y, int width, int height) {
-
-		GL2 gl = drawable.getGL2();
-		GLU glu = drawable.getGLU();
-
-		gl.glViewport((int)x, (int)y, (int)w, (int)h);
-
-		gl.glMatrixMode(GL2.GL_PROJECTION);
-
-		gl.glLoadIdentity();
-
-		glu.gluPerspective(60.0, (double) w / (double) h, 0.1, 500.0);
-
-		gl.glMatrixMode(GL2.GL_MODELVIEW);
-
-		gl.glLoadIdentity();
+		StandardExample.standardScene(drawable, x, y, width, height);
 	}
 
 	@Override
@@ -156,13 +92,13 @@ public class OrientedBoxCollision extends ApplicationGL {
 
 		mx = event.getX();
 		my = event.getY();
-		
+
 		if(event.isButtonDown(MouseButton.MOUSE_BUTTON_LEFT)) {
 			click = true;
 		} else if(event.isButtonUp(MouseButton.MOUSE_BUTTON_LEFT)) {
 			click = false;
 		}
-		
+
 		if(event.isButtonDown(MouseButton.MOUSE_BUTTON_RIGHT)) {
 			drawRay = true;
 		} else if(event.isButtonUp(MouseButton.MOUSE_BUTTON_RIGHT)) {
@@ -182,21 +118,29 @@ public class OrientedBoxCollision extends ApplicationGL {
 
 		//Transform by Aim
 		drawable.aimCamera(view.getAim());
-		
+
 		//Draw Scene
-		drawAxis(gl);
-		
+		StandardExample.drawAxis(gl, 100);
+
 		Ray ray = drawable.getCameraRay(mx, my);
-		if(drawRay) {
-			drawRay(gl, ray);
+		
+		if (colide >= 0) {
+			gl.glColor3d(1.0, 0.0, 0.0);
+		} else {
+			gl.glColor3d(0.0, 0.0, 1.0);
 		}
 		
-		colide = -1;
-		
+		if(drawRay) {
+			float raySize = 500;
+			StandardExample.drawRay(gl, ray, view, raySize);
+		}
+
+		colide = NONE;
+
 		for (int i = 0; i<cubes.size(); i++) {
 
 			OrientedBoundingBox cube = cubes.get(i);
-			
+
 			if (Intersector.intersectRayBounds(ray, cube) > 0) {
 				colide = i;
 				if (!click) {
@@ -205,21 +149,21 @@ public class OrientedBoxCollision extends ApplicationGL {
 					selected = i;
 					drawable.setColor(Color.BLUE);
 				}
-				
+
 			} else {
 				drawable.setColor(Color.GREEN);		
 			}
-			
+
 			if(selected == i) {
 				drawable.setColor(Color.BLUE);
 			}
-			
+
 			gl.glPushMatrix();
 			gl.glMultMatrixf(cube.transform.val, 0);
 			drawable.drawBoundingBox(cube);
 			gl.glPopMatrix();
 		}
-		
+
 
 		gl.glFlush();
 
@@ -233,7 +177,7 @@ public class OrientedBoxCollision extends ApplicationGL {
 		g.setColor(Color.WHITE);
 		g.drawShadow(20,60, "Scene",Color.BLACK);
 		g.drawShadow(20,80, Double.toString(view.getAim().getAngleY()),Color.BLACK);
-		
+
 		//orangeAim.simpleDraw(g, mx-orangeAim.getW()/2, my-orangeAim.getH()/2);
 	}
 
@@ -242,7 +186,7 @@ public class OrientedBoxCollision extends ApplicationGL {
 		//stone.rotateY(10);
 		cubes.get(6).rotateY(0.5f);
 		//stone.transform.translate(10, 0, 0);
-		
+
 		view.update(now);
 	}
 

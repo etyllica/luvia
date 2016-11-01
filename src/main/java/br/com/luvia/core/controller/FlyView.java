@@ -100,13 +100,25 @@ public class FlyView {
 		} else if(event.isKeyUp(KeyEvent.VK_S)) {
 			backwardPressed = false;
 		}
+		
+		if(event.isKeyDown(KeyEvent.VK_A)) {
+			strafeLeftPressed = true;
+		} else if(event.isKeyUp(KeyEvent.VK_A)) {
+			strafeLeftPressed = false;
+		}
+		
+		if(event.isKeyDown(KeyEvent.VK_D)) {
+			strafeRightPressed = true;
+		} else if(event.isKeyUp(KeyEvent.VK_D)) {
+			strafeRightPressed = false;
+		}
 
 		if(event.isKeyDown(KeyEvent.VK_UP_ARROW)) {
 			upPressed = true;
 		} else if(event.isKeyUp(KeyEvent.VK_UP_ARROW)) {
 			upPressed = false;
 		}
-
+		
 		if(event.isKeyDown(KeyEvent.VK_DOWN_ARROW)) {
 			downPressed = true;
 		} else if(event.isKeyUp(KeyEvent.VK_DOWN_ARROW)) {
