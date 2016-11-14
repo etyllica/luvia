@@ -152,46 +152,42 @@ public class Graphics3D extends AWTGraphics {
 		texture.disable(gl);
 	}
 
-	public double[] getModelView() {
-
-		double modelView[] = new double[16];
-		drawable.getGL().getGL2().glGetDoublev(GL2.GL_MODELVIEW_MATRIX, modelView, 0);
+	public float[] getModelView() {
+		float modelView[] = new float[16];
+		drawable.getGL().getGL2().glGetFloatv(GL2.GL_MODELVIEW_MATRIX, modelView, 0);
 
 		return modelView;
 	}
 
-	public double[] getProjection() {
-
-		double projection[] = new double[16];
-
-		getGL2().glGetDoublev(GL2.GL_PROJECTION_MATRIX, projection, 0);
+	public float[] getProjection() {
+		float projection[] = new float[16];
+		getGL2().glGetFloatv(GL2.GL_PROJECTION_MATRIX, projection, 0);
 
 		return projection;
 	}
 
-	public ColoredPoint3D get3DPointerFromMouse(float mx, float my) {
+	public Vector3 get3DPointerFromMouse(float mx, float my) {
 		return get3DPointerFromMouse(mx, my, 0);
 	}
 	
-	public void get3DPointFrom2D(float mx, float my, double[] out) {
+	public void get3DPointFrom2D(float mx, float my, Vector3 out) {
 		get3DPointFrom2D(mx, my, 0, out);
 	}
 
-	public double[] get2DPositionFromPoint(double px, double py, double pz) {
+	public float[] get2DPositionFromPoint(float px, float py, float pz) {
 
-		double[] position = new double[3];
-
+		float[] position = new float[3];
+		
 		int[] viewport = getViewPort();
-		double[] modelview = getModelView();
-		double[] projection = getProjection();
+		float[] modelview = getModelView();
+		float[] projection = getProjection();
 
 		glu.gluProject(px, py, pz, modelview, 0, projection, 0, viewport, 0, position, 0);
 
 		return position;
-
 	}
 
-	public void get3DPointFrom2D(float mx, float my, float zPlane, double[] out) {
+	public void get3DPointFrom2D(float mx, float my, float zPlane, Vector3 out) {
 		GL2 gl = getGL2();
 		
 		FloatBuffer projection = BufferUtils.createFloatBuffer(16);
@@ -217,22 +213,19 @@ public class Graphics3D extends AWTGraphics {
 		float fX = v1.x + (v2.x - v1.x) * t;
 		float fZ = v1.z + (v2.z - v1.z) * t;
 
-		out[0] = fX;
-		out[1] = zPlane;
-		out[2] = fZ;
+		out.x = fX;
+		out.y = zPlane;
+		out.z = fZ;
 	}
 	
-	public ColoredPoint3D get3DPointerFromMouse(float mx, float my, float zPlane) {
-
-		double[] out = new double[3];
+	public Vector3 get3DPointerFromMouse(float mx, float my, float zPlane) {
+		Vector3 out = new Vector3();
 		get3DPointFrom2D(mx, my, zPlane, out);
 		
-		ColoredPoint3D point = new ColoredPoint3D(out[0], out[1], out[2]);
-
-		return point;
+		return out;
 	}
 	
-	public Ray getCameraRay(int mx, int my) {
+	public Ray getCameraRay(int mx, int my, Ray rayOut) {
 		GL2 gl = getGL2();
 		
 		FloatBuffer projection = BufferUtils.createFloatBuffer(16);
@@ -249,12 +242,14 @@ public class Graphics3D extends AWTGraphics {
 		glu.gluUnProject(mx, viewport.get(3) - my, 0f, modelview, projection, viewport, positionNear);
 		glu.gluUnProject(mx, viewport.get(3) - my, 1f, modelview, projection, viewport, positionFar);
 
-		Vector3 origin = new Vector3(positionNear.get(0), positionNear.get(1), positionNear.get(2));
-		Vector3 direction = new Vector3(positionFar.get(0)-origin.x, positionFar.get(1)-origin.y, positionFar.get(2)-origin.z);
-
-		Ray ray = new Ray(origin, direction);
+		rayOut.origin.set(positionNear.get(0), positionNear.get(1), positionNear.get(2));
+		rayOut.direction.set(positionFar.get(0)-rayOut.origin.x, positionFar.get(1)-rayOut.origin.y, positionFar.get(2)-rayOut.origin.z);
 		
-		return ray;
+		return rayOut;
+	}
+	
+	public Ray getCameraRay(int mx, int my) {
+		return getCameraRay(mx, my, new Ray());
 	}
 
 	public void updateCamera(Camera camera) {

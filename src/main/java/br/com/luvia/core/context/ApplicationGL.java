@@ -2,13 +2,13 @@ package br.com.luvia.core.context;
 
 import javax.media.opengl.GL2;
 
-import br.com.abby.linear.ColoredPoint3D;
 import br.com.etyllica.core.context.Application;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.graphics.G3DEventListener;
 import br.com.luvia.core.graphics.Graphics3D;
 
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector3;
 
 public abstract class ApplicationGL extends Application implements com.badlogic.gdx.Application, G3DEventListener {
 		
@@ -46,30 +46,30 @@ public abstract class ApplicationGL extends Application implements com.badlogic.
 		return returnApplication3D;
 	}
 
-	protected ColoredPoint3D transformPosition(Graphics3D g, ColoredPoint3D point) {
+	protected Vector3 transformPosition(Graphics3D g, Vector3 point) {
 				
-		double[] m = g.getModelView();
+		float[] m = g.getModelView();
 		
-		double x = m[0]*point.getX()+m[4]*point.getY()+m[8]*point.getZ();//+m[12]*0;
+		float x = m[0]*point.x+m[4]*point.y+m[8]*point.z;//+m[12]*0;
 		
-		double y = m[1]*point.getX()+m[5]*point.getY()+m[9]*point.getZ();//+m[13]*0;
+		float y = m[1]*point.x+m[5]*point.y+m[9]*point.z;//+m[13]*0;
 		
-		double z = m[2]*point.getX()+m[6]*point.getY()+m[10]*point.getZ();//+m[14]*0;
+		float z = m[2]*point.x+m[6]*point.y+m[10]*point.z;//+m[14]*0;
 		
 		//double w = m[3]*point.getX()+m[7]*point.getY()+m[11]*point.getZ()+m[15]*0;
 		
-		return new ColoredPoint3D(x, y, z);
+		return new Vector3(x, y, z);
 	}
 	
 	protected int[] getViewPort(Graphics3D g) {
 		return g.getViewPort();
 	}
 
-	protected double[] getModelView(Graphics3D g) {
+	protected float[] getModelView(Graphics3D g) {
 		return g.getModelView();
 	}
 	
-	protected double[] getProjection(Graphics3D g) {
+	protected float[] getProjection(Graphics3D g) {
 		return g.getProjection();
 	}
 	
