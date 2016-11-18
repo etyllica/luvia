@@ -16,13 +16,8 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.Ray;
-import com.jogamp.opengl.util.texture.Texture;
-
 import br.com.abby.core.loader.MeshLoader;
 import br.com.abby.core.model.Model;
-import br.com.abby.linear.ColoredPoint3D;
 import br.com.etyllica.awt.SVGColor;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.MouseButton;
@@ -33,6 +28,10 @@ import br.com.luvia.core.controller.FlyView;
 import br.com.luvia.core.graphics.Graphics3D;
 import br.com.luvia.graphics.ModelInstance;
 import br.com.luvia.loader.TextureLoader;
+
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
+import com.jogamp.opengl.util.texture.Texture;
 
 public class StampApplication extends ApplicationGL {
 	
@@ -57,8 +56,8 @@ public class StampApplication extends ApplicationGL {
 	
 	private Model stoneMesh;
 
-	Set<ColoredPoint3D> bsp = new HashSet<ColoredPoint3D>();
-	private ColoredPoint3D position;
+	Set<Vector3> bsp = new HashSet<Vector3>();
+	private Vector3 position;
 	
 	public StampApplication(int w, int h) {
 		super(w, h);
@@ -274,8 +273,8 @@ public class StampApplication extends ApplicationGL {
 		
 		position = drawable.get3DPointerFromMouse(mx, my);
 		
-		int currentX = (int)(position.getX()/tileSize);
-		int currentZ = (int)(position.getZ()/tileSize);
+		int currentX = (int)(position.x/tileSize);
+		int currentZ = (int)(position.z/tileSize);
 		
 		if(drawRay) {
 			drawRay(gl, drawable.getCameraRay(mx+32, my));
