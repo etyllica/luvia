@@ -12,16 +12,16 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
+import com.jogamp.opengl.util.texture.Texture;
+
+import br.com.abby.core.view.FlyView;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.MouseButton;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.controller.FlyView;
 import br.com.luvia.core.graphics.Graphics3D;
 import br.com.luvia.loader.TextureLoader;
-
-import com.jogamp.opengl.util.texture.Texture;
 
 public class GridPerspective extends ApplicationGL {
 

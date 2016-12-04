@@ -99,8 +99,8 @@ public class Graphics3D extends AWTGraphics {
 		gl.glEnd();
 	}
 
-	public void drawSphere(ColoredPoint3D point, double radius) {
-		drawSphere(radius, point.getX(), point.getY(), point.getZ());
+	public void drawSphere(Vector3 point, double radius) {
+		drawSphere(radius, point.x, point.y, point.z);
 	}
 	
 	public void drawSphere(AimPoint point, double radius) {

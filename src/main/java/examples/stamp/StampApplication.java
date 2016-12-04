@@ -16,22 +16,22 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
+import com.jogamp.opengl.util.texture.Texture;
+
 import br.com.abby.core.loader.MeshLoader;
 import br.com.abby.core.model.Model;
+import br.com.abby.core.view.FlyView;
 import br.com.etyllica.awt.SVGColor;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.MouseButton;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.controller.FlyView;
 import br.com.luvia.core.graphics.Graphics3D;
 import br.com.luvia.graphics.ModelInstance;
 import br.com.luvia.loader.TextureLoader;
-
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.Ray;
-import com.jogamp.opengl.util.texture.Texture;
 
 public class StampApplication extends ApplicationGL {
 	

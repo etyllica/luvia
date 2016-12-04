@@ -5,9 +5,9 @@ import java.awt.Color;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
+import br.com.abby.core.view.FlyView;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.controller.FlyView;
 import br.com.luvia.core.graphics.Graphics3D;
 import br.com.luvia.graphics.Cone;
 import br.com.luvia.graphics.Cylinder;
