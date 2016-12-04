@@ -20,6 +20,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import br.com.abby.core.loader.AnimationLoader;
 import br.com.abby.core.loader.MeshLoader;
 import br.com.etyllica.core.InnerCore;
 import br.com.etyllica.core.context.Application;
@@ -102,7 +103,8 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		loaders.add(ImageLoader.getInstance());
 		loaders.add(FontLoader.getInstance());		
 		loaders.add(TextureLoader.getInstance());
-		loaders.add(MeshLoader.getInstance());		
+		loaders.add(MeshLoader.getInstance());
+		loaders.add(AnimationLoader.getInstance());
 		loaders.add(GISInfoLoader.getInstance());
 	}
 
