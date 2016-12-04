@@ -7,7 +7,7 @@ import javax.media.opengl.glu.GLU;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 
-import br.com.luvia.core.controller.FlyView;
+import br.com.abby.core.view.FlyView;
 import br.com.luvia.core.graphics.Graphics3D;
 
 public class StandardExample {

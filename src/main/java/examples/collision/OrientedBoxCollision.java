@@ -8,18 +8,17 @@ import java.util.List;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.collision.Ray;
+
+import br.com.abby.core.view.FlyView;
 import br.com.abby.linear.OrientedBoundingBox;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.MouseButton;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.controller.FlyView;
 import br.com.luvia.core.graphics.Graphics3D;
-
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.collision.Ray;
-
 import examples.simple.StandardExample;
 
 public class OrientedBoxCollision extends ApplicationGL {

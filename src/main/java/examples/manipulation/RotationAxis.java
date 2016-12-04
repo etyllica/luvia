@@ -13,12 +13,12 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.math.collision.Ray;
 
+import br.com.abby.core.view.FlyView;
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.etyllica.core.event.MouseButton;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.controller.FlyView;
 import br.com.luvia.core.graphics.Graphics3D;
 
 public class RotationAxis extends ApplicationGL {
