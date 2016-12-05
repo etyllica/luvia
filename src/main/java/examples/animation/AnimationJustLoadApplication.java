@@ -1,15 +1,13 @@
 package examples.animation;
 
 import java.awt.Color;
-import java.io.File;
-import java.util.List;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
 import br.com.abby.core.loader.AnimationLoader;
-import br.com.abby.core.model.Joint;
+import br.com.abby.core.model.Bone;
 import br.com.abby.core.model.motion.Motion;
 import br.com.abby.core.view.FlyView;
 import br.com.etyllica.core.event.KeyEvent;
@@ -20,14 +18,12 @@ import br.com.luvia.core.view.UEView;
 
 import com.badlogic.gdx.math.Vector3;
 
-public class AnimationApplication extends ApplicationGL {
+public class AnimationJustLoadApplication extends ApplicationGL {
 	
 	protected FlyView view;
 	private Motion motion;
-	
-	long startAnimation = 0;
 		
-	public AnimationApplication(int width, int height) {
+	public AnimationJustLoadApplication(int width, int height) {
 		super(width, height);
 	}
 		
@@ -42,15 +38,12 @@ public class AnimationApplication extends ApplicationGL {
 		gl.glHint(GL2.GL_PERSPECTIVE_CORRECTION_HINT, GL.GL_NICEST); // best perspective correction
 		gl.glShadeModel(GL2.GL_SMOOTH); // blends colors nicely, and smoothes out lighting
 		
-		view = new UEView(-28, 8, 0);
+		view = new UEView(-10, 0, 0);
 		view.getAim().rotate(Vector3.Y, 90);
 		
 		//Load motion
-		//String path = "02_01.bvh";
-		String path = "anim.bvh";
-		motion = AnimationLoader.getInstance().loadMotion(path);
+		motion = AnimationLoader.getInstance().loadMotion("anim.bvh");
 		
-		startAnimation = System.currentTimeMillis();
 		loading = 100;
 	}
 
@@ -73,37 +66,12 @@ public class AnimationApplication extends ApplicationGL {
 		
 		g.setColor(Color.CYAN);
 		
-		
-		updateAnimation();
-		
-		Joint root = motion.getArmature().getRoot();
-		
-		for(Joint js:root.getChildren()) {
-			drawSkeleton(g, js);
+		for (Bone bone : motion.getArmature().getBones()) {
+			g.drawLine(bone.getOrigin().getPosition(), bone.getDestination().getPosition());
+			g.drawSphere(bone.getOrigin().getPosition(), 0.1);
 		}
 	}
 	
-	private void drawSkeleton(Graphics3D g, Joint root) {
-		g.drawSphere(root.getPosition(), 0.1);
-		for (Joint joint : root.getChildren()) {
-			g.drawLine(root.getPosition(), joint.getPosition());
-			drawSkeleton(g, joint);
-		}
-	}
-
-	private void updateAnimation() {
-		long now = System.currentTimeMillis();
-				
-		float FPS = 1/motion.getFrameTime();
-		int interval = (int)(1000/FPS);
-				
-		int keyFrameIndex = (int)((now-startAnimation)/interval);
-		//keyFrameIndex /= 2;
-		keyFrameIndex %= motion.getFrames();
-				
-		motion.animate(keyFrameIndex);
-	}
-
 	@Override
 	public void reshape(Graphics3D g, int x, int y, int width, int height) {
 		GL2 gl = g.getGL2(); // get the OpenGL graphics context
@@ -134,11 +102,5 @@ public class AnimationApplication extends ApplicationGL {
 	@Override
 	public void updateKeyboard(KeyEvent event) {
 		view.updateKeyboard(event);
-	}
-	
-	@Override
-	public void dropFiles(int x, int y, List<File> files) {
-		String path = files.get(0).getAbsolutePath();
-		motion = AnimationLoader.getInstance().loadMotion(path, true);		
 	}
 }
