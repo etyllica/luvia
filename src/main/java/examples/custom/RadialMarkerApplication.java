@@ -16,7 +16,7 @@ import javax.media.opengl.glu.GLU;
 
 import br.com.abby.linear.Camera;
 import br.com.etyllica.core.event.KeyEvent;
-import br.com.etyllica.core.event.MouseButton;
+import br.com.etyllica.core.event.MouseEvent;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.etyllica.core.linear.Point3D;
@@ -252,12 +252,12 @@ public class RadialMarkerApplication extends ApplicationGL {
 		mx = event.getX();
 		my = event.getY();
 
-		if(event.isButtonDown(MouseButton.MOUSE_BUTTON_LEFT)) {
+		if(event.isButtonDown(MouseEvent.MOUSE_BUTTON_LEFT)) {
 			camera.position.z += 0.1f;
 			click = true;
 		}
 
-		if(event.isButtonUp(MouseButton.MOUSE_BUTTON_LEFT)) {
+		if(event.isButtonUp(MouseEvent.MOUSE_BUTTON_LEFT)) {
 			camera.position.z -= 0.1f;
 			click = false;
 		}
@@ -317,17 +317,15 @@ public class RadialMarkerApplication extends ApplicationGL {
 
 		//Draw Gui
 		g.setColor(Color.WHITE);
-		g.drawShadow(20,20, "Scene",Color.BLACK);
+		g.drawStringShadow(20, 20, "Scene",Color.BLACK);
 		
-		g.drawShadow(20,40, "AngleX: "+(angleX-5),Color.BLACK);
+		g.drawStringShadow(20, 40, "AngleX: "+(angleX-5),Color.BLACK);
+		g.drawStringShadow(20, 60, "AngleY: "+(angleY),Color.BLACK);
+		g.drawStringShadow(20, 80, "AngleZ: "+(angleZ),Color.BLACK);
 		
-		g.drawShadow(20,60, "AngleY: "+(angleY),Color.BLACK);
-		
-		g.drawShadow(20,80, "AngleZ: "+(angleZ),Color.BLACK);
-		
-		g.drawShadow(20,100, "AngleXY: "+(angleXY),Color.BLACK);
-		g.drawShadow(20,130, "AngleXZ: "+(angleXZ),Color.BLACK);
-		g.drawShadow(20,160, "AngleYZ: "+(angleYZ),Color.BLACK);
+		g.drawStringShadow(20, 100, "AngleXY: "+(angleXY),Color.BLACK);
+		g.drawStringShadow(20, 130, "AngleXZ: "+(angleXZ),Color.BLACK);
+		g.drawStringShadow(20, 160, "AngleYZ: "+(angleYZ),Color.BLACK);
 	}
 	
 }

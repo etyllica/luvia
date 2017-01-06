@@ -14,7 +14,7 @@ import com.badlogic.gdx.math.collision.Ray;
 import br.com.abby.core.view.FlyView;
 import br.com.abby.linear.OrientedBoundingBox;
 import br.com.etyllica.core.event.KeyEvent;
-import br.com.etyllica.core.event.MouseButton;
+import br.com.etyllica.core.event.MouseEvent;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.context.ApplicationGL;
@@ -92,15 +92,15 @@ public class OrientedBoxCollision extends ApplicationGL {
 		mx = event.getX();
 		my = event.getY();
 
-		if(event.isButtonDown(MouseButton.MOUSE_BUTTON_LEFT)) {
+		if(event.isButtonDown(MouseEvent.MOUSE_BUTTON_LEFT)) {
 			click = true;
-		} else if(event.isButtonUp(MouseButton.MOUSE_BUTTON_LEFT)) {
+		} else if(event.isButtonUp(MouseEvent.MOUSE_BUTTON_LEFT)) {
 			click = false;
 		}
 
-		if(event.isButtonDown(MouseButton.MOUSE_BUTTON_RIGHT)) {
+		if(event.isButtonDown(MouseEvent.MOUSE_BUTTON_RIGHT)) {
 			drawRay = true;
-		} else if(event.isButtonUp(MouseButton.MOUSE_BUTTON_RIGHT)) {
+		} else if(event.isButtonUp(MouseEvent.MOUSE_BUTTON_RIGHT)) {
 			drawRay = false;
 		}
 	}
@@ -174,8 +174,8 @@ public class OrientedBoxCollision extends ApplicationGL {
 
 		//Draw Gui
 		g.setColor(Color.WHITE);
-		g.drawShadow(20,60, "Scene",Color.BLACK);
-		g.drawShadow(20,80, Double.toString(view.getAim().getAngleY()),Color.BLACK);
+		g.drawStringShadow(20, 60, "Scene",Color.BLACK);
+		g.drawStringShadow(20, 80, Double.toString(view.getAim().getAngleY()),Color.BLACK);
 
 		//orangeAim.simpleDraw(g, mx-orangeAim.getW()/2, my-orangeAim.getH()/2);
 	}

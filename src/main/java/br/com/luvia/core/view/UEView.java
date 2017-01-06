@@ -2,7 +2,7 @@ package br.com.luvia.core.view;
 
 import br.com.abby.core.view.FlyView;
 import br.com.etyllica.core.event.KeyEvent;
-import br.com.etyllica.core.event.MouseButton;
+import br.com.etyllica.core.event.MouseEvent;
 import br.com.etyllica.core.event.PointerEvent;
 
 public class UEView extends FlyView {
@@ -92,15 +92,15 @@ public class UEView extends FlyView {
 		mx = event.getX();
 		my = event.getY();
 
-		if (event.isButtonDown(MouseButton.MOUSE_BUTTON_LEFT)) {
+		if (event.isButtonDown(MouseEvent.MOUSE_BUTTON_LEFT)) {
 			if(!mouseLeft) {
 				mouseLeft = true;
 			}
-		} else if (event.isButtonUp(MouseButton.MOUSE_BUTTON_LEFT)) {
+		} else if (event.isButtonUp(MouseEvent.MOUSE_BUTTON_LEFT)) {
 			mouseLeft = false;
 		}
 
-		if (event.isButtonDown(MouseButton.MOUSE_BUTTON_RIGHT)) {
+		if (event.isButtonDown(MouseEvent.MOUSE_BUTTON_RIGHT)) {
 			if(!mouseRight) {
 				mouseRight = true;
 				rmx = mx;
@@ -110,7 +110,7 @@ public class UEView extends FlyView {
 				startAngleX = aim.getAngleX();
 				startAngleY = aim.getAngleY();
 			}
-		} else if (event.isButtonUp(MouseButton.MOUSE_BUTTON_RIGHT)) {
+		} else if (event.isButtonUp(MouseEvent.MOUSE_BUTTON_RIGHT)) {
 			mouseRight = false;
 		}
 	}

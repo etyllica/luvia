@@ -19,7 +19,7 @@ public class AnimationExamples extends Luvia {
 	@Override
 	public ApplicationGL startApplication() {
 
-		initialSetup("../");
+		initialSetup("../../../");
 		
 		return new AnimationApplication(w, h);
 	}

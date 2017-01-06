@@ -12,7 +12,7 @@ import javax.media.opengl.GL2;
 import javax.media.opengl.glu.GLU;
 
 import br.com.abby.linear.Camera;
-import br.com.etyllica.core.event.MouseButton;
+import br.com.etyllica.core.event.MouseEvent;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.context.ApplicationGL;
@@ -170,12 +170,12 @@ public class Perspective extends ApplicationGL {
 		mx = event.getX();
 		my = event.getY();
 
-		if(event.isButtonDown(MouseButton.MOUSE_BUTTON_LEFT)){
+		if(event.isButtonDown(MouseEvent.MOUSE_BUTTON_LEFT)){
 
 			click = true;
 		}
 
-		if(event.isButtonUp(MouseButton.MOUSE_BUTTON_LEFT)){
+		if(event.isButtonUp(MouseEvent.MOUSE_BUTTON_LEFT)){
 			click = false;
 		}
 	}
@@ -216,7 +216,7 @@ public class Perspective extends ApplicationGL {
 
 		//Draw Gui
 		g.setColor(Color.WHITE);
-		g.drawShadow(20,20, "Scene",Color.BLACK);
+		g.drawStringShadow(20, 20, "Scene",Color.BLACK);
 				
 	}
 	

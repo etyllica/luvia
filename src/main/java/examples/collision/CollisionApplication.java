@@ -16,7 +16,7 @@ import javax.media.opengl.glu.GLU;
 
 import br.com.abby.linear.Camera;
 import br.com.etyllica.core.event.KeyEvent;
-import br.com.etyllica.core.event.MouseButton;
+import br.com.etyllica.core.event.MouseEvent;
 import br.com.etyllica.core.event.PointerEvent;
 import br.com.etyllica.loader.image.ImageLoader;
 import br.com.luvia.core.context.ApplicationGL;
@@ -196,7 +196,7 @@ public class CollisionApplication extends ApplicationGL {
 			area = event.getX()/(w/markerCount);			
 		}
 		
-		if (event.isButtonDown(MouseButton.MOUSE_BUTTON_LEFT)) {
+		if (event.isButtonDown(MouseEvent.MOUSE_BUTTON_LEFT)) {
 			toggle(area);
 		}
 	}
