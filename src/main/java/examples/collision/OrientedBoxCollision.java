@@ -174,8 +174,8 @@ public class OrientedBoxCollision extends ApplicationGL {
 
 		//Draw Gui
 		g.setColor(Color.WHITE);
-		g.drawStringShadow(20, 60, "Scene",Color.BLACK);
-		g.drawStringShadow(20, 80, Double.toString(view.getAim().getAngleY()),Color.BLACK);
+		g.drawStringShadow("Scene", 20, 60, Color.BLACK);
+		g.drawStringShadow(Double.toString(view.getAim().getAngleY()), 20, 80, Color.BLACK);
 
 		//orangeAim.simpleDraw(g, mx-orangeAim.getW()/2, my-orangeAim.getH()/2);
 	}

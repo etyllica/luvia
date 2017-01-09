@@ -205,9 +205,8 @@ public class GridPerspective extends ApplicationGL {
 
 		//Draw Gui
 		g.setColor(Color.WHITE);
-		g.drawStringShadow(20,20, "Scene",Color.BLACK);
-		g.drawStringShadow(20,40, Double.toString(view.getAim().getAngleY()),Color.BLACK);
-		
+		g.drawStringShadow("Scene", 20, 20, Color.BLACK);
+		g.drawStringShadow(Double.toString(view.getAim().getAngleY()), 20,40, Color.BLACK);
 	}
 
 	@Override

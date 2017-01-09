@@ -55,16 +55,14 @@ public class DefaultLoadApplicationGL extends ApplicationGL implements LoadAppli
 		g.drawRect(bx-1,by-1,bxLimite+2,byLimite+2);
 
 		g.setColor(Color.WHITE);
-		g.drawStringX(100, loadingInfo);
+		g.drawStringX(loadingInfo, 100);
 			
-		//Desenha preenchimento da barra
+		//Fill bar
 		g.fillRect(bx+2, by+2, fill*4, byLimite-3);
-
 
 		g.setColor(Color.WHITE);
 		
-		///System.out.println(percent);
-		g.drawStringX(h-85, percent);
+		g.drawStringX(percent, h-85);
 
 	}
 

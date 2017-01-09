@@ -215,7 +215,7 @@ public class Ortographic extends ApplicationGL {
 
 		//Draw Gui
 		g.setColor(Color.WHITE);
-		g.drawStringShadow(20, 20, "Scene",Color.BLACK);
+		g.drawStringShadow("Scene", 20, 20, Color.BLACK);
 		//g.escreve(20,20,"Scene");
 		//System.out.println("w = "+w);
 		//System.out.println("h = "+h);

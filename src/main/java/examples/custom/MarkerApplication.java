@@ -287,13 +287,13 @@ public class MarkerApplication extends ApplicationGL {
 
 		//Draw Gui
 		g.setColor(Color.WHITE);
-		g.drawStringShadow(20, 20, "Scene",Color.BLACK);
+		g.drawStringShadow("Scene", 20, 20, Color.BLACK);
 		
-		g.drawStringShadow(20, 40, "AngleX: "+(angleX-5),Color.BLACK);
+		g.drawStringShadow("AngleX: "+(angleX-5), 20, 40, Color.BLACK);
 		
-		g.drawStringShadow(20, 60, "AngleY: "+(angleY),Color.BLACK);
+		g.drawStringShadow("AngleY: "+(angleY), 20, 60, Color.BLACK);
 		
-		g.drawStringShadow(20, 80, "AngleZ: "+(angleZ),Color.BLACK);
+		g.drawStringShadow("AngleZ: "+(angleZ), 20, 80, Color.BLACK);
 		
 		
 	}

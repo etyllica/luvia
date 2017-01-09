@@ -216,7 +216,7 @@ public class Perspective extends ApplicationGL {
 
 		//Draw Gui
 		g.setColor(Color.WHITE);
-		g.drawStringShadow(20, 20, "Scene",Color.BLACK);
+		g.drawStringShadow("Scene", 20, 20, Color.BLACK);
 				
 	}
 	
