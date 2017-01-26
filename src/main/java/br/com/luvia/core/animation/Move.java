@@ -21,9 +21,9 @@ public class Move extends ShapeAnimation {
 	
 	@Override
 	public void calculate(double x) {
-		double valueX = interpolator.factor(start.x, end.x, x);
-		double valueY = interpolator.factor(start.y, end.y, x);
-		double valueZ = interpolator.factor(start.z, end.z, x);
+		double valueX = interpolator.interpolate(start.x, end.x, x);
+		double valueY = interpolator.interpolate(start.y, end.y, x);
+		double valueZ = interpolator.interpolate(start.z, end.z, x);
 		
 		target.setPosition((float) valueX, (float) valueY, (float) valueZ);
 	}
