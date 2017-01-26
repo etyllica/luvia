@@ -1,94 +1,102 @@
 <?xml version="1.0"?>
 <project name="Luvia" default="dist" basedir=".">
 
-	<property name="version"  value="1.0" />
-	<property name="libcore"  value="luvia-${version}" />
+   <property name="version"  value="1.0" />
+   <property name="libcore"  value="luvia-${version}" />
+   <property name="libphysics"  value="luvia-physics${version}" />
 
-	<property name="src.dir"   value="src/main/java" />
-	<property name="test.dir"  value="src/test/java" />
-	<property name="build.dir" value="bin" />
-	<property name="lib.dir"   value="libs"/>
+   <property name="src.dir"   value="src/main/java" />
+   <property name="test.dir"  value="src/test/java" />
+   <property name="build.dir" value="bin" />
+   <property name="lib.dir"   value="libs"/>
     <property name="reports.dir" value="tests"/>
 
-	<mkdir dir="${build.dir}" />
+   <mkdir dir="${build.dir}" />
+  
+   <target name="dist" depends="clean, package"/>
 
-	<path id="classpath">
-		<fileset dir="${lib.dir}" includes="**/*.jar" />
-	</path>
-	
-	<target name="dist" depends="clean, package"/>
+   <target name="clean">
+      <delete includeemptydirs="true" >
+         <fileset dir="${build.dir}">
+            <exclude name="**/assets/*"/>
+            <exclude name="**/assets/**"/>
+         </fileset>
+      </delete>
+   </target>
 
-	<target name="clean">
-		<delete includeemptydirs="true" >
-			<fileset dir="${build.dir}">
-				<exclude name="**/assets/*"/>
-				<exclude name="**/assets/**"/>
-			</fileset>
-		</delete>
-	</target>
-
-	<target name="init">
-		<mkdir dir="${build.dir}" />
-	</target>
+   <target name="init">
+      <mkdir dir="${build.dir}" />
+   </target>
    
-	<target name="compile">
+   <target name="compile">
                 <javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false" source="1.7" target="1.7" debug="off">
-		  <classpath>
-		    <pathelement path="${classpath}" />
-		    <fileset dir="${lib.dir}">
-			<include name="etyllica*.jar"/>
-			<include name="gluegen-rt.jar"/>
-			<include name="jogl-all.jar"/>
-		    </fileset>
-		  </classpath>
-		</javac>
-		<copy todir="${build.dir}">
-		  <fileset dir="${src.dir}" excludes="**/*.java"/>
-		</copy>
-	</target>
+        <classpath>
+          <pathelement path="${classpath}" />
+            <fileset dir="${lib.dir}">
+              <include name="abby*.jar"/>
+              <include name="etyllica*.jar"/>
+              <include name="gluegen-rt.jar"/>
+              <include name="jogl-all.jar"/>
+          </fileset>
+        </classpath>
+      </javac>
+      <copy todir="${build.dir}">
+        <fileset dir="${src.dir}" excludes="**/*.java"/>
+      </copy>
+   </target>
 
     <target name="compile-tests">
       <javac srcdir="${test.dir}" destdir="${build.dir}" includeantruntime="false" source="1.7" target="1.7" debug="off">
       <classpath>
-	    <fileset dir="${reports.dir}">
-	      <include name="*.jar"/>
+       <fileset dir="${reports.dir}">
+         <include name="*.jar"/>
         </fileset>
       </classpath>
       </javac>
     </target>
 
-	<target name="package" depends="init, compile">
-		<jar destfile="${lib.dir}/${libcore}.jar">
-			<fileset dir="${build.dir}">
-				<include name="**/br/com/luvia/*"/>
-				<include name="**/br/com/luvia/**"/>
-				<include name="**/org/lwjgl/*"/>
-				<include name="**/org/lwjgl/**"/>
-				<include name="**/org/jogamp/*"/>
-				<include name="**/org/jogamp/**"/>
-				<include name="**/javax/*"/>
-				<include name="**/javax/**"/>
-				<include name="**/com/*"/>
-				<include name="**/com/**"/>
-			</fileset>
-		</jar>
-	</target>
+   <target name="package" depends="init, compile">
+      <jar destfile="${lib.dir}/${libcore}.jar">
+         <fileset dir="${build.dir}">
+            <include name="**/br/com/luvia/*"/>
+            <include name="**/br/com/luvia/**"/>
+            <include name="**/org/lwjgl/*"/>
+            <include name="**/org/lwjgl/**"/>
+            <include name="**/org/jogamp/*"/>
+            <include name="**/org/jogamp/**"/>
+            <include name="**/com/badlogic/*"/>
+            <include name="**/com/badlogic/**"/>
+            <exclude name="**/com/badlogic/gdx/assets/*"/>
+            <exclude name="**/com/badlogic/gdx/assets/**"/>
+            <exclude name="**/com/badlogic/gdx/graphics/*"/>
+            <exclude name="**/com/badlogic/gdx/graphics/**"/>
+         </fileset>
+      </jar>
+      <jar destfile="${lib.dir}/${libphysics}.jar">
+        <fileset dir="${build.dir}">
+          <include name="**/javax/*"/>
+          <include name="**/javax/**"/>
+          <include name="**/com/bulletphysics/*"/>
+          <include name="**/com/bulletphysics/**"/>
+        </fileset>
+      </jar>
+   </target>
 
   <target name="test" depends="init, compile, compile-tests">
     <junit printsummary="yes" haltonfailure="yes" showoutput="true">
       <classpath>
-	<pathelement location="${build.dir}"/>
-	<fileset dir="${reports.dir}">
-	  <include name="*.jar"/>
+   <pathelement location="${build.dir}"/>
+   <fileset dir="${reports.dir}">
+     <include name="*.jar"/>
         </fileset>
       </classpath>
       <batchtest>
-	<fileset dir="${test.dir}">
-	  <include name="**/*Test*.java"/>
-	</fileset>
+   <fileset dir="${test.dir}">
+     <include name="**/*Test*.java"/>
+   </fileset>
       </batchtest>
       <formatter type="brief" usefile="false"/>
     </junit>
   </target>
-	
+   
 </project>
