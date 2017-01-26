@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Brandon Borkholder
+ * Copyright 2015 Brandon Borkholder
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ package org.jogamp.glg2d.impl.gl2;
 import java.awt.BasicStroke;
 import java.nio.FloatBuffer;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
 
 import org.jogamp.glg2d.VertexBuffer;
 import org.jogamp.glg2d.impl.SimplePathVisitor;
@@ -162,6 +162,8 @@ public class FastLineVisitor extends SimplePathVisitor {
       buf.position(p);
       buffer.drawBuffer(gl, GL2.GL_POINTS);
     }
+    
+    buffer.clear();
   }
 
   @Override

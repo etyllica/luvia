@@ -46,7 +46,7 @@ public class LuviaExamples extends Luvia {
 
 		initialSetup("../../../");
 		
-		//return new MixedRenderingExample(w, h);
+		return new MixedRenderingExample(w, h);
 		//return new OrthographicDrawingExample(w, h);
 		//return new SimpleMeshExample(w, h);
 		//return new BillboardExample(w, h);
@@ -71,7 +71,7 @@ public class LuviaExamples extends Luvia {
 		//return new PositionAxis(w, h);
 		//return new RotationAxis(w, h);
 		//return new ConeDrawing(w, h);
-		return new ConeCollision(w, h);
+		//return new ConeCollision(w, h);
 	}
 
 }

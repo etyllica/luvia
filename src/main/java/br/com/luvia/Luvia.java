@@ -1,5 +1,6 @@
 package br.com.luvia;
 import java.awt.AWTException;
+import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.event.KeyListener;
@@ -11,6 +12,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import br.com.etyllica.awt.core.AWTCore;
 import br.com.etyllica.loader.image.ImageLoader;
@@ -48,12 +50,18 @@ public abstract class Luvia {
 		this.w = w;
 		this.h = h;
 		
-		luviaCore = new GLCore(w,h);
-		luviaCore.initMonitors(w, h);
-		
 		frame = createFrame(w, h);
-		luviaCore.setComponent(frame);
-
+				
+		luviaCore = new GLCore(w,h, frame);
+		luviaCore.initMonitors(w, h);
+		frame.pack();
+		frame.addKeyListener((KeyListener) luviaCore.getKeyboard());
+		
+		//luviaCore.setComponent(frame);
+		
+		//frame.setLocation(p);
+		luviaCore.moveToCenter();
+		
 		initialSetup("");
 		
 		setMainApplication(startApplication());
@@ -70,18 +78,12 @@ public abstract class Luvia {
 				
 		JFrame frame = new JFrame();
 				
-		frame.setSize(w, h);
+		frame.setPreferredSize(new Dimension(w, h));
 		frame.setUndecorated(false);
 		frame.setTitle(title);
 		frame.addWindowListener(buildWindowAdapter());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.addKeyListener((KeyListener) luviaCore.getKeyboard());
-		
-		luviaCore.setComponent(frame);
-		
-		//frame.setLocation(p);
-		luviaCore.moveToCenter();
-		
+				
 		return frame;
 	}
 
@@ -119,7 +121,7 @@ public abstract class Luvia {
 		
 		future = executor.scheduleAtFixedRate(luviaCore, UPDATE_DELAY, UPDATE_DELAY, TimeUnit.MILLISECONDS);
 		
-		frame.add(luviaCore.getPanel());
+		//frame.add(luviaCore.getPanel());
 		
 		AWTCore.hideDefaultCursor(frame);
 		updateIcon();
@@ -142,7 +144,6 @@ public abstract class Luvia {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 
 	protected void initialSetup(String path) {

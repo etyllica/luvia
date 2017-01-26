@@ -1,6 +1,6 @@
 package br.com.luvia.graphics;
 
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL2;
 
 import br.com.abby.linear.BaseCylinder;
 import br.com.luvia.core.graphics.Graphics3D;

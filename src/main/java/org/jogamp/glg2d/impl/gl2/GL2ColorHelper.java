@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Brandon Borkholder
+ * Copyright 2015 Brandon Borkholder
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,10 +21,11 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Composite;
 import java.awt.GradientPaint;
+import java.awt.MultipleGradientPaint;
 import java.awt.Paint;
 
-import javax.media.opengl.GL2;
-import javax.media.opengl.GL2GL3;
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GL2GL3;
 
 import org.jogamp.glg2d.GLGraphics2D;
 import org.jogamp.glg2d.impl.AbstractColorHelper;
@@ -43,12 +44,13 @@ public class GL2ColorHelper extends AbstractColorHelper {
     if (paint instanceof Color) {
       setColor((Color) paint);
     } else if (paint instanceof GradientPaint) {
-      // TODO
       setColor(((GradientPaint) paint).getColor1());
       notImplemented("setPaint(Paint) with GradientPaint");
+    } else if (paint instanceof MultipleGradientPaint) {
+      setColor(((MultipleGradientPaint) paint).getColors()[0]);
+      notImplemented("setPaint(Paint) with MultipleGradientPaint");
     } else {
       notImplemented("setPaint(Paint) with " + paint.getClass().getSimpleName());
-      // TODO
       // This will probably be easier to handle with a fragment shader
       // in the shader pipeline, not sure how to handle it in the fixed-
       // function pipeline.
@@ -82,7 +84,6 @@ public class GL2ColorHelper extends AbstractColorHelper {
   }
 
   private void setColor(GL2 gl, Color c, float preMultiplyAlpha) {
-	
     int rgb = c.getRGB();
     gl.glColor4ub((byte) (rgb >> 16 & 0xFF), (byte) (rgb >> 8 & 0xFF), (byte) (rgb & 0xFF), (byte) ((rgb >> 24 & 0xFF) * preMultiplyAlpha));
   }

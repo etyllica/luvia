@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Brandon Borkholder
+ * Copyright 2015 Brandon Borkholder
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 package org.jogamp.glg2d.impl.shader.text;
 
-import javax.media.opengl.GL2ES2;
+import com.jogamp.opengl.GL2ES2;
 
 import org.jogamp.glg2d.impl.shader.AnyModePipeline;
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Brandon Borkholder
+ * Copyright 2015 Brandon Borkholder
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,110 +15,76 @@
  */
 package org.jogamp.glg2d;
 
+import java.awt.Component;
 import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.util.Map;
 
-import javax.media.opengl.GLAutoDrawable;
-import javax.media.opengl.GLCapabilities;
-import javax.media.opengl.GLCapabilitiesImmutable;
-import javax.media.opengl.GLContext;
-import javax.media.opengl.awt.GLJPanel;
+import com.jogamp.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GLCapabilities;
+import com.jogamp.opengl.GLCapabilitiesImmutable;
+import com.jogamp.opengl.GLContext;
+import com.jogamp.opengl.awt.GLCanvas;
 import javax.swing.JComponent;
-import javax.swing.RepaintManager;
+
+import org.jogamp.glg2d.event.AWTMouseEventTranslator;
 
 /**
- * This panel redirects all paints to an OpenGL canvas. The drawable component
- * can be any JComponent with any number of children. Full repaints and partial
- * repaints (child components repainting) are all intercepted and painted using
- * the OpenGL canvas.
+ * This wraps an AWT component hierarchy and paints it using OpenGL. The
+ * drawable component can be any JComponent.
+ *
+ * <p>
+ * If painting a simple scene using the
+ * {@link JComponent#paintComponents(Graphics)}, then use {@link GLG2DCanvas}.
+ * </p>
+ *
+ * <p>
+ * GL drawing can be enabled or disabled using the {@code setGLDrawing(boolean)}
+ * method. If GL drawing is enabled, all full paint requests are intercepted and
+ * the drawable component is drawn to the OpenGL canvas.
+ * </p>
  */
 public class GLG2DPanel extends GLG2DCanvas {
-  private static final long serialVersionUID = -1078503678565053043L;
+    private static final long serialVersionUID = 83442176852921790L;
 
-  GLGraphics2D g2d;
+    private AWTMouseEventTranslator mouseListener;
 
-  /**
-   * Returns the default, desired OpenGL capabilities needed for this component.
-   */
-  public static GLCapabilities getDefaultCapabalities() {
-    return GLG2DCanvas.getDefaultCapabalities();
-  }
-
-  /**
-   * Creates a new, blank {@code G2DGLPanel} using the default capabilities from
-   * {@link #getDefaultCapabalities()}.
-   */
-  public GLG2DPanel() {
-    this(getDefaultCapabalities());
-  }
-
-  /**
-   * Creates a new, blank {@code G2DGLPanel} using the given OpenGL
-   * capabilities.
-   */
-  public GLG2DPanel(GLCapabilities capabilities) {
-    super(capabilities);
-    RepaintManager.setCurrentManager(GLAwareRepaintManager.INSTANCE);
-  }
-
-  /**
-   * Creates a new {@code G2DGLPanel} where {@code drawableComponent} fills the
-   * canvas. This uses the default capabilities from
-   * {@link #getDefaultCapabalities()}.
-   */
-  public GLG2DPanel(JComponent drawableComponent) {
-    this();
-    setDrawableComponent(drawableComponent);
-  }
-
-  /**
-   * Creates a new {@code G2DGLPanel} where {@code drawableComponent} fills the
-   * canvas.
-   */
-  public GLG2DPanel(GLCapabilities capabilities, JComponent drawableComponent) {
-    this(capabilities);
-    setDrawableComponent(drawableComponent);
-  }
-
-  @Override
-  protected GLAutoDrawable createGLComponent(GLCapabilitiesImmutable capabilities, GLContext shareWith) {
-    GLJPanel canvas = new GLJPanel(capabilities, null, shareWith);
-    canvas.setEnabled(false);
-    return canvas;
-  }
-
-  @Override
-  protected GLG2DEventListener createG2DListener(JComponent drawingComponent) {
-    return new GLG2DEventListener(drawingComponent);
-  }
-
-  @Override
-  public Graphics getGraphics() {
-    return g2d == null ? super.getGraphics() : g2d.create();
-  }
-
-  @Override
-  public void paint(Graphics g) {
-    if (isGLDrawing() && getDrawableComponent() != null && canvas != null) {
-      if (g2d == null) {
-        // TODO: stack blown on UIDemo ComboBox if using canvas.display();
-        /*
-        ((G2DGLEventListener) g2dglListener).canvas = this;
-        canvas.display();
-        */
-        getDrawableComponent().paint(g);
-      } else {
-        getDrawableComponent().paint(g2d);
-      }
-    } else {
-      super.paint(g);
+    public GLG2DPanel(GLCapabilities capabilities, JComponent drawableComponent) {
+        super(capabilities, drawableComponent);
     }
-  }
 
-  void paintGLImmediately(Map<JComponent, Rectangle> r) {
-    ((GLG2DEventListener) g2dglListener).canvas = this;
-    ((GLG2DEventListener) g2dglListener).repaints = r;
-    canvas.display();
-  }
+    public GLG2DPanel(JComponent drawableComponent) {
+        super(drawableComponent);
+    }
+
+    @Override
+    public void setDrawableComponent(JComponent component) {
+        if (mouseListener != null) {
+            mouseListener = null;
+
+            Component c = (Component) canvas;
+            c.removeMouseListener(mouseListener);
+            c.removeMouseMotionListener(mouseListener);
+            c.removeMouseWheelListener(mouseListener);
+        }
+
+        super.setDrawableComponent(component);
+
+        if (getDrawableComponent() != null && canvas instanceof Component) {
+            mouseListener = new AWTMouseEventTranslator(getDrawableComponent());
+
+            Component c = (Component) canvas;
+            c.addMouseListener(mouseListener);
+            c.addMouseMotionListener(mouseListener);
+            c.addMouseWheelListener(mouseListener);
+        }
+    }
+
+    @Override
+    protected GLAutoDrawable createGLComponent(GLCapabilitiesImmutable capabilities, GLContext shareWith) {
+        GLAutoDrawable canvas = super.createGLComponent(capabilities, shareWith);
+        if (canvas instanceof GLCanvas) {
+            ((GLCanvas) canvas).setEnabled(true);
+        }
+
+        return canvas;
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Brandon Borkholder
+ * Copyright 2015 Brandon Borkholder
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import java.awt.BasicStroke;
 import java.awt.Shape;
 import java.awt.Stroke;
 
-import javax.media.opengl.GL;
+import com.jogamp.opengl.GL;
 
 import org.jogamp.glg2d.GLGraphics2D;
 import org.jogamp.glg2d.PathVisitor;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Brandon Borkholder
+ * Copyright 2015 Brandon Borkholder
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +18,10 @@ package org.jogamp.glg2d.impl.gl2;
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
-import javax.media.opengl.GL2ES1;
-import javax.media.opengl.fixedfunc.GLMatrixFunc;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GL2ES1;
 
-import org.jogamp.glg2d.GLG2DUtils;
 import org.jogamp.glg2d.GLGraphics2D;
 import org.jogamp.glg2d.impl.AbstractImageHelper;
 
@@ -31,6 +29,8 @@ import com.jogamp.opengl.util.texture.Texture;
 
 public class GL2ImageDrawer extends AbstractImageHelper {
   protected GL2 gl;
+
+  protected AffineTransform savedTransform;
 
   @Override
   public void setG2D(GLGraphics2D g2d) {
@@ -53,11 +53,10 @@ public class GL2ImageDrawer extends AbstractImageHelper {
     texture.enable(gl);
     texture.bind(gl);
 
-    gl.glMatrixMode(GLMatrixFunc.GL_MODELVIEW);
-    gl.glPushMatrix();
-
+    savedTransform = null;
     if (xform != null && !xform.isIdentity()) {
-      GLG2DUtils.multMatrix(gl, xform);
+      savedTransform = g2d.getTransform();
+      g2d.transform(xform);
     }
 
     g2d.getColorHelper().setColorRespectComposite(bgcolor == null ? Color.white : bgcolor);
@@ -65,17 +64,12 @@ public class GL2ImageDrawer extends AbstractImageHelper {
 
   @Override
   protected void end(Texture texture) {
-    gl.glPopMatrix();
+    if (savedTransform != null) {
+      g2d.setTransform(savedTransform);
+    }
 
     texture.disable(gl);
-
-    Color color = g2d.getColor();
-    
-    if(color!=null){
-    	g2d.getColorHelper().setColorRespectComposite(color);
-    }else{
-    	System.err.println("GL2ImageDrawer - NULL Color");
-    }
+    g2d.getColorHelper().setColorRespectComposite(g2d.getColor());
   }
 
   @Override

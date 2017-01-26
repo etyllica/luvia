@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Brandon Borkholder
+ * Copyright 2015 Brandon Borkholder
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.media.opengl.GL;
+import com.jogamp.opengl.GL;
 
 import org.jogamp.glg2d.impl.AbstractTesselatorVisitor;
 

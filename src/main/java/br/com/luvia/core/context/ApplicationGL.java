@@ -1,6 +1,6 @@
 package br.com.luvia.core.context;
 
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL2;
 
 import br.com.etyllica.core.context.Application;
 import br.com.etyllica.core.graphics.Graphics;

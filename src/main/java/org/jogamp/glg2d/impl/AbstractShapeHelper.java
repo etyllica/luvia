@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Brandon Borkholder
+ * Copyright 2015 Brandon Borkholder
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,7 +45,7 @@ public abstract class AbstractShapeHelper implements GLG2DShapeHelper {
   protected static final Rectangle2D.Float RECT = new Rectangle2D.Float();
   protected static final Line2D.Float LINE = new Line2D.Float();
 
-  protected Deque<Stroke> strokeStack = new ArrayDeque<Stroke>(10);
+  protected Deque<Stroke> strokeStack = new ArrayDeque<Stroke>();
 
   public AbstractShapeHelper() {
     strokeStack.push(new BasicStroke());

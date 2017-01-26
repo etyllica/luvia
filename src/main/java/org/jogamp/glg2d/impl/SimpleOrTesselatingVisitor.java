@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Brandon Borkholder
+ * Copyright 2015 Brandon Borkholder
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import static java.lang.Math.sqrt;
 import java.awt.BasicStroke;
 import java.nio.FloatBuffer;
 
-import javax.media.opengl.GL;
+import com.jogamp.opengl.GL;
 
 import org.jogamp.glg2d.PathVisitor;
 import org.jogamp.glg2d.VertexBuffer;
@@ -124,7 +124,7 @@ public class SimpleOrTesselatingVisitor extends SimplePathVisitor {
     if (firstContour) {
       firstContour = false;
     } else if (isConvexSoFar) {
-      setUseTesselator(true);
+      setUseTesselator(false);
     }
 
     if (isConvexSoFar) {
@@ -134,6 +134,7 @@ public class SimpleOrTesselatingVisitor extends SimplePathVisitor {
       buffer.clear();
       buffer.addVertex(vertex[0], vertex[1]);
     } else {
+      tesselatorFallback.closeLine();
       tesselatorFallback.moveTo(vertex);
     }
   }
@@ -276,8 +277,10 @@ public class SimpleOrTesselatingVisitor extends SimplePathVisitor {
 
     float[] vertex = new float[2];
 
-    buf.get(vertex);
-    visitor.moveTo(vertex);
+    if (buf.hasRemaining()) {
+	    buf.get(vertex);
+	    visitor.moveTo(vertex);
+    }
 
     while (buf.hasRemaining()) {
       buf.get(vertex);

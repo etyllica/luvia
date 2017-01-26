@@ -1,6 +1,7 @@
 package br.com.luvia.core;
 
 import java.awt.AlphaComposite;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -13,12 +14,16 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GLAutoDrawable;
-import javax.media.opengl.GLEventListener;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GLEventListener;
+
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import org.jogamp.glg2d.GLG2DCanvas;
 
 import br.com.abby.core.loader.AnimationLoader;
 import br.com.abby.core.loader.MeshLoader;
@@ -32,7 +37,8 @@ import br.com.etyllica.loader.image.ImageLoader;
 import br.com.etyllica.util.io.IOHelper;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.context.DefaultLoadApplicationGL;
-import br.com.luvia.core.glg2d.GLG2DPanel;
+import br.com.luvia.core.glg2d.GLG2DModifiedCanvas;
+import br.com.luvia.core.glg2d.GLG2DModifiedPanel;
 import br.com.luvia.core.glg2d.GLGraphics2D;
 import br.com.luvia.core.graphics.Graphics3D;
 import br.com.luvia.loader.GISInfoLoader;
@@ -53,7 +59,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 	private String path;
 
-	private GLG2DPanel canvas = new GLG2DPanel();
+	private GLG2DModifiedCanvas canvas;
 
 	private FPSAnimator animator;  // Used to drive display()
 
@@ -72,33 +78,44 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	private boolean changeApp = false;
 
 	public JPanel glass;
-	
+
 	private Set<Loader> loaders = new HashSet<Loader>();
-	
+
 	private static final Font DEFAULT_FONT = new Font("ARIAL", Font.PLAIN, 14);
 	private static final Color DEFAULT_COLOR = Color.BLACK;
 
-	public GLCore(int w, int h) {
+	public GLCore(int w, int h, JFrame frame) {
 		super(w, h);
 
-		activeWindowGL = new WindowGL(0, 0, w, h);
+		//Create JPanel
+		JPanel panel = new JPanel(new BorderLayout());
+	    panel.setDoubleBuffered(false);
 
-		glGraphics = new GLGraphics2D();
-
-		graphic = new Graphics3D(w,h);
+	    panel.add(new JButton("Press me!"), BorderLayout.NORTH);
+		
+		canvas = new GLG2DModifiedCanvas();
+				
+		frame.setContentPane(canvas);
+		frame.pack();
+		
+		this.component = frame;
 
 		canvas.addMouseMotionListener(getMouse());
 		canvas.addMouseWheelListener(getMouse());
 		canvas.addMouseListener(getMouse());
 
-		canvas.getCanvas().addGLEventListener(this);		
+		canvas.getCanvas().addGLEventListener(this);
 
 		animator = new FPSAnimator(REFRESH_FPS, true);
-		animator.add(canvas.getCanvas());
-				
+		animator.add(canvas.getGLDrawable());
+
+		activeWindowGL = new WindowGL(0, 0, w, h);
+		glGraphics = new GLGraphics2D();
+		graphic = new Graphics3D(w, h);
+
 		initLoaders();
 	}
-	
+
 	private void initLoaders() {
 		loaders.add(ImageLoader.getInstance());
 		loaders.add(FontLoader.getInstance());		
@@ -123,7 +140,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 		this.path = s;
 	}
-	
+
 	public void initDefault() {
 		for(Loader loader:loaders) {
 			loader.setUrl(path);
@@ -149,8 +166,8 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	}
 
 	private void resetGraphics(GLAutoDrawable drawable) {
-		glGraphics.setCanvas(drawable);
-		
+		glGraphics.setCanvas(drawable.getContext());
+
 		graphic.setGraphics(glGraphics);
 		graphic.setDrawable(drawable);
 		
@@ -158,9 +175,9 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	}
 
 	private void initGraphics(GLGraphics2D graphics) {
-		graphic.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
-		graphic.setColor(DEFAULT_COLOR);
-		graphic.setFont(DEFAULT_FONT);
+		graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
+		graphics.setColor(DEFAULT_COLOR);
+		graphics.setFont(DEFAULT_FONT);
 	}
 
 	@Override
@@ -172,7 +189,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	@Override
 	public void display(final GLAutoDrawable drawable) {
 		graphic.setDrawable(drawable);
-		
+
 		if(changeApp) {
 			changeApplication(drawable);
 		} else {
@@ -230,7 +247,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	}
 
 	private void drawActiveWindow(GLAutoDrawable drawable) {
-		
+
 		//Pre Drawing
 		resetGraphics(drawable);
 		preDisplay(graphic);
@@ -258,7 +275,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	public void changeApplication() {
 
 		ApplicationGL nextApplication = (ApplicationGL)activeWindowGL.getApplication3D().getNextApplication();
-		
+
 		setMainApplication3D(nextApplication);
 	}
 
@@ -291,11 +308,11 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	public JComponent getPanel() {
 		return canvas;
 	}
-	
+
 	public void hideDefaultCursor() {
-		
+
 		int[] pixels = new int[16 * 16];
-		
+
 		Cursor transparentCursor = Toolkit.getDefaultToolkit().createCustomCursor(
 				Toolkit.getDefaultToolkit().createImage( new MemoryImageSource(16, 16, pixels, 0, 16))
 				, new Point(0, 0), "invisibleCursor");
@@ -305,37 +322,37 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	@Override
 	public void initMonitors(int width, int height) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void moveToCenter() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void setEngine(EtyllicaFrame frame) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void startEngine() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void startCore(Application application) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

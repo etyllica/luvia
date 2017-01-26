@@ -1,9 +1,9 @@
 package br.com.luvia.core.glg2d;
 
-import javax.media.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GLAutoDrawable;
 
 
-public class GLG2DPanel extends org.jogamp.glg2d.GLG2DPanel {
+public class GLG2DModifiedCanvas extends org.jogamp.glg2d.GLG2DCanvas {
 
 	private static final long serialVersionUID = 370275184911204974L;
 

@@ -25,9 +25,10 @@ package examples.jbullet.opengl;
 
 import java.nio.FloatBuffer;
 
+import javax.vecmath.Vector3f;
+
 import br.com.luvia.core.graphics.Graphics3D;
 
-import com.bulletphysics.util.ObjectArrayList;
 import com.bulletphysics.collision.broadphase.BroadphaseNativeType;
 import com.bulletphysics.collision.shapes.BoxShape;
 import com.bulletphysics.collision.shapes.CollisionShape;
@@ -46,11 +47,9 @@ import com.bulletphysics.linearmath.Transform;
 import com.bulletphysics.linearmath.TransformUtil;
 import com.bulletphysics.linearmath.VectorUtil;
 import com.bulletphysics.util.IntArrayList;
+import com.bulletphysics.util.ObjectArrayList;
 import com.bulletphysics.util.ObjectPool;
-
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
-import javax.vecmath.Vector3f;
+import com.jogamp.opengl.GL2;
 
 /**
  *

@@ -23,7 +23,7 @@
 
 package examples.jbullet.basic;
 
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL2;
 import javax.vecmath.Vector3f;
 
 import br.com.luvia.core.graphics.Graphics3D;

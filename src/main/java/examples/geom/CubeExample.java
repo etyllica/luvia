@@ -2,7 +2,7 @@ package examples.geom;
 
 import java.awt.Color;
 
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL2;
 
 import br.com.etyllica.core.event.KeyEvent;
 import br.com.luvia.core.context.ApplicationGL;

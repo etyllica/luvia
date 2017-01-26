@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Brandon Borkholder
+ * Copyright 2015 Brandon Borkholder
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,6 @@
 package org.jogamp.glg2d.impl.shader;
 
 
-import javax.media.opengl.GLAutoDrawable;
-
 import org.jogamp.glg2d.GLG2DColorHelper;
 import org.jogamp.glg2d.GLG2DImageHelper;
 import org.jogamp.glg2d.GLG2DShapeHelper;
@@ -31,11 +29,6 @@ public class GLShaderGraphics2D extends GLGraphics2D {
 
   public UniformBufferObject getUniformsObject() {
     return uniforms;
-  }
-
-  @Override
-  public void setCanvas(GLAutoDrawable drawable) {
-    super.setCanvas(drawable);
   }
 
   @Override

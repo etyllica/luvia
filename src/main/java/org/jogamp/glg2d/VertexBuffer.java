@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Brandon Borkholder
+ * Copyright 2015 Brandon Borkholder
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,9 +17,9 @@ package org.jogamp.glg2d;
 
 import java.nio.FloatBuffer;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
-import javax.media.opengl.fixedfunc.GLPointerFunc;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.fixedfunc.GLPointerFunc;
 
 import com.jogamp.common.nio.Buffers;
 
@@ -110,7 +110,7 @@ public class VertexBuffer {
 
   protected void ensureCapacity(int numNewFloats) {
     if (buffer.capacity() <= buffer.position() + numNewFloats) {
-      FloatBuffer larger = Buffers.newDirectFloatBuffer(buffer.position() * 2);
+      FloatBuffer larger = Buffers.newDirectFloatBuffer(Math.max(buffer.position() * 2, buffer.position() + numNewFloats));
       deviceBufferId = -deviceBufferId;
       int position = buffer.position();
       buffer.rewind();
