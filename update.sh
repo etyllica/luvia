@@ -1,5 +1,7 @@
-jogamp=https://jogamp.org/deployment/archive/master/gluegen_900-joal_626-jogl_1469-jocl_1106/jar/
+jogamp=https://jogamp.org/deployment/archive/master/gluegen_757-joal_507-jogl_1176-jocl_890/jar/
 cd libs
+rm gluegen-rt*.jar
+rm jogl*.jar
 
 # Downloading Gluegen
 wget $jogamp/gluegen-rt.jar
