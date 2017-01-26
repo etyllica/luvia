@@ -1,4 +1,4 @@
-jogamp=https://jogamp.org/deployment/archive/master/gluegen_757-joal_507-jogl_1176-jocl_890/jar/
+jogamp=https://jogamp.org/deployment/archive/master/gluegen_838-joal_570-jogl_1366-jocl_1026/jar
 cd libs
 rm gluegen-rt*.jar
 rm jogl*.jar
