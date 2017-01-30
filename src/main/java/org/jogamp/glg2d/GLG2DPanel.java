@@ -23,7 +23,7 @@ import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLCapabilitiesImmutable;
 import javax.media.opengl.GLContext;
-import javax.media.opengl.awt.GLJPanel;
+import javax.media.opengl.awt.GLCanvas;
 import javax.swing.JComponent;
 import javax.swing.RepaintManager;
 
@@ -83,9 +83,12 @@ public class GLG2DPanel extends GLG2DCanvas {
 
   @Override
   protected GLAutoDrawable createGLComponent(GLCapabilitiesImmutable capabilities, GLContext shareWith) {
-    GLJPanel canvas = new GLJPanel(capabilities, null, shareWith);
-    canvas.setEnabled(false);
-    return canvas;
+	  GLAutoDrawable canvas = super.createGLComponent(capabilities, shareWith);
+      if (canvas instanceof GLCanvas) {
+          ((GLCanvas) canvas).setEnabled(true);
+      }
+
+      return canvas;
   }
 
   @Override

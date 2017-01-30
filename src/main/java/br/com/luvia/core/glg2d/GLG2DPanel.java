@@ -2,7 +2,10 @@ package br.com.luvia.core.glg2d;
 
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLCapabilities;
+import javax.media.opengl.GLCapabilitiesImmutable;
+import javax.media.opengl.GLContext;
 import javax.media.opengl.GLProfile;
+import javax.media.opengl.awt.GLJPanel;
 
 
 public class GLG2DPanel extends org.jogamp.glg2d.GLG2DPanel {
@@ -28,6 +31,13 @@ public class GLG2DPanel extends org.jogamp.glg2d.GLG2DPanel {
 	}
 
 	public GLAutoDrawable getCanvas() {
+		return canvas;
+	}
+	
+	@Override
+	protected GLAutoDrawable createGLComponent(GLCapabilitiesImmutable capabilities, GLContext shareWith) {
+		GLJPanel canvas = new GLJPanel(capabilities);
+		canvas.setEnabled(false);
 		return canvas;
 	}
 	

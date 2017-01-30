@@ -24,105 +24,105 @@ import javax.swing.JComponent;
  * paints the component fully for each display.
  */
 public class GLG2DSimpleEventListener implements GLEventListener {
-  /**
-   * The cached graphics object.
-   */
-  protected GLGraphics2D g2d;
+	/**
+	 * The cached graphics object.
+	 */
+	protected GLGraphics2D g2d;
 
-  /**
-   * The component to paint.
-   */
-  protected JComponent comp;
+	/**
+	 * The component to paint.
+	 */
+	protected JComponent comp;
 
-  /**
-   * Creates a new listener that will paint using the {@code baseComponent} on
-   * each call to {@link #display(GLAutoDrawable)}. The provided
-   * {@code baseComponent} is used to provide default font, backgroundColor,
-   * etc. to the {@code GLGraphics2D} object. It is also used for width, height
-   * of the viewport in OpenGL.
-   */
-  public GLG2DSimpleEventListener(JComponent baseComponent) {
-    this.comp = baseComponent;
-  }
+	/**
+	 * Creates a new listener that will paint using the {@code baseComponent} on
+	 * each call to {@link #display(GLAutoDrawable)}. The provided
+	 * {@code baseComponent} is used to provide default font, backgroundColor,
+	 * etc. to the {@code GLGraphics2D} object. It is also used for width, height
+	 * of the viewport in OpenGL.
+	 */
+	public GLG2DSimpleEventListener(JComponent baseComponent) {
+		this.comp = baseComponent;
+	}
 
-  @Override
-  public void display(GLAutoDrawable drawable) {
-    prePaint(drawable);
-    paintGL(g2d);
-    postPaint(drawable);
-  }
+	@Override
+	public void display(GLAutoDrawable drawable) {
+		prePaint(drawable);
+		paintGL(g2d);
+		postPaint(drawable);
+	}
 
-  /**
-   * Called after the canvas is set on {@code g2d} but before any painting is
-   * done. This should setup the matrices and ask {@code g2d} to setup any
-   * client state.
-   */
-  protected void prePaint(GLAutoDrawable drawable) {
-    setupViewport(drawable);
-    g2d.prePaint(drawable);
-    g2d.translate(comp.getX(), comp.getY());
-    g2d.clipRect(0, 0, comp.getWidth(), comp.getHeight());
-  }
+	/**
+	 * Called after the canvas is set on {@code g2d} but before any painting is
+	 * done. This should setup the matrices and ask {@code g2d} to setup any
+	 * client state.
+	 */
+	protected void prePaint(GLAutoDrawable drawable) {
+		setupViewport(drawable);
+		g2d.prePaint(drawable);
+		g2d.translate(comp.getX(), comp.getY());
+		g2d.clipRect(0, 0, comp.getWidth(), comp.getHeight());
+	}
 
-  protected void setupViewport(GLAutoDrawable drawable) {
-    drawable.getGL().glViewport(0, 0, drawable.getWidth(), drawable.getHeight());
-  }
+	protected void setupViewport(GLAutoDrawable drawable) {
+		drawable.getGL().glViewport(0, 0, drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
+	}
 
-  /**
-   * Called after all Java2D painting is complete. This should restore the
-   * matrices if they were modified.
-   */
-  protected void postPaint(GLAutoDrawable drawable) {
-    g2d.postPaint();
-  }
+	/**
+	 * Called after all Java2D painting is complete. This should restore the
+	 * matrices if they were modified.
+	 */
+	protected void postPaint(GLAutoDrawable drawable) {
+		g2d.postPaint();
+	}
 
-  /**
-   * Paints using the {@code GLGraphics2D} object. This could be forwarded to
-   * any code that expects to draw using the Java2D framework.
-   * <p>
-   * Currently is paints the component provided, turning off double-buffering in
-   * the {@code RepaintManager} to force drawing directly to the
-   * {@code Graphics2D} object.
-   * </p>
-   */
-  protected void paintGL(GLGraphics2D g2d) {
-    boolean wasDoubleBuffered = comp.isDoubleBuffered();
-    comp.setDoubleBuffered(false);
+	/**
+	 * Paints using the {@code GLGraphics2D} object. This could be forwarded to
+	 * any code that expects to draw using the Java2D framework.
+	 * <p>
+	 * Currently is paints the component provided, turning off double-buffering in
+	 * the {@code RepaintManager} to force drawing directly to the
+	 * {@code Graphics2D} object.
+	 * </p>
+	 */
+	protected void paintGL(GLGraphics2D g2d) {
+		boolean wasDoubleBuffered = comp.isDoubleBuffered();
+		comp.setDoubleBuffered(false);
 
-    comp.paint(g2d);
+		comp.paint(g2d);
 
-    comp.setDoubleBuffered(wasDoubleBuffered);
-  }
+		comp.setDoubleBuffered(wasDoubleBuffered);
+	}
 
-  @Override
-  public void init(GLAutoDrawable drawable) {
-    reshape(drawable, 0, 0, drawable.getWidth(), drawable.getWidth());
-  }
+	@Override
+	public void init(GLAutoDrawable drawable) {
+		reshape(drawable, 0, 0, drawable.getSurfaceWidth(), drawable.getSurfaceHeight());
+	}
 
-  @Override
-  public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
-    if (height <= 0) {
-      height = 1;
-    }
+	@Override
+	public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
+		if (height <= 0) {
+			height = 1;
+		}
 
-    dispose(drawable);
+		dispose(drawable);
 
-    g2d = createGraphics2D(drawable);
-  }
+		g2d = createGraphics2D(drawable);
+	}
 
-  /**
-   * Creates the {@code Graphics2D} object that forwards Java2D calls to OpenGL
-   * calls.
-   */
-  protected GLGraphics2D createGraphics2D(GLAutoDrawable drawable) {
-    return new GLGraphics2D();
-  }
+	/**
+	 * Creates the {@code Graphics2D} object that forwards Java2D calls to OpenGL
+	 * calls.
+	 */
+	protected GLGraphics2D createGraphics2D(GLAutoDrawable drawable) {
+		return new GLGraphics2D();
+	}
 
-  @Override
-  public void dispose(GLAutoDrawable arg0) {
-    if (g2d != null) {
-      g2d.glDispose();
-      g2d = null;
-    }
-  }
+	@Override
+	public void dispose(GLAutoDrawable arg0) {
+		if (g2d != null) {
+			g2d.glDispose();
+			g2d = null;
+		}
+	}
 }
