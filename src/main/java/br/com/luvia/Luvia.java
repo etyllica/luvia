@@ -57,9 +57,6 @@ public abstract class Luvia {
 		initialSetup("");
 		
 		setMainApplication(startApplication());
-		
-		frame.requestFocus();
-		frame.setVisible(true);
 	}
 	
 	protected void setPath(String path) {
@@ -113,6 +110,8 @@ public abstract class Luvia {
 	}
 	
 	protected void init() {
+		frame.requestFocus();
+		frame.setVisible(true);
 		//startThread();
 		//TODO Update Methods
 		executor = Executors.newSingleThreadScheduledExecutor();
