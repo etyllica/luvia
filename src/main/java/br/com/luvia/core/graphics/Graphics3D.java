@@ -634,12 +634,12 @@ public class Graphics3D extends AWTGraphics {
 		
 		int a = 0, b = 0;
 		
-		for (int i = 0;i < rows; i++) {
+		for (int i = 0;i < rows+1; i++) {
 			gl.glVertex3d(a+size*i, 0.0, b+size*columns);
 			gl.glVertex3d(a+size*i, 0, b);
 		}
 		
-		for (int j = 0;j < columns; j++) {
+		for (int j = 0;j < columns+1; j++) {
 			gl.glVertex3d(a+size*rows, 0.0, b+size*j);
 			gl.glVertex3d(a, 0, b+size*j);
 		}
