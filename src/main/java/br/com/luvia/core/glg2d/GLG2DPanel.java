@@ -8,12 +8,17 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
 
 
-public class GLG2DPanel extends org.jogamp.glg2d.GLG2DCanvas {
+public class GLG2DPanel extends org.jogamp.glg2d.GLG2DPanel {
 
 	private static final long serialVersionUID = 370275184911204974L;
 
 	public GLG2DPanel() {
-		super(GL2Capabilities());
+		super(defaultCapabilities());
+	}
+	
+	private static GLCapabilities defaultCapabilities() {
+		GLProfile profile = GLProfile.getDefault();
+		return new GLCapabilities(profile);
 	}
 	
 	private static GLCapabilities GL2Capabilities() {
