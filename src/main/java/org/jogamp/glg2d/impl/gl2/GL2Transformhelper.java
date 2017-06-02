@@ -19,9 +19,9 @@ package org.jogamp.glg2d.impl.gl2;
 import java.awt.RenderingHints.Key;
 import java.awt.geom.AffineTransform;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
-import javax.media.opengl.fixedfunc.GLMatrixFunc;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.fixedfunc.GLMatrixFunc;
 
 import org.jogamp.glg2d.GLG2DTransformHelper;
 import org.jogamp.glg2d.GLG2DUtils;

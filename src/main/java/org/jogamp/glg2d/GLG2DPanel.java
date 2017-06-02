@@ -19,11 +19,11 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Map;
 
-import javax.media.opengl.GLAutoDrawable;
-import javax.media.opengl.GLCapabilities;
-import javax.media.opengl.GLCapabilitiesImmutable;
-import javax.media.opengl.GLContext;
-import javax.media.opengl.awt.GLCanvas;
+import com.jogamp.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GLCapabilities;
+import com.jogamp.opengl.GLCapabilitiesImmutable;
+import com.jogamp.opengl.GLContext;
+import com.jogamp.opengl.awt.GLCanvas;
 import javax.swing.JComponent;
 import javax.swing.RepaintManager;
 

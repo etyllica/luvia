@@ -1,4 +1,6 @@
-jogamp=https://jogamp.org/deployment/archive/master/gluegen_838-joal_570-jogl_1366-jocl_1026/jar
+# Version date: 10-Oct-2015 (Same version as GLG2D)
+version=gluegen_900-joal_626-jogl_1469-jocl_1106
+jogamp=https://jogamp.org/deployment/archive/master/$version/jar
 cd libs
 rm gluegen-rt*.jar
 rm jogl*.jar

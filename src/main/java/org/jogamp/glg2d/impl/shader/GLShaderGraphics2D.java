@@ -16,7 +16,7 @@
 package org.jogamp.glg2d.impl.shader;
 
 
-import javax.media.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GLAutoDrawable;
 
 import org.jogamp.glg2d.GLG2DColorHelper;
 import org.jogamp.glg2d.GLG2DImageHelper;

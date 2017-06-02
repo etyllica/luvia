@@ -26,8 +26,8 @@ package examples.jbullet.opengl;
 import java.awt.Color;
 import java.nio.FloatBuffer;
 
-import javax.media.opengl.GL2;
-import javax.media.opengl.glu.GLU;
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.glu.GLU;
 import javax.vecmath.Color3f;
 import javax.vecmath.Matrix3f;
 import javax.vecmath.Quat4f;

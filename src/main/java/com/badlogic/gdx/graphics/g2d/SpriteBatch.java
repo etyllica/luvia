@@ -16,7 +16,7 @@
 
 package com.badlogic.gdx.graphics.g2d;
 
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL2;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

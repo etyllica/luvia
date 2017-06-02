@@ -20,9 +20,9 @@ import java.awt.geom.AffineTransform;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2ES1;
-import javax.media.opengl.fixedfunc.GLMatrixFunc;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2ES1;
+import com.jogamp.opengl.fixedfunc.GLMatrixFunc;
 
 public class GLG2DUtils {
   private static final Logger LOGGER = Logger.getLogger(GLG2DUtils.class.getName());

@@ -1,6 +1,6 @@
 package br.com.luvia.graphics;
 
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL2;
 
 import br.com.etyllica.core.linear.Point3D;
 import br.com.luvia.core.graphics.GLDrawable;

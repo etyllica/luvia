@@ -26,7 +26,7 @@ package examples.jbullet.vehicle;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL2;
 import javax.vecmath.Vector3f;
 
 import br.com.etyllica.core.event.KeyEvent;
