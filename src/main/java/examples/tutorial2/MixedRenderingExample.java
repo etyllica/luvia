@@ -5,8 +5,9 @@ import java.awt.Color;
 import br.com.etyllica.core.event.Action;
 import br.com.etyllica.core.event.GUIEvent;
 import br.com.etyllica.core.graphics.Graphics;
-import br.com.etyllica.gui.Button;
-import br.com.etyllica.gui.label.TextLabel;
+import br.com.etyllica.ui.Button;
+import br.com.etyllica.ui.label.TextLabel;
+import br.com.etyllica.ui.UI;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.graphics.Graphics3D;
 
@@ -32,7 +33,7 @@ public class MixedRenderingExample extends ApplicationGL {
 		exit.addAction(GUIEvent.MOUSE_LEFT_BUTTON_DOWN, new Action(this, "changeColor"));
 		exit.addAction(GUIEvent.MOUSE_RIGHT_BUTTON_DOWN, new Action(this, "clearColor"));
 		
-		addView(exit);
+		UI.add(exit);
 				
 		loading = 100;
 	}

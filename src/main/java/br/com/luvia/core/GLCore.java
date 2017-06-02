@@ -247,10 +247,6 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	}
 
 	private void preDisplay(Graphics3D g3d) {
-
-		if(!canDraw())
-			return;
-
 		activeWindowGL.getApplication3D().preDisplay(g3d);
 	}
 
@@ -338,4 +334,16 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		
 	}
 
+	@Override
+	public void update(double delta) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

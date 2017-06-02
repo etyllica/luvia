@@ -13,7 +13,11 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.JFrame;
 
 import br.com.etyllica.awt.core.AWTCore;
+import br.com.etyllica.core.Module;
+import br.com.etyllica.core.animation.AnimationModule;
+import br.com.etyllica.core.i18n.LanguageModule;
 import br.com.etyllica.loader.image.ImageLoader;
+import br.com.etyllica.ui.UI;
 import br.com.etyllica.util.PathHelper;
 import br.com.luvia.core.GLCore;
 import br.com.luvia.core.context.ApplicationGL;
@@ -48,7 +52,8 @@ public abstract class Luvia {
 		this.w = w;
 		this.h = h;
 		
-		luviaCore = new GLCore(w,h);
+		luviaCore = new GLCore(w, h);
+		addModules();
 		luviaCore.initMonitors(w, h);
 		
 		frame = createFrame(w, h);
@@ -57,6 +62,16 @@ public abstract class Luvia {
 		initialSetup("");
 		
 		setMainApplication(startApplication());
+	}
+	
+	protected void addModule(Module module) {
+		luviaCore.addModule(module);
+	}
+
+	private void addModules() {
+		addModule(AnimationModule.getInstance());
+		addModule(UI.getInstance());
+		addModule(LanguageModule.getInstance());
 	}
 	
 	protected void setPath(String path) {
@@ -102,7 +117,7 @@ public abstract class Luvia {
 	}
 	
 	public void hideCursor() {
-		luviaCore.hideCursor();
+		AWTCore.hideDefaultCursor(frame);
 	}
 	
 	public void setTitle(String title) {

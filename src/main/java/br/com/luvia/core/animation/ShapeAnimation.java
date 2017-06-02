@@ -1,7 +1,7 @@
 package br.com.luvia.core.animation;
 
 import br.com.abby.linear.Shape;
-import br.com.etyllica.core.animation.AnimationHandler;
+import br.com.etyllica.core.animation.AnimationModule;
 import br.com.etyllica.core.animation.script.AnimationScript;
 import br.com.etyllica.core.interpolation.Interpolator;
 
@@ -139,7 +139,7 @@ public class ShapeAnimation extends AnimationScript {
 
 		if(next != null) {
 			for(AnimationScript s: next) {
-				AnimationHandler.getInstance().add(s);
+				AnimationModule.getInstance().add(s);
 			}
 		}
 	}
