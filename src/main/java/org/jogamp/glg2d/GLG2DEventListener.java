@@ -19,7 +19,7 @@ import java.awt.Rectangle;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.media.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GLAutoDrawable;
 import javax.swing.JComponent;
 import javax.swing.RepaintManager;
 

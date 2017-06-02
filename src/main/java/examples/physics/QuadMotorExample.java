@@ -6,7 +6,7 @@ package examples.physics;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL2;
 import javax.vecmath.Vector3f;
 
 import br.com.etyllica.core.event.KeyEvent;

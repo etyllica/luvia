@@ -2,8 +2,8 @@ package br.com.luvia.graphics.light;
 
 import java.nio.FloatBuffer;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
 
 import br.com.abby.linear.Shape;
 import br.com.luvia.core.graphics.Graphics3D;

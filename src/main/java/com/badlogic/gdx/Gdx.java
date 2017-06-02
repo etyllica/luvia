@@ -1,7 +1,7 @@
 package com.badlogic.gdx;
 
-import javax.media.opengl.GL2;
-import javax.media.opengl.GLBase;
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GLBase;
 
 import br.com.luvia.core.graphics.Graphics3D;
 

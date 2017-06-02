@@ -1,6 +1,6 @@
 package br.com.luvia.grid;
 
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL2;
 
 import br.com.luvia.core.context.ApplicationGL;
 
