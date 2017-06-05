@@ -3,7 +3,7 @@ package com.badlogic.gdx;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLBase;
 
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
 
 public class Gdx {
 
@@ -12,6 +12,6 @@ public class Gdx {
 	public static GLBase gl30;
 	public static Files files;
 	public static Application app;
-	public static Graphics3D graphics;
+	public static AWTGraphics3D graphics;
 	
 }

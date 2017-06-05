@@ -1,7 +1,7 @@
 package br.com.luvia.graphics;
 
 import br.com.abby.linear.Shape;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
 
 public class Sphere extends Shape {
 
@@ -12,8 +12,8 @@ public class Sphere extends Shape {
 		this.radius = radius;
 	}
 
-	public void draw(Graphics3D g) {
-		g.drawSphere(radius, position.x, position.y, position.z, Graphics3D.DEFAULT_RESOLUTION, color);	  
+	public void draw(AWTGraphics3D g) {
+		g.drawSphere(radius, position.x, position.y, position.z, AWTGraphics3D.DEFAULT_RESOLUTION, color);	  
 	}
 
 }

@@ -27,7 +27,8 @@ import com.jogamp.opengl.GL2;
 import javax.vecmath.Vector3f;
 
 import br.com.etyllica.commons.event.KeyEvent;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
+import br.com.abby.core.graphics.Graphics3D;
 
 import com.bulletphysics.collision.broadphase.AxisSweep3;
 import com.bulletphysics.collision.broadphase.BroadphaseInterface;
@@ -90,7 +91,7 @@ public class CharacterDemo extends DemoApplication {
 		setTitle("Bullet Character Demo. http://bullet.sf.net");
 	}
 	
-	public void initPhysics(Graphics3D g) throws Exception {
+	public void initPhysics(Graphics3D graphics) throws Exception {
 		CollisionShape groundShape = new BoxShape(new Vector3f(50, 3, 50));
 		collisionShapes.add(groundShape);
 
@@ -255,8 +256,8 @@ public class CharacterDemo extends DemoApplication {
 	}
 
 	@Override
-	public void updateCamera(Graphics3D g) {
-		
+	public void updateCamera(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		GL2 gl = g.getGL2();
 		gl.glMatrixMode(GL2.GL_PROJECTION);
 		gl.glLoadIdentity();

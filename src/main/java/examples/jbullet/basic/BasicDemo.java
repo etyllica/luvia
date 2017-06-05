@@ -26,7 +26,8 @@ package examples.jbullet.basic;
 import com.jogamp.opengl.GL2;
 import javax.vecmath.Vector3f;
 
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
+import br.com.abby.core.graphics.Graphics3D;
 
 import com.bulletphysics.collision.broadphase.BroadphaseInterface;
 import com.bulletphysics.collision.broadphase.DbvtBroadphase;
@@ -93,12 +94,13 @@ public class BasicDemo extends DemoApplication {
 	}
 
 	@Override
-	public void display(Graphics3D g) {
+	public void display(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		GL2 gl = g.getGL2();
 		
-		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
+		graphics.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
 
-		super.display(g);
+		super.display(graphics);
 
 		// optional but useful: debug drawing to detect problems
 		if (dynamicsWorld != null) {
@@ -108,7 +110,7 @@ public class BasicDemo extends DemoApplication {
 		gl.glFlush();
 	}
 
-	public void initPhysics(Graphics3D g) {
+	public void initPhysics(Graphics3D graphics) {
 		
 		// collision configuration contains default setup for memory, collision setup
 		collisionConfiguration = new DefaultCollisionConfiguration();

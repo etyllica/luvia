@@ -25,7 +25,8 @@ package examples.jbullet.opengl;
 
 import java.nio.FloatBuffer;
 
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
+import br.com.abby.core.graphics.Graphics3D;
 
 import com.bulletphysics.util.ObjectArrayList;
 import com.bulletphysics.collision.broadphase.BroadphaseNativeType;
@@ -96,8 +97,8 @@ public class GLShapeDrawer {
 
 	private static float[] glMat = new float[16];
 	
-	public static void drawOpenGL(Graphics3D g, Transform trans, CollisionShape shape, Vector3f color, int debugMode) {
-		
+	public static void drawOpenGL(Graphics3D graphics, Transform trans, CollisionShape shape, Vector3f color, int debugMode) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		GL2 gl = g.getGL2();
 		
 		ObjectPool<Transform> transformsPool = ObjectPool.get(Transform.class);

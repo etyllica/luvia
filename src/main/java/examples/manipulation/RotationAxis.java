@@ -19,7 +19,8 @@ import br.com.etyllica.commons.event.MouseEvent;
 import br.com.etyllica.commons.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
+import br.com.abby.core.graphics.Graphics3D;
 
 public class RotationAxis extends ApplicationGL {
 
@@ -69,11 +70,12 @@ public class RotationAxis extends ApplicationGL {
 	}
 
 	@Override
-	public void init(Graphics3D drawable) {
+	public void init(Graphics3D graphics) {
 		view = new FlyView(30, 3.6f, 0);
 		view.getAim().setAngleY(190);
 
-		GL2 gl = drawable.getGL2(); // get the OpenGL graphics context
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
+		GL2 gl = g.getGL2(); // get the OpenGL graphics context
 
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // set background (clear) color
 		gl.glClearDepth(1.0f);      // set clear depth value to farthest
@@ -149,10 +151,10 @@ public class RotationAxis extends ApplicationGL {
 	}
 
 	@Override
-	public void reshape(Graphics3D drawable, int x, int y, int width, int height) {
-
-		GL2 gl = drawable.getGL2();
-		GLU glu = drawable.getGLU();
+	public void reshape(Graphics3D graphics, int x, int y, int width, int height) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
+		GL2 gl = g.getGL2();
+		GLU glu = g.getGLU();
 
 		gl.glViewport((int)x, (int)y, (int)w, (int)h);
 
@@ -260,21 +262,21 @@ public class RotationAxis extends ApplicationGL {
 	}
 
 	@Override
-	public void display(Graphics3D drawable) {
+	public void display(Graphics3D graphics) {
 
 		updateControls(0);
-
-		GL2 gl = drawable.getGL().getGL2();
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
+		GL2 gl = g.getGL().getGL2();
 
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 		gl.glClearColor(1f, 1f, 1f, 1);
 
 		//Transform by Aim
-		drawable.aimCamera(view.getAim());
+		g.aimCamera(view.getAim());
 		
 		//Draw Scene
-		drawable.setColor(Color.BLACK);
-		drawable.drawGrid(1, 150, 150);
+		g.setColor(Color.BLACK);
+		g.drawGrid(1, 150, 150);
 		
 		gl.glPushMatrix();
 		gl.glMultMatrixf(transform.val, 0);
@@ -286,18 +288,18 @@ public class RotationAxis extends ApplicationGL {
 		} else {
 			gl.glColor3d(1.0, 0.0, 0.0);
 		}
-		drawable.drawBoundingBox(vAxis);
+		g.drawBoundingBox(vAxis);
 
 		if (selected == AXIS_V || collisionAxis == hAxis) {
 			gl.glColor3d(1.0, 1.0, 0.0);
 		} else {
 			gl.glColor3d(0.0, 1.0, 0.0);
 		}
-		drawable.drawBoundingBox(hAxis);
+		g.drawBoundingBox(hAxis);
 
 		gl.glPopMatrix();
 
-		Ray ray = drawable.getCameraRay(mx, my);
+		Ray ray = g.getCameraRay(mx, my);
 		if(drawRay) {
 			drawRay(gl, ray);
 		}

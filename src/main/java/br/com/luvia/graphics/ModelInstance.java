@@ -20,7 +20,7 @@ import br.com.abby.core.model.Group;
 import br.com.abby.core.model.Model;
 import br.com.abby.linear.Shape;
 import br.com.luvia.core.graphics.GLDrawable;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
 import br.com.luvia.material.Material;
 
 import com.badlogic.gdx.math.Vector2;
@@ -295,7 +295,7 @@ public class ModelInstance extends Shape implements GLDrawable {
     }
 
     @Override
-    public void draw(Graphics3D g) {
+    public void draw(AWTGraphics3D g) {
         GL2 gl = g.getGL2();
        
         gl.glPushMatrix();

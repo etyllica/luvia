@@ -25,7 +25,8 @@ package examples.jbullet.bsp;
 
 import javax.vecmath.Vector3f;
 
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
+import br.com.abby.core.graphics.Graphics3D;
 
 import com.bulletphysics.collision.broadphase.BroadphaseInterface;
 import com.bulletphysics.collision.broadphase.DbvtBroadphase;
@@ -63,7 +64,7 @@ public class BspDemo extends DemoApplication {
 		super(w, h);
 	}
 	
-	public void initPhysics(Graphics3D g) throws Exception {
+	public void initPhysics(Graphics3D graphics) throws Exception {
 		cameraUp.set(0f, 0f, 1f);
 		forwardAxis = 1;
 

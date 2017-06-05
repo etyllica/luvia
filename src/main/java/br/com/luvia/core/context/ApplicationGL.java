@@ -3,9 +3,10 @@ package br.com.luvia.core.context;
 import com.jogamp.opengl.GL2;
 
 import br.com.etyllica.commons.context.Application;
+import br.com.abby.core.graphics.Graphics3D;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.graphics.G3DEventListener;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
 
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
@@ -46,7 +47,7 @@ public abstract class ApplicationGL extends Application implements com.badlogic.
 		return returnApplication3D;
 	}
 
-	protected Vector3 transformPosition(Graphics3D g, Vector3 point) {
+	protected Vector3 transformPosition(AWTGraphics3D g, Vector3 point) {
 				
 		float[] m = g.getModelView();
 		
@@ -61,19 +62,19 @@ public abstract class ApplicationGL extends Application implements com.badlogic.
 		return new Vector3(x, y, z);
 	}
 	
-	protected int[] getViewPort(Graphics3D g) {
+	protected int[] getViewPort(AWTGraphics3D g) {
 		return g.getViewPort();
 	}
 
-	protected float[] getModelView(Graphics3D g) {
+	protected float[] getModelView(AWTGraphics3D g) {
 		return g.getModelView();
 	}
 	
-	protected float[] getProjection(Graphics3D g) {
+	protected float[] getProjection(AWTGraphics3D g) {
 		return g.getProjection();
 	}
 	
-	protected Matrix4 getProjectionMatrix(Graphics3D g) {
+	protected Matrix4 getProjectionMatrix(AWTGraphics3D g) {
 		GL2 gl = g.getGL2();
 		
 		float[] projection = new float[16];

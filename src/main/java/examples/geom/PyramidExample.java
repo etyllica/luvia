@@ -6,7 +6,8 @@ import com.jogamp.opengl.GL2;
 
 import br.com.etyllica.commons.event.KeyEvent;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
+import br.com.abby.core.graphics.Graphics3D;
 
 public class PyramidExample extends ApplicationGL {
 
@@ -19,8 +20,8 @@ public class PyramidExample extends ApplicationGL {
 	private double angleY = 0;
 
 	@Override
-	public void init(Graphics3D g) {
-
+	public void init(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		GL2 gl = g.getGL2();
 
 		gl.glClearColor(0, 0, 0, 0);
@@ -33,7 +34,8 @@ public class PyramidExample extends ApplicationGL {
 	}
 
 	@Override
-	public void display(Graphics3D g) {
+	public void display(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		GL2 gl = g.getGL2();
 		
 		if(wireFrame) {
@@ -58,7 +60,8 @@ public class PyramidExample extends ApplicationGL {
 	}
 
 	@Override
-	public void reshape(Graphics3D g, int x, int y, int width, int height) {
+	public void reshape(Graphics3D graphics, int x, int y, int width, int height) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		GL2 gl = g.getGL2(); // get the OpenGL graphics context
 		
 		gl.glViewport(0, 0, width, height);

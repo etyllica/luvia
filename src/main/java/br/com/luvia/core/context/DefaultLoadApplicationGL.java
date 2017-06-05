@@ -5,8 +5,9 @@ import java.awt.Color;
 import br.com.etyllica.commons.context.load.LoadApplication;
 import br.com.etyllica.commons.event.KeyEvent;
 import br.com.etyllica.commons.event.PointerEvent;
+import br.com.abby.core.graphics.Graphics3D;
 import br.com.etyllica.core.graphics.Graphics;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
 
 /**
  * 

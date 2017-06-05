@@ -26,7 +26,8 @@ package examples.jbullet.opengl;
 import com.jogamp.opengl.GL2;
 import javax.vecmath.Vector3f;
 
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
+import br.com.abby.core.graphics.Graphics3D;
 
 import com.bulletphysics.linearmath.DebugDrawModes;
 import com.bulletphysics.linearmath.IDebugDraw;
@@ -40,17 +41,18 @@ public class GLDebugDrawer extends IDebugDraw {
 	// JAVA NOTE: added
 	private static final boolean DEBUG_NORMALS = false;
 	
-	private Graphics3D g;
+	private Graphics3D graphics;
 	private int debugMode;
 	
 	private final Vector3f tmpVec = new Vector3f();
 
-	public GLDebugDrawer(Graphics3D g) {
-		this.g = g;
+	public GLDebugDrawer(Graphics3D graphics) {
+		this.graphics = graphics;
 	}
 
 	@Override
 	public void drawLine(Vector3f from, Vector3f to, Vector3f color) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		GL2 gl = g.getGL2();
 		if (debugMode > 0) {
 			gl.glBegin(GL2.GL_LINES);
@@ -80,6 +82,7 @@ public class GLDebugDrawer extends IDebugDraw {
 	@Override
 	public void drawContactPoint(Vector3f pointOnB, Vector3f normalOnB, float distance, int lifeTime, Vector3f color) {
 		if ((debugMode & DebugDrawModes.DRAW_CONTACT_POINTS) != 0) {
+			AWTGraphics3D g = (AWTGraphics3D) graphics;
 			GL2 gl = g.getGL2();
 			
 			Vector3f to = tmpVec;

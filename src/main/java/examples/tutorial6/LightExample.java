@@ -8,7 +8,8 @@ import br.com.abby.linear.Camera;
 import br.com.etyllica.commons.event.KeyEvent;
 import br.com.etyllica.commons.event.PointerEvent;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
+import br.com.abby.core.graphics.Graphics3D;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -35,11 +36,12 @@ public class LightExample extends ApplicationGL {
 	}
 
 	@Override
-	public void init(Graphics3D drawable) {
-		Gdx.graphics = drawable;
-		Gdx.gl = drawable.getGL2();
-		Gdx.gl20 = drawable.getGL2();
-		Gdx.gl30 = drawable.getGL3();
+	public void init(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
+		Gdx.graphics = g;
+		Gdx.gl = g.getGL2();
+		Gdx.gl20 = g.getGL2();
+		Gdx.gl30 = g.getGL3();
 		Gdx.app = this;
 		
 		cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -61,10 +63,10 @@ public class LightExample extends ApplicationGL {
 	}
 
 	@Override
-	public void reshape(Graphics3D drawable, int x, int y, int width, int height) {
-
-		GL2 gl = drawable.getGL2();
-		GLU glu = drawable.getGLU();
+	public void reshape(Graphics3D graphics, int x, int y, int width, int height) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
+		GL2 gl = g.getGL2();
+		GLU glu = g.getGLU();
 
 		gl.glViewport (x, y, width, height);
 
@@ -98,8 +100,9 @@ public class LightExample extends ApplicationGL {
 	}
 
 	@Override
-	public void preDisplay(Graphics3D g) {
-		GL2 gl = g.getDrawable().getGL().getGL2();
+	public void preDisplay(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
+		GL2 gl = g.getGL2();
 
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 		gl.glClearColor(1f, 1f, 1f, 1);
@@ -109,13 +112,13 @@ public class LightExample extends ApplicationGL {
 	float angle = 2;
 
 	@Override
-	public void display(Graphics3D drawable) {
-
-		GL2 gl = drawable.getGL().getGL2();
-		drawable.setColor(java.awt.Color.WHITE);
+	public void display(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
+		GL2 gl = g.getGL().getGL2();
+		g.setColor(java.awt.Color.WHITE);
 		
 		//Transform by Camera
-		//drawable.updateCamera(camera);
+		//g.updateCamera(camera);
 		modelBatch.begin(cam);
         modelBatch.render(instance);
         modelBatch.end();

@@ -31,7 +31,8 @@ import javax.vecmath.Vector3f;
 
 import br.com.etyllica.commons.event.KeyEvent;
 import br.com.etyllica.commons.event.KeyState;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
+import br.com.abby.core.graphics.Graphics3D;
 
 import com.bulletphysics.collision.broadphase.BroadphaseInterface;
 import com.bulletphysics.collision.broadphase.DbvtBroadphase;
@@ -331,7 +332,8 @@ public class ForkLiftDemo extends DemoApplication {
 
 	///a very basic camera following the vehicle
 	@Override
-	public void updateCamera(Graphics3D g) {
+	public void updateCamera(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		super.updateCamera(g);
 
 		// //#define DISABLE_CAMERA 1
@@ -495,7 +497,8 @@ public class ForkLiftDemo extends DemoApplication {
 	}
 
 	@Override
-	public void display(Graphics3D g) {
+	public void display(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		//updateCamera(g);
 
 		//float[] m = new float[16];
@@ -535,7 +538,7 @@ public class ForkLiftDemo extends DemoApplication {
 	}
 
 	@Override
-	public void initPhysics(Graphics3D g) {
+	public void initPhysics(Graphics3D graphics) {
 		//#ifdef FORCE_ZAXIS_UP
 		//cameraUp.set(0,0,1);
 		//forwardAxis = 1;

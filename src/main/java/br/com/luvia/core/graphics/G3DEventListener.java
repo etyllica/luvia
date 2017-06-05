@@ -1,5 +1,7 @@
 package br.com.luvia.core.graphics;
 
+import br.com.abby.core.graphics.Graphics3D;
+
 
 public interface G3DEventListener {
 

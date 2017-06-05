@@ -30,7 +30,8 @@ import com.jogamp.opengl.GL2;
 import javax.vecmath.Vector3f;
 
 import br.com.etyllica.commons.event.KeyEvent;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
+import br.com.abby.core.graphics.Graphics3D;
 
 import com.bulletphysics.collision.broadphase.BroadphaseInterface;
 import com.bulletphysics.collision.broadphase.DbvtBroadphase;
@@ -145,7 +146,7 @@ public class VehicleDemo extends DemoApplication {
 		setTitle("Bullet Vehicle Demo");
 	}
 
-	public void initPhysics(Graphics3D g) {
+	public void initPhysics(Graphics3D graphics) {
 
 		System.out.println("Vehicle Physics");
 
@@ -389,7 +390,8 @@ public class VehicleDemo extends DemoApplication {
 
 	// to be implemented by the demo
 	@Override
-	public void display(Graphics3D g) {
+	public void display(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		super.display(g);
 
 		CylinderShapeX wheelShape = new CylinderShapeX(new Vector3f(wheelWidth, wheelRadius, wheelRadius));
@@ -518,8 +520,8 @@ public class VehicleDemo extends DemoApplication {
 	}
 
 	@Override
-	public void updateCamera(Graphics3D g) {
-
+	public void updateCamera(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		GL2 gl = g.getGL2();
 
 		// //#define DISABLE_CAMERA 1

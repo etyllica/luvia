@@ -35,7 +35,7 @@ import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.context.DefaultLoadApplicationGL;
 import br.com.luvia.core.glg2d.GLG2DPanel;
 import br.com.luvia.core.glg2d.GLGraphics2D;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
 import br.com.luvia.loader.GISInfoLoader;
 import br.com.luvia.loader.TextureLoader;
 
@@ -52,7 +52,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 	private GLGraphics2D glGraphics;
 
-	private Graphics3D graphic;
+	private AWTGraphics3D graphic;
 
 	private String path;
 
@@ -88,7 +88,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 		glGraphics = new GLGraphics2D();
 
-		graphic = new Graphics3D(w,h);
+		graphic = new AWTGraphics3D(w,h);
 
 		canvas.addMouseMotionListener(getMouse());
 		canvas.addMouseWheelListener(getMouse());
@@ -249,7 +249,7 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 		draw(graphic);
 	}
 
-	private void preDisplay(Graphics3D g3d) {
+	private void preDisplay(AWTGraphics3D g3d) {
 		activeWindowGL.getApplication3D().preDisplay(g3d);
 	}
 

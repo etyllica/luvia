@@ -14,7 +14,8 @@ import br.com.etyllica.commons.event.KeyEvent;
 import br.com.etyllica.commons.event.PointerEvent;
 import br.com.etyllica.loader.image.ImageLoader;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
+import br.com.abby.core.graphics.Graphics3D;
 import br.com.luvia.graphics.CustomBillboard;
 import br.com.luvia.loader.TextureLoader;
 import br.com.luvia.util.DirectionUtil;
@@ -46,7 +47,7 @@ public class RotateAroundExample extends ApplicationGL {
 	}
 
 	@Override
-	public void init(Graphics3D drawable) {
+	public void init(Graphics3D graphics) {
 		for (int i = 0; i < markerCount; i++) {
 			activeMarkers.add(false);
 		}
@@ -72,10 +73,10 @@ public class RotateAroundExample extends ApplicationGL {
 	}
 
 	@Override
-	public void reshape(Graphics3D drawable, int x, int y, int width, int height) {
-
-		GL2 gl = drawable.getGL2();
-		GLU glu = drawable.getGLU();
+	public void reshape(Graphics3D graphics, int x, int y, int width, int height) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
+		GL2 gl = g.getGL2();
+		GLU glu = g.getGLU();
 
 		gl.glViewport (x, y, width, height);
 
@@ -109,8 +110,9 @@ public class RotateAroundExample extends ApplicationGL {
 	}
 
 	@Override
-	public void preDisplay(Graphics3D g) {
-		GL2 gl = g.getDrawable().getGL().getGL2();
+	public void preDisplay(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
+		GL2 gl = g.getGL2();
 
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 		gl.glClearColor(1f, 1f, 1f, 1);
@@ -120,18 +122,18 @@ public class RotateAroundExample extends ApplicationGL {
 	float angle = 2;
 
 	@Override
-	public void display(Graphics3D drawable) {
-
-		GL2 gl = drawable.getGL().getGL2();
-		drawable.setColor(Color.WHITE);
+	public void display(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
+		GL2 gl = g.getGL().getGL2();
+		g.setColor(Color.WHITE);
 
 		//Transform by Camera
-		drawable.updateCamera(camera);
+		g.updateCamera(camera);
 
 		//Draw Billboard
 		texture.enable(gl);
 		texture.bind(gl);
-		drawable.drawBillboard(billboard);
+		g.drawBillboard(billboard);
 		texture.disable(gl);
 		
 		DirectionUtil.rotateAround(sphereCenter, billboard.center, rotationAxis, angle);
@@ -139,8 +141,8 @@ public class RotateAroundExample extends ApplicationGL {
 		billboard.turnTo(sphereCenter);
 		
 		gl.glPushMatrix();
-		drawable.setColor(Color.BLUE);
-		drawable.drawSphere(1, sphereCenter.x, sphereCenter.y, sphereCenter.z);
+		g.setColor(Color.BLUE);
+		g.drawSphere(1, sphereCenter.x, sphereCenter.y, sphereCenter.z);
 		gl.glPopMatrix();
 
 		gl.glFlush();

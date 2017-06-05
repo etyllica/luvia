@@ -4,10 +4,12 @@ import java.awt.Color;
 import java.io.File;
 import java.util.List;
 
+import com.badlogic.gdx.math.Vector3;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.glu.GLU;
 
+import br.com.abby.core.graphics.Graphics3D;
 import br.com.abby.core.loader.AnimationLoader;
 import br.com.abby.core.model.Joint;
 import br.com.abby.core.model.motion.Motion;
@@ -15,10 +17,8 @@ import br.com.abby.core.view.FlyView;
 import br.com.etyllica.commons.event.KeyEvent;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
 import br.com.luvia.core.view.UEView;
-
-import com.badlogic.gdx.math.Vector3;
 
 public class AnimationApplication extends ApplicationGL {
 	
@@ -32,7 +32,8 @@ public class AnimationApplication extends ApplicationGL {
 	}
 		
 	@Override
-	public void init(Graphics3D g) {
+	public void init(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		GL2 gl = g.getGL2(); // get the OpenGL graphics context
 
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // set background (clear) color
@@ -60,7 +61,8 @@ public class AnimationApplication extends ApplicationGL {
 	}
 	
 	@Override
-	public void display(Graphics3D g) {
+	public void display(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		view.update(0);
 		
 		GL2 gl = g.getGL2();  // get the OpenGL 2 graphics context
@@ -83,11 +85,11 @@ public class AnimationApplication extends ApplicationGL {
 		}
 	}
 	
-	private void drawSkeleton(Graphics3D g, Joint root) {
-		g.drawSphere(root.getPosition(), 0.1);
+	private void drawSkeleton(Graphics3D graphics, Joint root) {
+		graphics.drawSphere(root.getPosition(), 0.1);
 		for (Joint joint : root.getChildren()) {
-			g.drawLine(root.getPosition(), joint.getPosition());
-			drawSkeleton(g, joint);
+			graphics.drawLine(root.getPosition(), joint.getPosition());
+			drawSkeleton(graphics, joint);
 		}
 	}
 
@@ -105,7 +107,8 @@ public class AnimationApplication extends ApplicationGL {
 	}
 
 	@Override
-	public void reshape(Graphics3D g, int x, int y, int width, int height) {
+	public void reshape(Graphics3D graphics, int x, int y, int width, int height) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		GL2 gl = g.getGL2(); // get the OpenGL graphics context
 		GLU glu = g.getGLU();
 

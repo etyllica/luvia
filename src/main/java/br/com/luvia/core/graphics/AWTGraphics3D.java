@@ -16,6 +16,7 @@ import com.jogamp.opengl.glu.GLUquadric;
 import org.jogamp.glg2d.GLGraphics2D;
 import org.lwjgl.BufferUtils;
 
+import br.com.abby.core.graphics.Graphics3D;
 import br.com.abby.linear.AimPoint;
 import br.com.abby.linear.BoundingBox3D;
 import br.com.abby.linear.Camera;
@@ -31,7 +32,7 @@ import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.math.collision.Ray;
 import com.jogamp.opengl.util.texture.Texture;
 
-public class Graphics3D extends AWTGraphics {
+public class AWTGraphics3D extends AWTGraphics implements Graphics3D {
 
 	private GLU glu;
 
@@ -39,7 +40,7 @@ public class Graphics3D extends AWTGraphics {
 
 	public static int DEFAULT_RESOLUTION = 16;
 
-	public Graphics3D(int width, int heigth) {
+	public AWTGraphics3D(int width, int heigth) {
 		super(width,heigth);
 
 		glu = new GLU(); // GL Utilities
@@ -884,6 +885,24 @@ public class Graphics3D extends AWTGraphics {
 	public void setColorRGB(Vector3 color) {
 		GL2 gl = getGL2();
 		gl.glColor3f(color.x/0xff, color.y/0xff, color.z/0xff);
+	}
+
+	@Override
+	public void glMatrixMode(int glModelview) {
+		GL2 gl = getGL2();
+		gl.glMatrixMode(glModelview);
+	}
+
+	@Override
+	public void glLoadIdentity() {
+		GL2 gl = getGL2();
+		gl.glLoadIdentity();
+	}
+
+	@Override
+	public void glClear(int mask) {
+		GL2 gl = getGL2();
+		gl.glClear(mask);
 	}
 
 }

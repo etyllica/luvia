@@ -8,7 +8,8 @@ import br.com.abby.core.loader.MeshLoader;
 import br.com.abby.core.model.Model;
 import br.com.etyllica.awt.SVGColor;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
+import br.com.abby.core.graphics.Graphics3D;
 import br.com.luvia.graphics.ModelInstance;
 
 public class SimpleMeshExample extends ApplicationGL {
@@ -20,8 +21,9 @@ public class SimpleMeshExample extends ApplicationGL {
 	}
 		
 	@Override
-	public void init(Graphics3D g) {
+	public void init(Graphics3D graphics) {
 		//Init 3d Stuff
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		GL2 gl = g.getGL2(); // get the OpenGL graphics context
 
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // set background (clear) color
@@ -45,7 +47,8 @@ public class SimpleMeshExample extends ApplicationGL {
 	}
 	
 	@Override
-	public void display(Graphics3D g) {
+	public void display(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		GL2 gl = g.getGL2();  // get the OpenGL 2 graphics context
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT); // clear color and depth buffers
 		gl.glLoadIdentity();  // reset the model-view matrix
@@ -58,7 +61,8 @@ public class SimpleMeshExample extends ApplicationGL {
 	}
 
 	@Override
-	public void reshape(Graphics3D g, int x, int y, int width, int height) {
+	public void reshape(Graphics3D graphics, int x, int y, int width, int height) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		GL2 gl = g.getGL2(); // get the OpenGL graphics context
 		GLU glu = g.getGLU();
 

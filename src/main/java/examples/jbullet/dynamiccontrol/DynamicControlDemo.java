@@ -27,7 +27,8 @@ package examples.jbullet.dynamiccontrol;
 import com.jogamp.opengl.GL2;
 import javax.vecmath.Vector3f;
 
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
+import br.com.abby.core.graphics.Graphics3D;
 
 import com.bulletphysics.BulletGlobals;
 import com.bulletphysics.collision.broadphase.BroadphaseInterface;
@@ -64,7 +65,7 @@ public class DynamicControlDemo extends DemoApplication {
 		setTitle("Bullet Physics Demo. http://bullet.sf.net");
 	}
 
-	public void initPhysics(Graphics3D g) {
+	public void initPhysics(Graphics3D graphics) {
 		// Setup the basic world
 		time = 0.0f;
 		cyclePeriod = 2000.0f; // in milliseconds
@@ -151,13 +152,13 @@ public class DynamicControlDemo extends DemoApplication {
 	}
 	
 	@Override
-	public void display(Graphics3D g) {
-		super.display(g);
+	public void display(Graphics3D graphics) {
+		super.display(graphics);
 		
 		for (int i=2; i>=0; i--) {
 			CollisionObject obj = dynamicsWorld.getCollisionObjectArray().getQuick(i);
 			RigidBody body = RigidBody.upcast(obj);
-			drawFrame(g, body.getWorldTransform(new Transform()));
+			drawFrame(graphics, body.getWorldTransform(new Transform()));
 		}
 	};
 	
@@ -191,7 +192,8 @@ public class DynamicControlDemo extends DemoApplication {
 		gl.glVertex3f(v.x, v.y, v.z);
 	}
 
-	private void drawFrame(Graphics3D g, Transform tr) {
+	private void drawFrame(Graphics3D graphics, Transform tr) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		final float size = 1.0f;
 		GL2 gl = g.getGL2();
 		gl.glBegin(GL2.GL_LINES);

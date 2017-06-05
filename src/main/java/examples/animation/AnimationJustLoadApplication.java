@@ -2,10 +2,12 @@ package examples.animation;
 
 import java.awt.Color;
 
+import com.badlogic.gdx.math.Vector3;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.glu.GLU;
 
+import br.com.abby.core.graphics.Graphics3D;
 import br.com.abby.core.loader.AnimationLoader;
 import br.com.abby.core.model.Bone;
 import br.com.abby.core.model.motion.Motion;
@@ -13,10 +15,8 @@ import br.com.abby.core.view.FlyView;
 import br.com.etyllica.commons.event.KeyEvent;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
 import br.com.luvia.core.view.UEView;
-
-import com.badlogic.gdx.math.Vector3;
 
 public class AnimationJustLoadApplication extends ApplicationGL {
 	
@@ -28,7 +28,8 @@ public class AnimationJustLoadApplication extends ApplicationGL {
 	}
 		
 	@Override
-	public void init(Graphics3D g) {
+	public void init(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		GL2 gl = g.getGL2(); // get the OpenGL graphics context
 
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // set background (clear) color
@@ -53,7 +54,8 @@ public class AnimationJustLoadApplication extends ApplicationGL {
 	}
 	
 	@Override
-	public void display(Graphics3D g) {
+	public void display(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		view.update(0);
 		
 		GL2 gl = g.getGL2();  // get the OpenGL 2 graphics context
@@ -73,7 +75,8 @@ public class AnimationJustLoadApplication extends ApplicationGL {
 	}
 	
 	@Override
-	public void reshape(Graphics3D g, int x, int y, int width, int height) {
+	public void reshape(Graphics3D graphics, int x, int y, int width, int height) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		GL2 gl = g.getGL2(); // get the OpenGL graphics context
 		GLU glu = g.getGLU();
 

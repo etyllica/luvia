@@ -3,7 +3,7 @@ package br.com.luvia.graphics;
 import com.jogamp.opengl.GL2;
 
 import br.com.abby.linear.BaseCylinder;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
 
 import com.badlogic.gdx.math.Vector3;
 
@@ -21,7 +21,7 @@ public class Cylinder extends BaseCylinder {
 		super(sides, height, radius);
 	}
 
-	public void draw(Graphics3D g) {
+	public void draw(AWTGraphics3D g) {
 		GL2 gl = g.getGL2();
 		gl.glPushMatrix();
 		gl.glMultMatrixf(transform.val, 0);

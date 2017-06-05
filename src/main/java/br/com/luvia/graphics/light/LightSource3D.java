@@ -6,11 +6,11 @@ import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 
 import br.com.abby.linear.Shape;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
 
 public class LightSource3D extends Shape {
 
-	public void configureLight(Graphics3D g, int lightId) {
+	public void configureLight(AWTGraphics3D g, int lightId) {
 		GL2 gl = g.getGL2();
 		
 		//Default specular and shininess

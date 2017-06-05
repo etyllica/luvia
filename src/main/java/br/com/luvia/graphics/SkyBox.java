@@ -4,7 +4,7 @@ import com.jogamp.opengl.GL2;
 
 import br.com.etyllica.linear.Point3D;
 import br.com.luvia.core.graphics.GLDrawable;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
 import br.com.luvia.loader.TextureLoader;
 
 import com.jogamp.opengl.util.texture.Texture;
@@ -24,7 +24,7 @@ public class SkyBox extends Point3D implements GLDrawable {
 	}
 
 	@Override
-	public void draw(Graphics3D g) {
+	public void draw(AWTGraphics3D g) {
 		GL2 gl = g.getGL2();
 		
 		texture.enable(gl);

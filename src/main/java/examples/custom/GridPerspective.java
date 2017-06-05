@@ -20,7 +20,8 @@ import br.com.etyllica.commons.event.MouseEvent;
 import br.com.etyllica.commons.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
+import br.com.abby.core.graphics.Graphics3D;
 import br.com.luvia.loader.TextureLoader;
 
 public class GridPerspective extends ApplicationGL {
@@ -39,7 +40,7 @@ public class GridPerspective extends ApplicationGL {
 	}
 
 	@Override
-	public void init(Graphics3D drawable) {
+	public void init(Graphics3D graphics) {
 		
 		view = new FlyView(0,2,0);
 		view.getAim().setAngleY(180);
@@ -132,10 +133,10 @@ public class GridPerspective extends ApplicationGL {
 	}
 
 	@Override
-	public void reshape(Graphics3D drawable, int x, int y, int width, int height) {
-
-		GL2 gl = drawable.getGL2();
-		GLU glu = drawable.getGLU();
+	public void reshape(Graphics3D graphics, int x, int y, int width, int height) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
+		GL2 gl = g.getGL2();
+		GLU glu = g.getGLU();
 
 		gl.glViewport((int)x, (int)y, (int)w, (int)h);
 
@@ -173,15 +174,16 @@ public class GridPerspective extends ApplicationGL {
 	}
 
 	@Override
-	public void display(Graphics3D drawable) {
-		GL2 gl = drawable.getGL().getGL2();
+	public void display(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
+		GL2 gl = g.getGL().getGL2();
 
 		//TODO TEST
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 		gl.glClearColor(1f, 1f, 1f, 1);
 				
 		//Transform by Aim
-		drawable.aimCamera(view.getAim());
+		g.aimCamera(view.getAim());
 
 		//Draw Scene
 		drawAxis(gl);

@@ -20,7 +20,8 @@ import br.com.etyllica.commons.event.MouseEvent;
 import br.com.etyllica.commons.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
+import br.com.abby.core.graphics.Graphics3D;
 import br.com.luvia.loader.TextureLoader;
 
 import com.jogamp.opengl.util.texture.Texture;
@@ -47,7 +48,7 @@ public class MarkerApplication extends ApplicationGL {
 	}
 
 	@Override
-	public void init(Graphics3D drawable) {
+	public void init(Graphics3D graphics) {
 		
 		//marker = TextureLoader.getInstance().loadTexture("/mark.png");
 		
@@ -78,8 +79,8 @@ public class MarkerApplication extends ApplicationGL {
 		loading = 100;
 	}
 	
-	protected void lookCamera(Graphics3D g) {
-		GL2 gl = g.getGL2();
+	protected void lookCamera(Graphics3D gl) {
+		AWTGraphics3D g = (AWTGraphics3D) gl;
 		GLU glu = g.getGLU();
 		
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
@@ -142,10 +143,10 @@ public class MarkerApplication extends ApplicationGL {
 	}
 
 	@Override
-	public void reshape(Graphics3D drawable, int x, int y, int width, int height) {
-
-		GL2 gl = drawable.getGL2();
-		GLU glu = drawable.getGLU();
+	public void reshape(Graphics3D graphics, int x, int y, int width, int height) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
+		GL2 gl = g.getGL2();
+		GLU glu = g.getGLU();
 
 		gl.glViewport (x, y, width, height);
 
@@ -251,8 +252,9 @@ public class MarkerApplication extends ApplicationGL {
 	}
 
 	@Override
-	public void preDisplay(Graphics3D g) {
-		GL2 gl = g.getDrawable().getGL().getGL2();
+	public void preDisplay(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
+		GL2 gl = g.getGL2();
 
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 		gl.glClearColor(1f, 1f, 1f, 1);
@@ -262,12 +264,12 @@ public class MarkerApplication extends ApplicationGL {
 	}
 	
 	@Override
-	public void display(Graphics3D drawable) {
-
-		GL2 gl = drawable.getGL().getGL2();
-				
+	public void display(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
+		GL2 gl = g.getGL2();
+						
 		//Transform by Camera
-		lookCamera(drawable);
+		lookCamera(graphics);
 		
 		gl.glRotated(angleX, 1, 0, 0);
 		gl.glRotated(angleY, 0, 1, 0);

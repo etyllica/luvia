@@ -18,7 +18,8 @@ import br.com.etyllica.commons.event.MouseEvent;
 import br.com.etyllica.commons.event.PointerEvent;
 import br.com.etyllica.loader.image.ImageLoader;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
+import br.com.abby.core.graphics.Graphics3D;
 import br.com.luvia.loader.TextureLoader;
 
 import com.badlogic.gdx.math.collision.Ray;
@@ -51,7 +52,7 @@ public class CollisionApplication extends ApplicationGL {
 	}
 
 	@Override
-	public void init(Graphics3D drawable) {
+	public void init(Graphics3D graphics) {
 		for (int i = 0; i < markerCount; i++) {
 			activeMarkers.add(false);
 		}
@@ -183,8 +184,8 @@ public class CollisionApplication extends ApplicationGL {
 	}
 
 	@Override
-	public void reshape(Graphics3D drawable, int x, int y, int width, int height) {
-		StandardExample.standardScene(drawable, x, y, width, height);
+	public void reshape(Graphics3D graphics, int x, int y, int width, int height) {
+		StandardExample.standardScene(graphics, x, y, width, height);
 	}
 	
 	@Override
@@ -200,8 +201,8 @@ public class CollisionApplication extends ApplicationGL {
 	}
 
 	@Override
-	public void preDisplay(Graphics3D g) {
-		
+	public void preDisplay(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		GL2 gl = g.getDrawable().getGL().getGL2();
 
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
@@ -212,12 +213,12 @@ public class CollisionApplication extends ApplicationGL {
 	}
 	
 	@Override
-	public void display(Graphics3D drawable) {
-
-		GL2 gl = drawable.getGL().getGL2();
+	public void display(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
+		GL2 gl = g.getGL().getGL2();
 		
 		//Transform by Camera
-		drawable.updateCamera(camera);
+		g.updateCamera(camera);
 		
 		//Draw Scene
 		drawFloor(gl);

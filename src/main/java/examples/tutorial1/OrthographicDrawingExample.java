@@ -5,7 +5,8 @@ import java.awt.Color;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.etyllica.layer.ImageLayer;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
+import br.com.abby.core.graphics.Graphics3D;
 
 public class OrthographicDrawingExample extends ApplicationGL {
 
@@ -16,7 +17,7 @@ public class OrthographicDrawingExample extends ApplicationGL {
 	private ImageLayer layer;
 	
 	@Override
-	public void init(Graphics3D drawable) {
+	public void init(Graphics3D graphics) {
 		//Init 3d Stuff
 	}
 
@@ -28,13 +29,13 @@ public class OrthographicDrawingExample extends ApplicationGL {
 	}
 	
 	@Override
-	public void display(Graphics3D drawable) {
+	public void display(Graphics3D graphics) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void reshape(Graphics3D drawable, int x, int y, int width, int height) {
+	public void reshape(Graphics3D graphics, int x, int y, int width, int height) {
 		// TODO Auto-generated method stub
 
 	}

@@ -8,13 +8,15 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 
 import br.com.abby.core.view.FlyView;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
+import br.com.abby.core.graphics.Graphics3D;
 
 public class StandardExample {
 
-	public static void standardScene(Graphics3D drawable, int x, int y, int w, int h) {
-		GL2 gl = drawable.getGL2();
-		GLU glu = drawable.getGLU();
+	public static void standardScene(Graphics3D graphics, int x, int y, int w, int h) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
+		GL2 gl = g.getGL2();
+		GLU glu = g.getGLU();
 
 		gl.glViewport(x, y, w, h);
 

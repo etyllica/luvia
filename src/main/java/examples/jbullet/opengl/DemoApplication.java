@@ -38,7 +38,8 @@ import br.com.etyllica.commons.event.KeyState;
 import br.com.etyllica.commons.event.PointerEvent;
 import br.com.etyllica.commons.event.PointerState;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
+import br.com.abby.core.graphics.Graphics3D;
 
 import com.bulletphysics.BulletGlobals;
 import com.bulletphysics.BulletStats;
@@ -138,7 +139,7 @@ public abstract class DemoApplication extends ApplicationGL {
 		loading = 100;
 	}
 
-	public abstract void initPhysics(Graphics3D g) throws Exception;
+	public abstract void initPhysics(Graphics3D graphics) throws Exception;
 
 	public void destroy() {
 		// TODO: CProfileManager::Release_Iterator(m_profileIterator);
@@ -146,8 +147,8 @@ public abstract class DemoApplication extends ApplicationGL {
 		//	delete m_shootBoxShape;
 	}
 
-	public void init(Graphics3D g) {
-
+	public void init(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		GL2 gl = g.getGL2();
 
 		FloatBuffer light_ambient = FloatBuffer.wrap(new float[] { 0.2f, 0.2f, 0.2f, 1.0f });
@@ -206,7 +207,8 @@ public abstract class DemoApplication extends ApplicationGL {
 		}
 	}
 
-	public void updateCamera(Graphics3D g) {
+	public void updateCamera(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		/*if(!needUpdateCamera) {
 			return; 
 		} else {
@@ -308,7 +310,8 @@ public abstract class DemoApplication extends ApplicationGL {
 		needUpdateCamera = true;
 	}
 
-	public void reshape(Graphics3D g, int x, int y, int width, int height) {
+	public void reshape(Graphics3D graphics, int x, int y, int width, int height) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		glutScreenWidth = w;
 		glutScreenHeight = h;
 
@@ -559,7 +562,7 @@ public abstract class DemoApplication extends ApplicationGL {
 		}
 	}
 
-	private void moveAndDisplay(Graphics3D g) {
+	private void moveAndDisplay(Graphics3D graphics) {
 
 	}
 
@@ -813,7 +816,8 @@ public abstract class DemoApplication extends ApplicationGL {
 	}
 
 	// See http://www.lighthouse3d.com/opengl/glut/index.php?bmpfontortho
-	public void setOrthographicProjection(Graphics3D g) {
+	public void setOrthographicProjection(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		GL2 gl = g.getGL2();
 		GLU glu = g.getGLU();
 
@@ -837,7 +841,8 @@ public abstract class DemoApplication extends ApplicationGL {
 		gl.glTranslatef(0f, -glutScreenHeight, 0f);
 	}
 
-	public void resetPerspectiveProjection(Graphics3D g) {
+	public void resetPerspectiveProjection(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		GL2 gl = g.getGL2();
 
 		gl.glMatrixMode(GL2.GL_PROJECTION);
@@ -846,13 +851,15 @@ public abstract class DemoApplication extends ApplicationGL {
 		needUpdateCamera = true;
 	}
 
-	private void displayProfileString(Graphics3D g, float xOffset, float yStart, CharSequence message) {
+	private void displayProfileString(Graphics3D graphics, float xOffset, float yStart, CharSequence message) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		drawString(g, message, Math.round(xOffset), Math.round(yStart), TEXT_COLOR);
 	}	
 
 	private static double time_since_reset = 0f;
 
-	protected float showProfileInfo(Graphics3D g, float xOffset, float yStart, float yIncr) {
+	protected float showProfileInfo(Graphics3D graphics, float xOffset, float yStart, float yIncr) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		if (!idle) {
 			time_since_reset = CProfileManager.getTimeSinceReset();
 		}
@@ -930,7 +937,8 @@ public abstract class DemoApplication extends ApplicationGL {
 	protected Color3f TEXT_COLOR = new Color3f(0f, 0f, 0f);
 	private StringBuilder buf = new StringBuilder();
 
-	public void display(Graphics3D g) {
+	public void display(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		updateCamera(g);
 
 		g.getGL2().glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
@@ -1246,7 +1254,8 @@ public abstract class DemoApplication extends ApplicationGL {
 		this.idle = idle;
 	}
 
-	public void drawString(Graphics3D g, CharSequence s, int x, int y, Color3f color) {
+	public void drawString(Graphics3D graphics, CharSequence s, int x, int y, Color3f color) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		g.setColor(new Color(color.x*255, color.y*255, color.y*255));
 		g.drawString(s.toString(), x, y);
 	}

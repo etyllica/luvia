@@ -12,7 +12,8 @@ import br.com.abby.storage.octree.OctreeNode;
 import br.com.etyllica.commons.event.KeyEvent;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
+import br.com.abby.core.graphics.Graphics3D;
 import br.com.luvia.graphics.ModelInstance;
 
 public class MeshExample extends ApplicationGL {
@@ -28,7 +29,8 @@ public class MeshExample extends ApplicationGL {
 	}
 		
 	@Override
-	public void init(Graphics3D g) {
+	public void init(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		GL2 gl = g.getGL2(); // get the OpenGL graphics context
 
 		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // set background (clear) color
@@ -62,7 +64,8 @@ public class MeshExample extends ApplicationGL {
 	}
 	
 	@Override
-	public void display(Graphics3D g) {
+	public void display(Graphics3D graphics) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		GL2 gl = g.getGL2();  // get the OpenGL 2 graphics context
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT); // clear color and depth buffers
 		gl.glLoadIdentity();  // reset the model-view matrix
@@ -98,23 +101,25 @@ public class MeshExample extends ApplicationGL {
 		}
 	}
 	
-	public void renderOctree(Graphics3D g, Octree<?> tree) {
+	public void renderOctree(Graphics3D graphics, Octree<?> tree) {
 		
 		OctreeNode<?> root = tree.getRoot();
 		
-		renderOctreeNode(g, root);
+		renderOctreeNode(graphics, root);
 	}
 	
-	public void renderOctreeNode(Graphics3D g, OctreeNode<?> node) {
+	public void renderOctreeNode(Graphics3D graphics, OctreeNode<?> node) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		g.drawBoundingBox(node.getBox());
 		
 		for(OctreeNode<?> child: node.getChildrenNodes()) {
-			renderOctreeNode(g, child);
+			renderOctreeNode(graphics, child);
 		}
 	}
 
 	@Override
-	public void reshape(Graphics3D g, int x, int y, int width, int height) {
+	public void reshape(Graphics3D graphics, int x, int y, int width, int height) {
+		AWTGraphics3D g = (AWTGraphics3D) graphics;
 		GL2 gl = g.getGL2(); // get the OpenGL graphics context
 		GLU glu = g.getGLU();
 

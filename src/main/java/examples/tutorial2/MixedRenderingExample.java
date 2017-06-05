@@ -9,7 +9,8 @@ import br.com.etyllica.ui.Button;
 import br.com.etyllica.ui.label.TextLabel;
 import br.com.etyllica.ui.UI;
 import br.com.luvia.core.context.ApplicationGL;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
+import br.com.abby.core.graphics.Graphics3D;
 
 public class MixedRenderingExample extends ApplicationGL {
 
@@ -20,7 +21,7 @@ public class MixedRenderingExample extends ApplicationGL {
 	private Color color = Color.WHITE;
 	
 	@Override
-	public void init(Graphics3D drawable) {
+	public void init(Graphics3D graphics) {
 		//Init 3d Stuff		
 	}
 
@@ -39,13 +40,13 @@ public class MixedRenderingExample extends ApplicationGL {
 	}
 	
 	@Override
-	public void display(Graphics3D drawable) {
+	public void display(Graphics3D graphics) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void reshape(Graphics3D drawable, int x, int y, int width, int height) {
+	public void reshape(Graphics3D graphics, int x, int y, int width, int height) {
 		// TODO Auto-generated method stub
 
 	}

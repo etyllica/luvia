@@ -37,7 +37,8 @@ import java.util.zip.GZIPOutputStream;
 import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3f;
 
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
+import br.com.abby.core.graphics.Graphics3D;
 
 import com.bulletphysics.BulletGlobals;
 import com.bulletphysics.BulletStats;
@@ -149,7 +150,7 @@ public class ConcaveDemo extends DemoApplication {
 		super.keyboardCallback(key, x, y, modifiers);
 	}
 
-	public void initPhysics(Graphics3D g) {
+	public void initPhysics(Graphics3D graphics) {
 		final float TRISIZE = 10f;
 
 		BulletGlobals.setContactAddedCallback(new CustomMaterialCombinerCallback());

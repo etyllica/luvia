@@ -27,7 +27,8 @@ import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3f;
 
 import br.com.etyllica.commons.event.KeyEvent;
-import br.com.luvia.core.graphics.Graphics3D;
+import br.com.luvia.core.graphics.AWTGraphics3D;
+import br.com.abby.core.graphics.Graphics3D;
 
 import com.bulletphysics.collision.broadphase.BroadphaseInterface;
 import com.bulletphysics.collision.broadphase.DbvtBroadphase;
@@ -98,7 +99,7 @@ public class MovingConcaveDemo extends DemoApplication {
 		GImpactCollisionAlgorithm.registerAlgorithm(dispatcher);
 	}
 	
-	public void initPhysics(Graphics3D g) {
+	public void initPhysics(Graphics3D graphics) {
 		setCameraDistance(30f);
 
 		// collision configuration contains default setup for memory, collision setup
