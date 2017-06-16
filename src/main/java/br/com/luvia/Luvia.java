@@ -13,9 +13,9 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.JFrame;
 
 import br.com.etyllica.awt.core.AWTCore;
-import br.com.etyllica.core.Module;
-import br.com.etyllica.core.animation.AnimationModule;
-import br.com.etyllica.core.i18n.LanguageModule;
+import br.com.etyllica.commons.animation.AnimationModule;
+import br.com.etyllica.commons.module.Module;
+import br.com.etyllica.i18n.LanguageModule;
 import br.com.etyllica.loader.image.ImageLoader;
 import br.com.etyllica.ui.UI;
 import br.com.etyllica.util.PathHelper;

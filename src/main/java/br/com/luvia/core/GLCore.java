@@ -13,6 +13,8 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import br.com.etyllica.commons.context.Session;
+import br.com.etyllica.core.EtyllicaFrame;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
@@ -23,9 +25,8 @@ import javax.swing.JPanel;
 import br.com.abby.core.loader.AnimationLoader;
 import br.com.abby.core.loader.MeshLoader;
 import br.com.etyllica.core.InnerCore;
-import br.com.etyllica.core.context.Application;
-import br.com.etyllica.core.engine.EtyllicaFrame;
-import br.com.etyllica.core.event.GUIEvent;
+import br.com.etyllica.commons.context.Application;
+import br.com.etyllica.commons.event.GUIEvent;
 import br.com.etyllica.loader.FontLoader;
 import br.com.etyllica.loader.Loader;
 import br.com.etyllica.loader.image.ImageLoader;
@@ -42,6 +43,8 @@ import com.jogamp.opengl.util.FPSAnimator;
 
 
 public class GLCore extends InnerCore implements GLEventListener, Runnable {
+
+	public static final String COMPONENT = "COMPONENT";
 
 	private static final int UPDATE_DELAY = 20;
 
@@ -260,12 +263,17 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 
 	public void setMainApplication3D(ApplicationGL application3D) {
 		anotherApplication3D = application3D;
-		anotherApplication3D.setSession(activeWindowGL.getSession());
-		anotherApplication3D.setParent(activeWindowGL);
+		anotherApplication3D.setSession(session);
 
 		replaceWindow(activeWindowGL);
 
 		reload();
+	}
+
+	protected Session buildSession() {
+		Session session = new Session();
+		session.put(COMPONENT, component);
+		return session;
 	}
 
 	private void reload() {
@@ -311,9 +319,8 @@ public class GLCore extends InnerCore implements GLEventListener, Runnable {
 	}
 
 	@Override
-	public void setEngine(EtyllicaFrame frame) {
-		// TODO Auto-generated method stub
-		
+	public void setEngine(EtyllicaFrame engine) {
+
 	}
 
 	@Override

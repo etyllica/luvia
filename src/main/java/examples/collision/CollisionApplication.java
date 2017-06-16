@@ -14,8 +14,8 @@ import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 
 import br.com.abby.linear.Camera;
-import br.com.etyllica.core.event.MouseEvent;
-import br.com.etyllica.core.event.PointerEvent;
+import br.com.etyllica.commons.event.MouseEvent;
+import br.com.etyllica.commons.event.PointerEvent;
 import br.com.etyllica.loader.image.ImageLoader;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.graphics.Graphics3D;

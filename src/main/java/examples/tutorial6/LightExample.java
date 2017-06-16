@@ -5,8 +5,8 @@ import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.glu.GLU;
 
 import br.com.abby.linear.Camera;
-import br.com.etyllica.core.event.KeyEvent;
-import br.com.etyllica.core.event.PointerEvent;
+import br.com.etyllica.commons.event.KeyEvent;
+import br.com.etyllica.commons.event.PointerEvent;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.graphics.Graphics3D;
 

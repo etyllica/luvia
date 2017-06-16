@@ -2,8 +2,8 @@ package examples.tutorial2;
 
 import java.awt.Color;
 
-import br.com.etyllica.core.event.Action;
-import br.com.etyllica.core.event.GUIEvent;
+import br.com.etyllica.commons.event.Action;
+import br.com.etyllica.commons.event.GUIEvent;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.etyllica.ui.Button;
 import br.com.etyllica.ui.label.TextLabel;

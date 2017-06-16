@@ -33,10 +33,10 @@ import javax.vecmath.Matrix3f;
 import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3f;
 
-import br.com.etyllica.core.event.KeyEvent;
-import br.com.etyllica.core.event.KeyState;
-import br.com.etyllica.core.event.PointerEvent;
-import br.com.etyllica.core.event.PointerState;
+import br.com.etyllica.commons.event.KeyEvent;
+import br.com.etyllica.commons.event.KeyState;
+import br.com.etyllica.commons.event.PointerEvent;
+import br.com.etyllica.commons.event.PointerState;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.graphics.Graphics3D;
 

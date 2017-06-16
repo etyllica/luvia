@@ -9,7 +9,7 @@ import com.jogamp.opengl.glu.GLU;
 import br.com.abby.core.loader.MeshLoader;
 import br.com.abby.storage.octree.Octree;
 import br.com.abby.storage.octree.OctreeNode;
-import br.com.etyllica.core.event.KeyEvent;
+import br.com.etyllica.commons.event.KeyEvent;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.graphics.Graphics3D;

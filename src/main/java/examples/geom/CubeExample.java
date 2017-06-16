@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import com.jogamp.opengl.GL2;
 
-import br.com.etyllica.core.event.KeyEvent;
+import br.com.etyllica.commons.event.KeyEvent;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.graphics.Graphics3D;
 

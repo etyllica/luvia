@@ -2,7 +2,7 @@ package br.com.luvia.core.context;
 
 import com.jogamp.opengl.GL2;
 
-import br.com.etyllica.core.context.Application;
+import br.com.etyllica.commons.context.Application;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.graphics.G3DEventListener;
 import br.com.luvia.core.graphics.Graphics3D;

@@ -1,9 +1,9 @@
 package br.com.luvia.core.view;
 
 import br.com.abby.core.view.FlyView;
-import br.com.etyllica.core.event.KeyEvent;
-import br.com.etyllica.core.event.MouseEvent;
-import br.com.etyllica.core.event.PointerEvent;
+import br.com.etyllica.commons.event.KeyEvent;
+import br.com.etyllica.commons.event.MouseEvent;
+import br.com.etyllica.commons.event.PointerEvent;
 
 public class UEView extends FlyView {
 

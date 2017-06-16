@@ -10,7 +10,7 @@ import br.com.abby.core.loader.AnimationLoader;
 import br.com.abby.core.model.Bone;
 import br.com.abby.core.model.motion.Motion;
 import br.com.abby.core.view.FlyView;
-import br.com.etyllica.core.event.KeyEvent;
+import br.com.etyllica.commons.event.KeyEvent;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.graphics.Graphics3D;

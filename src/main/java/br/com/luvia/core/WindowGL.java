@@ -1,7 +1,7 @@
 package br.com.luvia.core;
 
 import br.com.etyllica.awt.AWTWindow;
-import br.com.etyllica.core.context.Context;
+import br.com.etyllica.commons.context.Context;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.context.DefaultLoadApplicationGL;
 

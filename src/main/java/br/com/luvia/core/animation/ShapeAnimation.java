@@ -1,9 +1,9 @@
 package br.com.luvia.core.animation;
 
 import br.com.abby.linear.Shape;
-import br.com.etyllica.core.animation.AnimationModule;
-import br.com.etyllica.core.animation.script.AnimationScript;
-import br.com.etyllica.core.interpolation.Interpolator;
+import br.com.etyllica.commons.animation.AnimationModule;
+import br.com.etyllica.commons.animation.script.AnimationScript;
+import br.com.etyllica.commons.interpolation.Interpolator;
 
 public class ShapeAnimation extends AnimationScript {
 

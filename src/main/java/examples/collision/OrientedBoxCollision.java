@@ -13,9 +13,9 @@ import com.badlogic.gdx.math.collision.Ray;
 
 import br.com.abby.core.view.FlyView;
 import br.com.abby.linear.OrientedBoundingBox;
-import br.com.etyllica.core.event.KeyEvent;
-import br.com.etyllica.core.event.MouseEvent;
-import br.com.etyllica.core.event.PointerEvent;
+import br.com.etyllica.commons.event.KeyEvent;
+import br.com.etyllica.commons.event.MouseEvent;
+import br.com.etyllica.commons.event.PointerEvent;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.context.ApplicationGL;
 import br.com.luvia.core.graphics.Graphics3D;

@@ -1,7 +1,7 @@
 package br.com.luvia.core.view;
 
 import br.com.abby.core.view.FlyView;
-import br.com.etyllica.core.event.KeyEvent;
+import br.com.etyllica.commons.event.KeyEvent;
 
 public class BlenderFlyView extends FlyView {
 

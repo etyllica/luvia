@@ -1,7 +1,7 @@
 package br.com.luvia.core.context;
 
-import br.com.etyllica.core.context.Application;
-import br.com.etyllica.core.context.Context;
+import br.com.etyllica.commons.context.Application;
+import br.com.etyllica.commons.context.Context;
 import br.com.etyllica.core.graphics.Graphics;
 import br.com.luvia.core.graphics.G3DEventListener;
 
