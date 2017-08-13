@@ -27,12 +27,8 @@
 
 package examples.jbullet.genericjoint;
 
-import javax.vecmath.Vector3f;
-
-import br.com.etyllica.commons.event.KeyEvent;
-import br.com.luvia.core.graphics.AWTGraphics3D;
 import br.com.abby.core.graphics.Graphics3D;
-
+import br.com.etyllica.commons.event.KeyEvent;
 import com.bulletphysics.collision.broadphase.BroadphaseInterface;
 import com.bulletphysics.collision.broadphase.DbvtBroadphase;
 import com.bulletphysics.collision.dispatch.CollisionDispatcher;
@@ -44,95 +40,95 @@ import com.bulletphysics.dynamics.constraintsolver.ConstraintSolver;
 import com.bulletphysics.dynamics.constraintsolver.SequentialImpulseConstraintSolver;
 import com.bulletphysics.linearmath.Transform;
 import com.bulletphysics.util.ObjectArrayList;
-
 import examples.jbullet.opengl.DemoApplication;
 
+import javax.vecmath.Vector3f;
+
 /**
- *
  * @author jezek2
  */
 public class GenericJointDemo extends DemoApplication {
 
-	private ObjectArrayList<RagDoll> ragdolls = new ObjectArrayList<RagDoll>();
+    private ObjectArrayList<RagDoll> ragdolls = new ObjectArrayList<RagDoll>();
 
-	public GenericJointDemo(int w, int h) {
-		super(w, h);
-		
-		setTitle("Joint 6DOF - Sequencial Impulse Solver");
-	}
-	
-	@Override
-	public void load() {
-		super.load();
-		setCameraDistance(10f);
-	}
+    public GenericJointDemo(int w, int h) {
+        super(w, h);
 
-	public void initPhysics(Graphics3D graphics) {
-		// Setup the basic world
-		DefaultCollisionConfiguration collision_config = new DefaultCollisionConfiguration();
+        setTitle("Joint 6DOF - Sequencial Impulse Solver");
+    }
 
-		CollisionDispatcher dispatcher = new CollisionDispatcher(collision_config);
+    @Override
+    public void load() {
+        super.load();
+        setCameraDistance(10f);
+    }
 
-		Vector3f worldAabbMin = new Vector3f(-10000, -10000, -10000);
-		Vector3f worldAabbMax = new Vector3f(10000, 10000, 10000);
-		//BroadphaseInterface overlappingPairCache = new AxisSweep3(worldAabbMin, worldAabbMax);
-		//BroadphaseInterface overlappingPairCache = new SimpleBroadphase();
-		BroadphaseInterface overlappingPairCache = new DbvtBroadphase();
+    public void initPhysics(Graphics3D graphics) {
+        // Setup the basic world
+        DefaultCollisionConfiguration collision_config = new DefaultCollisionConfiguration();
 
-		//#ifdef USE_ODE_QUICKSTEP
-		//btConstraintSolver* constraintSolver = new OdeConstraintSolver();
-		//#else
-		ConstraintSolver constraintSolver = new SequentialImpulseConstraintSolver();
-		//#endif
+        CollisionDispatcher dispatcher = new CollisionDispatcher(collision_config);
 
-		dynamicsWorld = new DiscreteDynamicsWorld(dispatcher, overlappingPairCache, constraintSolver, collision_config);
+        Vector3f worldAabbMin = new Vector3f(-10000, -10000, -10000);
+        Vector3f worldAabbMax = new Vector3f(10000, 10000, 10000);
+        //BroadphaseInterface overlappingPairCache = new AxisSweep3(worldAabbMin, worldAabbMax);
+        //BroadphaseInterface overlappingPairCache = new SimpleBroadphase();
+        BroadphaseInterface overlappingPairCache = new DbvtBroadphase();
 
-		dynamicsWorld.setGravity(new Vector3f(0f, -30f, 0f));
+        //#ifdef USE_ODE_QUICKSTEP
+        //btConstraintSolver* constraintSolver = new OdeConstraintSolver();
+        //#else
+        ConstraintSolver constraintSolver = new SequentialImpulseConstraintSolver();
+        //#endif
 
-		// Setup a big ground box
-		{
-			CollisionShape groundShape = new BoxShape(new Vector3f(200f, 10f, 200f));
-			Transform groundTransform = new Transform();
-			groundTransform.setIdentity();
-			groundTransform.origin.set(0f, -15f, 0f);
-			localCreateRigidBody(0f, groundTransform, groundShape);
-		}
+        dynamicsWorld = new DiscreteDynamicsWorld(dispatcher, overlappingPairCache, constraintSolver, collision_config);
 
-		// Spawn one ragdoll
-		spawnRagdoll();
+        dynamicsWorld.setGravity(new Vector3f(0f, -30f, 0f));
 
-		clientResetScene();
-	}
+        // Setup a big ground box
+        {
+            CollisionShape groundShape = new BoxShape(new Vector3f(200f, 10f, 200f));
+            Transform groundTransform = new Transform();
+            groundTransform.setIdentity();
+            groundTransform.origin.set(0f, -15f, 0f);
+            localCreateRigidBody(0f, groundTransform, groundShape);
+        }
 
-	public void spawnRagdoll() {
-		spawnRagdoll(false);
-	}
-	
-	public void spawnRagdoll(boolean random) {
-		RagDoll ragDoll = new RagDoll(dynamicsWorld, new Vector3f(0f, 0f, 10f), 5f);
-		ragdolls.add(ragDoll);
-	}
-	
-	@Override
-	public void clientMoveAndDisplay() {
+        // Spawn one ragdoll
+        spawnRagdoll();
 
-		// simple dynamics world doesn't handle fixed-time-stepping
-		float ms = getDeltaTimeMicroseconds();
-		float minFPS = 1000000f / 60f;
-		if (ms > minFPS) {
-			ms = minFPS;
-		}
+        clientResetScene();
+    }
 
-		if (dynamicsWorld != null) {
-			dynamicsWorld.stepSimulation(ms / 1000000.f);
-			// optional but useful: debug drawing
-			dynamicsWorld.debugDrawWorld();
-		}
-	}
+    public void spawnRagdoll() {
+        spawnRagdoll(false);
+    }
 
-	public void updateKeyboard(KeyEvent event) {
-		if(event.isAnyKeyDown(KeyEvent.VK_E)) {
-			spawnRagdoll(true);
-		}
-	}	
+    public void spawnRagdoll(boolean random) {
+        RagDoll ragDoll = new RagDoll(dynamicsWorld, new Vector3f(0f, 0f, 10f), 5f);
+        ragdolls.add(ragDoll);
+    }
+
+    @Override
+    public void clientMoveAndDisplay() {
+
+        // simple dynamics world doesn't handle fixed-time-stepping
+        float ms = getDeltaTimeMicroseconds();
+        float minFPS = 1000000f / 60f;
+        if (ms > minFPS) {
+            ms = minFPS;
+        }
+
+        if (dynamicsWorld != null) {
+            dynamicsWorld.stepSimulation(ms / 1000000.f);
+            // optional but useful: debug drawing
+            dynamicsWorld.debugDrawWorld();
+        }
+    }
+
+    public void updateKeyboard(KeyEvent event) {
+        if (event.isAnyKeyDown(KeyEvent.VK_E)) {
+            spawnRagdoll(true);
+        }
+    }
 }

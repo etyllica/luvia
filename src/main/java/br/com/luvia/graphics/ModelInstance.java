@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import br.com.abby.core.graphics.Graphics3D;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 

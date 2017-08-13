@@ -1,18 +1,20 @@
-package examples.animation;
+package examples.simple;
 
 import br.com.luvia.Luvia;
 import br.com.luvia.core.context.ApplicationGL;
 
-public class AnimationExamples extends Luvia {
+public class SimpleExamples extends Luvia {
 
-    public AnimationExamples() {
+    public SimpleExamples() {
+        //super(640,480);
         super(1024, 576);
     }
 
     // Main program
     public static void main(String[] args) {
-        AnimationExamples engine = new AnimationExamples();
-        engine.setTitle("Animation Example");
+        SimpleExamples engine = new SimpleExamples();
+        engine.setTitle("Luvia Examples");
+        engine.setIcon("cross_blue.png");
         engine.init();
     }
 
@@ -21,7 +23,7 @@ public class AnimationExamples extends Luvia {
 
         initialSetup("");
 
-        return new AnimationApplication(w, h);
+        return new ConeDrawing(w, h);
     }
 
 }
